@@ -20,7 +20,7 @@
                 <ColumnDefinition Width="80"/>
             </Grid.ColumnDefinitions>
             <Border Background="#FF5093EA">
-                <TextBlock Text="S12345" 
+                <TextBlock Text="s98765" 
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Center" 
                            Foreground="White" 
