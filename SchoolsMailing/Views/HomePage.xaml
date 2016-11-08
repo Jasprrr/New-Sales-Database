@@ -1,0 +1,36 @@
+﻿<Page
+    x:Class="SchoolsMailing.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SchoolsMailing.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:DataContext="using:SchoolsMailing.ViewModels"
+    xmlns:controlModels="using:SchoolsMailing.Controls.Models"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    DataContext="{Binding HomePageViewModel, Source={StaticResource VmLocator}}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <CalendarView x:Name="eventCalendar" 
+                          HorizontalAlignment="Stretch" 
+                          VerticalAlignment="Stretch">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="CalendarViewDayItemChanging">
+                        <core:InvokeCommandAction Command="{Binding Path=getEvents}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </CalendarView>
+            <ListView x:Name="eventList"
+                      Grid.Column="1">
+                
+            </ListView>
+        </Grid>
+        
+    </Grid>
+</Page>
