@@ -10,16 +10,16 @@ namespace SchoolsMailing.Models
     {
         public int ID { get; set; }
         public int userID { get; set; }
-        public string directMailingDeliveryCode { get; set; }
-        public DateTime directMailingDataDate { get; set; }
-        public DateTime directMailingInsertDate { get; set; }
-        public DateTime directMailingArtworkDate { get; set; }
-        public DateTime directMailingMailingDate { get; set; }
-        public string directMailingMailingTo { get; set; }
-        public string directMailingLeafletCode { get; set; }
-        public string directMailingDetails { get; set; }
-        public double directMailingFulfilmentCost { get; set; }
-        public double directMailingPrintCost { get; set; }
-        public double directMailingPostageCost { get; set; }
+        public string directDeliveryCode { get; set; }
+        public DateTime directDataDate { get; set; }
+        public DateTime directInsertDate { get; set; }
+        public DateTime directArtworkDate { get; set; }
+        public DateTime directDate { get; set; }
+        public string directMailingTo { get; set; }
+        public string directLeafletCode { get; set; }
+        public string directDetails { get; set; }
+        public double directFulfilmentCost { get; set; }
+        public double directPrintCost { get; set; }
+        public double directPostageCost { get; set; }
     }
 }

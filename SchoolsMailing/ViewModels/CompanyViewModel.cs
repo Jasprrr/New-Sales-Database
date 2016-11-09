@@ -23,7 +23,7 @@ namespace SchoolsMailing.ViewModels
         {
             // register parameter
             MessengerInstance.Register<NotificationMessage<string>>(this, setCompanyID);
-            addOrders();
+            addTestData();
         }
 
         private ObservableCollection<DataOrder> _companyDataOrder;
@@ -39,16 +39,29 @@ namespace SchoolsMailing.ViewModels
                 }
             }
         }
+        private ObservableCollection<CompanyHistory> _selectedCompanyHistory;
+        public ObservableCollection<CompanyHistory> selectedCompanyHistory
+        {
+            get { return _selectedCompanyHistory; }
+            set
+            {
+                if(_selectedCompanyHistory != value)
+                {
+                    _selectedCompanyHistory = value;
+                    RaisePropertyChanged("companyHistory");
+                }
+            }
+        }
 
-        public void addOrders()
+        public void addTestData()
         {
             ObservableCollection<DataOrder> c = new ObservableCollection<DataOrder>();
-            DataOrder d1 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 1", orderDate = Convert.ToDateTime("01/01/16"), ID = 1, orderCode = "L200", orderCreator = 1 };
-            DataOrder d2 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 2", orderDate = Convert.ToDateTime("02/01/16"), ID = 1, orderCode = "L201", orderCreator = 1 };
-            DataOrder d3 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 3", orderDate = Convert.ToDateTime("03/01/16"), ID = 1, orderCode = "L202", orderCreator = 1 };
-            DataOrder d4 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 4", orderDate = Convert.ToDateTime("04/01/16"), ID = 1, orderCode = "L204", orderCreator = 1 };
-            DataOrder d5 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 5", orderDate = Convert.ToDateTime("05/01/16"), ID = 1, orderCode = "L205", orderCreator = 1 };
-            DataOrder d6 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 6", orderDate = Convert.ToDateTime("06/01/16"), ID = 1, orderCode = "L206", orderCreator = 1 };
+            DataOrder d1 = new DataOrder() { companyID = 1, dataCost = 12500.00, dataDetails = "a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 ", orderDate = Convert.ToDateTime("01/01/16"), ID = 1, orderCode = "L200"};
+            DataOrder d2 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 2", orderDate = Convert.ToDateTime("02/01/16"), ID = 1, orderCode = "L201"};
+            DataOrder d3 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 3", orderDate = Convert.ToDateTime("03/01/16"), ID = 1, orderCode = "L202"};
+            DataOrder d4 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 4", orderDate = Convert.ToDateTime("04/01/16"), ID = 1, orderCode = "L204"};
+            DataOrder d5 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 5", orderDate = Convert.ToDateTime("05/01/16"), ID = 1, orderCode = "L205"};
+            DataOrder d6 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 6", orderDate = Convert.ToDateTime("06/01/16"), ID = 1, orderCode = "L206"};
             c.Add(d1);
             c.Add(d2);
             c.Add(d3);
@@ -56,8 +69,13 @@ namespace SchoolsMailing.ViewModels
             c.Add(d5);
             c.Add(d6);
             companyDataOrder = c;
+            ObservableCollection<CompanyHistory> h = new ObservableCollection<CompanyHistory>();
+            CompanyHistory h1 = new CompanyHistory() { companyHistoryDate = Convert.ToDateTime("02/01/16"), companyHistoryDetails= "Some details about this company Some details about this company Some details about this company Some details about this company Some details about this company", companyID=1, ID=1 };
+            CompanyHistory h2 = new CompanyHistory() { companyHistoryDate = Convert.ToDateTime("03/01/16"), companyHistoryDetails = "Some details about this company", companyID = 1, ID = 1 };
+            h.Add(h1);
+            h.Add(h2);
+            selectedCompanyHistory = h;
         }
-        
 
         private Boolean _postCodeRequested = false;
         public Boolean postCodeRequested
@@ -96,7 +114,6 @@ namespace SchoolsMailing.ViewModels
                     companyProduct = selectedCompany.companyProduct;
                     companyRemove = selectedCompany.companyRemove;
                     companyTelephone = selectedCompany.companyTelephone;
-                    companyHistory = selectedCompany.companyHistory;
                     userID = selectedCompany.userID;
                 }
             }
@@ -234,20 +251,6 @@ namespace SchoolsMailing.ViewModels
                 {
                     _companyProduct = value;
                     RaisePropertyChanged("companyProduct");
-                }
-            }
-        }
-
-        private string _companyHistory;
-        public string companyHistory
-        {
-            get { return _companyHistory; }
-            set
-            {
-                if (_companyHistory != value)
-                {
-                    _companyHistory = value;
-                    RaisePropertyChanged("companyHistory");
                 }
             }
         }

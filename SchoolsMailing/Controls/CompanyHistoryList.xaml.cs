@@ -17,9 +17,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace SchoolsMailing.Controls
 {
-    public sealed partial class CompanyControl : UserControl
+    public sealed partial class CompanyHistoryList : UserControl
     {
-        public CompanyControl()
+        public CompanyHistoryList()
         {
             this.InitializeComponent();
         }
