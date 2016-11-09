@@ -216,10 +216,12 @@
                             <HubSection Header="Emails" 
                                         IsHeaderInteractive="True">
                                 <DataTemplate>
-                                    <ListView Width="600" Height="200">
+                                    <ListView Width="600" 
+                                              Height="600"
+                                              ItemsSource="{Binding companyDataOrder}">
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
-                                                <cntrl:EmailList/>
+                                                <cntrl:DataList/>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
                                     </ListView>
@@ -227,18 +229,73 @@
                             </HubSection>
                             <HubSection Header="Data"
                                         IsHeaderInteractive="True">
+                                <DataTemplate>
+                                    <ListView Width="600" 
+                                              Height="600"
+                                              ItemsSource="{Binding companyDataOrder}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <cntrl:DataList/>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </DataTemplate>
                             </HubSection>
                             <HubSection Header="SchoolSend"
                                         IsHeaderInteractive="True">
+                                <DataTemplate>
+                                    <ListView Width="600" 
+                                              Height="600"
+                                              ItemsSource="{Binding companyDataOrder}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <cntrl:DataList/>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </DataTemplate>
                             </HubSection>
                             <HubSection Header="Direct Mailing"
                                         IsHeaderInteractive="True">
+                                <DataTemplate>
+                                    <ListView Width="600" 
+                                              Height="600"
+                                              ItemsSource="{Binding companyDataOrder}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <cntrl:DataList/>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </DataTemplate>
                             </HubSection>
                             <HubSection Header="Shared Mailing"
                                         IsHeaderInteractive="True">
+                                <DataTemplate>
+                                    <ListView Width="600" 
+                                              Height="600"
+                                              ItemsSource="{Binding companyDataOrder}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <cntrl:DataList/>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </DataTemplate>
                             </HubSection>
                             <HubSection Header="Print"
                                         IsHeaderInteractive="True">
+                                <DataTemplate>
+                                    <ListView Width="600" 
+                                              Height="600"
+                                              ItemsSource="{Binding companyDataOrder}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <cntrl:DataList/>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </DataTemplate>
                             </HubSection>
                         </Hub>
                     </PivotItem.Content>

@@ -12,6 +12,7 @@ namespace SchoolsMailing.Models
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
         public int companyID { get; set; }
+        public string contactTitle { get; set; }
         public string contactForename { get; set; }
         public string contactSurname { get; set; }
         public string contactEmail { get; set; }

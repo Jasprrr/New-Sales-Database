@@ -11,6 +11,7 @@ using SchoolsMailing.Models;
 using SchoolsMailing.DAL;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.WindowsAzure.MobileServices;
+using System.Collections.ObjectModel;
 
 namespace SchoolsMailing.ViewModels
 {
@@ -22,7 +23,41 @@ namespace SchoolsMailing.ViewModels
         {
             // register parameter
             MessengerInstance.Register<NotificationMessage<string>>(this, setCompanyID);
+            addOrders();
         }
+
+        private ObservableCollection<DataOrder> _companyDataOrder;
+        public ObservableCollection<DataOrder> companyDataOrder
+        {
+            get { return _companyDataOrder; }
+            set
+            {
+                if(_companyDataOrder != value)
+                {
+                    _companyDataOrder = value;
+                    RaisePropertyChanged("companyDataOrder");
+                }
+            }
+        }
+
+        public void addOrders()
+        {
+            ObservableCollection<DataOrder> c = new ObservableCollection<DataOrder>();
+            DataOrder d1 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 1", orderDate = Convert.ToDateTime("01/01/16"), ID = 1, orderCode = "L200", orderCreator = 1 };
+            DataOrder d2 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 2", orderDate = Convert.ToDateTime("02/01/16"), ID = 1, orderCode = "L201", orderCreator = 1 };
+            DataOrder d3 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 3", orderDate = Convert.ToDateTime("03/01/16"), ID = 1, orderCode = "L202", orderCreator = 1 };
+            DataOrder d4 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 4", orderDate = Convert.ToDateTime("04/01/16"), ID = 1, orderCode = "L204", orderCreator = 1 };
+            DataOrder d5 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 5", orderDate = Convert.ToDateTime("05/01/16"), ID = 1, orderCode = "L205", orderCreator = 1 };
+            DataOrder d6 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 6", orderDate = Convert.ToDateTime("06/01/16"), ID = 1, orderCode = "L206", orderCreator = 1 };
+            c.Add(d1);
+            c.Add(d2);
+            c.Add(d3);
+            c.Add(d4);
+            c.Add(d5);
+            c.Add(d6);
+            companyDataOrder = c;
+        }
+        
 
         private Boolean _postCodeRequested = false;
         public Boolean postCodeRequested

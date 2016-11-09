@@ -45,9 +45,6 @@ namespace SchoolsMailing.Models
         [JsonProperty(PropertyName = "companyProduct")]
         public string companyProduct { get; set; }
 
-        [JsonProperty(PropertyName = "companyHistory")]
-        public string companyHistory { get; set; }
-
         [JsonProperty(PropertyName = "companyRemove")]
         public bool companyRemove { get; set; }
 

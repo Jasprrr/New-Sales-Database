@@ -103,6 +103,9 @@
     <Compile Include="Controls\CompanyControl.xaml.cs">
       <DependentUpon>CompanyControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DataList.xaml.cs">
+      <DependentUpon>DataList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Models\SplitViewPaneMenuItem.cs" />
     <Compile Include="Controls\ContactListView.cs" />
     <Compile Include="Controls\SplitViewPaneMenu.cs" />
@@ -113,10 +116,20 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\CompanyHistory.cs" />
     <Compile Include="Models\Contact.cs" />
+    <Compile Include="Models\ContactHistory.cs" />
     <Compile Include="Models\Data.cs" />
+    <Compile Include="Models\DataOrder.cs" />
+    <Compile Include="Models\DirectMailing.cs" />
+    <Compile Include="Models\Email.cs" />
+    <Compile Include="Models\EmailOrder.cs" />
     <Compile Include="Models\Orders.cs" />
+    <Compile Include="Models\Print.cs" />
+    <Compile Include="Models\SchoolSend.cs" />
+    <Compile Include="Models\SharedMailing.cs" />
     <Compile Include="Models\TodoItem.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Common\PageViewModel.cs" />
     <Compile Include="ViewModels\Common\ViewModelLocator.cs" />
@@ -175,6 +188,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\DataList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -221,8 +238,8 @@
     <SDKReference Include="Microsoft.VCLibs, Version=14.0">
       <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.15.0">
-      <Name>SQLite for Universal Windows Platform %28SQLite.UWP.2015, Version=3.15.0%29</Name>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.15.1">
+      <Name>SQLite for Universal Windows Platform %28SQLite.UWP.2015, Version=3.15.1%29</Name>
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
