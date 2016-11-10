@@ -14,6 +14,9 @@ using Microsoft.WindowsAzure.MobileServices;
 using System.Collections.ObjectModel;
 using static SchoolsMailing.ViewModels.CompanyViewModel;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml;
+using SchoolsMailing.Controls;
 
 namespace SchoolsMailing.ViewModels
 {
@@ -80,10 +83,38 @@ namespace SchoolsMailing.ViewModels
             h.Add(h1);
             h.Add(h2);
             selectedCompanyHistory = h;
-            var txtBox = new TextBox { Width=200, MinHeight=32 };
-            conDlg.Content = txtBox;
-            var conDlg2 = await conDlg.ShowAsync();
+
+            //var txtBox = new TextBox { Width=200, MinHeight=32 };
+            //Binding binding = new Binding() { Path = new PropertyPath("123") };
+            //txtBox.SetBinding(TextBox.TextProperty, binding);
+            //historyDialog.Content = txtBox;
+            //await historyDialog.ShowAsync();
+
+            var dial = new HistoryDialog()
+            {
+                DataContext = new
+                {
+                    companyHistory = h1.companyHistoryDetails
+                }
+            };
+
+            var result = await dial.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                var item = (TextBox)dial.Content;
+            }
+            else
+            {
+                Debug.Write("Canceled!");
+            }
         }
+
+        public ContentDialog historyDialog = new ContentDialog
+        {
+            Title = "Title!",
+
+            PrimaryButtonText = "Yes!"
+        };
 
         #region Company Data
 
@@ -97,7 +128,7 @@ namespace SchoolsMailing.ViewModels
                     _selectedCompany = value;
                     //Refresh bindings
                     RaisePropertyChanged("selectedCompany");
-                    companyName = selectedCompany.companyName;
+                    //companyName = selectedCompany.companyName;
                     companyAddress1 = selectedCompany.companyAddress1;
                     companyAddress2 = selectedCompany.companyAddress2;
                     companyCity = selectedCompany.companyCity;
@@ -115,17 +146,17 @@ namespace SchoolsMailing.ViewModels
 
         public int ID { get; private set; }
 
-        private string _companyName;
-        public string companyName
-        {
-            get { return selectedCompany.companyName; }
-            set { if (_companyName != value)
-                {
-                    _companyName = value;
-                    RaisePropertyChanged("companyName");
-                }
-            }
-        }
+        //private string _companyName;
+        //public string companyName
+        //{
+        //    get { return selectedCompany.companyName; }
+        //    set { if (_companyName != value)
+        //        {
+        //            _companyName = value;
+        //            RaisePropertyChanged("companyName");
+        //        }
+        //    }
+        //}
 
         private string _companyAddress1;
         public string companyAddress1
@@ -342,52 +373,6 @@ namespace SchoolsMailing.ViewModels
             //}
         }
 
-        //public async Task getCompany()
-        //{
-        //    Get company from parameter
-
-
-        //}
-
-        public ContentDialog conDlg = new ContentDialog
-        {
-            Title = "Title!",
-            
-            PrimaryButtonText = "Yes!"
-        };
-
-        //private RelayCommand _updateCompany;
-        //public RelayCommand updateCompany
-        //{
-        //    get
-        //    {
-        //        if (_updateCompany == null)
-        //        {
-        //            _updateCompany = new RelayCommand(async () =>
-        //            {
-                        
-        //            });
-        //        }
-        //        return updateCompany;
-        //    }
-        //}
-
-        //private RelayCommand _deleteCompany;
-        //public RelayCommand deleteCompany
-        //{
-        //    get
-        //    {
-        //        if (_deleteCompany == null)
-        //        {
-        //            _deleteCompany = new RelayCommand(() =>
-        //            {
-        //                DataAccessLayer.DeletePerson(selectedCompany);
-        //            });
-        //        }
-
-        //        return _deleteCompany;
-
-        //    }
-        //}
+        
     }
 }

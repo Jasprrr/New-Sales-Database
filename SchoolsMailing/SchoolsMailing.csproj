@@ -113,6 +113,9 @@
     <Compile Include="Controls\DataList.xaml.cs">
       <DependentUpon>DataList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\HistoryDialog.xaml.cs">
+      <DependentUpon>HistoryDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Models\SplitViewPaneMenuItem.cs" />
     <Compile Include="Controls\SplitViewPaneMenu.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
@@ -208,6 +211,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\HistoryDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -251,11 +258,8 @@
     <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
       <Name>Behaviors SDK %28XAML%29</Name>
     </SDKReference>
-    <SDKReference Include="Microsoft.VCLibs, Version=14.0">
-      <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
-    </SDKReference>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.15.1">
-      <Name>SQLite for Universal Windows Platform %28SQLite.UWP.2015, Version=3.15.1%29</Name>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.15.0">
+      <Name>SQLite for Universal Windows Platform %28SQLite.UWP.2015, Version=3.15.0%29</Name>
     </SDKReference>
   </ItemGroup>
   <ItemGroup>

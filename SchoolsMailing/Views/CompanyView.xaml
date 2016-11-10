@@ -55,7 +55,7 @@
                                     <StackPanel Orientation="Vertical">
                                         <TextBlock Text="Company" 
                                                        Style="{StaticResource inputTextBlock}"/>
-                                        <TextBox Text="{Binding Path=companyName, Mode=TwoWay}"
+                                        <TextBox Text="{Binding selectedCompany.companyName, Mode=TwoWay}"
                                                      Width="400" 
                                                      Style="{StaticResource inputTextBox}"/>
                                         <TextBlock Text="Prospects"
