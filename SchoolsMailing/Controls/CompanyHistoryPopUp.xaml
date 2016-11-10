@@ -13,6 +13,7 @@
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
     <Grid>
-        <TextBox Text="Enter text"/>
+        <TextBox Text="Enter text"
+                 Height="300"/>
     </Grid>
 </ContentDialog>

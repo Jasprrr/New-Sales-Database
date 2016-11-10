@@ -12,18 +12,22 @@ using SchoolsMailing.DAL;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.WindowsAzure.MobileServices;
 using System.Collections.ObjectModel;
+using static SchoolsMailing.ViewModels.CompanyViewModel;
+using Windows.UI.Xaml.Controls;
 
 namespace SchoolsMailing.ViewModels
 {
     public class CompanyViewModel : PageViewModel
     {
+        //http://www.c-sharpcorner.com/UploadFile/0cb003/contentdialog-in-universal-windows-program-part-1/
         //private IMobileServiceTable<Company> companyTable = App.MobileService.GetTable<Company>();
 
         public CompanyViewModel(IMessenger messenger, NavigationService navigationService) : base(messenger, navigationService)
         {
-            // register parameter
+            // register company parameter
             MessengerInstance.Register<NotificationMessage<string>>(this, setCompanyID);
             addTestData();
+            
         }
 
         private ObservableCollection<DataOrder> _companyDataOrder;
@@ -53,7 +57,8 @@ namespace SchoolsMailing.ViewModels
             }
         }
 
-        public void addTestData()
+
+        public async void addTestData()
         {
             ObservableCollection<DataOrder> c = new ObservableCollection<DataOrder>();
             DataOrder d1 = new DataOrder() { companyID = 1, dataCost = 12500.00, dataDetails = "a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 ", orderDate = Convert.ToDateTime("01/01/16"), ID = 1, orderCode = "L200"};
@@ -70,25 +75,14 @@ namespace SchoolsMailing.ViewModels
             c.Add(d6);
             companyDataOrder = c;
             ObservableCollection<CompanyHistory> h = new ObservableCollection<CompanyHistory>();
-            CompanyHistory h1 = new CompanyHistory() { companyHistoryDate = Convert.ToDateTime("02/01/16"), companyHistoryDetails= "Some details about this company Some details about this company Some details about this company Some details about this company Some details about this company", companyID=1, ID=1 };
-            CompanyHistory h2 = new CompanyHistory() { companyHistoryDate = Convert.ToDateTime("03/01/16"), companyHistoryDetails = "Some details about this company", companyID = 1, ID = 1 };
+            CompanyHistory h1 = new CompanyHistory() { companyHistoryDate = Convert.ToDateTime("02/01/16"), isVisible = true, companyHistoryDetails = "Some details about this company Some details about this company Some details about this company Some details about this company Some details about this company", companyID=1, ID=1 };
+            CompanyHistory h2 = new CompanyHistory() { companyHistoryDate = Convert.ToDateTime("03/01/16"), isVisible = true, companyHistoryDetails = "Some details about this company", companyID = 1, ID = 1 };
             h.Add(h1);
             h.Add(h2);
             selectedCompanyHistory = h;
-        }
-
-        private Boolean _postCodeRequested = false;
-        public Boolean postCodeRequested
-        {
-            get { return _postCodeRequested; }
-            set
-            {
-                if (_postCodeRequested != value)
-                {
-                    _postCodeRequested = !_postCodeRequested;
-                    RaisePropertyChanged("postCodeRequested");
-                }
-            }
+            var txtBox = new TextBox { Width=200, MinHeight=32 };
+            conDlg.Content = txtBox;
+            var conDlg2 = await conDlg.ShowAsync();
         }
 
         #region Company Data
@@ -355,24 +349,28 @@ namespace SchoolsMailing.ViewModels
 
         //}
 
-        private RelayCommand _updateCompany;
-        public RelayCommand updateCompany
+        public ContentDialog conDlg = new ContentDialog
         {
-            get
-            {
-                if (_updateCompany == null)
-                {
-                    _updateCompany = new RelayCommand(() =>
-                    {
-                        //DataAccessLayer.SaveCompany(selectedCompany);
-                        postCodeRequested = !postCodeRequested;
-                    });
-                }
+            Title = "Title!",
+            
+            PrimaryButtonText = "Yes!"
+        };
 
-                return _updateCompany;
-
-            }
-        }
+        //private RelayCommand _updateCompany;
+        //public RelayCommand updateCompany
+        //{
+        //    get
+        //    {
+        //        if (_updateCompany == null)
+        //        {
+        //            _updateCompany = new RelayCommand(async () =>
+        //            {
+                        
+        //            });
+        //        }
+        //        return updateCompany;
+        //    }
+        //}
 
         //private RelayCommand _deleteCompany;
         //public RelayCommand deleteCompany

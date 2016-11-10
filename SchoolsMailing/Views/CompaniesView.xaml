@@ -17,22 +17,22 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <GridView ItemsSource="{Binding companies, Mode=TwoWay}"
+            <ListView ItemsSource="{Binding companies, Mode=TwoWay}"
                       IsItemClickEnabled="True"
-                      Grid.Row="0">
+                      Grid.Row="0" 
+                      Header="Companies">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="ItemClick">
                         <core:CallMethodAction MethodName="companyInvoked" 
                                            TargetObject="{Binding Mode=OneWay}"/>
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
-
-                <GridView.ItemTemplate>
+                <ListView.ItemTemplate>
                     <DataTemplate>
-                        <local:CompanyCollection/>
+                        <local:CompanyList/>
                     </DataTemplate>
-                </GridView.ItemTemplate>
-            </GridView>
+                </ListView.ItemTemplate>
+            </ListView>
             <CommandBar VerticalAlignment="Bottom">
                 <AppBarButton Icon="Add"
                               Label="New Company">

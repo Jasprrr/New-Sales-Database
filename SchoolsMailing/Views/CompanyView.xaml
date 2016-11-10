@@ -36,6 +36,7 @@
         </Style>
         <conv:BooleanToVisibilityConverter x:Key="boolVisibility"/>
         <conv:StringFormatter x:Key="formatString"/>
+        <cntrl:CompanyHistoryPopUp x:Key="companyHistoryDialog"/>
     </Page.Resources>
     <Grid Background="WhiteSmoke">
         <StackPanel>
@@ -47,6 +48,7 @@
                         </StackPanel>
                     </PivotItem.Header>
                     <PivotItem.Content>
+                        <!--Company Details-->
                         <Hub VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
                             <HubSection>
                                 <DataTemplate>
@@ -79,6 +81,7 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </HubSection>
+                            <!--Company History-->
                             <HubSection Header="Company History">
                                 <DataTemplate>
                                     <StackPanel Grid.Column="1">
@@ -105,8 +108,8 @@
                                                                    VerticalAlignment="Top"/>
                                                         <TextBlock Text="{Binding Path=companyHistoryDetails}"
                                                                    Margin="12"
-                                                                   VerticalAlignment="Top"
-                                                                   Grid.Column="1"/>
+                                                                   VerticalAlignment="Stretch"
+                                                                   Grid.Column="1" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                                                     </Grid>
                                                 </DataTemplate>
                                             </ListView.ItemTemplate>
@@ -115,6 +118,7 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </HubSection>
+                            <!--Contact Details-->
                             <HubSection>
                                 <DataTemplate>
                                     <StackPanel Grid.Column="2">
@@ -162,6 +166,7 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </HubSection>
+                            <!--Contact History-->
                             <HubSection Header="Contact History">
                                 <DataTemplate>
                                     <StackPanel>
@@ -182,6 +187,7 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </HubSection>
+                            <!--Company Address Details-->
                             <HubSection>
                                 <DataTemplate>
                                     <StackPanel>
@@ -233,20 +239,27 @@
                 <PivotItem Header="Previous Orders">
                     <PivotItem.Content>
                         <Hub>
+                            <!--Email Orders-->
                             <HubSection Header="Emails" 
                                         IsHeaderInteractive="True">
                                 <DataTemplate>
                                     <ListView Width="600" 
-                                              Height="600"
                                               ItemsSource="{Binding companyDataOrder}">
+                                        <ListView.Footer>
+                                            <Button HorizontalAlignment="Center">
+                                                <TextBlock Text="Load More"/>
+                                            </Button>
+                                        </ListView.Footer>
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <cntrl:DataList/>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
+                                        
                                     </ListView>
                                 </DataTemplate>
                             </HubSection>
+                            <!--Data Orders-->
                             <HubSection Header="Data"
                                         IsHeaderInteractive="True">
                                 <DataTemplate>
@@ -261,6 +274,7 @@
                                     </ListView>
                                 </DataTemplate>
                             </HubSection>
+                            <!--SchoolSend Orders-->
                             <HubSection Header="SchoolSend"
                                         IsHeaderInteractive="True">
                                 <DataTemplate>
@@ -275,6 +289,7 @@
                                     </ListView>
                                 </DataTemplate>
                             </HubSection>
+                            <!--Direct Mailing Orders-->
                             <HubSection Header="Direct Mailing"
                                         IsHeaderInteractive="True">
                                 <DataTemplate>
@@ -289,6 +304,7 @@
                                     </ListView>
                                 </DataTemplate>
                             </HubSection>
+                            <!--Shared Mailing Orders-->
                             <HubSection Header="Shared Mailing"
                                         IsHeaderInteractive="True">
                                 <DataTemplate>
@@ -303,6 +319,7 @@
                                     </ListView>
                                 </DataTemplate>
                             </HubSection>
+                            <!--Print Orders-->
                             <HubSection Header="Print"
                                         IsHeaderInteractive="True">
                                 <DataTemplate>

@@ -8,14 +8,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="60"
-    d:DesignWidth="600">
+    d:DesignWidth="620">
     <UserControl.Resources>
         <conv:StringFormatter x:Key="StringFormatterValueConverter"/>
     </UserControl.Resources>
 
     <Grid Background="White"
           Width="600" 
-          Height="40">
+          Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>

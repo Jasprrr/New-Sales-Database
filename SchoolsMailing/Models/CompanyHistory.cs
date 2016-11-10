@@ -12,5 +12,6 @@ namespace SchoolsMailing.Models
         public int companyID { get; set; }
         public string companyHistoryDetails { get; set; }
         public DateTime companyHistoryDate { get; set; }
+        public bool isVisible { get; set; }
     }
 }

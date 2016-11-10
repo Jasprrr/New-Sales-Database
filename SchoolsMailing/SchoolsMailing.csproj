@@ -97,6 +97,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\NavigationService.cs" />
+    <Compile Include="Common\SpeechDialogService.cs" />
     <Compile Include="Controls\CompanyCollection.xaml.cs">
       <DependentUpon>CompanyCollection.xaml</DependentUpon>
     </Compile>
@@ -106,12 +107,16 @@
     <Compile Include="Controls\CompanyHistoryPopUp.xaml.cs">
       <DependentUpon>CompanyHistoryPopUp.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CompanyList.xaml.cs">
+      <DependentUpon>CompanyList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DataList.xaml.cs">
       <DependentUpon>DataList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Models\SplitViewPaneMenuItem.cs" />
     <Compile Include="Controls\SplitViewPaneMenu.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\IntegerToInitial.cs" />
     <Compile Include="Converters\StringFormatter.cs" />
     <Compile Include="DAL\DataAccessLayer.cs" />
     <Compile Include="Extensions\VisualTreeHelperExtensions.cs" />
@@ -195,6 +200,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\CompanyList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\DataList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -245,8 +254,8 @@
     <SDKReference Include="Microsoft.VCLibs, Version=14.0">
       <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.15.0">
-      <Name>SQLite for Universal Windows Platform %28SQLite.UWP.2015, Version=3.15.0%29</Name>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.15.1">
+      <Name>SQLite for Universal Windows Platform %28SQLite.UWP.2015, Version=3.15.1%29</Name>
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
