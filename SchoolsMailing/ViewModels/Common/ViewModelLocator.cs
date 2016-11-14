@@ -25,6 +25,7 @@
         public CompaniesViewModel CompaniesViewModel => SimpleIoc.Default.GetInstance<CompaniesViewModel>();
         public NewCompanyViewModel NewCompanyViewModel => SimpleIoc.Default.GetInstance<NewCompanyViewModel>();
         public CompanyViewModel CompanyViewModel => SimpleIoc.Default.GetInstance<CompanyViewModel>();
+        public LoginViewModel LoginViewModel => SimpleIoc.Default.GetInstance<LoginViewModel>();
         //this, name=> { NameProperty = name}
         private static void RegisterViewModels()
         {
@@ -33,6 +34,7 @@
             SimpleIoc.Default.Register<NewCompanyViewModel>();
             SimpleIoc.Default.Register<CompaniesViewModel>();
             SimpleIoc.Default.Register<CompanyViewModel>();
+            SimpleIoc.Default.Register<LoginViewModel>();
         }
 
         private static void RegisterServiceProviders()

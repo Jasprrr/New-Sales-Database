@@ -33,15 +33,55 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <ToggleButton x:Name="ToggleMenuButton" 
-                      TabIndex="1"
-                      Style="{StaticResource ToggleMenuButtonStyle}"
-                      IsChecked="{Binding IsPaneOpen, ElementName=AppMenu, Mode=TwoWay}"
-                      Unchecked="OnMenuButtonChecked"
-                      ToolTipService.ToolTip="Menu"
-                      Grid.Row="0"/>
-
+        <RelativePanel>
+            <ToggleButton x:Name="ToggleMenuButton" 
+                          TabIndex="1"
+                          Style="{StaticResource ToggleMenuButtonStyle}"
+                          IsChecked="{Binding IsPaneOpen, ElementName=AppMenu, Mode=TwoWay}"
+                          Unchecked="OnMenuButtonChecked"
+                          ToolTipService.ToolTip="Menu"
+                          Grid.Row="0" 
+                          RelativePanel.AlignTopWithPanel="True" 
+                          RelativePanel.AlignLeftWithPanel="True"/>
+            <Button x:Name="UserInitial"
+                    Margin="10,4" 
+                    RelativePanel.AlignTopWithPanel="True" 
+                    RelativePanel.AlignRightWithPanel="True" 
+                    Width="40" 
+                    Height="40" 
+                    Padding="0" BorderThickness="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                <Border Width="40" 
+                        Height="40" 
+                        Background="#FF4CB6E8" 
+                        CornerRadius="48">
+                    <TextBlock Text="J" 
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Center" 
+                               Foreground="White">
+                    </TextBlock>
+                </Border>
+                <Button.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Settings">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Click">
+                                    <core:InvokeCommandAction Command="{Binding openSettings}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Logout"/>
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
+            <AutoSuggestBox Grid.Column="0" 
+                            HorizontalAlignment="Right" 
+                            Margin="0,9,10,0" 
+                            Width="250" 
+                            PlaceholderText="Search" 
+                            QueryIcon="Find" 
+                            RelativePanel.LeftOf="UserInitial"/>
+        </RelativePanel>
+        
 
         <SplitView x:Name="AppMenu"
                    DisplayMode="CompactInline"
@@ -68,6 +108,6 @@
             </SplitView.Content>
         </SplitView>
 
-        
+
     </Grid>
 </Page>

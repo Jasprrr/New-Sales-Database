@@ -4,7 +4,7 @@
     using System.Windows.Input;
 
     using Windows.UI.Xaml.Controls;
-
+    using System;
     using SchoolsMailing.Common;
     using SchoolsMailing.Controls.Models;
     using SchoolsMailing.ViewModels.Common;
@@ -15,7 +15,8 @@
     using DAL;
     using Models;
     using System.IO;
-
+    using Controls;
+    using System.Diagnostics;
     public class MainPageViewModel : PageViewModel
     {
         string path;
@@ -32,10 +33,10 @@
         public MainPageViewModel(IMessenger messenger, NavigationService navigationService)
             : base(messenger, navigationService)
         {
+            createLogin();
             this.InitializeMenu();
 
-            path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path,
-            "Sales.sqlite");
+            path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path,"Sales.sqlite");
             conn = new SQLite.Net.SQLiteConnection(new
                SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
             conn.CreateTable<Company>();
@@ -46,6 +47,16 @@
         /// <summary>
         /// Gets the menu items for the app.
         /// </summary>
+        /// 
+        public async void createLogin()
+        {
+            var dial = new LoginDialog();
+
+            var result = await dial.ShowAsync();
+        }
+        
+
+
         public ObservableCollection<SplitViewPaneMenuItem> MenuItems { get; private set; }
 
         private void InitializeMenu()
@@ -105,6 +116,24 @@
             if (menuItem != null)
             {
                 this.NavigationService.Navigate(menuItem.AssociatedPage, menuItem.Parameters);
+            }
+        }
+
+        private RelayCommand _openSettings;
+        public RelayCommand openSettings
+        {
+            get
+            {
+                if (_openSettings == null)
+                {
+                    _openSettings = new RelayCommand(() =>
+                    {
+                        createLogin();
+                    });
+                }
+
+                return _openSettings;
+
             }
         }
     }
