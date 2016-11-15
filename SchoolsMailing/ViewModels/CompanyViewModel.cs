@@ -99,6 +99,7 @@ namespace SchoolsMailing.ViewModels
             };
 
             var result = await dial.ShowAsync();
+
             if (result == ContentDialogResult.Primary)
             {
                 var item = (TextBox)dial.Content;

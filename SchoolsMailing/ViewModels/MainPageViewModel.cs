@@ -53,6 +53,27 @@
             Debug.Write("Msg Recieved!");
         }
 
+        #region login
+
+        private User _loggedInAs = new User()
+        {
+            userInitials="J", ID=1, userName="Jasper", userPassword="@"
+        };
+        public User loggedInAs
+        {
+            get { return _loggedInAs; }
+            set
+            {
+                if (loggedInAs != value)
+                {
+                    _loggedInAs = value;
+                    RaisePropertyChanged("loggedInAs");
+                }
+            }
+        }
+
+        #endregion
+        
         /// <summary>
         /// Gets the menu items for the app.
         /// </summary>
@@ -90,6 +111,13 @@
                 }
             };
 
+        }
+
+        private int _selectedItem = 0;
+        public int selectedItem
+        {
+            get { return _selectedItem; }
+            set { _selectedItem = value; RaisePropertyChanged("selectedItem"); }
         }
 
         private string _frameTitle;

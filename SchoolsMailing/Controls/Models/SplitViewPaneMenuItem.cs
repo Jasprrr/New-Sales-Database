@@ -1,4 +1,4 @@
-﻿namespace SchoolsMailing.Controls.Models
+﻿    namespace SchoolsMailing.Controls.Models
 {
     using System;
 

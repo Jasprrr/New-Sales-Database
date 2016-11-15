@@ -10,27 +10,27 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     DataContext="{Binding LoginViewModel, Source={StaticResource VmLocator}}">
 
-    <Grid Background="#FF009BDB">
+    <Grid>
         <StackPanel HorizontalAlignment="Center" 
                     VerticalAlignment="Center">
             <TextBlock Text="Username" 
                        FontSize="20" 
-                       Width="100" 
-                       Foreground="White" 
+                       Width="100"
                        HorizontalAlignment="Left"/>
             <TextBox Text="{Binding username, Mode=TwoWay}" 
                      Width="300" 
-                     SelectionHighlightColor="White"/>
+                     SelectionHighlightColor="Black" 
+                     Background="White"/>
             <TextBlock Text="Password"
                        FontSize="20" 
                        Width="100"
-                       Foreground="White"
                        HorizontalAlignment="Left"/>
             <PasswordBox Password="{Binding password, Mode=TwoWay}" 
                          Width="300"
                          SelectionHighlightColor="White"/>
-            <Button Content="Login" 
-                    Background="#FFC3C3C3" Width="100" HorizontalAlignment="Center">
+            <Button Content="Login"
+                    Width="100" 
+                    HorizontalAlignment="Center">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
                         <core:InvokeCommandAction Command="{Binding Path=authenticateLogin}" />
