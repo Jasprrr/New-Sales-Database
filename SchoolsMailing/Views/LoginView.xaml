@@ -1,0 +1,42 @@
+﻿<Page
+    x:Class="SchoolsMailing.Views.LoginView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SchoolsMailing.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    DataContext="{Binding LoginViewModel, Source={StaticResource VmLocator}}">
+
+    <Grid Background="#FF009BDB">
+        <StackPanel HorizontalAlignment="Center" 
+                    VerticalAlignment="Center">
+            <TextBlock Text="Username" 
+                       FontSize="20" 
+                       Width="100" 
+                       Foreground="White" 
+                       HorizontalAlignment="Left"/>
+            <TextBox Text="{Binding username, Mode=TwoWay}" 
+                     Width="300" 
+                     SelectionHighlightColor="White"/>
+            <TextBlock Text="Password"
+                       FontSize="20" 
+                       Width="100"
+                       Foreground="White"
+                       HorizontalAlignment="Left"/>
+            <PasswordBox Password="{Binding password, Mode=TwoWay}" 
+                         Width="300"
+                         SelectionHighlightColor="White"/>
+            <Button Content="Login" 
+                    Background="#FFC3C3C3" Width="100" HorizontalAlignment="Center">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:InvokeCommandAction Command="{Binding Path=authenticateLogin}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Page>

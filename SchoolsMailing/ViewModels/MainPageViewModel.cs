@@ -33,7 +33,6 @@
         public MainPageViewModel(IMessenger messenger, NavigationService navigationService)
             : base(messenger, navigationService)
         {
-            createLogin();
             this.InitializeMenu();
 
             path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path,"Sales.sqlite");
@@ -42,21 +41,22 @@
             conn.CreateTable<Company>();
 
             this.ItemInvokedCommand = new RelayCommand<ListViewItem>(this.ItemInvoked);
+
+            MessengerInstance.Register<string>(this, backButtonVisible);
+        }
+
+        public bool backVisisble;
+
+        public void backButtonVisible(string obj)
+        {
+            backVisisble = Convert.ToBoolean(obj);
+            Debug.Write("Msg Recieved!");
         }
 
         /// <summary>
         /// Gets the menu items for the app.
         /// </summary>
         /// 
-        public async void createLogin()
-        {
-            var dial = new LoginDialog();
-
-            var result = await dial.ShowAsync();
-        }
-        
-
-
         public ObservableCollection<SplitViewPaneMenuItem> MenuItems { get; private set; }
 
         private void InitializeMenu()
@@ -128,7 +128,7 @@
                 {
                     _openSettings = new RelayCommand(() =>
                     {
-                        createLogin();
+                        
                     });
                 }
 

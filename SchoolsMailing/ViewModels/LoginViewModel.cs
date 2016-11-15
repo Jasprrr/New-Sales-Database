@@ -6,32 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
 using SchoolsMailing.Common;
-using System.Windows.Input;
-using SchoolsMailing.Views;
 using GalaSoft.MvvmLight.Command;
-using Windows.UI.Xaml;
 using System.Diagnostics;
-using SchoolsMailing.Models;
-using Microsoft.WindowsAzure.MobileServices;
-using Windows.UI.Popups;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml;
+using SchoolsMailing.Views;
+using Windows.UI.Xaml.Navigation;
+using Windows.ApplicationModel.Activation;
 
 namespace SchoolsMailing.ViewModels
 {
     public class LoginViewModel : PageViewModel
     {
-        public RelayCommand<Window> CloseWindowCommand { get; private set; }
-
         public LoginViewModel(IMessenger messenger, NavigationService navigationService) : base(messenger, navigationService)
         {
-
-        }
-
-        private void CloseWindow(Window window)
-        {
-            if (window != null)
-            {
-                window.Close();
-            }
         }
 
         private string _username;
@@ -43,10 +31,10 @@ namespace SchoolsMailing.ViewModels
                 if(_username != value)
                 {
                     _username = value;
+                    RaisePropertyChanged("username");
                 }
             }
         }
-
         private string _password;
         public string password
         {
@@ -56,30 +44,33 @@ namespace SchoolsMailing.ViewModels
                 if(_password != value)
                 {
                     _password = value;
+                    RaisePropertyChanged("password");
                 }
             }
         }
 
-        private RelayCommand _attemptLogin;
-        public RelayCommand attemptLogin
+        private RelayCommand _authenticateLogin;
+        public RelayCommand authenticateLogin
         {
             get
             {
-                if (_attemptLogin == null)
+                if (_authenticateLogin == null)
                 {
-                    _attemptLogin = new RelayCommand(() =>
+                    _authenticateLogin = new RelayCommand(() =>
                     {
-                        if(username == "jasper@schoolsmailing.co.uk")
+                        if(username == "admin")
                         {
-                            if(password == "envelope1")
+                            if(password == "@")
                             {
-                                Application.Current.MainWindow.Close();
+                                var rootFrame = Window.Current.Content as Frame;
+
+                                rootFrame.Navigate(typeof(MainPage));
                             }
                         }
                     });
                 }
 
-                return _attemptLogin;
+                return _authenticateLogin;
 
             }
         }

@@ -30,7 +30,7 @@ namespace SchoolsMailing.ViewModels
             // register company parameter
             MessengerInstance.Register<NotificationMessage<string>>(this, setCompanyID);
             addTestData();
-            
+            MessengerInstance.Send<string>("false");
         }
 
         private ObservableCollection<DataOrder> _companyDataOrder;

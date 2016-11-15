@@ -7,12 +7,15 @@
 
     using Microsoft.Practices.ServiceLocation;
     using SchoolsMailing.ViewModels;
-
+    using GalaSoft.MvvmLight.Views;
     public class ViewModelLocator
     {
         static ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+
+            //SimpleIoc.Default.Register<IDialogService, DialogService>();
+
             RegisterServiceProviders();
             RegisterViewModels();
         }
@@ -26,6 +29,7 @@
         public NewCompanyViewModel NewCompanyViewModel => SimpleIoc.Default.GetInstance<NewCompanyViewModel>();
         public CompanyViewModel CompanyViewModel => SimpleIoc.Default.GetInstance<CompanyViewModel>();
         public LoginViewModel LoginViewModel => SimpleIoc.Default.GetInstance<LoginViewModel>();
+
         //this, name=> { NameProperty = name}
         private static void RegisterViewModels()
         {
@@ -40,7 +44,7 @@
         private static void RegisterServiceProviders()
         {
             SimpleIoc.Default.Register<IMessenger, Messenger>();
-            SimpleIoc.Default.Register<NavigationService>();
+            SimpleIoc.Default.Register<SchoolsMailing.Common.NavigationService>();
         }
     }
 }
