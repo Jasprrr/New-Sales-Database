@@ -13,7 +13,7 @@ namespace SchoolsMailing.Models
     public class Company
     {
         [PrimaryKey, AutoIncrement]
-        public int ID { get; set; }
+        public long ID { get; set; }
 
         [JsonProperty(PropertyName = "companyName")]
         public string companyName { get; set; }
@@ -49,7 +49,7 @@ namespace SchoolsMailing.Models
         public bool companyRemove { get; set; }
 
         [JsonProperty(PropertyName = "userID")]
-        public int userID { get; set; }
+        public long userID { get; set; }
 
         [JsonProperty(PropertyName = "globalID")]
         public string globalID { get; set; }

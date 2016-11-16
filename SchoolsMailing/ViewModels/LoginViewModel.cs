@@ -67,6 +67,12 @@ namespace SchoolsMailing.ViewModels
                                 rootFrame.Navigate(typeof(MainPage));
                             }
                         }
+                        else
+                        {
+                            var rootFrame = Window.Current.Content as Frame;
+
+                            rootFrame.Navigate(typeof(MainPage));
+                        }
                     });
                 }
 

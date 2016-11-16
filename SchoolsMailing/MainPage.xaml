@@ -157,12 +157,39 @@
                                             ItemsSource="{Binding MenuItems}"
                                             ItemContainerStyle="{StaticResource SplitViewPaneMenuContainerStyle}"
                                             ItemTemplate="{StaticResource SplitViewPaneMenuItemTemplate}" 
-                                            SelectedIndex="{Binding selectedItem, Mode=OneWay}">
+                                            SelectedIndex="{Binding selectedItem, Mode=TwoWay}">
                     <interactivity:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="ItemInvoked">
                             <core:InvokeCommandAction Command="{Binding ItemInvokedCommand}" />
                         </core:EventTriggerBehavior>
                     </interactivity:Interaction.Behaviors>
+                    <ListView.Footer>
+                        <ListViewItem Padding="0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="48"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="&#xE115;" 
+                                           FontFamily="Segoe MDL2 Assets" 
+                                           FontSize="20" 
+                                           VerticalAlignment="Center" 
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="Settings"
+                                           Grid.Column="1" 
+                                           VerticalAlignment="Center" 
+                                           FontSize="15"/>
+                            </Grid>
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding openSettings}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </ListViewItem>
+                    </ListView.Footer>
                 </controls:SplitViewPaneMenu>
             </SplitView.Pane>
             <SplitView.Content>

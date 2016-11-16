@@ -1,5 +1,4 @@
-﻿using SQLite.Net.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,12 +6,18 @@ using System.Threading.Tasks;
 
 namespace SchoolsMailing.Models
 {
-    public class Orders
+    public class CompanyPrintOrder
     {
-        [PrimaryKey, AutoIncrement]
-        public long ID { get; set; }
-        public long userID { get; set; }
         public long companyID { get; set; }
+        public string companyName { get; set; }
+        public long printID { get; set; }
+        public string printPrinter { get; set; }
+        public string printDetails { get; set; }
+        public double printCharge { get; set; }
+        public double printCost { get; set; }
+        public DateTime printDate { get; set; }
+        public long orderID { get; set; }
+        public long userID { get; set; }
         public long contactID { get; set; }
         public long promotionID { get; set; }
         public string orderCode { get; set; }

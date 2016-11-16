@@ -33,8 +33,8 @@ namespace SchoolsMailing.ViewModels
             MessengerInstance.Send<string>("false");
         }
 
-        private ObservableCollection<DataOrder> _companyDataOrder;
-        public ObservableCollection<DataOrder> companyDataOrder
+        private ObservableCollection<CompanyDataOrder> _companyDataOrder;
+        public ObservableCollection<CompanyDataOrder> companyDataOrder
         {
             get { return _companyDataOrder; }
             set
@@ -63,13 +63,13 @@ namespace SchoolsMailing.ViewModels
 
         public async void addTestData()
         {
-            ObservableCollection<DataOrder> c = new ObservableCollection<DataOrder>();
-            DataOrder d1 = new DataOrder() { companyID = 1, dataCost = 12500.00, dataDetails = "a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 ", orderDate = Convert.ToDateTime("01/01/16"), ID = 1, orderCode = "L200"};
-            DataOrder d2 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 2", orderDate = Convert.ToDateTime("02/01/16"), ID = 1, orderCode = "L201"};
-            DataOrder d3 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 3", orderDate = Convert.ToDateTime("03/01/16"), ID = 1, orderCode = "L202"};
-            DataOrder d4 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 4", orderDate = Convert.ToDateTime("04/01/16"), ID = 1, orderCode = "L204"};
-            DataOrder d5 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 5", orderDate = Convert.ToDateTime("05/01/16"), ID = 1, orderCode = "L205"};
-            DataOrder d6 = new DataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 6", orderDate = Convert.ToDateTime("06/01/16"), ID = 1, orderCode = "L206"};
+            ObservableCollection<CompanyDataOrder> c = new ObservableCollection<CompanyDataOrder>();
+            CompanyDataOrder d1 = new CompanyDataOrder() { companyID = 1, dataCost = 12500.00, dataDetails = "a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 ", orderDate = Convert.ToDateTime("01/01/16"), dataID = 1, orderCode = "L200"};
+            CompanyDataOrder d2 = new CompanyDataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 2", orderDate = Convert.ToDateTime("02/01/16"), dataID = 1, orderCode = "L201"};
+            CompanyDataOrder d3 = new CompanyDataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 3", orderDate = Convert.ToDateTime("03/01/16"), dataID = 1, orderCode = "L202"};
+            CompanyDataOrder d4 = new CompanyDataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 4", orderDate = Convert.ToDateTime("04/01/16"), dataID = 1, orderCode = "L204"};
+            CompanyDataOrder d5 = new CompanyDataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 5", orderDate = Convert.ToDateTime("05/01/16"), dataID = 1, orderCode = "L205"};
+            CompanyDataOrder d6 = new CompanyDataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 6", orderDate = Convert.ToDateTime("06/01/16"), dataID = 1, orderCode = "L206"};
             c.Add(d1);
             c.Add(d2);
             c.Add(d3);
@@ -295,8 +295,8 @@ namespace SchoolsMailing.ViewModels
             }
         }
 
-        private int _userID;
-        public int userID
+        private long _userID;
+        public long userID
         {
             get { return _userID; }
             set

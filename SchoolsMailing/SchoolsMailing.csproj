@@ -116,6 +116,24 @@
       <DependentUpon>HistoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Models\SplitViewPaneMenuItem.cs" />
+    <Compile Include="Controls\OrderDataList.xaml.cs">
+      <DependentUpon>OrderDataList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\OrderDirectMailingList.xaml.cs">
+      <DependentUpon>OrderDirectMailingList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\OrderEmailList.xaml.cs">
+      <DependentUpon>OrderEmailList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\OrderSchoolSendList.xaml.cs">
+      <DependentUpon>OrderSchoolSendList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\OrderSharedMailingList.xaml.cs">
+      <DependentUpon>OrderSharedMailingList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\OrderSurchargeList.xaml.cs">
+      <DependentUpon>OrderSurchargeList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SplitViewPaneMenu.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\IntegerToInitial.cs" />
@@ -126,11 +144,16 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\CompanyDirectMailingOrder.cs" />
+    <Compile Include="Models\CompanyEmailOrder.cs" />
     <Compile Include="Models\CompanyHistory.cs" />
+    <Compile Include="Models\CompanyPrintOrder.cs" />
+    <Compile Include="Models\CompanySchoolSendOrder.cs" />
+    <Compile Include="Models\CompanySharedMailingOrder.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\ContactHistory.cs" />
     <Compile Include="Models\Data.cs" />
-    <Compile Include="Models\DataOrder.cs" />
+    <Compile Include="Models\CompanyDataOrder.cs" />
     <Compile Include="Models\DirectMailing.cs" />
     <Compile Include="Models\Email.cs" />
     <Compile Include="Models\EmailOrder.cs" />
@@ -138,6 +161,8 @@
     <Compile Include="Models\Print.cs" />
     <Compile Include="Models\SchoolSend.cs" />
     <Compile Include="Models\SharedMailing.cs" />
+    <Compile Include="Models\SharedPack.cs" />
+    <Compile Include="Models\Surcharge.cs" />
     <Compile Include="Models\TodoItem.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -149,6 +174,7 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\NewCompanyViewModel.cs" />
+    <Compile Include="ViewModels\NewOrderViewModel.cs" />
     <Compile Include="ViewModels\OrdersViewModel.cs" />
     <Compile Include="Views\CompanyView.xaml.cs">
       <DependentUpon>CompanyView.xaml</DependentUpon>
@@ -167,6 +193,30 @@
     </Compile>
     <Compile Include="Views\NewCompanyView.xaml.cs">
       <DependentUpon>NewCompanyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewDataView.xaml.cs">
+      <DependentUpon>NewDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewDirectMailingView.xaml.cs">
+      <DependentUpon>NewDirectMailingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewEmailView.xaml.cs">
+      <DependentUpon>NewEmailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewOrderView.xaml.cs">
+      <DependentUpon>NewOrderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewPrintView.xaml.cs">
+      <DependentUpon>NewPrintView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewSchoolSendView.xaml.cs">
+      <DependentUpon>NewSchoolSendView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewSharedMailingView.xaml.cs">
+      <DependentUpon>NewSharedMailingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewSurchargeView.xaml.cs">
+      <DependentUpon>NewSurchargeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\OrdersView.xaml.cs">
       <DependentUpon>OrdersView.xaml</DependentUpon>
@@ -218,6 +268,30 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\OrderDataList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\OrderDirectMailingList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\OrderEmailList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\OrderSchoolSendList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\OrderSharedMailingList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\OrderSurchargeList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -256,6 +330,38 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\NewDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewDirectMailingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewEmailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewOrderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewPrintView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewSchoolSendView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewSharedMailingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewSurchargeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\OrdersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -268,8 +374,8 @@
     <SDKReference Include="Microsoft.VCLibs, Version=14.0">
       <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.15.0">
-      <Name>SQLite for Universal Windows Platform %28SQLite.UWP.2015, Version=3.15.0%29</Name>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.15.1">
+      <Name>SQLite for Universal Windows Platform %28SQLite.UWP.2015, Version=3.15.1%29</Name>
     </SDKReference>
   </ItemGroup>
   <ItemGroup>

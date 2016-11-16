@@ -8,9 +8,9 @@ namespace SchoolsMailing.Models
 {
     public class SchoolSend
     {
-        public int ID { get; set; }
-        public int orderID { get; set; }
-        public int schoolsendPackage { get; set; }
+        public long ID { get; set; }
+        public long orderID { get; set; }
+        public long schoolsendPackage { get; set; }
         public DateTime schoolsendStartDate { get; set; }
         public DateTime schoolsendEndDate { get; set; }
         public double schoolsendCost { get; set; }

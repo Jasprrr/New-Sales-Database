@@ -21,7 +21,7 @@
             this.Loaded += this.OnLoaded;
 
             SystemNavigationManager.GetForCurrentView().BackRequested += this.OnBackRequested;
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
 
             this.DataContextChanged += this.OnDataContextChanged;
         }

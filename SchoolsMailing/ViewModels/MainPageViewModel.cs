@@ -17,6 +17,7 @@
     using System.IO;
     using Controls;
     using System.Diagnostics;
+    using Windows.UI.Core;
     public class MainPageViewModel : PageViewModel
     {
         string path;
@@ -36,8 +37,7 @@
             this.InitializeMenu();
 
             path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path,"Sales.sqlite");
-            conn = new SQLite.Net.SQLiteConnection(new
-               SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
+            conn = new SQLite.Net.SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
             conn.CreateTable<Company>();
 
             this.ItemInvokedCommand = new RelayCommand<ListViewItem>(this.ItemInvoked);
@@ -53,7 +53,7 @@
             Debug.Write("Msg Recieved!");
         }
 
-        #region login
+        #region login details
 
         private User _loggedInAs = new User()
         {
@@ -93,7 +93,7 @@
                 },
                 new SplitViewPaneMenuItem
                 {
-                    Label = "Settings",
+                    Label = "Companies",
                     Symbol = Symbol.People,
                     AssociatedPage = typeof(CompaniesView)
                 },
@@ -108,6 +108,13 @@
                     Label = "Orders",
                     Symbol = Symbol.Library,
                     AssociatedPage = typeof(OrdersView)
+                },
+                new SplitViewPaneMenuItem
+                {
+                    Label = "Reports",
+                    Symbol = Symbol.Folder,
+                    AssociatedPage = typeof(NewOrderView)
+                    
                 }
             };
 
@@ -144,6 +151,7 @@
             if (menuItem != null)
             {
                 this.NavigationService.Navigate(menuItem.AssociatedPage, menuItem.Parameters);
+                //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             }
         }
 
@@ -156,7 +164,8 @@
                 {
                     _openSettings = new RelayCommand(() =>
                     {
-                        
+                        //selectedItem = 3;
+                        Debug.Write("Settings invoked");
                     });
                 }
 

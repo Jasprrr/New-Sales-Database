@@ -15,25 +15,6 @@
     DataContext="{Binding CompanyViewModel, Source={StaticResource VmLocator}}">
     <Page.Resources>
         <conv:BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
-        <Style x:Key="inputTextBlock" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Calibri"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Height" Value="24"/>
-        </Style>
-        <Style x:Key="inputTextBox" TargetType="TextBox">
-            <Setter Property="FontFamily" Value="Calibri"/>
-            <Setter Property="Margin" Value="0,4,0,10"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-        </Style>
-        <Style x:Key="inputComboBox" TargetType="ComboBox">
-            <Setter Property="FontFamily" Value="Calibri"/>
-            <Setter Property="Margin" Value="0,4,0,10"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-        </Style>
-        <Style x:Key="inputLargeTextBox" TargetType="TextBox" BasedOn="{StaticResource inputTextBox}">
-            <Setter Property="Height" Value="102"/>
-        </Style>
         <conv:BooleanToVisibilityConverter x:Key="boolVisibility"/>
         <conv:StringFormatter x:Key="formatString"/>
         <cntrl:CompanyHistoryPopUp x:Key="companyHistoryDialog"/>
@@ -69,8 +50,9 @@
                                                      Width="400"
                                                      Style="{StaticResource inputTextBox}"/>
                                         <TextBlock Text="Call Back Date"
-                                                       Style="{StaticResource inputTextBlock}"/>
-                                        <CalendarDatePicker Width="200" Margin="0,4,0,10"/>
+                                                   Style="{StaticResource inputTextBlock}"/>
+                                        <CalendarDatePicker Width="200"
+                                                            Style="{StaticResource inputCalendarDatePicker}"/>
                                         <TextBlock Text="Call Back Notes"
                                                        Style="{StaticResource inputTextBlock}"/>
                                         <TextBox Text="{Binding Path=companyHistory, Mode=TwoWay}"

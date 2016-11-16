@@ -8,8 +8,8 @@ namespace SchoolsMailing.Models
 {
     public class Email
     {
-        public int ID { get; set; }
-        public int orderID { get; set; }
+        public long ID { get; set; }
+        public long orderID { get; set; }
         public DateTime emailDate { get; set; }
         public string emailDetails { get; set; }
         public double emailAdminCost { get; set; }

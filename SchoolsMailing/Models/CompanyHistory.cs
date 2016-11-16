@@ -8,8 +8,8 @@ namespace SchoolsMailing.Models
 {
     public class CompanyHistory
     {
-        public int ID { get; set; }
-        public int companyID { get; set; }
+        public long ID { get; set; }
+        public long companyID { get; set; }
         public string companyHistoryDetails { get; set; }
         public DateTime companyHistoryDate { get; set; }
         public bool isVisible { get; set; }

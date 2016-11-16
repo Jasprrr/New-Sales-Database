@@ -8,8 +8,8 @@ namespace SchoolsMailing.Models
 {
     class ContactHistory
     {
-        public int ID { get; set; }
-        public int contactID { get; set; }
+        public long ID { get; set; }
+        public long contactID { get; set; }
         public string contactHistoryDetails { get; set; }
         public DateTime contactHistoryDate { get; set; }
     }

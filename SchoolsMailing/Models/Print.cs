@@ -8,8 +8,8 @@ namespace SchoolsMailing.Models
 {
     public class Print
     {
-        public int ID { get; set; }
-        public int orderID { get; set; }
+        public long ID { get; set; }
+        public long orderID { get; set; }
         public string printPrinter { get; set; }
         public string printDetails { get; set; }
         public double printCharge { get; set; }
