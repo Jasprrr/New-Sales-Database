@@ -62,6 +62,7 @@ namespace SchoolsMailing.Models
 
         [JsonProperty(PropertyName = "companyActive")]
         public bool companyActive { get; set; }
+        public long companySchoolSendID { get; set; }
     }
 
 }

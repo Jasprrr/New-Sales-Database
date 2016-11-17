@@ -18,7 +18,7 @@ namespace SchoolsMailing.Models
         public long sharedNumberOfLeaflets { get; set; }
         public string sharedFAO { get; set; }
         public string sharedLeafletSize { get; set; }
-        public int sharedLeafletWeight { get; set; }
+        public string sharedLeafletWeight { get; set; }
         public DateTime sharedDeliveryDate { get; set; }
         public long sharedPack { get; set; }
     }

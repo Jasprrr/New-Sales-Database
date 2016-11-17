@@ -10,26 +10,47 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <Hub>
+            <HubSection Header="Date">
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="Surcharge Date"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="200"/>
+                        <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
+                                            Width="200"/>
+                    </StackPanel>
+                </DataTemplate>
+            </HubSection>
+            <HubSection Header="Details">
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="Surcharge Details" 
+                                   Style="{StaticResource inputTextBlock}"
+                                    Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputLargeTextBox}"
+                                 Width="400"/>
+                    </StackPanel>
+                </DataTemplate>
+            </HubSection>
+            <HubSection Header="Costs">
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="Surcharge Cost"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="200"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="200"/>
+                    </StackPanel>
+                </DataTemplate>
+            </HubSection>
+        </Hub>
         <StackPanel Margin="12">
-            <TextBlock Text="Date"
-                       Style="{StaticResource inputTextBlock}"/>
-            <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"/>
-            <TextBlock Text="Details" 
-                       Style="{StaticResource inputTextBlock}"
-                       Width="400"/>
-            <TextBox Text=""
-                     Style="{StaticResource inputLargeTextBox}"
-                     Width="400"/>
-            <TextBlock Text="Cost"
-                       Style="{StaticResource inputTextBlock}"
-                       Width="400"/>
-            <TextBox Text=""
-                     Style="{StaticResource inputTextBox}"
-                     Width="200"/>
+            
+            
+            
         </StackPanel>
         <CommandBar VerticalAlignment="Bottom"
                     Grid.Row="1">

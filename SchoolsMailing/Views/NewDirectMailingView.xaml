@@ -14,70 +14,88 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Margin="12">
-            <TextBlock Text="Mailing Date"
-                       Style="{StaticResource inputTextBlock}"
-                       Width="400"/>
-            <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
+        <Hub>
+            <HubSection Header="Dates">
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="Mailing Date"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="200"/>
+                        <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
                                 Width="200"/>
-            <TextBlock Text="Data Date"
-                       Style="{StaticResource inputTextBlock}"
-                       Width="400"/>
-            <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
-                                Width="200"/>
-            <TextBlock Text="Insert Date"
-                       Style="{StaticResource inputTextBlock}"
-                       Width="400"/>
-            <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
-                                Width="200"/>
-            <TextBlock Text="Artwork Date"
-                       Style="{StaticResource inputTextBlock}"
-                       Width="400"/>
-            <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
-                                Width="200"/>
-            <TextBlock Text="Leaflet Code"
-                       Style="{StaticResource inputTextBlock}"
-                       Width="400"/>
-            <TextBox Text=""
-                     Style="{StaticResource inputTextBox}"
-                     Width="400"/>
-            <TextBlock Text="Delivery Code"
-                       Style="{StaticResource inputTextBlock}"
-                       Width="400"/>
-            <TextBox Text=""
-                     Style="{StaticResource inputTextBox}"
-                     Width="400"/>
-            <TextBlock Text="Mailing To"
-                       Style="{StaticResource inputTextBlock}"
-                       Width="400"/>
-            <TextBox Text=""
-                     Style="{StaticResource inputTextBox}"
-                     Width="400"/>
-            <TextBlock Text="Details" 
-                       Style="{StaticResource inputTextBlock}"
-                       Width="400"/>
-            <TextBox Text=""
-                     Style="{StaticResource inputLargeTextBox}"
-                     Width="400"/>
-            <TextBlock Text="Fulfilment Cost"
-                       Style="{StaticResource inputTextBlock}"
-                       Width="400"/>
-            <TextBox Text=""
-                     Style="{StaticResource inputTextBox}"
-                     Width="200"/>
-            <TextBlock Text="Print Cost"
-                       Style="{StaticResource inputTextBlock}"
-                       Width="400"/>
-            <TextBox Text=""
-                     Style="{StaticResource inputTextBox}"
-                     Width="200"/>
-            <TextBlock Text="Postage Cost"
-                       Style="{StaticResource inputTextBlock}"
-                       Width="400"/>
-            <TextBox Text=""
-                     Style="{StaticResource inputTextBox}"
-                     Width="200"/>
-        </StackPanel>
+                        <TextBlock Text="Data Date"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="200"/>
+                        <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
+                                            Width="200"/>
+                        <TextBlock Text="Insert Date"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="200"/>
+                        <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
+                                            Width="200"/>
+                        <TextBlock Text="Artwork Date"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="200"/>
+                        <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
+                                            Width="200"/>
+                    </StackPanel>
+                </DataTemplate>
+            </HubSection>
+            <HubSection Header="Details">
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="Leaflet Code"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="400"/>
+                        <TextBlock Text="Delivery Code"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="400"/>
+                        <TextBlock Text="Mailing To"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="400"/>
+                        <TextBlock Text="Details" 
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputLargeTextBox}"
+                                 Width="400"/>
+                    </StackPanel>
+                </DataTemplate>
+            </HubSection>
+            <HubSection Header="Costs">
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="Fulfilment Cost"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="200"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="200"/>
+                        <TextBlock Text="Print Cost"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="200"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="200"/>
+                        <TextBlock Text="Postage Cost"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="200"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="200"/>
+                    </StackPanel>
+                </DataTemplate>
+            </HubSection>
+        </Hub>
         <CommandBar VerticalAlignment="Bottom"
                     Grid.Row="1">
             <AppBarButton Icon="Save"
