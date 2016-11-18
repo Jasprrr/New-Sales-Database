@@ -35,31 +35,32 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Vertical">
                                         <TextBlock Text="Company" 
-                                                       Style="{StaticResource inputTextBlock}"/>
+                                                   Style="{StaticResource inputTextBlock}"/>
                                         <TextBox Text="{Binding selectedCompany.companyName, Mode=TwoWay}"
-                                                     Width="400" 
-                                                     Style="{StaticResource inputTextBox}"/>
+                                                 Width="400" 
+                                                 Style="{StaticResource inputTextBox}"/>
                                         <TextBlock Text="Prospects"
-                                                       Style="{StaticResource inputTextBlock}"/>
+                                                   Style="{StaticResource inputTextBlock}"
+                                                   Width="400"/>
                                         <TextBox Text="{Binding Path=companyProspects, Mode=TwoWay}"
-                                                     Width="400"
-                                                     Style="{StaticResource inputTextBox}"/>
+                                                 Width="400"
+                                                 Style="{StaticResource inputTextBox}"/>
                                         <TextBlock Text="Telephone"
-                                                       Style="{StaticResource inputTextBlock}"/>
+                                                   Style="{StaticResource inputTextBlock}"/>
                                         <TextBox Text="{Binding Path=companyTelephone, Mode=TwoWay}"
-                                                     Width="400"
-                                                     Style="{StaticResource inputTextBox}"/>
+                                                 Width="400"
+                                                 Style="{StaticResource inputTextBox}"/>
                                         <TextBlock Text="Call Back Date"
                                                    Style="{StaticResource inputTextBlock}"/>
                                         <CalendarDatePicker Width="200"
                                                             Style="{StaticResource inputCalendarDatePicker}"/>
                                         <TextBlock Text="Call Back Notes"
-                                                       Style="{StaticResource inputTextBlock}"/>
+                                                   Style="{StaticResource inputTextBlock}"/>
                                         <TextBox Text="{Binding Path=companyHistory, Mode=TwoWay}"
-                                                Width="400"
-                                                Style="{StaticResource inputLargeTextBox}" 
-                                                ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                                                AcceptsReturn="True"/>
+                                                 Width="400"
+                                                 Style="{StaticResource inputLargeTextBox}" 
+                                                 ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                                 AcceptsReturn="True"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </HubSection>
@@ -91,11 +92,12 @@
                                                         <TextBlock Text="{Binding Path=companyHistoryDetails}"
                                                                    Margin="12"
                                                                    VerticalAlignment="Stretch"
-                                                                   Grid.Column="1" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                                                                   Grid.Column="1" 
+                                                                   ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                                                                   ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                                                     </Grid>
                                                 </DataTemplate>
                                             </ListView.ItemTemplate>
-                                            
                                         </ListView>
                                     </StackPanel>
                                 </DataTemplate>
@@ -111,17 +113,18 @@
                                             </Grid.ColumnDefinitions>
                                             <StackPanel Orientation="Vertical">
                                                 <TextBlock Text="Contact"
-                                                               Style="{StaticResource inputTextBlock}"/>
+                                                           Style="{StaticResource inputTextBlock}"/>
                                                 <ComboBox Width="330"
-                                                              Style="{StaticResource inputComboBox}">
+                                                          Style="{StaticResource inputComboBox}">
                                                 </ComboBox>
                                             </StackPanel>
                                             <StackPanel Orientation="Vertical" 
                                                             Grid.Column="1">
                                                 <TextBlock Text="Default"
-                                                               Style="{StaticResource inputTextBlock}"/>
+                                                           Style="{StaticResource inputTextBlock}"/>
                                                 <ToggleSwitch OffContent=""
-                                                                  OnContent="" Margin="5,0,0,0">
+                                                              OnContent="" 
+                                                              Margin="5,0,0,0">
                                                 </ToggleSwitch>
                                             </StackPanel>
                                         </Grid>
@@ -194,21 +197,21 @@
                                                      Width="400" 
                                                      Style="{StaticResource inputTextBox}"/>
                                         <TextBlock Text="Post Code"
-                                                       Style="{StaticResource inputTextBlock}" 
-                                                       Height="24"/>
+                                                   Style="{StaticResource inputTextBlock}" 
+                                                   Width="400"/>
                                         <TextBox Text="{Binding Path=companyPostCode, Mode=TwoWay}"
-                                                     Width="200" 
-                                                     Style="{StaticResource inputTextBox}"/>
+                                                 Width="200" 
+                                                 Style="{StaticResource inputTextBox}"/>
                                         <TextBlock Text="Product"
-                                                       Style="{StaticResource inputTextBlock}"/>
+                                                   Style="{StaticResource inputTextBlock}"/>
                                         <TextBox Text="{Binding Path=companyProduct, Mode=TwoWay}"
-                                                     Width="400"
-                                                     Style="{StaticResource inputTextBox}"/>
+                                                 Width="400"
+                                                 Style="{StaticResource inputTextBox}"/>
                                         <TextBlock Text="Website"
-                                                       Style="{StaticResource inputTextBlock}" Visibility="Collapsed"/>
+                                                   Style="{StaticResource inputTextBlock}" Visibility="Collapsed"/>
                                         <TextBox Text="{Binding Path=companyWebsite, Mode=TwoWay}"
-                                                     Width="400"
-                                                     Style="{StaticResource inputTextBox}" Visibility="Collapsed"/>
+                                                 Width="400"
+                                                 Style="{StaticResource inputTextBox}" Visibility="Collapsed"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </HubSection>

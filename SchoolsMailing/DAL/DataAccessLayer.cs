@@ -63,7 +63,7 @@ namespace SchoolsMailing.DAL
             }
         }
 
-        public static ObservableCollection<Company> GetAllCompanies()
+        public static List<Company> GetAllCompanies()
         {
             List<Company> c;
 
@@ -73,7 +73,7 @@ namespace SchoolsMailing.DAL
                 c = (from p in db.Table<Company>()
                           select p).ToList();
             }
-            ObservableCollection<Company> model = new ObservableCollection<Company>(c);
+            List<Company> model = new List<Company>(c);
             return model;
         }
 

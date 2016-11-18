@@ -17,6 +17,10 @@
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <CalendarView x:Name="eventCalendar" 
                           HorizontalAlignment="Stretch" 
                           VerticalAlignment="Stretch">
@@ -26,10 +30,171 @@
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </CalendarView>
-            <ListView x:Name="eventList"
-                      Grid.Column="1">
-                
-            </ListView>
+            <Grid Grid.Column="1" 
+                  Margin="12">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="Call Backs"
+                               Style="{StaticResource inputTextBlock}"/>
+                    <ListView Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                    </ListView>
+                </StackPanel>
+                <StackPanel Grid.Row="1">
+                    <TextBlock Text="Upcoming Orders"
+                               Style="{StaticResource inputTextBlock}"/>
+                    <ListView Grid.Row="1">
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                        <ListViewItem>
+
+                        </ListViewItem>
+                    </ListView>
+                </StackPanel>
+            </Grid>
+            <CommandBar VerticalAlignment="Bottom"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2">
+                <AppBarButton Icon="Save"
+                        Label="Save">
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="Click">
+                            <core:InvokeCommandAction Command="{Binding Path=newCompany}" />
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                </AppBarButton>
+                <AppBarButton Icon="Cancel"
+                        Label="Cancel">
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="Click">
+                            <core:InvokeCommandAction Command="{Binding Path=cancelNew}" />
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                </AppBarButton>
+            </CommandBar>
         </Grid>
         
     </Grid>

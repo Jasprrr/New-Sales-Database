@@ -13,33 +13,115 @@
     DataContext="{Binding NewCompanyViewModel, Source={StaticResource VmLocator}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel>
-            <TextBlock Text="Company"/>
-            <TextBox Text="{Binding newCompanyName, Mode=TwoWay}"
-                                 Width="400" 
-                                 HorizontalAlignment="Left"/>
-            <TextBlock Text="Address 1"/>
-            <TextBox Text="{Binding newCompanyAddress1, Mode=TwoWay}"
-                                 Width="400" 
-                                 HorizontalAlignment="Left"/>
-            <TextBlock Text="Address 2"/>
-            <TextBox Text="{Binding newCompanyAddress2, Mode=TwoWay}"
-                                 Width="400" 
-                                 HorizontalAlignment="Left"/>
-            <TextBlock Text="City"/>
-            <TextBox Text="{Binding newCompanyCity, Mode=TwoWay}"
-                                 Width="400" 
-                                 HorizontalAlignment="Left"/>
-            <TextBlock Text="County"/>
-            <TextBox Text="{Binding newCompanyCounty, Mode=TwoWay}"
-                                 Width="400" 
-                                 HorizontalAlignment="Left"/>
-            <TextBlock Text="Post Code"/>
-            <TextBox Text="{Binding newCompanyPostCode, Mode=TwoWay}"
-                                 Width="100" 
-                                 HorizontalAlignment="Left"/>
-        </StackPanel>
-        <CommandBar VerticalAlignment="Bottom">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Hub>
+            <HubSection>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="Company Name"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="400"/>
+                        <TextBlock Text="Address 1"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="400"/>
+                        <TextBlock Text="Address 2"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="400"/>
+                        <TextBlock Text="City"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="400"/>
+                        <TextBlock Text="County"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="400"/>
+                        <TextBlock Text="Post Code"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="200"/>
+                    </StackPanel>
+                </DataTemplate>
+            </HubSection>
+            <HubSection>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="Product"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="400" AutomationProperties.IsRequiredForForm="True"/>
+                        <TextBlock Text="Prospects"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="400"/>
+                        <TextBlock Text="Website"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="400"/>
+                        <TextBlock Text="Telephone"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="400"/>
+                        <TextBlock Text="SchoolSend ID"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="400"/>
+                    </StackPanel>
+                </DataTemplate>
+            </HubSection>
+            <HubSection>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="Call Back"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <CalendarDatePicker Width="200"
+                                            Style="{StaticResource inputCalendarDatePicker}"/>
+                        <TextBlock Text="Call Back Notes"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputLargeTextBox}"
+                                 Width="400"/>
+                        <TextBlock Text="Company History"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text=""
+                                 Style="{StaticResource inputLargeTextBox}"
+                                 Width="400"/>
+                    </StackPanel>
+                </DataTemplate>
+            </HubSection>
+        </Hub>
+        <CommandBar VerticalAlignment="Bottom"
+                    Grid.Row="1">
             <AppBarButton Label="Save"
                           Icon="Save">
                 <interactivity:Interaction.Behaviors>
@@ -56,7 +138,7 @@
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
-            
+
         </CommandBar>
     </Grid>
 </Page>

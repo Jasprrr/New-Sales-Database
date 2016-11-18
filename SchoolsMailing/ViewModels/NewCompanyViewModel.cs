@@ -118,6 +118,7 @@ namespace SchoolsMailing.ViewModels
                         c.companyCity = newCompanyCity;
                         c.companyCounty = newCompanyCounty;
                         c.companyPostCode = newCompanyPostCode;
+                        c.companyInitial = newCompanyName.Substring(0, 1);
 
                         DataAccessLayer.SaveCompany(c);
 

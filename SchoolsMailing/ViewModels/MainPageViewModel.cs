@@ -88,8 +88,14 @@
                 new SplitViewPaneMenuItem
                 {
                     Label = "Home",
-                    Symbol = Symbol.Home,
+                    Symbol = Symbol.Calendar,
                     AssociatedPage = typeof(HomePage)
+                },
+                new SplitViewPaneMenuItem
+                {
+                    Label = "Companies",
+                    Symbol = Symbol.Contact,
+                    AssociatedPage = typeof(CompaniesView)
                 },
                 new SplitViewPaneMenuItem
                 {
@@ -115,6 +121,13 @@
                     Symbol = Symbol.Folder,
                     AssociatedPage = typeof(NewOrderView)
                     
+                },
+                new SplitViewPaneMenuItem
+                {
+                    Label = "GridView",
+                    Symbol = Symbol.Folder,
+                    AssociatedPage = typeof(CompaniesView2)
+
                 }
             };
 

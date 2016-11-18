@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    DataContext="{Binding NewCompanyViewModel, Source={StaticResource VmLocator}}">
+    DataContext="{Binding NewOrderViewModel, Source={StaticResource VmLocator}}">
     
     <Page.Resources>
         <Style x:Key="inputTextBlock" TargetType="TextBlock">
@@ -40,21 +40,22 @@
                 <PivotItem.Content>
                     <StackPanel>
                         <TextBlock Text="Company"
-                                    Style="{StaticResource inputTextBlock}" 
-                                    Width="400"/>
+                                   Style="{StaticResource inputTextBlock}" 
+                                   Width="400"/>
                         <ComboBox Style="{StaticResource inputComboBox}"
-                                    Width="400"/>
+                                  Width="400"/>
                         <TextBlock Text="Contact"
-                                    Style="{StaticResource inputTextBlock}"/>
+                                   Style="{StaticResource inputTextBlock}"/>
                         <ComboBox Style="{StaticResource inputComboBox}"
-                                    Width="400"/>
+                                  Width="400"/>
                         <TextBlock Text="Order Code"
-                                    Style="{StaticResource inputTextBlock}"
-                                    Width="400"/>
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
                         <TextBox Style="{StaticResource inputTextBox}"
-                                    Width="200"/>
+                                 Width="200"
+                                 Text="{Binding orderCode, Mode=TwoWay}"/>
                         <TextBlock Text="Order Date"
-                                    Style="{StaticResource inputTextBlock}"/>
+                                   Style="{StaticResource inputTextBlock}"/>
                         <CalendarDatePicker Width="200" 
                                             Margin="0,4,0,10"/>
                     </StackPanel>
@@ -69,6 +70,11 @@
                         <ListView.Header>
                             <Button Content="New" 
                                     HorizontalAlignment="Center">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="Click">
+                                        <core:InvokeCommandAction Command="{Binding Path=newEmail}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
                             </Button>
                         </ListView.Header>
                         <ListViewItem>
@@ -88,8 +94,26 @@
                     <TextBlock Text="Data"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
-                    <ListView>
-
+                    <ListView HorizontalAlignment="Center">
+                        <ListView.Header>
+                            <Button Content="New" 
+                                    HorizontalAlignment="Center">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="Click">
+                                        <core:InvokeCommandAction Command="{Binding Path=newData}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </Button>
+                        </ListView.Header>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
                     </ListView>
                 </PivotItem.Content>
             </PivotItem>
@@ -98,8 +122,26 @@
                     <TextBlock Text="SchoolSend"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
-                    <ListView>
-
+                    <ListView HorizontalAlignment="Center">
+                        <ListView.Header>
+                            <Button Content="New" 
+                                    HorizontalAlignment="Center">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="Click">
+                                        <core:InvokeCommandAction Command="{Binding Path=newSchoolSend}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </Button>
+                        </ListView.Header>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
                     </ListView>
                 </PivotItem.Content>
             </PivotItem>
@@ -108,8 +150,26 @@
                     <TextBlock Text="Direct Mailing"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
-                    <ListView>
-
+                    <ListView HorizontalAlignment="Center">
+                        <ListView.Header>
+                            <Button Content="New" 
+                                    HorizontalAlignment="Center">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="Click">
+                                        <core:InvokeCommandAction Command="{Binding Path=newDirectMailing}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </Button>
+                        </ListView.Header>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
                     </ListView>
                 </PivotItem.Content>
             </PivotItem>
@@ -118,8 +178,26 @@
                     <TextBlock Text="Shared Mailing"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
-                    <ListView>
-
+                    <ListView HorizontalAlignment="Center">
+                        <ListView.Header>
+                            <Button Content="New" 
+                                    HorizontalAlignment="Center">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="Click">
+                                        <core:InvokeCommandAction Command="{Binding Path=newSharedMailing}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </Button>
+                        </ListView.Header>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
                     </ListView>
                 </PivotItem.Content>
             </PivotItem>
@@ -128,8 +206,26 @@
                     <TextBlock Text="Print"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
-                    <ListView>
-
+                    <ListView HorizontalAlignment="Center">
+                        <ListView.Header>
+                            <Button Content="New" 
+                                    HorizontalAlignment="Center">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="Click">
+                                        <core:InvokeCommandAction Command="{Binding Path=newPrint}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </Button>
+                        </ListView.Header>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
                     </ListView>
                 </PivotItem.Content>
             </PivotItem>
@@ -138,8 +234,26 @@
                     <TextBlock Text="Surcharge"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
-                    <ListView>
-
+                    <ListView HorizontalAlignment="Center">
+                        <ListView.Header>
+                            <Button Content="New" 
+                                    HorizontalAlignment="Center">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="Click">
+                                        <core:InvokeCommandAction Command="{Binding Path=newSurcharge}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </Button>
+                        </ListView.Header>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <TextBlock Text="123"/>
+                        </ListViewItem>
                     </ListView>
                 </PivotItem.Content>
             </PivotItem>

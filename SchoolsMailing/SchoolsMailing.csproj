@@ -176,6 +176,9 @@
     <Compile Include="ViewModels\NewCompanyViewModel.cs" />
     <Compile Include="ViewModels\NewOrderViewModel.cs" />
     <Compile Include="ViewModels\OrdersViewModel.cs" />
+    <Compile Include="Views\CompaniesView2.xaml.cs">
+      <DependentUpon>CompaniesView2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CompanyView.xaml.cs">
       <DependentUpon>CompanyView.xaml</DependentUpon>
     </Compile>
@@ -305,6 +308,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\CompaniesView2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CompanyView.xaml">
       <SubType>Designer</SubType>

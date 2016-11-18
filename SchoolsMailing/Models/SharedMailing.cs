@@ -21,5 +21,6 @@ namespace SchoolsMailing.Models
         public string sharedLeafletWeight { get; set; }
         public DateTime sharedDeliveryDate { get; set; }
         public long sharedPack { get; set; }
+        public double sharedCost { get; set; }
     }
 }

@@ -7,14 +7,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    DataContext="{Binding NewOrderViewModel, Source={StaticResource VmLocator}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Hub>
             <HubSection Header="Date">
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="Surcharge Date"
+                        <TextBlock Text="Date"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
                         <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
@@ -25,7 +26,7 @@
             <HubSection Header="Details">
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="Surcharge Details" 
+                        <TextBlock Text="Details" 
                                    Style="{StaticResource inputTextBlock}"
                                     Width="400"/>
                         <TextBox Text=""
@@ -37,7 +38,7 @@
             <HubSection Header="Costs">
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="Surcharge Cost"
+                        <TextBlock Text="Cost"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
                         <TextBox Text=""
@@ -66,7 +67,7 @@
                           Label="Cancel">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=refreshCompany}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cancelNew}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

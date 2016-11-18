@@ -69,12 +69,15 @@ namespace SchoolsMailing.ViewModels
         //}
 
 
-        private ObservableCollection<Company> _companies;
-        public ObservableCollection<Company> companies
+        
+        
+        private List<Company> _companies;
+        public List<Company> companies
         {
             get
             {
                 _companies = DataAccessLayer.GetAllCompanies();
+                //companies.GroupBy()
                 return _companies;
             }
         }
