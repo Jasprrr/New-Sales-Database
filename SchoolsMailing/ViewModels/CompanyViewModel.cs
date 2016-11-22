@@ -59,7 +59,19 @@ namespace SchoolsMailing.ViewModels
                 }
             }
         }
-
+        private ObservableCollection<Contact> _companyContacts;
+        public ObservableCollection<Contact> companyContacts
+        {
+            get { return _companyContacts; }
+            set
+            {
+                if(_companyContacts != value)
+                {
+                    _companyContacts = value;
+                    RaisePropertyChanged("companyContacts");
+                }
+            }
+        }
 
         public async void addTestData()
         {
@@ -90,24 +102,24 @@ namespace SchoolsMailing.ViewModels
             //historyDialog.Content = txtBox;
             //await historyDialog.ShowAsync();
 
-            var dial = new HistoryDialog()
-            {
-                DataContext = new
-                {
-                    companyHistory = h1.companyHistoryDetails
-                }
-            };
+            //var dial = new HistoryDialog()
+            //{
+            //    DataContext = new
+            //    {
+            //        companyHistory = h1.companyHistoryDetails
+            //    }
+            //};
 
-            var result = await dial.ShowAsync();
+            //var result = await dial.ShowAsync();
 
-            if (result == ContentDialogResult.Primary)
-            {
-                var item = (TextBox)dial.Content;
-            }
-            else
-            {
-                Debug.Write("Canceled!");
-            }
+            //if (result == ContentDialogResult.Primary)
+            //{
+            //    var item = (TextBox)dial.Content;
+            //}
+            //else
+            //{
+            //    Debug.Write("Canceled!");
+            //}
         }
 
         public ContentDialog historyDialog = new ContentDialog
@@ -118,7 +130,6 @@ namespace SchoolsMailing.ViewModels
         };
 
         #region Company Data
-
         private Company _selectedCompany;
         public Company selectedCompany {
             get { return _selectedCompany; }
@@ -129,213 +140,23 @@ namespace SchoolsMailing.ViewModels
                     _selectedCompany = value;
                     //Refresh bindings
                     RaisePropertyChanged("selectedCompany");
-                    //companyName = selectedCompany.companyName;
-                    companyAddress1 = selectedCompany.companyAddress1;
-                    companyAddress2 = selectedCompany.companyAddress2;
-                    companyCity = selectedCompany.companyCity;
-                    companyCounty = selectedCompany.companyCounty;
-                    companyPostCode = selectedCompany.companyPostCode;
-                    companyWebsite = selectedCompany.companyWebsite;
-                    companyProspects = selectedCompany.companyProspects;
-                    companyProduct = selectedCompany.companyProduct;
-                    companyRemove = selectedCompany.companyRemove;
-                    companyTelephone = selectedCompany.companyTelephone;
-                    userID = selectedCompany.userID;
                 }
             }
         }
+
+        public DateTimeOffset companyCallBack
+        {
+            get
+            {
+                DateTime dateTimeToOffset = DateTime.SpecifyKind(selectedCompany.companyCallBackDate, DateTimeKind.Utc);
+                DateTimeOffset OffsetCallBack = dateTimeToOffset;
+                return dateTimeToOffset;
+            }
+        }
+
+
 
         public int ID { get; private set; }
-
-        //private string _companyName;
-        //public string companyName
-        //{
-        //    get { return selectedCompany.companyName; }
-        //    set { if (_companyName != value)
-        //        {
-        //            _companyName = value;
-        //            RaisePropertyChanged("companyName");
-        //        }
-        //    }
-        //}
-
-        private string _companyAddress1;
-        public string companyAddress1
-        {
-            get { return _companyAddress1; }
-            set
-            {
-                if (_companyAddress1 != value)
-                {
-                    _companyAddress1 = value;
-                    RaisePropertyChanged("companyAddress1");
-                }
-            }
-        }
-        private string _companyAddress2;
-        public string companyAddress2
-        {
-            get { return _companyAddress2; }
-            set
-            {
-                if (_companyAddress2 != value)
-                {
-                    _companyAddress2 = value;
-                    RaisePropertyChanged("companyAddress2");
-                }
-            }
-        }
-        private string _companyCity;
-        public string companyCity
-        {
-            get { return _companyCity; }
-            set
-            {
-                if (_companyCity != value)
-                {
-                    _companyCity = value;
-                    RaisePropertyChanged("companyCity");
-                }
-            }
-        }
-        private string _companyCounty;
-        public string companyCounty
-        {
-            get { return _companyCounty; }
-            set
-            {
-                if (_companyCounty != value)
-                {
-                    _companyCounty = value;
-                    RaisePropertyChanged("companyCounty");
-                }
-            }
-        }
-        private string _companyPostCode;
-        public string companyPostCode
-        {
-            get { return _companyPostCode; }
-            set
-            {
-                if (_companyPostCode != value)
-                {
-                    _companyPostCode = value;
-                    RaisePropertyChanged("companyPostCode");
-                }
-            }
-        }
-
-        private string _companyWebsite;
-        public string companyWebsite
-        {
-            get { return _companyWebsite; }
-            set
-            {
-                if (_companyWebsite != value)
-                {
-                    _companyWebsite = value;
-                    RaisePropertyChanged("companyWebsite");
-                }
-            }
-        }
-
-        private string _companyProspects;
-        public string companyProspects
-        {
-            get { return _companyProspects; }
-            set
-            {
-                if (_companyProspects != value)
-                {
-                    _companyProspects = value;
-                    RaisePropertyChanged("companyProspects");
-                }
-            }
-        }
-
-        private string _companyTelephone;
-        public string companyTelephone
-        {
-            get { return _companyTelephone; }
-            set
-            {
-                if (_companyTelephone != value)
-                {
-                    _companyTelephone = value;
-                    RaisePropertyChanged("companyTelephone");
-                }
-            }
-        }
-
-        private string _companyProduct;
-        public string companyProduct
-        {
-            get { return _companyProduct; }
-            set
-            {
-                if (_companyProduct != value)
-                {
-                    _companyProduct = value;
-                    RaisePropertyChanged("companyProduct");
-                }
-            }
-        }
-
-        private bool _companyRemove;
-        public bool companyRemove
-        {
-            get { return _companyRemove; }
-            set
-            {
-                if (_companyRemove != value)
-                {
-                    _companyRemove = value;
-                    RaisePropertyChanged("companyRemove");
-                }
-            }
-        }
-
-        private long _userID;
-        public long userID
-        {
-            get { return _userID; }
-            set
-            {
-                if (_userID != value)
-                {
-                    _userID = value;
-                    RaisePropertyChanged("userID");
-                }
-            }
-        }
-
-        private DateTime _companyCreated;
-        public DateTime companyCreated
-        {
-            get { return _companyCreated; }
-            set
-            {
-                if (_companyCreated != value)
-                {
-                    _companyCreated = value;
-                    RaisePropertyChanged("companyCreated");
-                }
-            }
-        }
-
-        private DateTime _companyModified;
-        public DateTime companyModified
-        {
-            get { return _companyModified; }
-            set
-            {
-                if (_companyModified != value)
-                {
-                    _companyModified = value;
-                    RaisePropertyChanged("companyModified");
-                }
-            }
-        }
         #endregion
 
         //public MobileServiceCollection<Company, Company> companyCollection;
@@ -357,6 +178,7 @@ namespace SchoolsMailing.ViewModels
             }
 
             selectedCompany = DataAccessLayer.GetCompanyById(ID);
+            companyContacts = DataAccessLayer.
 
             //MobileServiceInvalidOperationException exception = null;
             //try
@@ -374,6 +196,25 @@ namespace SchoolsMailing.ViewModels
             //}
         }
 
-        
+        private RelayCommand _saveCompany;
+        public RelayCommand saveCompany
+        {
+            get
+            {
+                if (_saveCompany == null)
+                {
+                    _saveCompany = new RelayCommand(() =>
+                    {
+                        selectedCompany.companyModified = DateTime.Now;
+                        selectedCompany.companyInitial = selectedCompany.companyName.Substring(0, 1);
+                        DataAccessLayer.SaveCompany(selectedCompany);
+                    });
+                }
+
+                return _saveCompany;
+
+            }
+        }
+
     }
 }

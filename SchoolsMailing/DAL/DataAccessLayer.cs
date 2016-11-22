@@ -106,6 +106,16 @@ namespace SchoolsMailing.DAL
                 }
             }
         }
-
+        public static ObservableCollection<Contact> GetContactsByCompany(int companyID)
+        {
+            List<Contact> c;
+            ObservableCollection<Contact> c2;
+            using(var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                c = (from p in db.Table<Contact>()
+                     select p).ToList();
+            }
+            c2 = new ObservableCollection<int>(c2);
+        }
     }
 }

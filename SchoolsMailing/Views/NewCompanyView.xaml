@@ -7,11 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:DataContext="using:SchoolsMailing.ViewModels"
+    xmlns:conv="using:SchoolsMailing.Converters"
     xmlns:controlModels="using:SchoolsMailing.Controls.Models"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     DataContext="{Binding NewCompanyViewModel, Source={StaticResource VmLocator}}">
-
+    <Page.Resources>
+        <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -24,37 +27,37 @@
                         <TextBlock Text="Company Name"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newCompany.companyName, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                         <TextBlock Text="Address 1"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newCompany.companyAddress1, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                         <TextBlock Text="Address 2"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newCompany.companyAddress2, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                         <TextBlock Text="City"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newCompany.companyCity, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                         <TextBlock Text="County"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newCompany.companyCounty, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                         <TextBlock Text="Post Code"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newCompany.companyPostCode, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
                     </StackPanel>
@@ -66,31 +69,31 @@
                         <TextBlock Text="Product"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newCompany.companyProduct, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400" AutomationProperties.IsRequiredForForm="True"/>
                         <TextBlock Text="Prospects"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newCompany.companyProspects, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                         <TextBlock Text="Website"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newCompany.companyWebsite, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                         <TextBlock Text="Telephone"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newCompany.companyTelephone, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                         <TextBlock Text="SchoolSend ID"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newCompany.companySchoolSendID, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                     </StackPanel>
@@ -102,24 +105,29 @@
                         <TextBlock Text="Call Back"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <CalendarDatePicker Width="200"
-                                            Style="{StaticResource inputCalendarDatePicker}"/>
+                        <DatePicker Width="200" 
+                                    MonthFormat="{}{month.abbreviated}" 
+                                    MinWidth="200"
+                                    Date="{Binding newCompany.companyCallBackDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"/>
                         <TextBlock Text="Call Back Notes"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newCompany.companyCallBackDetails, Mode=TwoWay}"
                                  Style="{StaticResource inputLargeTextBox}"
-                                 Width="400"/>
+                                 Width="400" 
+                                 ScrollViewer.VerticalScrollBarVisibility="Visible"/>
                         <TextBlock Text="Company History"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newCompany.companyHistory, Mode=TwoWay}"
                                  Style="{StaticResource inputLargeTextBox}"
-                                 Width="400"/>
+                                 Width="400" 
+                                 ScrollViewer.VerticalScrollBarVisibility="Visible"/>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
         </Hub>
+        
         <CommandBar VerticalAlignment="Bottom"
                     Grid.Row="1">
             <AppBarButton Label="Save"
@@ -132,11 +140,11 @@
             </AppBarButton>
             <AppBarButton Label="Cancel"
                           Icon="Cancel">
-                <interactivity:Interaction.Behaviors>
+                <!--<interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
                         <core:InvokeCommandAction Command="{Binding Path=cancelCompany}" />
                     </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
+                </interactivity:Interaction.Behaviors>-->
             </AppBarButton>
 
         </CommandBar>

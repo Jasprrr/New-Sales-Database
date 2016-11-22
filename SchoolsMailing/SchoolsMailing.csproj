@@ -115,6 +115,9 @@
     <Compile Include="Controls\HistoryDialog.xaml.cs">
       <DependentUpon>HistoryDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\InvalidFlag.xaml.cs">
+      <DependentUpon>InvalidFlag.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Models\SplitViewPaneMenuItem.cs" />
     <Compile Include="Controls\OrderDataList.xaml.cs">
       <DependentUpon>OrderDataList.xaml</DependentUpon>
@@ -136,7 +139,9 @@
     </Compile>
     <Compile Include="Controls\SplitViewPaneMenu.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\DateTimeToDateTimeOffsetConverter.cs" />
     <Compile Include="Converters\IntegerToInitial.cs" />
+    <Compile Include="Converters\NativeTypeConverter.cs" />
     <Compile Include="Converters\StringFormatter.cs" />
     <Compile Include="DAL\DataAccessLayer.cs" />
     <Compile Include="Extensions\VisualTreeHelperExtensions.cs" />
@@ -268,6 +273,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\HistoryDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\InvalidFlag.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

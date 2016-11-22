@@ -39,6 +39,7 @@
             path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path,"Sales.sqlite");
             conn = new SQLite.Net.SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
             conn.CreateTable<Company>();
+            conn.CreateTable<Contact>();
 
             this.ItemInvokedCommand = new RelayCommand<ListViewItem>(this.ItemInvoked);
 

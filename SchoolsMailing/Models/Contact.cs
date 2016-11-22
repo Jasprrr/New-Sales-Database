@@ -19,5 +19,6 @@ namespace SchoolsMailing.Models
         public string contactTelephone { get; set; }
         public bool contactPrimary { get; set; }
         public bool contactRemove { get; set; }
+        public string contactHistory { get; set; }
     }
 }

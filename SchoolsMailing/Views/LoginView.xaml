@@ -5,29 +5,44 @@
     xmlns:local="using:SchoolsMailing.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cntrl="using:SchoolsMailing.Controls"
     mc:Ignorable="d"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:conv="using:SchoolsMailing.Converters"
     DataContext="{Binding LoginViewModel, Source={StaticResource VmLocator}}">
-
+    <Page.Resources>
+        <conv:BooleanToVisibilityConverter x:Key="InvalidTextBox"/>
+    </Page.Resources>
     <Grid>
         <StackPanel HorizontalAlignment="Center" 
                     VerticalAlignment="Center">
-            <TextBlock Text="Username" 
-                       FontSize="20" 
+            <TextBlock Text="Username"
                        Width="100"
-                       HorizontalAlignment="Left"/>
-            <TextBox Text="{Binding username, Mode=TwoWay}" 
-                     Width="300" 
-                     SelectionHighlightColor="Black" 
-                     Background="White"/>
+                       HorizontalAlignment="Left"
+                       Style="{StaticResource inputTextBlock}"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="{Binding username, Mode=TwoWay}" 
+                         Width="300" 
+                         SelectionHighlightColor="Black" 
+                         Background="White"
+                         Style="{StaticResource inputTextBox}"/>
+                <cntrl:InvalidFlag Visibility="{Binding invalidUsername, Converter={StaticResource InvalidTextBox}}" 
+                                   ToolTipService.ToolTip="Invalid Username"/>
+            </StackPanel>
             <TextBlock Text="Password"
                        FontSize="20" 
                        Width="100"
                        HorizontalAlignment="Left"/>
-            <PasswordBox Password="{Binding password, Mode=TwoWay}" 
-                         Width="300"
-                         SelectionHighlightColor="White"/>
+            <StackPanel Orientation="Horizontal">
+                <PasswordBox Password="{Binding password, Mode=TwoWay}" 
+                             Width="300"
+                             SelectionHighlightColor="White"
+                             Style="{StaticResource inputPasswordBox}"/>
+                <cntrl:InvalidFlag Visibility="{Binding invalidPassword, Converter={StaticResource InvalidTextBox}}" 
+                                   ToolTipService.ToolTip="Invalid Username"/>
+            </StackPanel>
+            
             <Button Content="Login"
                     Width="100" 
                     HorizontalAlignment="Center">

@@ -139,7 +139,13 @@
         <Setter Property="Margin" Value="0,4,0,10"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
     </Style>
+    <Style x:Key="inputPasswordBox" TargetType="PasswordBox">
+        <Setter Property="Margin" Value="0,4,0,10"/>
+    </Style>
     <Style x:Key="inputCalendarDatePicker" TargetType="CalendarDatePicker">
+        <Setter Property="Margin" Value="0,4,0,10"/>
+    </Style>
+    <Style x:Key="inputDatePicker" TargetType="DatePicker">
         <Setter Property="Margin" Value="0,4,0,10"/>
     </Style>
     <Style x:Key="userButton" TargetType="Button">

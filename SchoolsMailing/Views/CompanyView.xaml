@@ -16,6 +16,7 @@
     <Page.Resources>
         <conv:BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
         <conv:BooleanToVisibilityConverter x:Key="boolVisibility"/>
+        <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
         <conv:StringFormatter x:Key="formatString"/>
         <cntrl:CompanyHistoryPopUp x:Key="companyHistoryDialog"/>
     </Page.Resources>
@@ -35,28 +36,33 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Vertical">
                                         <TextBlock Text="Company" 
-                                                   Style="{StaticResource inputTextBlock}"/>
+                                                   Style="{StaticResource inputTextBlock}"
+                                                   Width="400"/>
                                         <TextBox Text="{Binding selectedCompany.companyName, Mode=TwoWay}"
                                                  Width="400" 
                                                  Style="{StaticResource inputTextBox}"/>
                                         <TextBlock Text="Prospects"
                                                    Style="{StaticResource inputTextBlock}"
                                                    Width="400"/>
-                                        <TextBox Text="{Binding Path=companyProspects, Mode=TwoWay}"
+                                        <TextBox Text="{Binding selectedCompany.companyProspects, Mode=TwoWay}"
                                                  Width="400"
                                                  Style="{StaticResource inputTextBox}"/>
                                         <TextBlock Text="Telephone"
                                                    Style="{StaticResource inputTextBlock}"/>
-                                        <TextBox Text="{Binding Path=companyTelephone, Mode=TwoWay}"
+                                        <TextBox Text="{Binding selectedCompany.companyTelephone, Mode=TwoWay}"
                                                  Width="400"
                                                  Style="{StaticResource inputTextBox}"/>
                                         <TextBlock Text="Call Back Date"
-                                                   Style="{StaticResource inputTextBlock}"/>
-                                        <CalendarDatePicker Width="200"
-                                                            Style="{StaticResource inputCalendarDatePicker}"/>
+                                                   Style="{StaticResource inputTextBlock}"
+                                                   Width="400"/>
+                                        <DatePicker Width="200" 
+                                                    MonthFormat="{}{month.abbreviated}" 
+                                                    MinWidth="200"
+                                                    Date="{Binding selectedCompany.companyCallBackDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                                    Style="{StaticResource inputDatePicker}"/>
                                         <TextBlock Text="Call Back Notes"
                                                    Style="{StaticResource inputTextBlock}"/>
-                                        <TextBox Text="{Binding Path=companyHistory, Mode=TwoWay}"
+                                        <TextBox Text="{Binding selectedCompany.companyCallBackDetails, Mode=TwoWay}"
                                                  Width="400"
                                                  Style="{StaticResource inputLargeTextBox}" 
                                                  ScrollViewer.VerticalScrollBarVisibility="Auto" 
@@ -129,25 +135,25 @@
                                             </StackPanel>
                                         </Grid>
                                         <TextBlock Text="Title"
-                                                       Style="{StaticResource inputTextBlock}"/>
+                                                   Style="{StaticResource inputTextBlock}"/>
                                         <TextBox Style="{StaticResource inputTextBox}"
-                                                     Width="100"/>
+                                                 Width="100"/>
                                         <TextBlock Text="First Name"
-                                                       Style="{StaticResource inputTextBlock}"/>
+                                                   Style="{StaticResource inputTextBlock}"/>
                                         <TextBox Style="{StaticResource inputTextBox}"
-                                                     Width="400"/>
+                                                 Width="400"/>
                                         <TextBlock Text="Last Name"
-                                                       Style="{StaticResource inputTextBlock}"/>
+                                                   Style="{StaticResource inputTextBlock}"/>
                                         <TextBox Style="{StaticResource inputTextBox}"
-                                                     Width="400"/>
+                                                 Width="400"/>
                                         <TextBlock Text="Telephone"
-                                                       Style="{StaticResource inputTextBlock}"/>
+                                                   Style="{StaticResource inputTextBlock}"/>
                                         <TextBox Style="{StaticResource inputTextBox}"
-                                                     Width="400"/>
+                                                 Width="400"/>
                                         <TextBlock Text="Email"
-                                                       Style="{StaticResource inputTextBlock}"/>
+                                                   Style="{StaticResource inputTextBlock}"/>
                                         <TextBox Style="{StaticResource inputTextBox}"
-                                                     Width="400"/>
+                                                 Width="400"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </HubSection>
@@ -177,39 +183,42 @@
                                 <DataTemplate>
                                     <StackPanel>
                                         <TextBlock Text="Address 1"
-                                                       Style="{StaticResource inputTextBlock}"/>
-                                        <TextBox Text="{Binding Path=companyAddress1, Mode=TwoWay}"
-                                                     Width="400" 
-                                                     Style="{StaticResource inputTextBox}"/>
+                                                   Style="{StaticResource inputTextBlock}"
+                                                   Width="400"/>
+                                        <TextBox Text="{Binding selectedCompany.companyAddress1, Mode=TwoWay}"
+                                                 Width="400" 
+                                                 Style="{StaticResource inputTextBox}"/>
                                         <TextBlock Text="Address 2"
-                                                       Style="{StaticResource inputTextBlock}"/>
-                                        <TextBox Text="{Binding Path=companyAddress2, Mode=TwoWay}"
-                                                     Width="400" 
-                                                     Style="{StaticResource inputTextBox}"/>
+                                                   Style="{StaticResource inputTextBlock}"
+                                                   Width="400"/>
+                                        <TextBox Text="{Binding selectedCompany.companyAddress2, Mode=TwoWay}"
+                                                 Width="400" 
+                                                 Style="{StaticResource inputTextBox}"/>
                                         <TextBlock Text="City"
-                                                       Style="{StaticResource inputTextBlock}"/>
-                                        <TextBox Text="{Binding Path=companyCity, Mode=TwoWay}"
-                                                     Width="400" 
-                                                     Style="{StaticResource inputTextBox}"/>
+                                                   Style="{StaticResource inputTextBlock}"
+                                                   Width="400"/>
+                                        <TextBox Text="{Binding selectedCompany.companyCity, Mode=TwoWay}"
+                                                 Width="400" 
+                                                 Style="{StaticResource inputTextBox}"/>
                                         <TextBlock Text="County"
-                                                       Style="{StaticResource inputTextBlock}"/>
-                                        <TextBox Text="{Binding Path=companyCounty, Mode=TwoWay}"
-                                                     Width="400" 
-                                                     Style="{StaticResource inputTextBox}"/>
+                                                   Style="{StaticResource inputTextBlock}"/>
+                                        <TextBox Text="{Binding selectedCompany.companyCounty, Mode=TwoWay}"
+                                                 Width="400" 
+                                                 Style="{StaticResource inputTextBox}"/>
                                         <TextBlock Text="Post Code"
                                                    Style="{StaticResource inputTextBlock}" 
                                                    Width="400"/>
-                                        <TextBox Text="{Binding Path=companyPostCode, Mode=TwoWay}"
+                                        <TextBox Text="{Binding selectedCompany.companyPostCode, Mode=TwoWay}"
                                                  Width="200" 
                                                  Style="{StaticResource inputTextBox}"/>
                                         <TextBlock Text="Product"
                                                    Style="{StaticResource inputTextBlock}"/>
-                                        <TextBox Text="{Binding Path=companyProduct, Mode=TwoWay}"
+                                        <TextBox Text="{Binding selectedCompany.companyProduct, Mode=TwoWay}"
                                                  Width="400"
                                                  Style="{StaticResource inputTextBox}"/>
                                         <TextBlock Text="Website"
                                                    Style="{StaticResource inputTextBlock}" Visibility="Collapsed"/>
-                                        <TextBox Text="{Binding Path=companyWebsite, Mode=TwoWay}"
+                                        <TextBox Text="{Binding selectedCompany.companyWebsite, Mode=TwoWay}"
                                                  Width="400"
                                                  Style="{StaticResource inputTextBox}" Visibility="Collapsed"/>
                                     </StackPanel>
@@ -336,17 +345,17 @@
                           Icon="Save">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=updateCompany}" />
+                        <core:InvokeCommandAction Command="{Binding Path=saveCompany}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
             <AppBarButton Label="Delete"
                           Icon="Delete">
-                <interactivity:Interaction.Behaviors>
+                <!--<interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
                         <core:InvokeCommandAction Command="{Binding Path=deleteCompany}" />
                     </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
+                </interactivity:Interaction.Behaviors>-->
             </AppBarButton>
             <AppBarButton Label="Export"
                           Icon="Download"/>

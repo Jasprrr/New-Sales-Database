@@ -21,84 +21,26 @@ namespace SchoolsMailing.ViewModels
             
         }
 
+        public DateTime? _asd;
+        public DateTime? asd {
+            get { return _asd; }
+            set {
+                if (_asd.Value != value)
+                {
+                    _asd = value;
+                    RaisePropertyChanged("asd");
+                }
+            }
+        }
+
+        public string testDate;
+
         #region Company Data
-
-        private string _newCompanyName;
-        public string newCompanyName
+        private Company _newCompany = new Company();
+        public Company newCompany
         {
-            get { return _newCompanyName; }
-            set
-            {
-                if(_newCompanyName != value)
-                {
-                    _newCompanyName = value;
-                }
-            }
-        }
-
-        private string _newCompanyAddress1;
-        public string newCompanyAddress1
-        {
-            get { return _newCompanyAddress1; }
-            set
-            {
-                if (_newCompanyAddress1 != value)
-                {
-                    _newCompanyAddress1 = value;
-                }
-            }
-        }
-
-        private string _newCompanyAddress2;
-        public string newCompanyAddress2
-        {
-            get { return _newCompanyAddress2; }
-            set
-            {
-                if (_newCompanyAddress2 != value)
-                {
-                    _newCompanyAddress2 = value;
-                }
-            }
-        }
-
-        private string _newCompanyCity;
-        public string newCompanyCity
-        {
-            get { return _newCompanyCity; }
-            set
-            {
-                if (_newCompanyCity != value)
-                {
-                    _newCompanyCity = value;
-                }
-            }
-        }
-
-        private string _newCompanyCounty;
-        public string newCompanyCounty
-        {
-            get { return _newCompanyCounty; }
-            set
-            {
-                if (_newCompanyCounty != value)
-                {
-                    _newCompanyCounty = value;
-                }
-            }
-        }
-
-        private string _newCompanyPostCode;
-        public string newCompanyPostCode
-        {
-            get { return _newCompanyPostCode; }
-            set
-            {
-                if (_newCompanyPostCode != value)
-                {
-                    _newCompanyPostCode = value;
-                }
-            }
+            get { return _newCompany; }
+            set { if(_newCompany != value) { _newCompany = value; RaisePropertyChanged("newCompany"); } }
         }
         #endregion
 
@@ -111,28 +53,19 @@ namespace SchoolsMailing.ViewModels
                 {
                     _saveCompany = new RelayCommand(() =>
                     {
-                        Company c = new Company();
-                        c.companyName = newCompanyName;
-                        c.companyAddress1 = newCompanyAddress1;
-                        c.companyAddress2 = newCompanyAddress2;
-                        c.companyCity = newCompanyCity;
-                        c.companyCounty = newCompanyCounty;
-                        c.companyPostCode = newCompanyPostCode;
-                        c.companyInitial = newCompanyName.Substring(0, 1);
+                        //if(asd.Value != null) { newCompany.companyCallBackDate = asd.Value.Date; }
+                        newCompany.companyCreated = DateTime.Now;
+                        newCompany.companyModified = DateTime.Now;
+                        newCompany.companyInitial = newCompany.companyName.Substring(0, 1);
+                        //DateTimeOffset
+                        DataAccessLayer.SaveCompany(newCompany); 
 
-                        DataAccessLayer.SaveCompany(c);
+                        //string _companyID = c.ID.ToString();
+                        //this.NavigationService.GoBack();
+                        //this.NavigationService.Navigate(typeof(CompanyView));
+                        //MessengerInstance.Send<NotificationMessage<string>>(new NotificationMessage<string>("CompanyID", _companyID));
 
-                        string _companyID = c.ID.ToString();
-                        this.NavigationService.GoBack();
-                        this.NavigationService.Navigate(typeof(CompanyView));
-                        MessengerInstance.Send<NotificationMessage<string>>(new NotificationMessage<string>("CompanyID", _companyID));
-
-                        newCompanyName = null;
-                        newCompanyAddress1 = null;
-                        newCompanyAddress2 = null;
-                        newCompanyCity = null;
-                        newCompanyCounty = null;
-                        newCompanyPostCode = null;
+                        newCompany = null;
                     });
                 }
 
@@ -150,6 +83,8 @@ namespace SchoolsMailing.ViewModels
                 {
                     _cancelCompany = new RelayCommand(() =>
                     {
+                        string testingString = "Company Name:" + newCompany.companyName.ToString();
+                        Debug.Write(testingString);
                     });
                 }
 

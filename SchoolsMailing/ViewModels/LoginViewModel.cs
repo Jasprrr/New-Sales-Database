@@ -49,6 +49,20 @@ namespace SchoolsMailing.ViewModels
             }
         }
 
+        private bool _invalidPassword = false;
+        public bool invalidPassword
+        {
+            get { return _invalidPassword; }
+            set { if(_invalidPassword != value) { _invalidPassword = !invalidPassword; RaisePropertyChanged("invalidPassword"); } }
+        }
+
+        private bool _invalidUsername = false;
+        public bool invalidUsername
+        {
+            get { return _invalidUsername; }
+            set { if (_invalidUsername != value) { _invalidUsername = !invalidUsername; RaisePropertyChanged("invalidUsername"); } }
+        }
+
         private RelayCommand _authenticateLogin;
         public RelayCommand authenticateLogin
         {
@@ -60,18 +74,22 @@ namespace SchoolsMailing.ViewModels
                     {
                         if(username == "admin")
                         {
+                            invalidUsername = false;
+
                             if(password == "@")
                             {
                                 var rootFrame = Window.Current.Content as Frame;
 
                                 rootFrame.Navigate(typeof(MainPage));
                             }
+                            else
+                            {
+                                invalidPassword = true;
+                            }
                         }
                         else
                         {
-                            var rootFrame = Window.Current.Content as Frame;
-
-                            rootFrame.Navigate(typeof(MainPage));
+                            invalidUsername = true;
                         }
                     });
                 }

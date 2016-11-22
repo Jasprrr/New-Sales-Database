@@ -7,9 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:conv="using:SchoolsMailing.Converters"
     mc:Ignorable="d"
     DataContext="{Binding NewOrderViewModel, Source={StaticResource VmLocator}}">
-
+    <Page.Resources>
+        <conv:StringFormatter x:Key="CurrencyConverter"/>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -52,7 +55,7 @@
                         <TextBlock Text="Admin Cost"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding someBinding, Mode=TwoWay, Converter={StaticResource CurrencyConverter}, ConverterParameter=\{0:d\}}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
                         <TextBlock Text="Direct Cost"

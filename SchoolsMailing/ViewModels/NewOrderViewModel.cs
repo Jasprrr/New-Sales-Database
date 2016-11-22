@@ -36,6 +36,14 @@ namespace SchoolsMailing.ViewModels
 
             }
         }
+
+        private string _someBinding;
+        public string someBinding
+        {
+            get { return _someBinding; }
+            set { if(_someBinding != value) { _someBinding = value; RaisePropertyChanged("someBinding"); } }
+        }
+
         #region Navigate to new orders
         private RelayCommand _newEmail;
         public RelayCommand newEmail
