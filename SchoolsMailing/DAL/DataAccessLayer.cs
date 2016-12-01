@@ -115,7 +115,8 @@ namespace SchoolsMailing.DAL
                 c = (from p in db.Table<Contact>()
                      select p).ToList();
             }
-            c2 = new ObservableCollection<int>(c2);
+            c2 = new ObservableCollection<Contact>(c);
+            return c2;
         }
     }
 }

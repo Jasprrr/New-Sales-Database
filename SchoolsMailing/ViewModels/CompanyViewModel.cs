@@ -178,7 +178,7 @@ namespace SchoolsMailing.ViewModels
             }
 
             selectedCompany = DataAccessLayer.GetCompanyById(ID);
-            companyContacts = DataAccessLayer.
+            //companyContacts = DataAccessLayer.
 
             //MobileServiceInvalidOperationException exception = null;
             //try

@@ -94,6 +94,7 @@ namespace SchoolsMailing.ViewModels
             get { return _orderCode; }
             set { if(_orderCode != value) { _orderCode = value; RaisePropertyChanged("orderCode"); } }
         }
+
         private string _emailSubject;
         public string emailSubject
         {
