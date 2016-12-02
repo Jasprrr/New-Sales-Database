@@ -100,7 +100,7 @@
                 },
                 new SplitViewPaneMenuItem
                 {
-                    Label = "Companies",
+                    Label = "Contacts",
                     Symbol = Symbol.People,
                     AssociatedPage = typeof(CompaniesView)
                 },

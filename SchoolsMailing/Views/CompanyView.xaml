@@ -339,8 +339,6 @@
         <CommandBar ClosedDisplayMode="Compact"
                     IsSticky="True" 
                     VerticalAlignment="Bottom">
-            <AppBarButton Label="Contact"
-                          Icon="AddFriend"/>
             <AppBarButton Label="Save"
                           Icon="Save">
                 <interactivity:Interaction.Behaviors>
@@ -349,20 +347,19 @@
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
-            <AppBarButton Label="Delete"
-                          Icon="Delete">
-                <!--<interactivity:Interaction.Behaviors>
-                    <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=deleteCompany}" />
-                    </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>-->
+            <AppBarButton Label="Contact"
+                          Icon="AddFriend"/>
+            <AppBarButton Label="History"
+                          Icon="Comment">
+                <AppBarButton.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Company"/>
+                        <MenuFlyoutItem Text="Contact"/>
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
             </AppBarButton>
-            <AppBarButton Label="Export"
-                          Icon="Download"/>
-            <AppBarButton Label="Reset"
-                          Icon="Refresh"/>
             <AppBarButton Label="Other"
-                          Icon="Add">
+                          Icon="Shop">
                 <AppBarButton.Flyout>
                     <MenuFlyout>
                         <MenuFlyoutItem Text="Data Order"/>
@@ -373,6 +370,18 @@
                         <MenuFlyoutItem Text="Shared Mailing Order"/>
                     </MenuFlyout>
                 </AppBarButton.Flyout>
+            </AppBarButton>
+            <AppBarButton Label="Export"
+                          Icon="Download"/>
+            <AppBarButton Label="Reset"
+                          Icon="Refresh"/>
+            <AppBarButton Label="Delete"
+                          Icon="Delete">
+                <!--<interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:InvokeCommandAction Command="{Binding Path=deleteCompany}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>-->
             </AppBarButton>
         </CommandBar>
     </Grid>

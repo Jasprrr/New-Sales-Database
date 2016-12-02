@@ -24,5 +24,10 @@
   </Applications>
   <Capabilities>
     <Capability Name="internetClient" />
+    <Capability Name="internetClientServer" />
+    <uap:Capability Name="contacts" />
+    <uap:Capability Name="phoneCall" />
+    <uap:Capability Name="userAccountInformation" />
+    <uap:Capability Name="voipCall" />
   </Capabilities>
 </Package>
