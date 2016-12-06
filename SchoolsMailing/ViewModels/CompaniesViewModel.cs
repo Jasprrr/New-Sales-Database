@@ -1,27 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
 using SchoolsMailing.Common;
 using SchoolsMailing.ViewModels.Common;
-using System.Collections.ObjectModel;
 using SchoolsMailing.Models;
-using System.Windows.Input;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Popups;
-using SQLite.Net;
-using SQLite.Net.Platform.WinRT;
 using Windows.Storage;
 using System.IO;
 using GalaSoft.MvvmLight.Command;
-using System.Diagnostics;
 using SchoolsMailing.DAL;
 using SchoolsMailing.Views;
-using SchoolsMailing.Controls;
-using SchoolsMailing.Controls.Models;
-using Microsoft.WindowsAzure.MobileServices;
 
 namespace SchoolsMailing.ViewModels
 {

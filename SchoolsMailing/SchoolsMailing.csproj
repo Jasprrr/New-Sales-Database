@@ -202,6 +202,9 @@
     <Compile Include="Views\NewCompanyView.xaml.cs">
       <DependentUpon>NewCompanyView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\NewContact.xaml.cs">
+      <DependentUpon>NewContact.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\NewDataView.xaml.cs">
       <DependentUpon>NewDataView.xaml</DependentUpon>
     </Compile>
@@ -343,6 +346,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NewCompanyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewContact.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

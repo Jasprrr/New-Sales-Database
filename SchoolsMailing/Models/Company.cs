@@ -32,7 +32,6 @@ namespace SchoolsMailing.Models
         public bool companyActive { get; set; }
         public long companySchoolSendID { get; set; }
         public string companyInitial { get; set; }
-        public string companyHistory { get; set; }
         public DateTime companyCallBackDate { get; set; }
         public string companyCallBackDetails { get; set; }
     }

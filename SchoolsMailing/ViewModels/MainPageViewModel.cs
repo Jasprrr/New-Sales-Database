@@ -40,6 +40,7 @@
             conn = new SQLite.Net.SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
             conn.CreateTable<Company>();
             conn.CreateTable<Contact>();
+            conn.CreateTable<CompanyHistory>();
 
             this.ItemInvokedCommand = new RelayCommand<ListViewItem>(this.ItemInvoked);
 

@@ -122,14 +122,10 @@ namespace SchoolsMailing.ViewModels
             //}
         }
 
-        public ContentDialog historyDialog = new ContentDialog
-        {
-            Title = "Title!",
-
-            PrimaryButtonText = "Yes!"
-        };
-
         #region Company Data
+        //Selected company's ID
+        public int ID { get; private set; }
+
         private Company _selectedCompany;
         public Company selectedCompany {
             get { return _selectedCompany; }
@@ -143,7 +139,7 @@ namespace SchoolsMailing.ViewModels
                 }
             }
         }
-
+        //Allows binding from DateTime to DateTimeOffset
         public DateTimeOffset companyCallBack
         {
             get
@@ -154,10 +150,9 @@ namespace SchoolsMailing.ViewModels
             }
         }
 
-
-
-        public int ID { get; private set; }
         #endregion
+
+        
 
         //public MobileServiceCollection<Company, Company> companyCollection;
 
@@ -215,6 +210,80 @@ namespace SchoolsMailing.ViewModels
 
             }
         }
+
+        public void historyInvoked(object sender, object parameter)
+        {
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
+            //Get clicked company
+            var history = arg.ClickedItem as CompanyHistory;
+            //Get clicked company ID
+
+            try
+            {
+                h = Int32.Parse(history.ToString());
+            }
+            catch (FormatException e) { }
+        }
+
+        #region Company History
+
+        private RelayCommand _newCompanyHistory;
+        public RelayCommand newCompanyHistory
+        {
+            get
+            {
+                if (_newCompanyHistory == null)
+                {
+                    _newCompanyHistory = new RelayCommand(() =>
+                    {
+
+                    });
+                }
+
+                return _newCompanyHistory;
+
+            }
+        }
+
+        private CompanyHistory _invokedCompanyHistory;
+        public CompanyHistory invokedCompanyHistory
+        {
+            get { return _invokedCompanyHistory; }
+            set
+            {
+                if (_invokedCompanyHistory != value)
+                {
+                    _invokedCompanyHistory = value;
+                    RaisePropertyChanged("selectedCompanyHistory");
+                }
+            }
+        }
+        
+        public async void createCompanyHistoryDialog(long HistoryID = 0)
+        {
+            if (HistoryID != 0)
+            {
+                invokedCompanyHistory = DataAccessLayer.GetHistoryByID(HistoryID);
+            }
+            else
+            {
+                invokedCompanyHistory = new CompanyHistory();
+            }
+
+            var newHistoryDialog = new HistoryDialog();
+            var result = await newHistoryDialog.ShowAsync();
+            if(result == ContentDialogResult.Primary)
+            {
+                var item = (TextBox)newHistoryDialog.Content;
+            }
+            else
+            {
+
+            }
+        }
+
+        #endregion
+        
 
     }
 }

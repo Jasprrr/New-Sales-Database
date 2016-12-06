@@ -1,0 +1,44 @@
+﻿<Page
+    x:Class="SchoolsMailing.Views.NewContact"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SchoolsMailing.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Hub>
+            <HubSection>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="Title"
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <TextBox Style="{StaticResource inputTextBox}"
+                                 Width="200"/>
+                        <TextBlock Text="First Name"
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <TextBox Style="{StaticResource inputTextBox}"
+                                 Width="400"/>
+                        <TextBlock Text="Last Name"
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <TextBox Style="{StaticResource inputTextBox}"
+                                 Width="400"/>
+                        <TextBlock Text="Telephone"
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <TextBox Style="{StaticResource inputTextBox}"
+                                 Width="400"/>
+                        <TextBlock Text="Email"
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <TextBox Style="{StaticResource inputTextBox}"
+                                 Width="400"/>
+                        <TextBlock Text="Notes"
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <TextBox Style="{StaticResource inputLargeTextBox}"
+                                 Width="400"/>
+                    </StackPanel>
+                </DataTemplate>
+            </HubSection>
+        </Hub>
+    </Grid>
+</Page>

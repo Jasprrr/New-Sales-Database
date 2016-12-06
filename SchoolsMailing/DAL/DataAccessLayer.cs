@@ -77,7 +77,8 @@ namespace SchoolsMailing.DAL
             return model;
         }
 
-        public static Company GetCompanyById(int companyID)
+        #region Get by ID
+        public static Company GetCompanyById(long companyID)
         {
             // Create a new connection
             using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
@@ -88,6 +89,19 @@ namespace SchoolsMailing.DAL
                 return m;
             }
         }
+
+        public static CompanyHistory GetHistoryByID(long historyID)
+        {
+            // Create a new connection
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                CompanyHistory m = (from p in db.Table<CompanyHistory>()
+                               where p.ID == historyID
+                               select p).FirstOrDefault();
+                return m;
+            }
+        }
+        #endregion
 
         public static void SaveCompany(Company company)
         {
