@@ -12,7 +12,8 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
     DataContext="{Binding CompanyViewModel, Source={StaticResource VmLocator}}">
-    <TextBox Text="{Binding companyHistoryDetails, Mode=TwoWay}" 
+    <TextBox x:Name="HistoryInput" 
+             Text="{Binding invokedCompanyHistory.companyHistoryDetails, Mode=TwoWay}" 
              Margin="0,4,0,0" 
              Height="120" 
              ScrollViewer.VerticalScrollBarVisibility="Visible" 

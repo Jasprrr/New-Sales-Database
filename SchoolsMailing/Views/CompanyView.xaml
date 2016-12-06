@@ -112,8 +112,11 @@
                             </StackPanel>
                             <StackPanel Grid.Column="1"
                                         Margin="12,0">
+                                <TextBlock Text="Company History"
+                                           Style="{StaticResource inputTextBlock}"/>
                                 <ListView Width="400"
-                                          ItemsSource="{Binding selectedCompanyHistory}">
+                                          ItemsSource="{Binding selectedCompanyHistory, Mode=TwoWay}" 
+                                          IsItemClickEnabled="True">
                                     <interactivity:Interaction.Behaviors>
                                         <core:EventTriggerBehavior EventName="ItemClick">
                                             <core:CallMethodAction MethodName="historyInvoked" 
@@ -134,7 +137,7 @@
                                                            HorizontalAlignment="Center" 
                                                            Padding="0,4"/>
                                                 <TextBlock Grid.Column="1"
-                                                           Text="Lots of text in this box to pretend that it is actually some company history when really it's just a bunch of spammy things to fill up a textbox with some realistic representation of text"
+                                                           Text="{Binding Path=companyHistoryDetails}"
                                                            Width="275" 
                                                            Padding="12,4" 
                                                            TextWrapping="Wrap" 
@@ -145,208 +148,17 @@
                                     </ListView.ItemTemplate>
                                 </ListView>
                             </StackPanel>
+                            <StackPanel Grid.Column="2" 
+                                        Margin="12,0">
+                                <TextBlock Text="Contact"
+                                           Style="{StaticResource inputTextBlock}"/>
+                                <TextBlock Text="Forename"
+                                           Style="{StaticResource inputTextBlock}"/>
+                                <TextBox Text=""
+                                         Width="400"
+                                         Style="{StaticResource inputTextBox}"/>
+                            </StackPanel>
                         </Grid>
-                        <!--Company Details-->
-                        <!--<Hub VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                            <HubSection>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="Company" 
-                                                   Style="{StaticResource inputTextBlock}"
-                                                   Width="400"/>
-                                        <TextBox Text="{Binding selectedCompany.companyName, Mode=TwoWay}"
-                                                 Width="400" 
-                                                 Style="{StaticResource inputTextBox}"/>
-                                        <TextBlock Text="Address 1"
-                                                   Style="{StaticResource inputTextBlock}"
-                                                   Width="400"/>
-                                        <TextBox Text="{Binding selectedCompany.companyAddress1, Mode=TwoWay}"
-                                                 Width="400" 
-                                                 Style="{StaticResource inputTextBox}"/>
-                                        <TextBlock Text="Address 2"
-                                                   Style="{StaticResource inputTextBlock}"
-                                                   Width="400"/>
-                                        <TextBox Text="{Binding selectedCompany.companyAddress2, Mode=TwoWay}"
-                                                 Width="400" 
-                                                 Style="{StaticResource inputTextBox}"/>
-                                        <TextBlock Text="City"
-                                                   Style="{StaticResource inputTextBlock}"
-                                                   Width="400"/>
-                                        <TextBox Text="{Binding selectedCompany.companyCity, Mode=TwoWay}"
-                                                 Width="400" 
-                                                 Style="{StaticResource inputTextBox}"/>
-                                        <TextBlock Text="County"
-                                                   Style="{StaticResource inputTextBlock}"/>
-                                        <TextBox Text="{Binding selectedCompany.companyCounty, Mode=TwoWay}"
-                                                 Width="400" 
-                                                 Style="{StaticResource inputTextBox}"/>
-                                        <TextBlock Text="Post Code"
-                                                   Style="{StaticResource inputTextBlock}" 
-                                                   Width="400"/>
-                                        <TextBox Text="{Binding selectedCompany.companyPostCode, Mode=TwoWay}"
-                                                 Width="200" 
-                                                 Style="{StaticResource inputTextBox}"/>
-                                        <TextBlock Text="Prospects"
-                                                   Style="{StaticResource inputTextBlock}"
-                                                   Width="400"/>
-                                        <TextBox Text="{Binding selectedCompany.companyProspects, Mode=TwoWay}"
-                                                 Width="400"
-                                                 Style="{StaticResource inputTextBox}"/>
-                                        <TextBlock Text="Telephone"
-                                                   Style="{StaticResource inputTextBlock}"/>
-                                        <TextBox Text="{Binding selectedCompany.companyTelephone, Mode=TwoWay}"
-                                                 Width="400"
-                                                 Style="{StaticResource inputTextBox}"/>
-                                        <TextBlock Text="Call Back Date"
-                                                   Style="{StaticResource inputTextBlock}"
-                                                   Width="400"/>
-                                        <CalendarDatePicker Width="200" 
-                                                            MinWidth="200"
-                                                            Date="{Binding selectedCompany.companyCallBackDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"/>
-                                        <TextBlock Text="Call Back Notes"
-                                                   Style="{StaticResource inputTextBlock}"/>
-                                        <TextBox Text="{Binding selectedCompany.companyCallBackDetails, Mode=TwoWay}"
-                                                 Width="400"
-                                                 Style="{StaticResource inputLargeTextBox}" 
-                                                 ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                                                 AcceptsReturn="True"/>
-                                        
-                                        
-                                        <TextBlock Text="Product"
-                                                   Style="{StaticResource inputTextBlock}"/>
-                                        <TextBox Text="{Binding selectedCompany.companyProduct, Mode=TwoWay}"
-                                                 Width="400"
-                                                 Style="{StaticResource inputTextBox}"/>
-                                        <TextBlock Text="Website"
-                                                   Style="{StaticResource inputTextBlock}" Visibility="Collapsed"/>
-                                        <TextBox Text="{Binding selectedCompany.companyWebsite, Mode=TwoWay}"
-                                                 Width="400"
-                                                 Style="{StaticResource inputTextBox}" Visibility="Collapsed"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </HubSection>
-                            -->
-                        <!--Company History-->
-                        <!--
-                            <HubSection Header="Company History">
-                                <DataTemplate>
-                                    <StackPanel Grid.Column="1">
-                                        <ListView Width="400" 
-                                                  HorizontalAlignment="Left"
-                                                  ItemsSource="{Binding selectedCompanyHistory}">
-                                            <interactivity:Interaction.Behaviors>
-                                                <core:EventTriggerBehavior EventName="ItemClick">
-                                                    <core:CallMethodAction MethodName="companyHistoryInvoked" 
-                                                                           TargetObject="{Binding Mode=OneWay}"/>
-                                                </core:EventTriggerBehavior>
-                                            </interactivity:Interaction.Behaviors>
-                                            <ListView.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="100"/>
-                                                            <ColumnDefinition Width="300"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="100"/>
-                                                        </Grid.RowDefinitions>
-                                                        <TextBlock Style="{StaticResource inputTextBlock}"
-                                                                   Grid.Column="1"
-                                                                   Text="Lots of text in this box to pretend that it is actually some company history when really it's just a bunch of spammy things" 
-                                                                   HorizontalAlignment="Stretch" MaxWidth="300" Width="300"
-                                                                   />
-                                                    </Grid>
-                                                </DataTemplate>
-                                            </ListView.ItemTemplate>
-                                        </ListView>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </HubSection>
-                            -->
-                        <!--Contact Details-->
-                        <!--
-                            <HubSection>
-                                <DataTemplate>
-                                    <StackPanel Grid.Column="2">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="340"/>
-                                                <ColumnDefinition Width="60"/>
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel Orientation="Vertical">
-                                                <TextBlock Text="Contact"
-                                                           Style="{StaticResource inputTextBlock}"/>
-                                                <ComboBox Width="330"
-                                                          Style="{StaticResource inputComboBox}">
-                                                </ComboBox>
-                                            </StackPanel>
-                                            <StackPanel Orientation="Vertical" 
-                                                            Grid.Column="1">
-                                                <TextBlock Text="Default"
-                                                           Style="{StaticResource inputTextBlock}"/>
-                                                <ToggleSwitch OffContent=""
-                                                              OnContent="" 
-                                                              Margin="5,0,0,0">
-                                                </ToggleSwitch>
-                                            </StackPanel>
-                                        </Grid>
-                                        <TextBlock Text="Title"
-                                                   Style="{StaticResource inputTextBlock}"/>
-                                        <TextBox Style="{StaticResource inputTextBox}"
-                                                 Width="100"/>
-                                        <TextBlock Text="First Name"
-                                                   Style="{StaticResource inputTextBlock}"/>
-                                        <TextBox Style="{StaticResource inputTextBox}"
-                                                 Width="400"/>
-                                        <TextBlock Text="Last Name"
-                                                   Style="{StaticResource inputTextBlock}"/>
-                                        <TextBox Style="{StaticResource inputTextBox}"
-                                                 Width="400"/>
-                                        <TextBlock Text="Telephone"
-                                                   Style="{StaticResource inputTextBlock}"/>
-                                        <TextBox Style="{StaticResource inputTextBox}"
-                                                 Width="400"/>
-                                        <TextBlock Text="Email"
-                                                   Style="{StaticResource inputTextBlock}"/>
-                                        <TextBox Style="{StaticResource inputTextBox}"
-                                                 Width="400"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </HubSection>
-                            -->
-                        <!--Contact History-->
-                        <!--
-                            <HubSection Header="Contact History">
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <ListView Width="400" HorizontalAlignment="Left" Height="386">
-                                            <ListViewItem>
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="70"/>
-                                                        <ColumnDefinition Width="330"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Text="01/01/16"/>
-                                                    <TextBlock Text="123 abc 123 abc 123 abc 123 abc 123 abc 123 abc 123 abc 123 abc 123 abc 123 abc 123 abc 123 abc 123 abc 123 abc 123 abc 123 abc 123 abc 123 abc 123 abc 123 abc 123"
-                                                               Grid.Column="1" 
-                                                               TextWrapping="WrapWholeWords"/>
-                                                </Grid>
-                                            </ListViewItem>
-                                        </ListView>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </HubSection>
-                            -->
-                        <!--Company Address Details-->
-                        <!--
-                            <HubSection>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        
-                                    </StackPanel>
-                                </DataTemplate>
-                            </HubSection>
-                        </Hub>-->
                     </PivotItem.Content>
                 </PivotItem>
                 <PivotItem Header="Quotes">
@@ -490,12 +302,12 @@
                           Icon="Shop">
                 <AppBarButton.Flyout>
                     <MenuFlyout>
-                        <MenuFlyoutItem Text="Data Order"/>
-                        <MenuFlyoutItem Text="Email Order"/>
-                        <MenuFlyoutItem Text="Direct Mailing Order"/>
-                        <MenuFlyoutItem Text="Print Order"/>
-                        <MenuFlyoutItem Text="SchoolSend Order"/>
-                        <MenuFlyoutItem Text="Shared Mailing Order"/>
+                        <MenuFlyoutItem Text="Data"/>
+                        <MenuFlyoutItem Text="Email"/>
+                        <MenuFlyoutItem Text="Direct Mailing"/>
+                        <MenuFlyoutItem Text="Print"/>
+                        <MenuFlyoutItem Text="SchoolSend"/>
+                        <MenuFlyoutItem Text="Shared Mailing"/>
                     </MenuFlyout>
                 </AppBarButton.Flyout>
             </AppBarButton>

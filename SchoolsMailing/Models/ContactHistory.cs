@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite.Net.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace SchoolsMailing.Models
 {
     class ContactHistory
     {
+        [PrimaryKey, AutoIncrement]
         public long ID { get; set; }
         public long contactID { get; set; }
         public string contactHistoryDetails { get; set; }

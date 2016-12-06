@@ -4,6 +4,7 @@ using SQLite.Net.Platform.WinRT;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -63,6 +64,8 @@ namespace SchoolsMailing.DAL
             }
         }
 
+        #region Get data list
+
         public static List<Company> GetAllCompanies()
         {
             List<Company> c;
@@ -76,6 +79,22 @@ namespace SchoolsMailing.DAL
             List<Company> model = new List<Company>(c);
             return model;
         }
+
+        public static ObservableCollection<CompanyHistory> GetAllHistoryByCompany(long companyID)
+        {
+            List<CompanyHistory> h;
+            ObservableCollection<CompanyHistory> h2;
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                h = (from p in db.Table<CompanyHistory>()
+                     where p.companyID == companyID
+                     select p).ToList();
+            }
+            h2 = new ObservableCollection<CompanyHistory>(h);
+            return h2;
+        }
+
+        #endregion
 
         #region Get by ID
         public static Company GetCompanyById(long companyID)
@@ -103,6 +122,7 @@ namespace SchoolsMailing.DAL
         }
         #endregion
 
+        #region Saving
         public static void SaveCompany(Company company)
         {
             // Create a new connection
@@ -120,6 +140,26 @@ namespace SchoolsMailing.DAL
                 }
             }
         }
+        public static void SaveHistory(CompanyHistory history)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                if (history.ID == 0)
+                {
+                    // New
+                    db.Insert(history);
+                    Debug.Write("History inserted");
+                }
+                else
+                {
+                    // Update
+                    db.Update(history);
+                    Debug.Write("History updated");
+                }
+            }
+        }
+        #endregion
+
         public static ObservableCollection<Contact> GetContactsByCompany(int companyID)
         {
             List<Contact> c;

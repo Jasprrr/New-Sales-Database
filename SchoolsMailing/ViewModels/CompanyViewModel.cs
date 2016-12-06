@@ -29,7 +29,6 @@ namespace SchoolsMailing.ViewModels
         {
             // register company parameter
             MessengerInstance.Register<NotificationMessage<string>>(this, setCompanyID);
-            addTestData();
             MessengerInstance.Send<string>("false");
         }
 
@@ -55,12 +54,12 @@ namespace SchoolsMailing.ViewModels
                 if(_selectedCompanyHistory != value)
                 {
                     _selectedCompanyHistory = value;
-                    RaisePropertyChanged("companyHistory");
+                    RaisePropertyChanged("selectedCompanyHistory");
                 }
             }
         }
-        private ObservableCollection<Contact> _companyContacts;
-        public ObservableCollection<Contact> companyContacts
+        private List<Contact> _companyContacts;
+        public List<Contact> companyContacts
         {
             get { return _companyContacts; }
             set
@@ -71,55 +70,6 @@ namespace SchoolsMailing.ViewModels
                     RaisePropertyChanged("companyContacts");
                 }
             }
-        }
-
-        public async void addTestData()
-        {
-            ObservableCollection<CompanyDataOrder> c = new ObservableCollection<CompanyDataOrder>();
-            CompanyDataOrder d1 = new CompanyDataOrder() { companyID = 1, dataCost = 12500.00, dataDetails = "a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 a lot of data 1 ", orderDate = Convert.ToDateTime("01/01/16"), dataID = 1, orderCode = "L200"};
-            CompanyDataOrder d2 = new CompanyDataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 2", orderDate = Convert.ToDateTime("02/01/16"), dataID = 1, orderCode = "L201"};
-            CompanyDataOrder d3 = new CompanyDataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 3", orderDate = Convert.ToDateTime("03/01/16"), dataID = 1, orderCode = "L202"};
-            CompanyDataOrder d4 = new CompanyDataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 4", orderDate = Convert.ToDateTime("04/01/16"), dataID = 1, orderCode = "L204"};
-            CompanyDataOrder d5 = new CompanyDataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 5", orderDate = Convert.ToDateTime("05/01/16"), dataID = 1, orderCode = "L205"};
-            CompanyDataOrder d6 = new CompanyDataOrder() { companyID = 1, dataCost = 125.00, dataDetails = "a lot of data 6", orderDate = Convert.ToDateTime("06/01/16"), dataID = 1, orderCode = "L206"};
-            c.Add(d1);
-            c.Add(d2);
-            c.Add(d3);
-            c.Add(d4);
-            c.Add(d5);
-            c.Add(d6);
-            companyDataOrder = c;
-            ObservableCollection<CompanyHistory> h = new ObservableCollection<CompanyHistory>();
-            CompanyHistory h1 = new CompanyHistory() { companyHistoryDate = Convert.ToDateTime("02/01/16"), isVisible = true, companyHistoryDetails = "Some details about this company Some details about this company Some details about this company Some details about this company Some details about this company", companyID=1, ID=1 };
-            CompanyHistory h2 = new CompanyHistory() { companyHistoryDate = Convert.ToDateTime("03/01/16"), isVisible = true, companyHistoryDetails = "Some details about this company", companyID = 1, ID = 1 };
-            h.Add(h1);
-            h.Add(h2);
-            selectedCompanyHistory = h;
-
-            //var txtBox = new TextBox { Width=200, MinHeight=32 };
-            //Binding binding = new Binding() { Path = new PropertyPath("123") };
-            //txtBox.SetBinding(TextBox.TextProperty, binding);
-            //historyDialog.Content = txtBox;
-            //await historyDialog.ShowAsync();
-
-            //var dial = new HistoryDialog()
-            //{
-            //    DataContext = new
-            //    {
-            //        companyHistory = h1.companyHistoryDetails
-            //    }
-            //};
-
-            //var result = await dial.ShowAsync();
-
-            //if (result == ContentDialogResult.Primary)
-            //{
-            //    var item = (TextBox)dial.Content;
-            //}
-            //else
-            //{
-            //    Debug.Write("Canceled!");
-            //}
         }
 
         #region Company Data
@@ -173,7 +123,7 @@ namespace SchoolsMailing.ViewModels
             }
 
             selectedCompany = DataAccessLayer.GetCompanyById(ID);
-            //companyContacts = DataAccessLayer.
+            GetHistory();
 
             //MobileServiceInvalidOperationException exception = null;
             //try
@@ -211,39 +161,10 @@ namespace SchoolsMailing.ViewModels
             }
         }
 
-        public void historyInvoked(object sender, object parameter)
-        {
-            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
-            //Get clicked company
-            var history = arg.ClickedItem as CompanyHistory;
-            //Get clicked company ID
 
-            try
-            {
-                h = Int32.Parse(history.ToString());
-            }
-            catch (FormatException e) { }
-        }
+        //public List<CompanyHistory> companyHistoryList;
 
         #region Company History
-
-        private RelayCommand _newCompanyHistory;
-        public RelayCommand newCompanyHistory
-        {
-            get
-            {
-                if (_newCompanyHistory == null)
-                {
-                    _newCompanyHistory = new RelayCommand(() =>
-                    {
-
-                    });
-                }
-
-                return _newCompanyHistory;
-
-            }
-        }
 
         private CompanyHistory _invokedCompanyHistory;
         public CompanyHistory invokedCompanyHistory
@@ -258,29 +179,68 @@ namespace SchoolsMailing.ViewModels
                 }
             }
         }
-        
+
+        public void historyInvoked(object sender, object parameter)
+        {
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs; //Get invoked item
+            var history = arg.ClickedItem as CompanyHistory; //Get history
+            long HistoryID = history.ID;
+            createCompanyHistoryDialog(HistoryID); //Create dialog
+        }
+
+        private RelayCommand _newCompanyHistory;
+        public RelayCommand newCompanyHistory
+        {
+            get
+            {
+                if (_newCompanyHistory == null)
+                {
+                    _newCompanyHistory = new RelayCommand(() =>
+                    {
+                        createCompanyHistoryDialog();
+                    });
+                }
+
+                return _newCompanyHistory;
+
+            }
+        }
+                
         public async void createCompanyHistoryDialog(long HistoryID = 0)
         {
             if (HistoryID != 0)
             {
-                invokedCompanyHistory = DataAccessLayer.GetHistoryByID(HistoryID);
+                invokedCompanyHistory = DataAccessLayer.GetHistoryByID(HistoryID); //Get company history
             }
             else
             {
-                invokedCompanyHistory = new CompanyHistory();
+                invokedCompanyHistory = new CompanyHistory(); //Create new history
+                invokedCompanyHistory.companyHistoryDate = DateTime.Now; //Set date to today
             }
 
-            var newHistoryDialog = new HistoryDialog();
-            var result = await newHistoryDialog.ShowAsync();
+            var newHistoryDialog = new HistoryDialog(); //Create new input dialog
+            newHistoryDialog.SecondaryButtonText = "Delete";
+            var result = await newHistoryDialog.ShowAsync(); //Await result
+
             if(result == ContentDialogResult.Primary)
             {
-                var item = (TextBox)newHistoryDialog.Content;
+                var item = newHistoryDialog.Content; //Get user input
+                invokedCompanyHistory.companyHistoryDetails = item.ToString(); //Convert to string
+                invokedCompanyHistory.companyID = selectedCompany.ID; //Attribute company
+                DataAccessLayer.SaveHistory(invokedCompanyHistory); //Save history
             }
             else
             {
 
             }
+            GetHistory();
         }
+
+        public void GetHistory()
+        {
+            selectedCompanyHistory = DataAccessLayer.GetAllHistoryByCompany(ID);
+        }
+        
 
         #endregion
         
