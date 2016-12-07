@@ -6,37 +6,37 @@
     xmlns:conv="using:SchoolsMailing.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    d:DesignHeight="200"
-    d:DesignWidth="400">
-    
+    mc:Ignorable="d">
+
     <UserControl.Resources>
-        <conv:BooleanToVisibilityConverter x:Key="boolVisibility"/>
+        <conv:StringFormatter x:Key="formatString"/>
     </UserControl.Resources>
-    
-    <Grid>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="300"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Text="01/01/16" 
-                       HorizontalAlignment="Center" 
-                       Margin="12" 
-                       VerticalAlignment="Top"/>
-            <StackPanel Grid.Column="1">
-                <TextBlock Text="booked something at some point booked something at some point booked something at some point booked something at some point "
-                       Grid.Column="1" 
-                       Margin="12" 
-                       TextWrapping="WrapWholeWords" 
-                       Visibility="{Binding historyEdit, Converter={StaticResource boolVisibility}}"/>
-                <TextBox Text="booked something at some point booked something at some point booked something at some point booked something at some point 1"
-                       Grid.Column="1" 
-                       Margin="12" 
-                       TextWrapping="Wrap"
-                       Visibility="{Binding historyEdit,Converter={StaticResource boolVisibility}}"/>
-            </StackPanel>
-            
-        </Grid>
+
+    <Grid MinHeight="42" 
+          MaxHeight="280" 
+          VerticalAlignment="Top" 
+          Background="White" 
+          BorderThickness="1" 
+          BorderBrush="#FF151515" 
+          CornerRadius="0" 
+          Margin="0,2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="350"/>
+        </Grid.ColumnDefinitions>
+        <Border Background="#FF706F6F">
+            <TextBlock Text="{Binding Path=companyHistoryDate, Converter={StaticResource formatString}, ConverterParameter=\{0:d\}}"
+                   HorizontalAlignment="Center" 
+                   Padding="0,10,0,0" 
+                   FontSize="13" 
+                   VerticalAlignment="Top" 
+                       Foreground="White"/>
+        </Border>
+        <TextBlock Grid.Column="1"
+                   Text="{Binding Path=companyHistoryDetails}" 
+                   Padding="12,10" 
+                   TextWrapping="Wrap" 
+                   TextTrimming="CharacterEllipsis" 
+                   FontSize="14"/>
     </Grid>
 </UserControl>

@@ -88,6 +88,7 @@ namespace SchoolsMailing.DAL
             {
                 h = (from p in db.Table<CompanyHistory>()
                      where p.companyID == companyID
+                     orderby p.companyHistoryDate descending
                      select p).ToList();
             }
             h2 = new ObservableCollection<CompanyHistory>(h);

@@ -94,7 +94,16 @@ namespace SchoolsMailing.ViewModels
         {
             get
             {
-                DateTime dateTimeToOffset = DateTime.SpecifyKind(selectedCompany.companyCallBackDate, DateTimeKind.Utc);
+                DateTime dateTimeToOffset = DateTime.SpecifyKind(selectedCompany.companyCallBack, DateTimeKind.Utc);
+                DateTimeOffset OffsetCallBack = dateTimeToOffset;
+                return dateTimeToOffset;
+            }
+        }
+        public DateTimeOffset companyLastCall
+        {
+            get
+            {
+                DateTime dateTimeToOffset = DateTime.SpecifyKind(selectedCompany.companyLastCall, DateTimeKind.Utc);
                 DateTimeOffset OffsetCallBack = dateTimeToOffset;
                 return dateTimeToOffset;
             }
@@ -102,7 +111,7 @@ namespace SchoolsMailing.ViewModels
 
         #endregion
 
-        
+
 
         //public MobileServiceCollection<Company, Company> companyCollection;
 
@@ -197,7 +206,7 @@ namespace SchoolsMailing.ViewModels
                 {
                     _newCompanyHistory = new RelayCommand(() =>
                     {
-                        createCompanyHistoryDialog();
+                        createCompanyHistoryDialog(); //Create dialog
                     });
                 }
 
@@ -208,32 +217,39 @@ namespace SchoolsMailing.ViewModels
                 
         public async void createCompanyHistoryDialog(long HistoryID = 0)
         {
+            var newHistoryDialog = new HistoryDialog(); //Create new input dialog
+
             if (HistoryID != 0)
             {
                 invokedCompanyHistory = DataAccessLayer.GetHistoryByID(HistoryID); //Get company history
+                newHistoryDialog.SecondaryButtonText = "Delete"; //Set secondary option
             }
             else
             {
                 invokedCompanyHistory = new CompanyHistory(); //Create new history
                 invokedCompanyHistory.companyHistoryDate = DateTime.Now; //Set date to today
+                newHistoryDialog.SecondaryButtonText = "Cancel"; //Set secondary option
             }
 
-            var newHistoryDialog = new HistoryDialog(); //Create new input dialog
-            newHistoryDialog.SecondaryButtonText = "Delete";
-            var result = await newHistoryDialog.ShowAsync(); //Await result
+            var result = await newHistoryDialog.ShowAsync(); //Show dialog & await result
 
-            if(result == ContentDialogResult.Primary)
+            if(result == ContentDialogResult.Primary) //If primary option chosen
             {
                 var item = newHistoryDialog.Content; //Get user input
                 invokedCompanyHistory.companyHistoryDetails = item.ToString(); //Convert to string
                 invokedCompanyHistory.companyID = selectedCompany.ID; //Attribute company
                 DataAccessLayer.SaveHistory(invokedCompanyHistory); //Save history
+                GetHistory(); //Refresh history
             }
-            else
+            else if(result == ContentDialogResult.Secondary) //If secondary option chosen
             {
-
+                if(HistoryID != 0)
+                {
+                    //Delete history
+                    GetHistory(); //Refresh history if item deleted
+                }
+                
             }
-            GetHistory();
         }
 
         public void GetHistory()

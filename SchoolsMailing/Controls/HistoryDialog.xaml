@@ -15,8 +15,12 @@
     <TextBox x:Name="HistoryInput" 
              Text="{Binding invokedCompanyHistory.companyHistoryDetails, Mode=TwoWay}" 
              Margin="0,4,0,0" 
-             Height="120" 
+             MinHeight="120"
+             MinWidth="320"
              ScrollViewer.VerticalScrollBarVisibility="Visible" 
              AcceptsReturn="True" 
-             TextWrapping="Wrap" Width="400" />
+             TextWrapping="Wrap" 
+             Padding="10,3" 
+             MaxWidth="600" 
+             MaxHeight="420" />
 </ContentDialog>
