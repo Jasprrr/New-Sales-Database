@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml;
 using SchoolsMailing.Controls;
+using SchoolsMailing.Views;
 
 namespace SchoolsMailing.ViewModels
 {
@@ -28,49 +29,58 @@ namespace SchoolsMailing.ViewModels
         public CompanyViewModel(IMessenger messenger, NavigationService navigationService) : base(messenger, navigationService)
         {
             // register company parameter
-            MessengerInstance.Register<NotificationMessage<string>>(this, setCompanyID);
+            MessengerInstance.Register<NotificationMessage<Int64>>(this, SetUp);
             MessengerInstance.Send<string>("false");
         }
 
+        public void SetUp(NotificationMessage<Int64> obj)
+        {
+            if (obj.Notification == "CompanyViewModel")
+            {
+                long id = obj.Content;
+                selectedCompany = DataAccessLayer.GetCompanyById(id);
+                companyContacts = DataAccessLayer.GetAllContactsByCompany(id);
+                GetHistory();
+            }
+
+            //MobileServiceInvalidOperationException exception = null;
+            //try
+            //{
+            //    //Turn azure table to bindable collection
+            //    companyCollection = await companyTable
+            //                            .Where(selectedCompany => selectedCompany.ID == ID)
+            //                            .ToCollectionAsync();
+            //    //Get record from collection
+            //    selectedCompany = companyCollection.FirstOrDefault();
+            //}
+            //catch (MobileServiceInvalidOperationException e)
+            //{
+            //    exception = e;
+            //}
+        }
+
+        #region Data Lists
         private ObservableCollection<CompanyDataOrder> _companyDataOrder;
         public ObservableCollection<CompanyDataOrder> companyDataOrder
         {
             get { return _companyDataOrder; }
-            set
-            {
-                if(_companyDataOrder != value)
-                {
-                    _companyDataOrder = value;
-                    RaisePropertyChanged("companyDataOrder");
-                }
-            }
+            set { if(_companyDataOrder != value) { _companyDataOrder = value; RaisePropertyChanged("companyDataOrder"); } }
         }
+
         private ObservableCollection<CompanyHistory> _selectedCompanyHistory;
         public ObservableCollection<CompanyHistory> selectedCompanyHistory
         {
             get { return _selectedCompanyHistory; }
-            set
-            {
-                if(_selectedCompanyHistory != value)
-                {
-                    _selectedCompanyHistory = value;
-                    RaisePropertyChanged("selectedCompanyHistory");
-                }
-            }
+            set { if(_selectedCompanyHistory != value) { _selectedCompanyHistory = value; RaisePropertyChanged("selectedCompanyHistory"); } }
         }
-        private List<Contact> _companyContacts;
-        public List<Contact> companyContacts
+
+        private ObservableCollection<Contact> _companyContacts;
+        public ObservableCollection<Contact> companyContacts
         {
             get { return _companyContacts; }
-            set
-            {
-                if(_companyContacts != value)
-                {
-                    _companyContacts = value;
-                    RaisePropertyChanged("companyContacts");
-                }
-            }
+            set { if(_companyContacts != value) { _companyContacts = value; RaisePropertyChanged("companyContacts"); } }
         }
+        #endregion
 
         #region Company Data
         //Selected company's ID
@@ -79,16 +89,9 @@ namespace SchoolsMailing.ViewModels
         private Company _selectedCompany;
         public Company selectedCompany {
             get { return _selectedCompany; }
-            set
-            {
-                if (_selectedCompany != value)
-                {
-                    _selectedCompany = value;
-                    //Refresh bindings
-                    RaisePropertyChanged("selectedCompany");
-                }
-            }
+            set { if (_selectedCompany != value) { _selectedCompany = value; RaisePropertyChanged("selectedCompany"); } }
         }
+
         //Allows binding from DateTime to DateTimeOffset
         public DateTimeOffset companyCallBack
         {
@@ -111,67 +114,25 @@ namespace SchoolsMailing.ViewModels
 
         #endregion
 
-
-
-        //public MobileServiceCollection<Company, Company> companyCollection;
-
-        public async void setCompanyID(NotificationMessage<string> obj)
+        #region Contact Data
+        public bool ContactDirty = false; //If contact has been changed
+        
+        private Contact _selectedContact; //Contact selected from drop down
+        public Contact selectedContact
         {
-            //Name of parameter
-            string content = obj.Content;
-            //Parameter
-            string notification = obj.Notification;
-            try
-            {
-                //Convert ID string to integer
-                ID = Int32.Parse(notification);
-            }
-            catch (FormatException e)
-            {
-                Debug.Write(e.Message);
-            }
-
-            selectedCompany = DataAccessLayer.GetCompanyById(ID);
-            GetHistory();
-
-            //MobileServiceInvalidOperationException exception = null;
-            //try
-            //{
-            //    //Turn azure table to bindable collection
-            //    companyCollection = await companyTable
-            //                            .Where(selectedCompany => selectedCompany.ID == ID)
-            //                            .ToCollectionAsync();
-            //    //Get record from collection
-            //    selectedCompany = companyCollection.FirstOrDefault();
-            //}
-            //catch (MobileServiceInvalidOperationException e)
-            //{
-            //    exception = e;
-            //}
+            get { return _selectedContact; }
+            set { if (_selectedContact != value) { _selectedContact = value; RaisePropertyChanged("selectedContact"); } }
+        }
+        
+        private Contact _boundContact; //Contact binding - to allow saving during SelectionChanged event
+        public Contact boundContact
+        {
+            get { return _boundContact; }
+            set { if (_boundContact != value) {  _boundContact = value; RaisePropertyChanged("boundContact"); } }
         }
 
-        private RelayCommand _saveCompany;
-        public RelayCommand saveCompany
-        {
-            get
-            {
-                if (_saveCompany == null)
-                {
-                    _saveCompany = new RelayCommand(() =>
-                    {
-                        selectedCompany.companyModified = DateTime.Now;
-                        selectedCompany.companyInitial = selectedCompany.companyName.Substring(0, 1);
-                        DataAccessLayer.SaveCompany(selectedCompany);
-                    });
-                }
-
-                return _saveCompany;
-
-            }
-        }
-
-
-        //public List<CompanyHistory> companyHistoryList;
+        public Contact originalContact;
+        #endregion
 
         #region Company History
 
@@ -245,8 +206,8 @@ namespace SchoolsMailing.ViewModels
             {
                 if(HistoryID != 0)
                 {
-                    //Delete history
-                    GetHistory(); //Refresh history if item deleted
+                    //TODO: Delete history
+                    GetHistory(); //Refresh history
                 }
                 
             }
@@ -254,12 +215,102 @@ namespace SchoolsMailing.ViewModels
 
         public void GetHistory()
         {
-            selectedCompanyHistory = DataAccessLayer.GetAllHistoryByCompany(ID);
+            selectedCompanyHistory = DataAccessLayer.GetAllHistoryByCompany(selectedCompany.ID);
         }
-        
+
 
         #endregion
-        
 
+        #region Commands
+        private RelayCommand _newContact;
+        public RelayCommand newContact
+        {
+            get
+            {
+                if (_newContact == null)
+                {
+                    _newContact = new RelayCommand(() =>
+                    {
+                        this.NavigationService.Navigate(typeof(NewContact)); //Navigate to view
+                        MessengerInstance.Send<NotificationMessage<Int64>>(new NotificationMessage<long>(selectedCompany.ID, "NewContactViewModel")); //Send company parameter
+                    });
+                }
+                return _newContact;
+            }
+        }
+
+        private RelayCommand _saveCompany;
+        public RelayCommand saveCompany
+        {
+            get
+            {
+                if (_saveCompany == null)
+                {
+                    _saveCompany = new RelayCommand(() =>
+                    {
+                        selectedCompany.companyModified = DateTime.Now; //Set date modified
+                        selectedCompany.companyInitial = selectedCompany.companyName.Substring(0, 1); //Set company initial
+                        DataAccessLayer.SaveCompany(selectedCompany);
+                    });
+                }
+
+                return _saveCompany;
+
+            }
+        }
+
+        private RelayCommand _contactInvoked;
+        public RelayCommand contactInvoked
+        {
+            get
+            {
+                if (_contactInvoked == null)
+                {
+                    _contactInvoked = new RelayCommand(async () =>
+                    {
+                        if(boundContact != originalContact)
+                        {
+                            ContentDialog saveContact = new ContentDialog() //Ask user if they want to save changes to contact changes
+                            {
+                                Title = "Save Changes",
+                                Content = string.Format("Do you want to save changes to contact {0}", boundContact.contactForename.ToString()),
+                                PrimaryButtonText = "Yes",
+                                SecondaryButtonText = "No"
+                            };
+
+                            ContentDialogResult result = await saveContact.ShowAsync(); //Await input
+
+                            if (result == ContentDialogResult.Primary)
+                            {
+                                DataAccessLayer.SaveContact(boundContact); //Save contact
+                            }
+                        }
+
+                        boundContact = selectedContact; //Change binding to selected contact
+                        originalContact = selectedContact; //Set contact before changes
+                    });
+                }
+                return _contactInvoked;
+            }
+        }
+
+        private RelayCommand _refreshCompany;
+        public RelayCommand refreshCompany
+        {
+            get
+            {
+                if (_refreshCompany == null)
+                {
+                    _refreshCompany = new RelayCommand(() =>
+                    {
+                        
+                    });
+                }
+
+                return _refreshCompany;
+
+            }
+        }
+        #endregion
     }
 }

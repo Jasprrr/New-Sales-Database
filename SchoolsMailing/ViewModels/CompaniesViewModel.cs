@@ -54,9 +54,6 @@ namespace SchoolsMailing.ViewModels
         //        exception = e;
         //    }
         //}
-
-
-        
         
         private List<Company> _companies;
         public List<Company> companies
@@ -132,7 +129,7 @@ namespace SchoolsMailing.ViewModels
             //Navigate to CompanyView
             this.NavigationService.Navigate(typeof(CompanyView));
             //Pass ID parameter
-            MessengerInstance.Send<NotificationMessage<String>>(new NotificationMessage<string>("CompanyID", _companyID));
+            MessengerInstance.Send<NotificationMessage<Int64>>(new NotificationMessage<Int64>(company.ID, "CompanyViewModel"));
         }
 
         //public ObservableCollection<Company> GetAllCompanies()

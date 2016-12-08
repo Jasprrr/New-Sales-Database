@@ -41,6 +41,7 @@
             conn.CreateTable<Company>();
             conn.CreateTable<Contact>();
             conn.CreateTable<CompanyHistory>();
+            conn.CreateTable<Contact>();
 
             this.ItemInvokedCommand = new RelayCommand<ListViewItem>(this.ItemInvoked);
 

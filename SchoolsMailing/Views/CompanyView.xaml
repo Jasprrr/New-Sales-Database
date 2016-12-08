@@ -80,7 +80,7 @@
                                     </Grid>
                                     <TextBlock Text="Notes"
                                                Style="{StaticResource inputTextBlock}"/>
-                                    <TextBox Text="{Binding selectedCompany.companyCallBackDetails, Mode=TwoWay}"
+                                    <TextBox Text="{Binding selectedCompany.companyNotes, Mode=TwoWay}"
                                              Width="300"
                                              Style="{StaticResource inputLargeTextBox}" 
                                              ScrollViewer.VerticalScrollBarVisibility="Auto" 
@@ -99,30 +99,39 @@
                                     <TextBlock Text="Contact"
                                                Style="{StaticResource inputTextBlock}"/>
                                     <ComboBox Style="{StaticResource inputComboBox}"
-                                              Width="300"/>
+                                              Width="300"
+                                              ItemsSource="{Binding companyContacts, Mode=OneWay}"
+                                              DisplayMemberPath="contactForename" 
+                                              SelectedItem="{Binding selectedContact, Mode=TwoWay}">
+                                        <interactivity:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="SelectionChanged">
+                                                <core:InvokeCommandAction Command="{Binding Path=contactInvoked}" />
+                                            </core:EventTriggerBehavior>
+                                        </interactivity:Interaction.Behaviors>
+                                    </ComboBox>
                                     <TextBlock Text="Title"
                                                Style="{StaticResource inputTextBlock}"/>
-                                    <TextBox Text=""
+                                    <TextBox Text="{Binding boundContact.contactTitle, Mode=TwoWay}"
                                              Width="150"
                                              Style="{StaticResource inputTextBox}"/>
                                     <TextBlock Text="Forename"
                                                Style="{StaticResource inputTextBlock}"/>
-                                    <TextBox Text=""
+                                    <TextBox Text="{Binding boundContact.contactForename, Mode=TwoWay}"
                                              Width="300"
                                              Style="{StaticResource inputTextBox}"/>
                                     <TextBlock Text="Surname"
                                                Style="{StaticResource inputTextBlock}"/>
-                                    <TextBox Text=""
+                                    <TextBox Text="{Binding boundContact.contactSurname, Mode=TwoWay}"
                                              Width="300"
                                              Style="{StaticResource inputTextBox}"/>
                                     <TextBlock Text="Telephone"
                                                Style="{StaticResource inputTextBlock}"/>
-                                    <TextBox Text=""
+                                    <TextBox Text="{Binding boundContact.contactTelephone, Mode=TwoWay}"
                                              Width="300"
                                              Style="{StaticResource inputTextBox}"/>
                                     <TextBlock Text="Email"
                                                Style="{StaticResource inputTextBlock}"/>
-                                    <TextBox Text=""
+                                    <TextBox Text="{Binding boundContact.contactEmail, Mode=TwoWay}"
                                              Width="300"
                                              Style="{StaticResource inputTextBox}"/>
                                 </StackPanel>
@@ -409,7 +418,13 @@
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
             <AppBarButton Label="Contact"
-                          Icon="AddFriend"/>
+                          Icon="AddFriend">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:InvokeCommandAction Command="{Binding Path=newContact}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AppBarButton>
             <AppBarButton Label="History"
                           Icon="Comment">
                 <interactivity:Interaction.Behaviors>

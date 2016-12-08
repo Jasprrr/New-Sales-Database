@@ -5,40 +5,68 @@
     xmlns:local="using:SchoolsMailing.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    xmlns:DataContext="using:SchoolsMailing.ViewModels"
+    xmlns:conv="using:SchoolsMailing.Converters"
+    xmlns:controlModels="using:SchoolsMailing.Controls.Models"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    DataContext="{Binding NewContactViewModel, Source={StaticResource VmLocator}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Hub>
-            <HubSection>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="Title"
-                                   Style="{StaticResource inputTextBlock}"/>
-                        <TextBox Style="{StaticResource inputTextBox}"
-                                 Width="200"/>
-                        <TextBlock Text="First Name"
-                                   Style="{StaticResource inputTextBlock}"/>
-                        <TextBox Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
-                        <TextBlock Text="Last Name"
-                                   Style="{StaticResource inputTextBlock}"/>
-                        <TextBox Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
-                        <TextBlock Text="Telephone"
-                                   Style="{StaticResource inputTextBlock}"/>
-                        <TextBox Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
-                        <TextBlock Text="Email"
-                                   Style="{StaticResource inputTextBlock}"/>
-                        <TextBox Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
-                        <TextBlock Text="Notes"
-                                   Style="{StaticResource inputTextBlock}"/>
-                        <TextBox Style="{StaticResource inputLargeTextBox}"
-                                 Width="400"/>
-                    </StackPanel>
-                </DataTemplate>
-            </HubSection>
-        </Hub>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="12">
+            <TextBlock Text="Title"
+                       Style="{StaticResource inputTextBlock}"/>
+            <TextBox Text="{Binding newContact.contactTitle, Mode=TwoWay}"
+                     Style="{StaticResource inputTextBox}"
+                     Width="150"/>
+            <TextBlock Text="First Name"
+                       Style="{StaticResource inputTextBlock}"/>
+            <TextBox Text="{Binding newContact.contactForename, Mode=TwoWay}"
+                     Style="{StaticResource inputTextBox}"
+                     Width="300"/>
+            <TextBlock Text="Last Name"
+                       Style="{StaticResource inputTextBlock}"/>
+            <TextBox Text="{Binding newContact.contactSurname, Mode=TwoWay}"
+                     Style="{StaticResource inputTextBox}"
+                     Width="300"/>
+            <TextBlock Text="Telephone"
+                       Style="{StaticResource inputTextBlock}"/>
+            <TextBox Text="{Binding newContact.contactTelephone, Mode=TwoWay}"
+                     Style="{StaticResource inputTextBox}"
+                     Width="300"/>
+            <TextBlock Text="Email"
+                       Style="{StaticResource inputTextBlock}"/>
+            <TextBox Text="{Binding newContact.contactEmail, Mode=TwoWay}"
+                     Style="{StaticResource inputTextBox}"
+                     Width="300"/>
+            <ToggleSwitch Header="Primary Contact" 
+                          IsOn="{Binding newContact.contactPrimary, Mode=TwoWay}"/>
+            <TextBox Text="{Binding newContact.companyID}"
+                     Width="20"
+                     Style="{StaticResource inputTextBox}"/>
+        </StackPanel>
+        <CommandBar Grid.Row="1">
+            <AppBarButton Icon="Save"
+                          Content="Save">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:InvokeCommandAction Command="{Binding Path=saveContact}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AppBarButton>
+            <AppBarButton Icon="Cancel"
+                          Content="Cancel">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:InvokeCommandAction Command="{Binding Path=cancelContact}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AppBarButton>
+        </CommandBar>
     </Grid>
 </Page>

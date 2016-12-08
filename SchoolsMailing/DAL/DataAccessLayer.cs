@@ -95,6 +95,21 @@ namespace SchoolsMailing.DAL
             return h2;
         }
 
+        public static ObservableCollection<Contact> GetAllContactsByCompany(long companyID)
+        {
+            List<Contact> c; //Create list
+            ObservableCollection<Contact> c2; //Create ObservableCollection
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath)) //Connect to SQLite table
+            {
+                c = (from p in db.Table<Contact>() //Query
+                     where p.companyID == companyID
+                     orderby p.contactForename ascending
+                     select p).ToList(); 
+            }
+            c2 = new ObservableCollection<Contact>(c); //Convert list to ObservableCollection
+            return c2;
+        }
+
         #endregion
 
         #region Get by ID
@@ -156,6 +171,22 @@ namespace SchoolsMailing.DAL
                     // Update
                     db.Update(history);
                     Debug.Write("History updated");
+                }
+            }
+        }
+        public static void SaveContact(Contact contact)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                if (contact.ID == 0)
+                {
+                    // New
+                    db.Insert(contact);
+                }
+                else
+                {
+                    // Update
+                    db.Update(contact);
                 }
             }
         }

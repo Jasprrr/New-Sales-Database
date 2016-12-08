@@ -179,6 +179,7 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\NewCompanyViewModel.cs" />
+    <Compile Include="ViewModels\NewContactViewModel.cs" />
     <Compile Include="ViewModels\NewOrderViewModel.cs" />
     <Compile Include="ViewModels\OrdersViewModel.cs" />
     <Compile Include="Views\CompaniesView2.xaml.cs">
