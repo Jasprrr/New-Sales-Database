@@ -6,10 +6,42 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="70"
-    d:DesignWidth="804">
-
-    <Grid Background="White" 
+    d:DesignHeight="210"
+    d:DesignWidth="300">
+    <Grid Background="White" Margin="0" BorderBrush="#FF1F80E2" BorderThickness="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Border Background="#FF1F80E2">
+            <TextBlock Grid.Row="0"
+                       Text="01/01/15" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" Foreground="White"/>
+        </Border>
+        
+        <TextBlock Grid.Row="1"
+                   Text="FAO: Some subject line"
+                   VerticalAlignment="Center" 
+                   Margin="0" 
+                   Padding="10,0"/>
+        <TextBlock Grid.Row="2"
+                   Text="All of London, Haringey (Nursery only) [630] Head Teacher direct Nursery Primary [1,179]" 
+                   TextWrapping="Wrap"
+                   Padding="10,0"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <TextBlock Grid.Row="3"
+                   Text="£1000.00"
+                   Padding="10,0"/>
+    </Grid>
+    <!--<Grid Background="White" 
           BorderBrush="#FFFFB700" VerticalAlignment="Center" 
           HorizontalAlignment="Center" BorderThickness="0,1">
         <Grid.RowDefinitions>
@@ -55,5 +87,5 @@
                        Foreground="White"/>
         </Border>
         
-    </Grid>
+    </Grid>-->
 </UserControl>

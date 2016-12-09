@@ -103,35 +103,30 @@
                                               ItemsSource="{Binding companyContacts, Mode=OneWay}"
                                               DisplayMemberPath="contactForename" 
                                               SelectedItem="{Binding selectedContact, Mode=TwoWay}">
-                                        <interactivity:Interaction.Behaviors>
-                                            <core:EventTriggerBehavior EventName="SelectionChanged">
-                                                <core:InvokeCommandAction Command="{Binding Path=contactInvoked}" />
-                                            </core:EventTriggerBehavior>
-                                        </interactivity:Interaction.Behaviors>
                                     </ComboBox>
                                     <TextBlock Text="Title"
                                                Style="{StaticResource inputTextBlock}"/>
-                                    <TextBox Text="{Binding boundContact.contactTitle, Mode=TwoWay}"
+                                    <TextBox Text="{Binding selectedContact.contactTitle, Mode=TwoWay}"
                                              Width="150"
                                              Style="{StaticResource inputTextBox}"/>
                                     <TextBlock Text="Forename"
                                                Style="{StaticResource inputTextBlock}"/>
-                                    <TextBox Text="{Binding boundContact.contactForename, Mode=TwoWay}"
+                                    <TextBox Text="{Binding selectedContact.contactForename, Mode=TwoWay}"
                                              Width="300"
                                              Style="{StaticResource inputTextBox}"/>
                                     <TextBlock Text="Surname"
                                                Style="{StaticResource inputTextBlock}"/>
-                                    <TextBox Text="{Binding boundContact.contactSurname, Mode=TwoWay}"
+                                    <TextBox Text="{Binding selectedContact.contactSurname, Mode=TwoWay}"
                                              Width="300"
                                              Style="{StaticResource inputTextBox}"/>
                                     <TextBlock Text="Telephone"
                                                Style="{StaticResource inputTextBlock}"/>
-                                    <TextBox Text="{Binding boundContact.contactTelephone, Mode=TwoWay}"
+                                    <TextBox Text="{Binding selectedContact.contactTelephone, Mode=TwoWay}"
                                              Width="300"
                                              Style="{StaticResource inputTextBox}"/>
                                     <TextBlock Text="Email"
                                                Style="{StaticResource inputTextBlock}"/>
-                                    <TextBox Text="{Binding boundContact.contactEmail, Mode=TwoWay}"
+                                    <TextBox Text="{Binding selectedContact.contactEmail, Mode=TwoWay}"
                                              Width="300"
                                              Style="{StaticResource inputTextBox}"/>
                                 </StackPanel>
@@ -449,7 +444,13 @@
             <AppBarButton Label="Export"
                           Icon="Download"/>
             <AppBarButton Label="Reset"
-                          Icon="Refresh"/>
+                          Icon="Refresh">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:InvokeCommandAction Command="{Binding Path=refreshCompany}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AppBarButton>
             <AppBarButton Label="Delete"
                           Icon="Delete">
                 <!--<interactivity:Interaction.Behaviors>

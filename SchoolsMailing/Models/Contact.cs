@@ -20,4 +20,5 @@ namespace SchoolsMailing.Models
         public bool contactPrimary { get; set; }
         public bool contactRemove { get; set; }
     }
+
 }

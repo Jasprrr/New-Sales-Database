@@ -28,9 +28,9 @@ namespace SchoolsMailing.ViewModels
 
         public CompanyViewModel(IMessenger messenger, NavigationService navigationService) : base(messenger, navigationService)
         {
-            // register company parameter
-            MessengerInstance.Register<NotificationMessage<Int64>>(this, SetUp);
-            MessengerInstance.Send<string>("false");
+            
+            MessengerInstance.Register<NotificationMessage<Int64>>(this, SetUp); // register company parameter
+            MessengerInstance.Send<string>("false"); //Register can go back
         }
 
         public void SetUp(NotificationMessage<Int64> obj)
@@ -38,11 +38,10 @@ namespace SchoolsMailing.ViewModels
             if (obj.Notification == "CompanyViewModel")
             {
                 long id = obj.Content;
-                selectedCompany = DataAccessLayer.GetCompanyById(id);
-                companyContacts = DataAccessLayer.GetAllContactsByCompany(id);
-                GetHistory();
+                GetCompany(id);
+                GetContacts(id);
+                GetHistory(id);
             }
-
             //MobileServiceInvalidOperationException exception = null;
             //try
             //{
@@ -59,7 +58,21 @@ namespace SchoolsMailing.ViewModels
             //}
         }
 
+        public void GetCompany(long id)
+        {
+            selectedCompany = DataAccessLayer.GetCompanyById(id);
+        }
+        public void GetContacts(long id)
+        {
+            companyContacts = DataAccessLayer.GetAllContactsByCompany(id);
+        }
+        public void GetHistory(long id)
+        {
+            selectedCompanyHistory = DataAccessLayer.GetAllHistoryByCompany(id);
+        }
+
         #region Data Lists
+
         private ObservableCollection<CompanyDataOrder> _companyDataOrder;
         public ObservableCollection<CompanyDataOrder> companyDataOrder
         {
@@ -80,9 +93,11 @@ namespace SchoolsMailing.ViewModels
             get { return _companyContacts; }
             set { if(_companyContacts != value) { _companyContacts = value; RaisePropertyChanged("companyContacts"); } }
         }
+
         #endregion
 
         #region Company Data
+
         //Selected company's ID
         public int ID { get; private set; }
 
@@ -115,7 +130,6 @@ namespace SchoolsMailing.ViewModels
         #endregion
 
         #region Contact Data
-        public bool ContactDirty = false; //If contact has been changed
         
         private Contact _selectedContact; //Contact selected from drop down
         public Contact selectedContact
@@ -124,14 +138,6 @@ namespace SchoolsMailing.ViewModels
             set { if (_selectedContact != value) { _selectedContact = value; RaisePropertyChanged("selectedContact"); } }
         }
         
-        private Contact _boundContact; //Contact binding - to allow saving during SelectionChanged event
-        public Contact boundContact
-        {
-            get { return _boundContact; }
-            set { if (_boundContact != value) {  _boundContact = value; RaisePropertyChanged("boundContact"); } }
-        }
-
-        public Contact originalContact;
         #endregion
 
         #region Company History
@@ -200,28 +206,23 @@ namespace SchoolsMailing.ViewModels
                 invokedCompanyHistory.companyHistoryDetails = item.ToString(); //Convert to string
                 invokedCompanyHistory.companyID = selectedCompany.ID; //Attribute company
                 DataAccessLayer.SaveHistory(invokedCompanyHistory); //Save history
-                GetHistory(); //Refresh history
+                GetHistory(selectedCompany.ID); //Refresh history
             }
             else if(result == ContentDialogResult.Secondary) //If secondary option chosen
             {
                 if(HistoryID != 0)
                 {
                     //TODO: Delete history
-                    GetHistory(); //Refresh history
+                    GetHistory(selectedCompany.ID); //Refresh history
                 }
                 
             }
         }
 
-        public void GetHistory()
-        {
-            selectedCompanyHistory = DataAccessLayer.GetAllHistoryByCompany(selectedCompany.ID);
-        }
-
-
         #endregion
 
         #region Commands
+
         private RelayCommand _newContact;
         public RelayCommand newContact
         {
@@ -251,6 +252,10 @@ namespace SchoolsMailing.ViewModels
                         selectedCompany.companyModified = DateTime.Now; //Set date modified
                         selectedCompany.companyInitial = selectedCompany.companyName.Substring(0, 1); //Set company initial
                         DataAccessLayer.SaveCompany(selectedCompany);
+                        foreach (Contact c in companyContacts) //Loop through contacts
+                        {
+                            DataAccessLayer.SaveContact(c); //Save contacts
+                        }
                     });
                 }
 
@@ -258,42 +263,7 @@ namespace SchoolsMailing.ViewModels
 
             }
         }
-
-        private RelayCommand _contactInvoked;
-        public RelayCommand contactInvoked
-        {
-            get
-            {
-                if (_contactInvoked == null)
-                {
-                    _contactInvoked = new RelayCommand(async () =>
-                    {
-                        if(boundContact != originalContact)
-                        {
-                            ContentDialog saveContact = new ContentDialog() //Ask user if they want to save changes to contact changes
-                            {
-                                Title = "Save Changes",
-                                Content = string.Format("Do you want to save changes to contact {0}", boundContact.contactForename.ToString()),
-                                PrimaryButtonText = "Yes",
-                                SecondaryButtonText = "No"
-                            };
-
-                            ContentDialogResult result = await saveContact.ShowAsync(); //Await input
-
-                            if (result == ContentDialogResult.Primary)
-                            {
-                                DataAccessLayer.SaveContact(boundContact); //Save contact
-                            }
-                        }
-
-                        boundContact = selectedContact; //Change binding to selected contact
-                        originalContact = selectedContact; //Set contact before changes
-                    });
-                }
-                return _contactInvoked;
-            }
-        }
-
+        
         private RelayCommand _refreshCompany;
         public RelayCommand refreshCompany
         {
@@ -303,7 +273,9 @@ namespace SchoolsMailing.ViewModels
                 {
                     _refreshCompany = new RelayCommand(() =>
                     {
-                        
+                        GetCompany(selectedCompany.ID);
+                        GetContacts(selectedCompany.ID);
+                        GetHistory(selectedCompany.ID);
                     });
                 }
 
@@ -311,6 +283,7 @@ namespace SchoolsMailing.ViewModels
 
             }
         }
+
         #endregion
     }
 }
