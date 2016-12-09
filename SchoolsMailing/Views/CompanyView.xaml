@@ -140,7 +140,7 @@
                                               IsItemClickEnabled="True"
                                               VerticalAlignment="Top" 
                                               HorizontalAlignment="Center"
-                                              Height="808">
+                                              MaxHeight="808">
                                         <interactivity:Interaction.Behaviors>
                                             <core:EventTriggerBehavior EventName="ItemClick">
                                                 <core:CallMethodAction MethodName="historyInvoked" 

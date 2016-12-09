@@ -20,47 +20,58 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="324"/>
+                <ColumnDefinition Width="324"/>
+                <ColumnDefinition Width="324"/>
+                <ColumnDefinition Width="324"/>
+                <ColumnDefinition Width="324"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <StackPanel>
+            <StackPanel>
+                <TextBlock Text="Company"
+                           FontSize="22" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,4"/>
+                <TextBlock Text="Company Name"
+                           Style="{StaticResource inputTextBlock}"/>
+                <TextBox Text="{Binding newCompany.companyName, Mode=TwoWay}"
+                         Style="{StaticResource inputTextBox}"
+                         Width="300"/>
+                <TextBlock Text="Address 1"
+                           Style="{StaticResource inputTextBlock}"/>
+                <TextBox Text="{Binding newCompany.companyAddress1, Mode=TwoWay}"
+                         Style="{StaticResource inputTextBox}"
+                         Width="300"/>
+                <TextBlock Text="Address 2"
+                           Style="{StaticResource inputTextBlock}"/>
+                <TextBox Text="{Binding newCompany.companyAddress2, Mode=TwoWay}"
+                         Style="{StaticResource inputTextBox}"
+                         Width="300"/>
+                <TextBlock Text="City"
+                           Style="{StaticResource inputTextBlock}"/>
+                <TextBox Text="{Binding newCompany.companyCity, Mode=TwoWay}"
+                         Style="{StaticResource inputTextBox}"
+                         Width="300"/>
+                <TextBlock Text="County"
+                           Style="{StaticResource inputTextBlock}"
+                           Width="300"/>
+                <TextBox Text="{Binding newCompany.companyCounty, Mode=TwoWay}"
+                         Style="{StaticResource inputTextBox}"
+                         Width="300"/>
+                <TextBlock Text="Post Code"
+                           Style="{StaticResource inputTextBlock}"/>
+                <TextBox Text="{Binding newCompany.companyPostCode, Mode=TwoWay}"
+                         Style="{StaticResource inputTextBox}"
+                         Width="150"/>
+            </StackPanel>
+        </StackPanel>
         <Hub>
             <HubSection>
                 <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="Company Name"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
-                        <TextBox Text="{Binding newCompany.companyName, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
-                        <TextBlock Text="Address 1"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
-                        <TextBox Text="{Binding newCompany.companyAddress1, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
-                        <TextBlock Text="Address 2"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
-                        <TextBox Text="{Binding newCompany.companyAddress2, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
-                        <TextBlock Text="City"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
-                        <TextBox Text="{Binding newCompany.companyCity, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
-                        <TextBlock Text="County"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
-                        <TextBox Text="{Binding newCompany.companyCounty, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
-                        <TextBlock Text="Post Code"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
-                        <TextBox Text="{Binding newCompany.companyPostCode, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="200"/>
-                    </StackPanel>
+                    
                 </DataTemplate>
             </HubSection>
             <HubSection>
