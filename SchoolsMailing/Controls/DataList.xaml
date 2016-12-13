@@ -7,46 +7,55 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="60"
-    d:DesignWidth="620">
+    d:DesignHeight="340"
+    d:DesignWidth="300" 
+    Padding="3" 
+    MinWidth="300" 
+    MaxWidth="300" 
+    MinHeight="340" 
+    MaxHeight="340">
     <UserControl.Resources>
         <conv:StringFormatter x:Key="StringFormatterValueConverter"/>
     </UserControl.Resources>
 
-    <Grid Background="White"
-          Width="600" 
-          Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5">
-        <Grid>
+    <Grid Background="White" 
+          BorderBrush="#FF009BDB" 
+          BorderThickness="2">
+        <Grid Margin="5"
+              Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="32"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="280"/>
-                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Border Background="#FF5093EA">
-                <TextBlock Text="{Binding orderCode}" 
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Center" 
-                           Foreground="White"
-                           FontSize="12"/>
-            </Border>
-            <TextBlock Text="{Binding orderDate, Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=\{0:d\}}" 
-                       VerticalAlignment="Center"
+            <TextBlock Text="Start" Margin="0,5"/>
+            <TextBlock Text="End"
+                   Grid.Row="1" Margin="0,5"/>
+            <TextBlock Text="Details"
+                   Grid.Row="2" Margin="0,5"/>
+            <TextBlock Text="Cost"
+                   Grid.Row="3" Padding="0" Margin="0,5"/>
+            <TextBlock Text="{Binding dataStart, Mode=OneWay, Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=\{0:d\}}"
                        Grid.Column="1"
-                       HorizontalAlignment="Center" 
-                       FontSize="12"/>
-            <TextBlock Text="{Binding dataDetails}"
-                       Grid.Column="2"
-                       ToolTipService.ToolTip="{Binding dataDetails}"
-                       VerticalAlignment="Center" 
-                       TextTrimming="CharacterEllipsis"
-                       FontSize="12"
-                       HorizontalAlignment="Center"/>
-            <TextBlock Text="{Binding dataCost, Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=\{0:C\}}" 
-                       Grid.Column="3" 
-                       HorizontalAlignment="Center" 
-                       FontSize="12"
-                       VerticalAlignment="Center"/>
+                       Margin="0,5"/>
+            <TextBlock Text="{Binding dataEnd, Mode=OneWay, Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=\{0:d\}}"
+                       Grid.Column="1"
+                       Grid.Row="1"
+                       Margin="0,5"/>
+            <TextBlock Text="{Binding dataDetails, Mode=OneWay}"
+                       Grid.Column="1"
+                       Grid.Row="2"
+                       Margin="0,5" 
+                       TextWrapping="Wrap"/>
+            <TextBlock Text="{Binding dataCost, Mode=OneWay, Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=\{0:C\}}"
+                       Grid.Column="1"
+                       Grid.Row="3"
+                       Margin="0,5"/>
         </Grid>
     </Grid>
 </UserControl>

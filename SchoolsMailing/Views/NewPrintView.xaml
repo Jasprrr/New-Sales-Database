@@ -46,7 +46,9 @@
                                    Width="400"/>
                         <TextBox Text="{Binding newPrintOrder.printDetails, Mode=TwoWay}"
                                  Style="{StaticResource inputLargeTextBox}"
-                                 Width="400"/>
+                                 Width="400" 
+                                 ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                                 TextWrapping="Wrap"/>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>

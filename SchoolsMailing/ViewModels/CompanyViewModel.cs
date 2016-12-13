@@ -121,6 +121,7 @@ namespace SchoolsMailing.ViewModels
             if(result == ContentDialogResult.Primary)
             {
                 DataAccessLayer.DeleteCompany(selectedCompany);
+                NavigationService.GoBack();
             }
             else if(result == ContentDialogResult.Secondary)
             {

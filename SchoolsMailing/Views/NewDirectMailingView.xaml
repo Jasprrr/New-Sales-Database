@@ -76,7 +76,10 @@
                                    Width="400"/>
                         <TextBox Text="{Binding newDirectMailingOrder.directDetails, Mode=TwoWay}"
                                  Style="{StaticResource inputLargeTextBox}"
-                                 Width="400"/>
+                                 Width="400" 
+                                 AcceptsReturn="True" 
+                                 ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                                 TextWrapping="Wrap"/>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -113,6 +116,14 @@
         </Hub>
         <CommandBar VerticalAlignment="Bottom"
                     Grid.Row="1">
+            <AppBarButton Icon="Calculator"
+                          Label="Calculator">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:InvokeCommandAction Command="{Binding Path=saveDirectMailing}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AppBarButton>
             <AppBarButton Icon="Save"
                           Label="Save">
                 <interactivity:Interaction.Behaviors>

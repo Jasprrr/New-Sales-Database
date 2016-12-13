@@ -42,6 +42,7 @@
             conn.CreateTable<Contact>();
             conn.CreateTable<CompanyHistory>();
             conn.CreateTable<Contact>();
+            conn.CreateTable<SharedPack>();
 
             this.ItemInvokedCommand = new RelayCommand<ListViewItem>(this.ItemInvoked);
 
@@ -124,13 +125,6 @@
                     Symbol = Symbol.Folder,
                     AssociatedPage = typeof(NewOrderView)
                     
-                },
-                new SplitViewPaneMenuItem
-                {
-                    Label = "GridView",
-                    Symbol = Symbol.Folder,
-                    AssociatedPage = typeof(CompaniesView2)
-
                 }
             };
 

@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="SchoolsMailing.Controls.OrderDirectMailingList"
+    x:Class="SchoolsMailing.Controls.OrderPrintList"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SchoolsMailing.Controls"
@@ -33,30 +33,30 @@
                 <ColumnDefinition Width="70"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Send Date" 
+            <TextBlock Text="Date" 
                        Margin="0,5"/>
-            <TextBlock Text="Mailing To"
+            <TextBlock Text="Printer"
                        Grid.Row="1" 
                        Margin="0,5"/>
             <TextBlock Text="Details"
                        Grid.Row="2" 
                        Margin="0,5"/>
             <TextBlock Text="Cost"
-                       Grid.Row="3"
+                       Grid.Row="3" 
                        Margin="0,5"/>
-            <TextBlock Text="{Binding directDate, Mode=OneWay, Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=\{0:d\}}"
+            <TextBlock Text="{Binding printDate, Mode=OneWay, Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=\{0:d\}}"
                        Grid.Column="1"
                        Margin="0,5"/>
-            <TextBlock Text="{Binding directMailingTo, Mode=OneWay, Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=\{0:d\}}"
+            <TextBlock Text="{Binding printPrinter, Mode=OneWay}"
                        Grid.Column="1"
                        Grid.Row="1"
                        Margin="0,5"/>
-            <TextBlock Text="{Binding directDetails, Mode=OneWay}"
+            <TextBlock Text="{Binding printDetails, Mode=OneWay}"
                        Grid.Column="1"
                        Grid.Row="2"
                        Margin="0,5" 
                        TextWrapping="Wrap"/>
-            <TextBlock Text="{Binding directTotal, Mode=OneWay, Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=\{0:C\}}"
+            <TextBlock Text="{Binding printCost, Mode=OneWay, Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=\{0:C\}}"
                        Grid.Column="1"
                        Grid.Row="3"
                        Margin="0,5"/>

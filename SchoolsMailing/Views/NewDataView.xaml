@@ -46,7 +46,10 @@
                                    Width="400"/>
                         <TextBox Text="{Binding newDataOrder.dataDetails, Mode=TwoWay}"
                                  Style="{StaticResource inputLargeTextBox}"
-                                 Width="400"/>
+                                 Width="400" 
+                                 ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                                 AcceptsReturn="True" 
+                                 TextWrapping="Wrap"/>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -54,9 +57,8 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="Total" 
-                                Style="{StaticResource inputTextBlock}"
-                                Width="200"/>
-                        <TextBox Text="{Binding newDataOrder.dataCost}"
+                                Style="{StaticResource inputTextBlock}"/>
+                        <TextBox Text="{Binding newDataOrder.dataCost, Mode=TwoWay}"
                                 Style="{StaticResource inputTextBox}"
                                 Width="200"/>
                     </StackPanel>
@@ -65,6 +67,14 @@
         </Hub>
         <CommandBar VerticalAlignment="Bottom"
                     Grid.Row="1">
+            <AppBarButton Icon="Calculator"
+                          Label="Calculator">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:InvokeCommandAction Command="{Binding Path=saveData}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AppBarButton>
             <AppBarButton Icon="Save"
                           Label="Save">
                 <interactivity:Interaction.Behaviors>

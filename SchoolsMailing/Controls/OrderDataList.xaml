@@ -3,45 +3,59 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SchoolsMailing.Controls"
+    xmlns:conv="using:SchoolsMailing.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="70"
-    d:DesignWidth="804">
+    d:DesignHeight="340"
+    d:DesignWidth="300" 
+    Padding="3" 
+    MinWidth="300" 
+    MaxWidth="300" 
+    MinHeight="340" 
+    MaxHeight="340">
+    <UserControl.Resources>
+        <conv:StringFormatter x:Key="StringFormatterValueConverter"/>
+    </UserControl.Resources>
 
     <Grid Background="White" 
-          BorderBrush="#FFFF8700" VerticalAlignment="Center" 
-          HorizontalAlignment="Center" BorderThickness="0,1">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="64"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="600"/>
-            <ColumnDefinition Width="100"/>
-        </Grid.ColumnDefinitions>
-        <Border Background="#FFFF8700"
-                Grid.RowSpan="2">
-            <TextBlock Text="" 
-                       Grid.RowSpan="2" 
-                       VerticalAlignment="Center" 
-                       HorizontalAlignment="Center" 
-                       Foreground="White"/>
-        </Border>
-        <TextBlock Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium."
-                   Grid.Column="1"
-                   Height="52" 
-                   Margin="10,6"
-                   TextWrapping="WrapWholeWords"/>
-        <Border Background="#FFFF8700"
-                Grid.Column="2">
-            <TextBlock Text="£120,005.00"
-                       Grid.Column="2"
-                       Grid.RowSpan="2" 
-                       VerticalAlignment="Center" 
-                       HorizontalAlignment="Center" 
-                       Foreground="White"/>
-        </Border>
-
+          BorderBrush="#FF009BDB" 
+          BorderThickness="2">
+        <Grid Margin="5"
+              Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="32"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Start" Margin="0,5"/>
+            <TextBlock Text="End"
+                   Grid.Row="1" Margin="0,5"/>
+            <TextBlock Text="Details"
+                   Grid.Row="2" Margin="0,5"/>
+            <TextBlock Text="Cost"
+                   Grid.Row="3" Padding="0" Margin="0,5"/>
+            <TextBlock Text="{Binding dataStart, Mode=OneWay, Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=\{0:d\}}"
+                       Grid.Column="1"
+                       Margin="0,5"/>
+            <TextBlock Text="{Binding dataEnd, Mode=OneWay, Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=\{0:d\}}"
+                       Grid.Column="1"
+                       Grid.Row="1"
+                       Margin="0,5"/>
+            <TextBlock Text="{Binding dataDetails, Mode=OneWay}"
+                       Grid.Column="1"
+                       Grid.Row="2"
+                       Margin="0,5" 
+                       TextWrapping="Wrap"/>
+            <TextBlock Text="{Binding dataCost, Mode=OneWay, Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=\{0:C\}}"
+                       Grid.Column="1"
+                       Grid.Row="3"
+                       Margin="0,5"/>
+        </Grid>
     </Grid>
 </UserControl>

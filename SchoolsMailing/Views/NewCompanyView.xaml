@@ -20,94 +20,160 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="324"/>
-                <ColumnDefinition Width="324"/>
-                <ColumnDefinition Width="324"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0"
-                        Margin="12,0">
-                <TextBlock Text="Company"
-                           FontSize="22" 
-                           HorizontalAlignment="Center" 
-                           Margin="0,0,0,4"/>
-                <TextBlock Text="Company Name"
-                           Style="{StaticResource inputTextBlock}"/>
-                <TextBox Text="{Binding newCompany.companyName, Mode=TwoWay}"
-                         Style="{StaticResource inputTextBox}"
-                         Width="300"/>
-                <TextBlock Text="Address 1"
-                           Style="{StaticResource inputTextBlock}"/>
-                <TextBox Text="{Binding newCompany.companyAddress1, Mode=TwoWay}"
-                         Style="{StaticResource inputTextBox}"
-                         Width="300"/>
-                <TextBlock Text="Address 2"
-                           Style="{StaticResource inputTextBlock}"/>
-                <TextBox Text="{Binding newCompany.companyAddress2, Mode=TwoWay}"
-                         Style="{StaticResource inputTextBox}"
-                         Width="300"/>
-                <TextBlock Text="City"
-                           Style="{StaticResource inputTextBlock}"/>
-                <TextBox Text="{Binding newCompany.companyCity, Mode=TwoWay}"
-                         Style="{StaticResource inputTextBox}"
-                         Width="300"/>
-                <TextBlock Text="County"
-                           Style="{StaticResource inputTextBlock}"
-                           Width="300"/>
-                <TextBox Text="{Binding newCompany.companyCounty, Mode=TwoWay}"
-                         Style="{StaticResource inputTextBox}"
-                         Width="300"/>
-                <TextBlock Text="Post Code"
-                           Style="{StaticResource inputTextBlock}"/>
-                <TextBox Text="{Binding newCompany.companyPostCode, Mode=TwoWay}"
-                         Style="{StaticResource inputTextBox}"
-                         Width="150"/>
-            </StackPanel>
-            <StackPanel Grid.Column="1"
-                        Margin="12,0">
-                <TextBlock Text="Product"
-                           Style="{StaticResource inputTextBlock}"/>
-                <TextBox Text="{Binding newCompany.companyProduct, Mode=TwoWay}"
-                         Style="{StaticResource inputTextBox}"
-                         Width="300"/>
-                <TextBlock Text="Prospects"
-                           Style="{StaticResource inputTextBlock}"/>
-                <TextBox Text="{Binding newCompany.companyProspects, Mode=TwoWay}"
-                         Style="{StaticResource inputTextBox}"
-                         Width="300"/>
-                <TextBlock Text="Website"
-                           Style="{StaticResource inputTextBlock}"/>
-                <TextBox Text="{Binding newCompany.companyWebsite, Mode=TwoWay}"
-                         Style="{StaticResource inputTextBox}"
-                         Width="300"/>
-                <TextBlock Text="Telephone"
-                           Style="{StaticResource inputTextBlock}"/>
-                <TextBox Text="{Binding newCompany.companyTelephone, Mode=TwoWay}"
-                         Style="{StaticResource inputTextBox}"
-                         Width="300"/>
-                <TextBlock Text="SchoolSend ID"
-                           Style="{StaticResource inputTextBlock}"/>
-                <TextBox Text="{Binding newCompany.companySchoolSendID, Mode=TwoWay}"
-                         Style="{StaticResource inputTextBox}"
-                         Width="300"/>
-            </StackPanel>
-            <StackPanel Grid.Column="2"
-                        Margin="12,0">
-                <TextBlock Text="Call Back"
-                           Style="{StaticResource inputTextBlock}"/>
-                <DatePicker Width="200" 
-                            MonthFormat="{}{month.abbreviated}" 
-                            MinWidth="200"
-                            Date="{Binding newCompany.companyCallBackDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"/>
-                <TextBlock Text="Notes"
-                           Style="{StaticResource inputTextBlock}"/>
-                <TextBox Text="{Binding newCompany.companyNotes, Mode=TwoWay}"
-                         Style="{StaticResource inputLargeTextBox}"
-                         Width="300" 
-                         ScrollViewer.VerticalScrollBarVisibility="Visible"/>
-            </StackPanel>
-        </Grid>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="324"/>
+                    <ColumnDefinition Width="324"/>
+                    <ColumnDefinition Width="324"/>
+                    <ColumnDefinition Width="324"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="12,0">
+                    <TextBlock Text="Company" 
+                               FontSize="22" 
+                               HorizontalAlignment="Center" 
+                               Margin="0,0,0,4"/>
+                    <TextBlock Text="Name" 
+                               Style="{StaticResource inputTextBlock}"/>
+                    <TextBox Text="{Binding newCompany.companyName, Mode=TwoWay}"
+                             Width="300" 
+                             Style="{StaticResource inputTextBox}"/>
+                    <TextBlock Text="Address 1"
+                               Style="{StaticResource inputTextBlock}"/>
+                    <TextBox Text="{Binding newCompany.companyAddress1, Mode=TwoWay}"
+                             Width="300" 
+                             Style="{StaticResource inputTextBox}"/>
+                    <TextBlock Text="Address 2"
+                               Style="{StaticResource inputTextBlock}"/>
+                    <TextBox Text="{Binding newCompany.companyAddress2, Mode=TwoWay}"
+                             Width="300" 
+                             Style="{StaticResource inputTextBox}"/>
+                    <TextBlock Text="City"
+                               Style="{StaticResource inputTextBlock}"/>
+                    <TextBox Text="{Binding newCompany.companyCity, Mode=TwoWay}"
+                             Width="300" 
+                             Style="{StaticResource inputTextBox}"/>
+                    <TextBlock Text="County"
+                               Style="{StaticResource inputTextBlock}"/>
+                    <TextBox Text="{Binding newCompany.companyCounty, Mode=TwoWay}"
+                             Width="300" 
+                             Style="{StaticResource inputTextBox}"/>
+                    <TextBlock Text="Post Code"
+                               Style="{StaticResource inputTextBlock}"/>
+                    <TextBox Text="{Binding newCompany.companyPostCode, Mode=TwoWay}"
+                             Width="150" 
+                             Style="{StaticResource inputTextBox}"/>
+                </StackPanel>
+                <StackPanel Margin="12,0"
+                            Grid.Column="1">
+                    <TextBlock Text="Other Info" 
+                               FontSize="22" 
+                               HorizontalAlignment="Center" 
+                               Margin="0,0,0,4"/>
+                    <TextBlock Text="Telephone"
+                               Style="{StaticResource inputTextBlock}"/>
+                    <TextBox Text="{Binding newCompany.companyTelephone, Mode=TwoWay}"
+                             Width="300"
+                             Style="{StaticResource inputTextBox}"/>
+                    <TextBlock Text="Website"
+                               Style="{StaticResource inputTextBlock}"/>
+                    <TextBox Text="{Binding newCompany.companyWebsite, Mode=TwoWay}"
+                             Width="300"
+                             Style="{StaticResource inputTextBox}"/>
+                    <TextBlock Text="Product"
+                                               Style="{StaticResource inputTextBlock}"/>
+                    <TextBox Text="{Binding newCompany.companyProduct, Mode=TwoWay}"
+                             Width="300"
+                             Style="{StaticResource inputTextBox}"/>
+                    <TextBlock Text="Prospects"
+                               Style="{StaticResource inputTextBlock}"/>
+                    <TextBox Text="{Binding newCompany.companyProspects, Mode=TwoWay}"
+                             Width="300"
+                             Style="{StaticResource inputTextBox}"/>
+                    <TextBlock Text="SchoolSend ID"
+                               Style="{StaticResource inputTextBlock}"/>
+                    <TextBox Text="{Binding newCompany.companySchoolSendID, Mode=TwoWay}"
+                             Width="300"
+                             Style="{StaticResource inputTextBox}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" 
+                            Margin="12,0">
+                    <TextBlock Text="Invoice Details" 
+                               FontSize="22" 
+                               HorizontalAlignment="Center" 
+                               Margin="0,0,0,4"/>
+                    <TextBlock Text="Name"
+                               Style="{StaticResource inputTextBlock}"/>
+                    <TextBox Text="{Binding newCompany.companyInvoiceName, Mode=TwoWay}"
+                             Width="300" 
+                             Style="{StaticResource inputTextBox}"/>
+                    <TextBlock Text="Address 1"
+                               Style="{StaticResource inputTextBlock}"/>
+                    <TextBox Text="{Binding newCompany.companyInvoiceAddress1, Mode=TwoWay}"
+                             Width="300" 
+                             Style="{StaticResource inputTextBox}"/>
+                    <TextBlock Text="Address 2"
+                               Style="{StaticResource inputTextBlock}"/>
+                    <TextBox Text="{Binding newCompany.companyInvoiceAddress2, Mode=TwoWay}"
+                             Width="300" 
+                             Style="{StaticResource inputTextBox}"/>
+                    <TextBlock Text="City"
+                               Style="{StaticResource inputTextBlock}"
+                               Width="300"/>
+                    <TextBox Text="{Binding newCompany.companyInvoiceCity, Mode=TwoWay}"
+                             Width="300" 
+                             Style="{StaticResource inputTextBox}"/>
+                    <TextBlock Text="County"
+                               Style="{StaticResource inputTextBlock}"/>
+                    <TextBox Text="{Binding newCompany.companyInvoiceCounty, Mode=TwoWay}"
+                             Width="300" 
+                             Style="{StaticResource inputTextBox}"/>
+                    <TextBlock Text="Post Code"
+                               Style="{StaticResource inputTextBlock}"/>
+                    <TextBox Text="{Binding newCompany.companyInvoicePostCode, Mode=TwoWay}"
+                             Width="150" 
+                             Style="{StaticResource inputTextBox}"/>
+                </StackPanel>
+                <StackPanel Margin="12,0"
+                            Grid.Column="3">
+                    <TextBlock Text="Call Back" 
+                               FontSize="22" 
+                               HorizontalAlignment="Center" 
+                               Margin="0,0,0,4"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            
+                            <TextBlock Text="Call Back"
+                                       Style="{StaticResource inputTextBlock}"/>
+                            <CalendarDatePicker Width="120" 
+                                                MinWidth="120"
+                                                Date="{Binding newCompany.companyCallBack, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                                Style="{StaticResource inputCalendarDatePicker}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Last Call"
+                                       Style="{StaticResource inputTextBlock}"/>
+                            <CalendarDatePicker Width="120" 
+                                                MinWidth="120"
+                                                Date="{Binding newCompany.companyLastCall, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                                Style="{StaticResource inputCalendarDatePicker}"/>
+                        </StackPanel>
+                    </Grid>
+                    <TextBlock Text="Notes"
+                               Style="{StaticResource inputTextBlock}"/>
+                    <TextBox Text="{Binding newCompany.companyNotes, Mode=TwoWay}"
+                             Width="300"
+                             Style="{StaticResource inputLargeTextBox}" 
+                             ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                             AcceptsReturn="True"/>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
         <CommandBar VerticalAlignment="Bottom"
                     Grid.Row="1">
             <AppBarButton Label="Save"

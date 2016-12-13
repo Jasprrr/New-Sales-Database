@@ -20,44 +20,7 @@ namespace SchoolsMailing.ViewModels
         {
 
         }
-
-        private RelayCommand _saveEmail;
-        public RelayCommand saveEmail
-        {
-            get
-            {
-                if (_saveEmail == null)
-                {
-                    _saveEmail = new RelayCommand(() =>
-                    {
-                        emailOrders.Add(newEmailOrder);
-                        newEmailOrder = new Email();
-                    });
-                }
-
-                return _saveEmail;
-
-            }
-        }
-
-        private RelayCommand _cancelEmail;
-        public RelayCommand cancelEmail
-        {
-            get
-            {
-                if (_cancelEmail == null)
-                {
-                    _cancelEmail = new RelayCommand(() =>
-                    {
-                        
-                    });
-                }
-
-                return _cancelEmail;
-
-            }
-        }
-
+        
         private string _someBinding;
         public string someBinding
         {
@@ -131,6 +94,44 @@ namespace SchoolsMailing.ViewModels
             get { return _newDataOrder; }
             set { if (_newDataOrder != value) { _newDataOrder = value; RaisePropertyChanged("newDataOrder"); } }
         }
+
+        private RelayCommand _saveData;
+        public RelayCommand saveData
+        {
+            get
+            {
+                if (_saveData == null)
+                {
+                    _saveData = new RelayCommand(() =>
+                    {
+                        dataOrders.Add(newDataOrder);
+                        newDataOrder = new Data();
+                        NavigationService.GoBack();
+                    });
+                }
+
+                return _saveData;
+
+            }
+        }
+
+        private RelayCommand _cancelData;
+        public RelayCommand cancelData
+        {
+            get
+            {
+                if (_cancelData == null)
+                {
+                    _cancelData = new RelayCommand(() =>
+                    {
+                        NavigationService.GoBack();
+                    });
+                }
+
+                return _cancelData;
+
+            }
+        }
         #endregion
 
         #region Email Order
@@ -146,6 +147,44 @@ namespace SchoolsMailing.ViewModels
         {
             get { return _newEmailOrder; }
             set { if(_newEmailOrder != value) { _newEmailOrder = value; RaisePropertyChanged("newEmailOrder"); } }
+        }
+
+        private RelayCommand _saveEmail;
+        public RelayCommand saveEmail
+        {
+            get
+            {
+                if (_saveEmail == null)
+                {
+                    _saveEmail = new RelayCommand(() =>
+                    {
+                        emailOrders.Add(newEmailOrder);
+                        newEmailOrder = new Email();
+                        NavigationService.GoBack();
+                    });
+                }
+
+                return _saveEmail;
+
+            }
+        }
+
+        private RelayCommand _cancelEmail;
+        public RelayCommand cancelEmail
+        {
+            get
+            {
+                if (_cancelEmail == null)
+                {
+                    _cancelEmail = new RelayCommand(() =>
+                    {
+                        NavigationService.GoBack();
+                    });
+                }
+
+                return _cancelEmail;
+
+            }
         }
         #endregion
 
@@ -163,6 +202,44 @@ namespace SchoolsMailing.ViewModels
             get { return _newDirectMailingOrder; }
             set { if(_newDirectMailingOrder != value) { _newDirectMailingOrder = value; RaisePropertyChanged("newDirectMailingOrder"); } }
         }
+
+        private RelayCommand _saveDirectMailing;
+        public RelayCommand saveDirectMailing
+        {
+            get
+            {
+                if (_saveDirectMailing == null)
+                {
+                    _saveDirectMailing = new RelayCommand(() =>
+                    {
+                        directMailingOrders.Add(newDirectMailingOrder);
+                        newDirectMailingOrder = new DirectMailing();
+                        NavigationService.GoBack();
+                    });
+                }
+
+                return _saveDirectMailing;
+
+            }
+        }
+
+        private RelayCommand _cancelDirectMailing;
+        public RelayCommand cancelDirectMailing
+        {
+            get
+            {
+                if (_cancelDirectMailing == null)
+                {
+                    _cancelDirectMailing = new RelayCommand(() =>
+                    {
+                        NavigationService.GoBack();
+                    });
+                }
+
+                return _cancelDirectMailing;
+
+            }
+        }
         #endregion
 
         #region Print Order
@@ -178,6 +255,44 @@ namespace SchoolsMailing.ViewModels
         {
             get { return _newPrintOrder; }
             set { if(_newPrintOrder != value) { _newPrintOrder = value; RaisePropertyChanged("newPrintOrder"); } }
+        }
+
+        private RelayCommand _savePrint;
+        public RelayCommand savePrint
+        {
+            get
+            {
+                if (_savePrint == null)
+                {
+                    _savePrint = new RelayCommand(() =>
+                    {
+                        printOrders.Add(newPrintOrder);
+                        newPrintOrder = new Print();
+                        NavigationService.GoBack();
+                    });
+                }
+
+                return _savePrint;
+
+            }
+        }
+
+        private RelayCommand _cancelPrint;
+        public RelayCommand cancelPrint
+        {
+            get
+            {
+                if (_cancelPrint == null)
+                {
+                    _cancelPrint = new RelayCommand(() =>
+                    {
+                        NavigationService.GoBack();
+                    });
+                }
+
+                return _cancelPrint;
+
+            }
         }
         #endregion
 
@@ -195,6 +310,62 @@ namespace SchoolsMailing.ViewModels
             get { return _newSchoolSendOrder; }
             set { if(_newSchoolSendOrder != value) { _newSchoolSendOrder = value; RaisePropertyChanged("newSchoolSendOrder"); } }
         }
+
+        private RelayCommand _saveSchoolSend;
+        public RelayCommand saveSchoolSend
+        {
+            get
+            {
+                if (_saveSchoolSend == null)
+                {
+                    _saveSchoolSend = new RelayCommand(() =>
+                    {
+                        schoolSendOrders.Add(newSchoolSendOrder);
+                        newSchoolSendOrder = new SchoolSend();
+                        NavigationService.GoBack();
+                    });
+                }
+
+                return _saveSchoolSend;
+
+            }
+        }
+
+        private RelayCommand _cancelSchoolSend;
+        public RelayCommand cancelSchoolSend
+        {
+            get
+            {
+                if (_cancelSchoolSend == null)
+                {
+                    _cancelSchoolSend = new RelayCommand(() =>
+                    {
+                        NavigationService.GoBack();
+                    });
+                }
+
+                return _cancelSchoolSend;
+
+            }
+        }
+
+        private RelayCommand _setCredits;
+        public RelayCommand setCredits
+        {
+            get {
+                if (_setCredits == null) {
+                        _setCredits = new RelayCommand(() => {
+                            //switch (newSchoolSendOrder.schoolsendPackage)
+                            //{
+                            //    case "Ruby":
+                            //        break;
+                            //}
+                            Debug.WriteLine(string.Format(newSchoolSendOrder.schoolsendPackage.ToString()));
+                        });
+                }
+                return _setCredits;
+            }
+        }
         #endregion
 
         #region Shared Mailing Order
@@ -211,6 +382,44 @@ namespace SchoolsMailing.ViewModels
             get { return _newSharedMailingOrder; }
             set { if(_newSharedMailingOrder != value) { _newSharedMailingOrder = value; RaisePropertyChanged("newSharedMailingOrder"); } }
         }
+
+        private RelayCommand _saveSharedMailing;
+        public RelayCommand saveSharedMailing
+        {
+            get
+            {
+                if (_saveSharedMailing == null)
+                {
+                    _saveSharedMailing = new RelayCommand(() =>
+                    {
+                        sharedMailingOrders.Add(newSharedMailingOrder);
+                        newSharedMailingOrder = new SharedMailing();
+                        NavigationService.GoBack();
+                    });
+                }
+
+                return _saveSharedMailing;
+
+            }
+        }
+
+        private RelayCommand _cancelSharedMailing;
+        public RelayCommand cancelSharedMailing
+        {
+            get
+            {
+                if (_cancelSharedMailing == null)
+                {
+                    _cancelSharedMailing = new RelayCommand(() =>
+                    {
+                        NavigationService.GoBack();
+                    });
+                }
+
+                return _cancelSharedMailing;
+
+            }
+        }
         #endregion
 
         #region Surcharge Order
@@ -226,6 +435,44 @@ namespace SchoolsMailing.ViewModels
         {
             get { return _newSurchargeOrder; }
             set { if(_newSurchargeOrder != value) { _newSurchargeOrder = value; RaisePropertyChanged("newSurchargeOrder"); } }
+        }
+
+        private RelayCommand _saveSurcharge;
+        public RelayCommand saveSurcharge
+        {
+            get
+            {
+                if (_saveSurcharge == null)
+                {
+                    _saveSurcharge = new RelayCommand(() =>
+                    {
+                        surchargeOrders.Add(newSurchargeOrder);
+                        newSurchargeOrder = new Surcharge();
+                        NavigationService.GoBack();
+                    });
+                }
+
+                return _saveSurcharge;
+
+            }
+        }
+
+        private RelayCommand _cancelSurcharge;
+        public RelayCommand cancelSurcharge
+        {
+            get
+            {
+                if (_cancelSurcharge == null)
+                {
+                    _cancelSurcharge = new RelayCommand(() =>
+                    {
+                        NavigationService.GoBack();
+                    });
+                }
+
+                return _cancelSurcharge;
+
+            }
         }
         #endregion
         #endregion

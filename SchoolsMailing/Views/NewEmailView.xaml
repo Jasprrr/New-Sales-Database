@@ -44,14 +44,20 @@
                                    Style="{StaticResource inputTextBlock}"/>
                         <TextBox Text="{Binding newEmailOrder.emailDetails, Mode=TwoWay}"
                                  Style="{StaticResource inputLargeTextBox}"
-                                 Width="300"/>
+                                 Width="300" 
+                                 ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                                 TextWrapping="Wrap" 
+                                 AcceptsReturn="True"/>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
             <HubSection Header="Costs">
                 <DataTemplate>
                     <StackPanel>
-                        <CheckBox Content="Set Up Cost"/>
+                        <TextBlock Text="Set Up"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="200"/>
+                        <CheckBox Content="+ 125"/>
                         <TextBlock Text="Admin Cost"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
@@ -76,6 +82,14 @@
         </Hub>
         <CommandBar VerticalAlignment="Bottom"
                     Grid.Row="1">
+            <AppBarButton Icon="Calculator"
+                          Label="Calculator">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:InvokeCommandAction Command="{Binding Path=saveEmail}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AppBarButton>
             <AppBarButton Icon="Save"
                           Label="Save">
                 <interactivity:Interaction.Behaviors>

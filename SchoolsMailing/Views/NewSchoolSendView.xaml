@@ -42,17 +42,39 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="Package"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
+                                   Style="{StaticResource inputTextBlock}"/>
                         <ComboBox Style="{StaticResource inputComboBox}"
-                                  Width="400"
-                                  SelectedItem="{Binding newSchoolSendOrder.schoolsendPackage, Mode=TwoWay}"/>
-                        <TextBlock Text="Credits"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
+                                  Width="300"
+                                  SelectedItem="{Binding newSchoolSendOrder.schoolsendPackage, Mode=TwoWay}">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="SelectionChanged">
+                                    <core:InvokeCommandAction Command="{Binding Path=setCredits}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                            <ComboBoxItem>
+                                <TextBlock Text="Ruby"/>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Sapphire"/>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Emerald"/>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Silver"/>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Gold"/>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Platinum"/>
+                            </ComboBoxItem>
+                        </ComboBox>
+                        <TextBlock Text="Max Credits"
+                                   Style="{StaticResource inputTextBlock}"/>
                         <TextBox Text="{Binding newSchoolSendOrder.schoolsendCredits, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
+                                 Width="300"/>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
