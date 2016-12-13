@@ -20,7 +20,7 @@ namespace SchoolsMailing.Models
         public string sharedLeafletSize { get; set; }
         public string sharedLeafletWeight { get; set; }
         public DateTime sharedDeliveryDate { get; set; }
-        public long sharedPack { get; set; }
+        public long sharedPackage { get; set; }
         public double sharedCost { get; set; }
     }
 }

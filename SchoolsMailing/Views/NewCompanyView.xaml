@@ -25,12 +25,9 @@
                 <ColumnDefinition Width="324"/>
                 <ColumnDefinition Width="324"/>
                 <ColumnDefinition Width="324"/>
-                <ColumnDefinition Width="324"/>
-                <ColumnDefinition Width="324"/>
             </Grid.ColumnDefinitions>
-        </Grid>
-        <StackPanel>
-            <StackPanel>
+            <StackPanel Grid.Column="0"
+                        Margin="12,0">
                 <TextBlock Text="Company"
                            FontSize="22" 
                            HorizontalAlignment="Center" 
@@ -67,78 +64,50 @@
                          Style="{StaticResource inputTextBox}"
                          Width="150"/>
             </StackPanel>
-        </StackPanel>
-        <Hub>
-            <HubSection>
-                <DataTemplate>
-                    
-                </DataTemplate>
-            </HubSection>
-            <HubSection>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="Product"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
-                        <TextBox Text="{Binding newCompany.companyProduct, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="400" AutomationProperties.IsRequiredForForm="True"/>
-                        <TextBlock Text="Prospects"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
-                        <TextBox Text="{Binding newCompany.companyProspects, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
-                        <TextBlock Text="Website"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
-                        <TextBox Text="{Binding newCompany.companyWebsite, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
-                        <TextBlock Text="Telephone"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
-                        <TextBox Text="{Binding newCompany.companyTelephone, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
-                        <TextBlock Text="SchoolSend ID"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
-                        <TextBox Text="{Binding newCompany.companySchoolSendID, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
-                    </StackPanel>
-                </DataTemplate>
-            </HubSection>
-            <HubSection>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="Call Back"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
-                        <DatePicker Width="200" 
-                                    MonthFormat="{}{month.abbreviated}" 
-                                    MinWidth="200"
-                                    Date="{Binding newCompany.companyCallBackDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"/>
-                        <TextBlock Text="Call Back Notes"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
-                        <TextBox Text="{Binding newCompany.companyCallBackDetails, Mode=TwoWay}"
-                                 Style="{StaticResource inputLargeTextBox}"
-                                 Width="400" 
-                                 ScrollViewer.VerticalScrollBarVisibility="Visible"/>
-                        <TextBlock Text="Company History"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
-                        <TextBox Text="{Binding newCompany.companyHistory, Mode=TwoWay}"
-                                 Style="{StaticResource inputLargeTextBox}"
-                                 Width="400" 
-                                 ScrollViewer.VerticalScrollBarVisibility="Visible"/>
-                    </StackPanel>
-                </DataTemplate>
-            </HubSection>
-        </Hub>
-        
+            <StackPanel Grid.Column="1"
+                        Margin="12,0">
+                <TextBlock Text="Product"
+                           Style="{StaticResource inputTextBlock}"/>
+                <TextBox Text="{Binding newCompany.companyProduct, Mode=TwoWay}"
+                         Style="{StaticResource inputTextBox}"
+                         Width="300"/>
+                <TextBlock Text="Prospects"
+                           Style="{StaticResource inputTextBlock}"/>
+                <TextBox Text="{Binding newCompany.companyProspects, Mode=TwoWay}"
+                         Style="{StaticResource inputTextBox}"
+                         Width="300"/>
+                <TextBlock Text="Website"
+                           Style="{StaticResource inputTextBlock}"/>
+                <TextBox Text="{Binding newCompany.companyWebsite, Mode=TwoWay}"
+                         Style="{StaticResource inputTextBox}"
+                         Width="300"/>
+                <TextBlock Text="Telephone"
+                           Style="{StaticResource inputTextBlock}"/>
+                <TextBox Text="{Binding newCompany.companyTelephone, Mode=TwoWay}"
+                         Style="{StaticResource inputTextBox}"
+                         Width="300"/>
+                <TextBlock Text="SchoolSend ID"
+                           Style="{StaticResource inputTextBlock}"/>
+                <TextBox Text="{Binding newCompany.companySchoolSendID, Mode=TwoWay}"
+                         Style="{StaticResource inputTextBox}"
+                         Width="300"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2"
+                        Margin="12,0">
+                <TextBlock Text="Call Back"
+                           Style="{StaticResource inputTextBlock}"/>
+                <DatePicker Width="200" 
+                            MonthFormat="{}{month.abbreviated}" 
+                            MinWidth="200"
+                            Date="{Binding newCompany.companyCallBackDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"/>
+                <TextBlock Text="Notes"
+                           Style="{StaticResource inputTextBlock}"/>
+                <TextBox Text="{Binding newCompany.companyNotes, Mode=TwoWay}"
+                         Style="{StaticResource inputLargeTextBox}"
+                         Width="300" 
+                         ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+            </StackPanel>
+        </Grid>
         <CommandBar VerticalAlignment="Bottom"
                     Grid.Row="1">
             <AppBarButton Label="Save"
@@ -151,11 +120,11 @@
             </AppBarButton>
             <AppBarButton Label="Cancel"
                           Icon="Cancel">
-                <!--<interactivity:Interaction.Behaviors>
+                <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
                         <core:InvokeCommandAction Command="{Binding Path=cancelCompany}" />
                     </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>-->
+                </interactivity:Interaction.Behaviors>
             </AppBarButton>
 
         </CommandBar>

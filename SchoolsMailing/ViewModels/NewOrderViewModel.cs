@@ -9,6 +9,8 @@ using SchoolsMailing.Common;
 using GalaSoft.MvvmLight.Command;
 using System.Diagnostics;
 using SchoolsMailing.Views;
+using SchoolsMailing.Models;
+using System.Collections.ObjectModel;
 
 namespace SchoolsMailing.ViewModels
 {
@@ -28,11 +30,30 @@ namespace SchoolsMailing.ViewModels
                 {
                     _saveEmail = new RelayCommand(() =>
                     {
-                        Debug.Write(orderCode);
+                        emailOrders.Add(newEmailOrder);
+                        newEmailOrder = new Email();
                     });
                 }
 
                 return _saveEmail;
+
+            }
+        }
+
+        private RelayCommand _cancelEmail;
+        public RelayCommand cancelEmail
+        {
+            get
+            {
+                if (_cancelEmail == null)
+                {
+                    _cancelEmail = new RelayCommand(() =>
+                    {
+                        
+                    });
+                }
+
+                return _cancelEmail;
 
             }
         }
@@ -95,11 +116,118 @@ namespace SchoolsMailing.ViewModels
             set { if(_orderCode != value) { _orderCode = value; RaisePropertyChanged("orderCode"); } }
         }
 
-        private string _emailSubject;
-        public string emailSubject
+        #region Orders
+        #region Data Order
+        private ObservableCollection<Data> _dataOrders = new ObservableCollection<Data>();
+        public ObservableCollection<Data> dataOrders
         {
-            get { return _emailSubject; }
-            set { if(_emailSubject != value) { _emailSubject = value; RaisePropertyChanged("emailSubject"); } }
+            get { return _dataOrders; }
+            set { if(_dataOrders != value) { _dataOrders = value; RaisePropertyChanged("dataOrders"); } }
         }
+
+        private Data _newDataOrder = new Data();
+        public Data newDataOrder
+        {
+            get { return _newDataOrder; }
+            set { if (_newDataOrder != value) { _newDataOrder = value; RaisePropertyChanged("newDataOrder"); } }
+        }
+        #endregion
+
+        #region Email Order
+        private ObservableCollection<Email> _emailOrders = new ObservableCollection<Email>();
+        public ObservableCollection<Email> emailOrders
+        {
+            get { return _emailOrders; }
+            set { if(_emailOrders != value) { _emailOrders = value; RaisePropertyChanged("emailOrders"); } }
+        }
+
+        private Email _newEmailOrder = new Email();
+        public Email newEmailOrder
+        {
+            get { return _newEmailOrder; }
+            set { if(_newEmailOrder != value) { _newEmailOrder = value; RaisePropertyChanged("newEmailOrder"); } }
+        }
+        #endregion
+
+        #region Direct Mailing Order
+        private ObservableCollection<DirectMailing> _directMailingOrders = new ObservableCollection<DirectMailing>();
+        public ObservableCollection<DirectMailing> directMailingOrders
+        {
+            get { return _directMailingOrders; }
+            set { if(_directMailingOrders != value) { _directMailingOrders = value;  RaisePropertyChanged("directMailingOrders"); } }
+        }
+
+        private DirectMailing _newDirectMailingOrder = new DirectMailing();
+        public DirectMailing newDirectMailingOrder
+        {
+            get { return _newDirectMailingOrder; }
+            set { if(_newDirectMailingOrder != value) { _newDirectMailingOrder = value; RaisePropertyChanged("newDirectMailingOrder"); } }
+        }
+        #endregion
+
+        #region Print Order
+        private ObservableCollection<Print> _printOrders = new ObservableCollection<Print>();
+        public ObservableCollection<Print> printOrders
+        {
+            get { return _printOrders; }
+            set { if(_printOrders != value) { _printOrders = value; RaisePropertyChanged("printOrders"); } }
+        }
+
+        private Print _newPrintOrder = new Print();
+        public Print newPrintOrder
+        {
+            get { return _newPrintOrder; }
+            set { if(_newPrintOrder != value) { _newPrintOrder = value; RaisePropertyChanged("newPrintOrder"); } }
+        }
+        #endregion
+
+        #region SchoolSend Order
+        private ObservableCollection<SchoolSend> _schoolSendOrders = new ObservableCollection<SchoolSend>();
+        public ObservableCollection<SchoolSend> schoolSendOrders
+        {
+            get { return _schoolSendOrders; }
+            set { if(_schoolSendOrders != value) { _schoolSendOrders = value;  RaisePropertyChanged("schoolSendOrders"); } }
+        }
+
+        private SchoolSend _newSchoolSendOrder = new SchoolSend();
+        public SchoolSend newSchoolSendOrder
+        {
+            get { return _newSchoolSendOrder; }
+            set { if(_newSchoolSendOrder != value) { _newSchoolSendOrder = value; RaisePropertyChanged("newSchoolSendOrder"); } }
+        }
+        #endregion
+
+        #region Shared Mailing Order
+        private ObservableCollection<SharedMailing> _sharedMailingOrders = new ObservableCollection<SharedMailing>();
+        public ObservableCollection<SharedMailing> sharedMailingOrders
+        {
+            get { return _sharedMailingOrders; }
+            set { if(_sharedMailingOrders != value) { _sharedMailingOrders = value; RaisePropertyChanged("sharedMailingOrders"); } }
+        }
+
+        private SharedMailing _newSharedMailingOrder = new SharedMailing();
+        public SharedMailing newSharedMailingOrder
+        {
+            get { return _newSharedMailingOrder; }
+            set { if(_newSharedMailingOrder != value) { _newSharedMailingOrder = value; RaisePropertyChanged("newSharedMailingOrder"); } }
+        }
+        #endregion
+
+        #region Surcharge Order
+        private ObservableCollection<Surcharge> _surchargeOrders = new ObservableCollection<Surcharge>();
+        public ObservableCollection<Surcharge> surchargeOrders
+        {
+            get { return _surchargeOrders; }
+            set { if(_surchargeOrders != value) { _surchargeOrders = value; RaisePropertyChanged("surchargeOrders"); } }
+        }
+
+        private Surcharge _newSurchargeOrder = new Surcharge();
+        public Surcharge newSurchargeOrder
+        {
+            get { return _newSurchargeOrder; }
+            set { if(_newSurchargeOrder != value) { _newSurchargeOrder = value; RaisePropertyChanged("newSurchargeOrder"); } }
+        }
+        #endregion
+        #endregion
     }
 }

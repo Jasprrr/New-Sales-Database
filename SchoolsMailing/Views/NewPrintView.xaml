@@ -7,9 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:conv="using:SchoolsMailing.Converters"
     mc:Ignorable="d"
     DataContext="{Binding NewOrderViewModel, Source={StaticResource VmLocator}}">
-
+    <Page.Resources>
+        <conv:StringFormatter x:Key="CurrencyConverter"/>
+        <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -20,10 +24,11 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="Print Date"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="200"/>
-                        <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
-                                            Width="200"/>
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <CalendarDatePicker Width="120" 
+                                            MinWidth="120"
+                                            Date="{Binding newPrintOrder.printDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                            Style="{StaticResource inputCalendarDatePicker}"/>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -33,13 +38,13 @@
                         <TextBlock Text="Printer"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newPrintOrder.printDetails, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                         <TextBlock Text="Details" 
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newPrintOrder.printDetails, Mode=TwoWay}"
                                  Style="{StaticResource inputLargeTextBox}"
                                  Width="400"/>
                     </StackPanel>
@@ -51,13 +56,13 @@
                         <TextBlock Text="Print Cost"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newPrintOrder.printCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
                         <TextBlock Text="Print Charge"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newPrintOrder.printCharge, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
                         <TextBlock Text="Postage Cost"

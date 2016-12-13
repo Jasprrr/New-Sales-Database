@@ -10,6 +10,7 @@ namespace SchoolsMailing.Models
     {
         public long ID { get; set; }
         public long orderID { get; set; }
+        public DateTime surchargeDate { get; set; }
         public string surchargeDetails { get; set; }
         public double surchargeCost { get; set; }
     }

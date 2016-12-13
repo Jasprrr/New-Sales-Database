@@ -7,9 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:conv="using:SchoolsMailing.Converters"
     mc:Ignorable="d"
     DataContext="{Binding NewOrderViewModel, Source={StaticResource VmLocator}}">
-
+    <Page.Resources>
+        <conv:StringFormatter x:Key="CurrencyConverter"/>
+        <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Hub>
             <HubSection Header="Date">
@@ -19,7 +23,8 @@
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
                         <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
-                                            Width="200"/>
+                                            Width="200"
+                                            Date="{Binding surchargeDate, Mode=TwoWay}"/>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -29,7 +34,7 @@
                         <TextBlock Text="Details" 
                                    Style="{StaticResource inputTextBlock}"
                                     Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newSurchargeOrder.surchargeDetails, Mode=TwoWay}"
                                  Style="{StaticResource inputLargeTextBox}"
                                  Width="400"/>
                     </StackPanel>
@@ -41,7 +46,7 @@
                         <TextBlock Text="Cost"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newSurchargeOrder.surchargeCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
                     </StackPanel>
@@ -59,7 +64,7 @@
                           Label="Save">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=newCompany}" />
+                        <core:InvokeCommandAction Command="{Binding Path=saveSurcharge}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
@@ -67,7 +72,7 @@
                           Label="Cancel">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=cancelNew}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cancelSurcharge}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

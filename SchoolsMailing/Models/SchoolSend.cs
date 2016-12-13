@@ -11,8 +11,8 @@ namespace SchoolsMailing.Models
         public long ID { get; set; }
         public long orderID { get; set; }
         public long schoolsendPackage { get; set; }
-        public DateTime schoolsendStartDate { get; set; }
-        public DateTime schoolsendEndDate { get; set; }
+        public DateTime schoolsendStart { get; set; }
+        public DateTime schoolsendEnd { get; set; }
         public double schoolsendCost { get; set; }
         public long schoolsendCredits { get; set; }
     }

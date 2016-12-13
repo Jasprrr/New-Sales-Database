@@ -7,9 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:conv="using:SchoolsMailing.Converters"
     mc:Ignorable="d"
     DataContext="{Binding NewOrderViewModel, Source={StaticResource VmLocator}}">
-
+    <Page.Resources>
+        <conv:StringFormatter x:Key="CurrencyConverter"/>
+        <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -23,7 +27,8 @@
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
                         <ComboBox Style="{StaticResource inputComboBox}"
-                                  Width="200"/>
+                                  Width="200"
+                                  SelectedItem="{Binding newSharedMailingOrder.sharedPackage, Mode=TwoWay}"/>
                         <TextBlock Text="Send Date"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
@@ -32,7 +37,7 @@
                         <TextBlock Text="To"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newSharedMailingOrder.sharedMailingTo, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
 
@@ -43,15 +48,17 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="Artwork"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="200"/>
-                        <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
-                                            Width="200"/>
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <CalendarDatePicker Width="120" 
+                                            MinWidth="120"
+                                            Date="{Binding newDirectMailingOrder.directArtworkDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                            Style="{StaticResource inputCalendarDatePicker}"/>
                         <TextBlock Text="Delivery"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="200"/>
-                        <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
-                                            Width="200"/>
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <CalendarDatePicker Width="120" 
+                                            MinWidth="120"
+                                            Date="{Binding newSharedMailingOrder.sharedDeliveryDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                            Style="{StaticResource inputCalendarDatePicker}"/>
 
                     </StackPanel>
                 </DataTemplate>
@@ -62,25 +69,25 @@
                         <TextBlock Text="FAO"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newSharedMailingOrder.sharedFAO, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                         <TextBlock Text="Name"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newSharedMailingOrder.sharedLeafletName, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                         <TextBlock Text="Size"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newSharedMailingOrder.sharedLeafletSize, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                         <TextBlock Text="Weight"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newSharedMailingOrder.sharedLeafletWeight, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                         
@@ -93,7 +100,7 @@
                         <TextBlock Text="Total"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newSharedMailingOrder.sharedCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
                     </StackPanel>
@@ -106,7 +113,7 @@
                         Label="Save">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=newCompany}" />
+                        <core:InvokeCommandAction Command="{Binding Path=saveSharedMailing}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
@@ -114,7 +121,7 @@
                         Label="Cancel">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=cancelNew}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cancelSharedMailing}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

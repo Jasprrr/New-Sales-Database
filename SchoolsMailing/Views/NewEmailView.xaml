@@ -12,6 +12,7 @@
     DataContext="{Binding NewOrderViewModel, Source={StaticResource VmLocator}}">
     <Page.Resources>
         <conv:StringFormatter x:Key="CurrencyConverter"/>
+        <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -23,10 +24,11 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="Send Date"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="200"/>
-                        <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
-                                            Width="200"/>
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <CalendarDatePicker Width="120" 
+                                            MinWidth="120"
+                                            Date="{Binding newEmailOrder.emailDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                            Style="{StaticResource inputCalendarDatePicker}"/>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -34,17 +36,15 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="Subject"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
+                                   Style="{StaticResource inputTextBlock}"/>
                         <TextBox Style="{StaticResource inputTextBox}"
-                                 Width="400"
-                                 Text="{Binding emailSubject, Mode=TwoWay}"/>
+                                 Width="300"
+                                 Text="{Binding newEmailOrder.emailSubject, Mode=TwoWay}"/>
                         <TextBlock Text="Details" 
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
-                        <TextBox Text=""
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <TextBox Text="{Binding newEmailOrder.emailDetails, Mode=TwoWay}"
                                  Style="{StaticResource inputLargeTextBox}"
-                                 Width="400"/>
+                                 Width="300"/>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -55,19 +55,19 @@
                         <TextBlock Text="Admin Cost"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text="{Binding someBinding, Mode=TwoWay, Converter={StaticResource CurrencyConverter}, ConverterParameter=\{0:d\}}"
+                        <TextBox Text="{Binding newEmailOrder.emailAdminCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
                         <TextBlock Text="Direct Cost"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newEmailOrder.emailDirectCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
                         <TextBlock Text="Total Cost"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newEmailOrder.emailCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
                     </StackPanel>

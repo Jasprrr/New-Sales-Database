@@ -40,17 +40,15 @@
                 <PivotItem.Content>
                     <StackPanel>
                         <TextBlock Text="Company"
-                                   Style="{StaticResource inputTextBlock}" 
-                                   Width="400"/>
+                                   Style="{StaticResource inputTextBlock}"/>
                         <ComboBox Style="{StaticResource inputComboBox}"
-                                  Width="400"/>
+                                  Width="300"/>
                         <TextBlock Text="Contact"
                                    Style="{StaticResource inputTextBlock}"/>
                         <ComboBox Style="{StaticResource inputComboBox}"
-                                  Width="400"/>
+                                  Width="300"/>
                         <TextBlock Text="Order Code"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
+                                   Style="{StaticResource inputTextBlock}"/>
                         <TextBox Style="{StaticResource inputTextBox}"
                                  Width="200"
                                  Text="{Binding orderCode, Mode=TwoWay}"/>
@@ -66,7 +64,8 @@
                     <TextBlock Text="Email"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
-                    <ListView HorizontalAlignment="Center">
+                    <ListView HorizontalAlignment="Center"
+                              ItemsSource="{Binding emailOrders, Mode=OneWay}">
                         <ListView.Header>
                             <Button Content="New" 
                                     HorizontalAlignment="Center">
@@ -77,15 +76,13 @@
                                 </interactivity:Interaction.Behaviors>
                             </Button>
                         </ListView.Header>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding emailSubject, Mode=OneWay}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
                     </ListView>
                 </PivotItem.Content>
             </PivotItem>
@@ -94,7 +91,8 @@
                     <TextBlock Text="Data"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
-                    <ListView HorizontalAlignment="Center">
+                    <ListView HorizontalAlignment="Center"
+                              ItemsSource="{Binding dataOrders, Mode=OneWay}">
                         <ListView.Header>
                             <Button Content="New" 
                                     HorizontalAlignment="Center">
@@ -105,15 +103,13 @@
                                 </interactivity:Interaction.Behaviors>
                             </Button>
                         </ListView.Header>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding dataDetails, Mode=OneWay}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
                     </ListView>
                 </PivotItem.Content>
             </PivotItem>
@@ -122,7 +118,8 @@
                     <TextBlock Text="SchoolSend"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
-                    <ListView HorizontalAlignment="Center">
+                    <ListView HorizontalAlignment="Center"
+                              ItemsSource="{Binding schoolSendOrders, Mode=OneWay}">
                         <ListView.Header>
                             <Button Content="New" 
                                     HorizontalAlignment="Center">
@@ -133,15 +130,13 @@
                                 </interactivity:Interaction.Behaviors>
                             </Button>
                         </ListView.Header>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding schoolsendStart, Mode=OneWay}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
                     </ListView>
                 </PivotItem.Content>
             </PivotItem>
@@ -150,7 +145,8 @@
                     <TextBlock Text="Direct Mailing"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
-                    <ListView HorizontalAlignment="Center">
+                    <ListView HorizontalAlignment="Center"
+                              ItemsSource="{Binding directMailingOrders, Mode=OneWay}">
                         <ListView.Header>
                             <Button Content="New" 
                                     HorizontalAlignment="Center">
@@ -161,15 +157,13 @@
                                 </interactivity:Interaction.Behaviors>
                             </Button>
                         </ListView.Header>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding directDetails}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
                     </ListView>
                 </PivotItem.Content>
             </PivotItem>
@@ -178,7 +172,8 @@
                     <TextBlock Text="Shared Mailing"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
-                    <ListView HorizontalAlignment="Center">
+                    <ListView HorizontalAlignment="Center"
+                              ItemsSource="{Binding sharedMailingOrders, Mode=OneWay}">
                         <ListView.Header>
                             <Button Content="New" 
                                     HorizontalAlignment="Center">
@@ -189,15 +184,13 @@
                                 </interactivity:Interaction.Behaviors>
                             </Button>
                         </ListView.Header>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding sharedmailingPackage, Mode=OneWay}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
                     </ListView>
                 </PivotItem.Content>
             </PivotItem>
@@ -206,7 +199,8 @@
                     <TextBlock Text="Print"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
-                    <ListView HorizontalAlignment="Center">
+                    <ListView HorizontalAlignment="Center"
+                              ItemsSource="{Binding printOrders, Mode=OneWay}">
                         <ListView.Header>
                             <Button Content="New" 
                                     HorizontalAlignment="Center">
@@ -217,15 +211,13 @@
                                 </interactivity:Interaction.Behaviors>
                             </Button>
                         </ListView.Header>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding printDate, Mode=OneWay}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
                     </ListView>
                 </PivotItem.Content>
             </PivotItem>
@@ -234,7 +226,8 @@
                     <TextBlock Text="Surcharge"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
-                    <ListView HorizontalAlignment="Center">
+                    <ListView HorizontalAlignment="Center"
+                              ItemsSource="{Binding surchargeOrders, Mode=OneWay}">
                         <ListView.Header>
                             <Button Content="New" 
                                     HorizontalAlignment="Center">
@@ -245,15 +238,13 @@
                                 </interactivity:Interaction.Behaviors>
                             </Button>
                         </ListView.Header>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
-                        <ListViewItem>
-                            <TextBlock Text="123"/>
-                        </ListViewItem>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding surchargeCost, Mode=OneWay}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
                     </ListView>
                 </PivotItem.Content>
             </PivotItem>

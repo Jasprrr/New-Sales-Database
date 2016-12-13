@@ -64,6 +64,28 @@ namespace SchoolsMailing.DAL
             }
         }
 
+        public static void DeleteCompany(Company company)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                db.Delete(company);
+            }
+        }
+        public static void DeleteContact(Contact contact)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                db.Delete(contact);
+            }
+        }
+        public static void DeleteHistory(CompanyHistory history)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                db.Delete(history);
+            }
+        }
+
         #region Get data list
 
         public static List<Company> GetAllCompanies()

@@ -21,20 +21,6 @@ namespace SchoolsMailing.ViewModels
             
         }
 
-        public DateTime? _asd;
-        public DateTime? asd {
-            get { return _asd; }
-            set {
-                if (_asd.Value != value)
-                {
-                    _asd = value;
-                    RaisePropertyChanged("asd");
-                }
-            }
-        }
-
-        public string testDate;
-
         #region Company Data
         private Company _newCompany = new Company();
         public Company newCompany
@@ -83,8 +69,8 @@ namespace SchoolsMailing.ViewModels
                 {
                     _cancelCompany = new RelayCommand(() =>
                     {
-                        string testingString = "Company Name:" + newCompany.companyName.ToString();
-                        Debug.Write(testingString);
+                        NavigationService.GoBack();
+                        newCompany = null;
                     });
                 }
 

@@ -107,26 +107,26 @@ namespace SchoolsMailing.ViewModels
             set { if (_selectedCompany != value) { _selectedCompany = value; RaisePropertyChanged("selectedCompany"); } }
         }
 
-        //Allows binding from DateTime to DateTimeOffset
-        public DateTimeOffset companyCallBack
+        public async void deleteCompanyDialog()
         {
-            get
+            ContentDialog deleteCompanyDialog = new ContentDialog()
             {
-                DateTime dateTimeToOffset = DateTime.SpecifyKind(selectedCompany.companyCallBack, DateTimeKind.Utc);
-                DateTimeOffset OffsetCallBack = dateTimeToOffset;
-                return dateTimeToOffset;
-            }
-        }
-        public DateTimeOffset companyLastCall
-        {
-            get
-            {
-                DateTime dateTimeToOffset = DateTime.SpecifyKind(selectedCompany.companyLastCall, DateTimeKind.Utc);
-                DateTimeOffset OffsetCallBack = dateTimeToOffset;
-                return dateTimeToOffset;
-            }
-        }
+                Title = "Delete this company?",
+                Content = "If you delete this company, you won't be able to recover it. Do you want to delete it?",
+                PrimaryButtonText = "Delete",
+                SecondaryButtonText = "Cancel"
+            };
 
+            var result = await deleteCompanyDialog.ShowAsync();
+            if(result == ContentDialogResult.Primary)
+            {
+                DataAccessLayer.DeleteCompany(selectedCompany);
+            }
+            else if(result == ContentDialogResult.Secondary)
+            {
+
+            }
+        }
         #endregion
 
         #region Contact Data
@@ -137,7 +137,27 @@ namespace SchoolsMailing.ViewModels
             get { return _selectedContact; }
             set { if (_selectedContact != value) { _selectedContact = value; RaisePropertyChanged("selectedContact"); } }
         }
-        
+
+        public async void deleteContactDialog()
+        {
+            ContentDialog deleteContactDialog = new ContentDialog()
+            {
+                Title = "Delete this contact?",
+                Content = "If you delete this contact, you won't be able to recover it. Do you want to delete it?",
+                PrimaryButtonText = "Delete",
+                SecondaryButtonText = "Cancel"
+            };
+
+            var result = await deleteContactDialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                DataAccessLayer.DeleteContact(selectedContact);
+            }
+            else if (result == ContentDialogResult.Secondary)
+            {
+
+            }
+        }
         #endregion
 
         #region Company History
@@ -212,10 +232,9 @@ namespace SchoolsMailing.ViewModels
             {
                 if(HistoryID != 0)
                 {
-                    //TODO: Delete history
+                    DataAccessLayer.DeleteHistory(invokedCompanyHistory);
                     GetHistory(selectedCompany.ID); //Refresh history
                 }
-                
             }
         }
 
@@ -258,9 +277,7 @@ namespace SchoolsMailing.ViewModels
                         }
                     });
                 }
-
                 return _saveCompany;
-
             }
         }
         
@@ -278,9 +295,39 @@ namespace SchoolsMailing.ViewModels
                         GetHistory(selectedCompany.ID);
                     });
                 }
-
                 return _refreshCompany;
+            }
+        }
 
+        private RelayCommand _deleteCompany;
+        public RelayCommand deleteCompany
+        {
+            get
+            {
+                if (_deleteCompany == null)
+                {
+                    _deleteCompany = new RelayCommand(() =>
+                    {
+                        deleteCompanyDialog();
+                    });
+                }
+                return _deleteCompany;
+            }
+        }
+
+        private RelayCommand _deleteContact;
+        public RelayCommand deleteContact
+        {
+            get
+            {
+                if (_deleteContact == null)
+                {
+                    _deleteContact = new RelayCommand(() =>
+                    {
+                        deleteContactDialog();
+                    });
+                }
+                return _deleteContact;
             }
         }
 

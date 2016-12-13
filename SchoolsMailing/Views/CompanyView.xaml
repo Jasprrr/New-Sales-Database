@@ -453,11 +453,24 @@
             </AppBarButton>
             <AppBarButton Label="Delete"
                           Icon="Delete">
-                <!--<interactivity:Interaction.Behaviors>
-                    <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=deleteCompany}" />
-                    </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>-->
+                <AppBarButton.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Company">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Click">
+                                    <core:InvokeCommandAction Command="{Binding Path=deleteCompany}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Contact">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Click">
+                                    <core:InvokeCommandAction Command="{Binding Path=deleteContact}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
             </AppBarButton>
         </CommandBar>
     </Grid>

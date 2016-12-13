@@ -7,9 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:conv="using:SchoolsMailing.Converters"
     mc:Ignorable="d"
     DataContext="{Binding NewOrderViewModel, Source={StaticResource VmLocator}}">
-
+    <Page.Resources>
+        <conv:StringFormatter x:Key="CurrencyConverter"/>
+        <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -20,15 +24,17 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="Start"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="200"/>
-                        <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
-                                            Width="200"/>
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <CalendarDatePicker Width="120" 
+                                            MinWidth="120"
+                                            Date="{Binding newSchoolSendOrder.schoolsendStart, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                            Style="{StaticResource inputCalendarDatePicker}"/>
                         <TextBlock Text="End"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="200"/>
-                        <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
-                                            Width="200"/>
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <CalendarDatePicker Width="120" 
+                                            MinWidth="120"
+                                            Date="{Binding newSchoolSendOrder.schoolsendEnd, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                            Style="{StaticResource inputCalendarDatePicker}"/>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -39,11 +45,12 @@
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
                         <ComboBox Style="{StaticResource inputComboBox}"
-                                  Width="400"/>
+                                  Width="400"
+                                  SelectedItem="{Binding newSchoolSendOrder.schoolsendPackage, Mode=TwoWay}"/>
                         <TextBlock Text="Credits"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newSchoolSendOrder.schoolsendCredits, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                     </StackPanel>
@@ -55,7 +62,7 @@
                         <TextBlock Text="Total"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text=""
+                        <TextBox Text="{Binding newSchoolSendOrder.schoolsendCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
                     </StackPanel>
@@ -68,7 +75,7 @@
                         Label="Save">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=newCompany}" />
+                        <core:InvokeCommandAction Command="{Binding Path=saveSchoolSend}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
@@ -76,7 +83,7 @@
                         Label="Cancel">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=cancelNew}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cancelSchoolSend}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

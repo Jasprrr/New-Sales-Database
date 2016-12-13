@@ -14,5 +14,7 @@ namespace SchoolsMailing.Models
         public long orderID { get; set; }
         public string dataDetails { get; set; }
         public double dataCost { get; set; }
+        public DateTime dataStart { get; set; }
+        public DateTime dataEnd { get; set; }
     }
 }
