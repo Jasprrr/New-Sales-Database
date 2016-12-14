@@ -115,12 +115,6 @@
                 },
                 new SplitViewPaneMenuItem
                 {
-                    Label = "Orders",
-                    Symbol = Symbol.Library,
-                    AssociatedPage = typeof(OrdersView)
-                },
-                new SplitViewPaneMenuItem
-                {
                     Label = "Reports",
                     Symbol = Symbol.Folder,
                     AssociatedPage = typeof(NewOrderView)

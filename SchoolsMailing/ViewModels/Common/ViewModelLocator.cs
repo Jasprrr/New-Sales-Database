@@ -29,8 +29,8 @@
         public NewCompanyViewModel NewCompanyViewModel => SimpleIoc.Default.GetInstance<NewCompanyViewModel>();
         public CompanyViewModel CompanyViewModel => SimpleIoc.Default.GetInstance<CompanyViewModel>();
         public LoginViewModel LoginViewModel => SimpleIoc.Default.GetInstance<LoginViewModel>();
-        public NewOrderViewModel NewOrderViewModel => SimpleIoc.Default.GetInstance<NewOrderViewModel>();
         public NewContactViewModel NewContactViewModel => SimpleIoc.Default.GetInstance<NewContactViewModel>();
+        public NewOrderViewModel NewOrderViewModel => SimpleIoc.Default.GetInstance<NewOrderViewModel>();
 
         //this, name=> { NameProperty = name}
         private static void RegisterViewModels()

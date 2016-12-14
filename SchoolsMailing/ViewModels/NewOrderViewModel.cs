@@ -11,6 +11,7 @@ using System.Diagnostics;
 using SchoolsMailing.Views;
 using SchoolsMailing.Models;
 using System.Collections.ObjectModel;
+using SchoolsMailing.DAL;
 
 namespace SchoolsMailing.ViewModels
 {
@@ -18,14 +19,32 @@ namespace SchoolsMailing.ViewModels
     {
         public NewOrderViewModel(IMessenger messenger, NavigationService navigationService) : base(messenger, navigationService)
         {
-
+            companies = DataAccessLayer.GetAllCompanies2();
+            MessengerInstance.Register<NotificationMessage<Int64>>(this, SetUp); // register company parameter
         }
         
-        private string _someBinding;
-        public string someBinding
+        public async void SetUp(NotificationMessage<Int64> obj)
         {
-            get { return _someBinding; }
-            set { if(_someBinding != value) { _someBinding = value; RaisePropertyChanged("someBinding"); } }
+            if(obj.Notification == "OrderViewModel")
+            {
+                if(obj.Content != 0)
+                {
+                    //TODO: Get Order Code
+                    selectedOrder = DAL.DataAccessLayer.GetOrder(obj.Content);
+                }
+                else
+                {
+                    //TODO: Set new order code
+                }
+                companies = DataAccessLayer.GetAllCompanies2();
+            }
+        }
+
+        private Orders _selectedOrder;
+        public Orders selectedOrder
+        {
+            get { return _selectedOrder; }
+            set { if(_selectedOrder != value) { _selectedOrder = value;  RaisePropertyChanged("selectedOrder"); } }
         }
 
         #region Navigate to new orders
@@ -79,9 +98,56 @@ namespace SchoolsMailing.ViewModels
             set { if(_orderCode != value) { _orderCode = value; RaisePropertyChanged("orderCode"); } }
         }
 
+        #region Order information
+        private ObservableCollection<Company> _companies;
+        public ObservableCollection<Company> companies
+        {
+            get { return _companies; }
+            set { if(_companies != value) { _companies = value;  RaisePropertyChanged("companies"); } }
+        }
+
+        private Company _selectedCompany;
+        public Company selectedCompany
+        {
+            get { return _selectedCompany; }
+            set { if(_selectedCompany != value) { _selectedCompany = value;  RaisePropertyChanged("selectedCompany"); } }
+        }
+
+        private ObservableCollection<Contact> _contacts;
+        public ObservableCollection<Contact> contacts
+        {
+            get { return _contacts; }
+            set { if(_contacts != value) { _contacts = value;  RaisePropertyChanged("contacts"); } }
+        }
+
+        private Contact _selectedContact;
+        public Contact selectedContact
+        {
+            get { return _selectedContact; }
+            set { if(_selectedContact != value) { _selectedContact = value;  RaisePropertyChanged("selectedContact"); } }
+        }
+
+        private RelayCommand _companyChanged;
+        public RelayCommand companyChanged
+        {
+            get
+            {
+                if(_companyChanged == null)
+                {
+                    _companyChanged = new RelayCommand(() =>
+                    {
+                        contacts = DataAccessLayer.GetContactsByCompany(selectedCompany.ID);
+                    });
+                }
+                return _companyChanged;
+            }
+        }
+        
+        #endregion
+
         #region Orders
         #region Data Order
-        private ObservableCollection<Data> _dataOrders = new ObservableCollection<Data>();
+        private ObservableCollection<Data> _dataOrders;
         public ObservableCollection<Data> dataOrders
         {
             get { return _dataOrders; }
@@ -132,10 +198,46 @@ namespace SchoolsMailing.ViewModels
 
             }
         }
+
+        private RelayCommand _duplicateData;
+        public RelayCommand duplicateData
+        {
+            get
+            {
+                if (_duplicateData == null)
+                {
+                    _duplicateData = new RelayCommand(() =>
+                    {
+                        Debug.WriteLine("Duplicate");
+                    });
+                }
+
+                return _duplicateData;
+
+            }
+        }
+
+        private RelayCommand _deleteData;
+        public RelayCommand deleteData
+        {
+            get
+            {
+                if (_deleteData == null)
+                {
+                    _deleteData = new RelayCommand(() =>
+                    {
+                        Debug.WriteLine("delete");
+                    });
+                }
+
+                return _deleteData;
+
+            }
+        }
         #endregion
 
         #region Email Order
-        private ObservableCollection<Email> _emailOrders = new ObservableCollection<Email>();
+        private ObservableCollection<Email> _emailOrders;
         public ObservableCollection<Email> emailOrders
         {
             get { return _emailOrders; }
@@ -186,10 +288,44 @@ namespace SchoolsMailing.ViewModels
 
             }
         }
+
+        private RelayCommand _duplicateEmail;
+        public RelayCommand duplicateEmail
+        {
+            get
+            {
+                if (_duplicateEmail == null)
+                {
+                    _duplicateEmail = new RelayCommand(() =>
+                    {
+                        Debug.WriteLine("Duplicate");
+                    });
+                }
+
+                return _duplicateEmail;
+            }
+        }
+
+        private RelayCommand _deleteEmail;
+        public RelayCommand deleteEmail
+        {
+            get
+            {
+                if (_deleteEmail == null)
+                {
+                    _deleteEmail = new RelayCommand(() =>
+                    {
+                        Debug.WriteLine("delete");
+                    });
+                }
+
+                return _deleteEmail;
+            }
+        }
         #endregion
 
         #region Direct Mailing Order
-        private ObservableCollection<DirectMailing> _directMailingOrders = new ObservableCollection<DirectMailing>();
+        private ObservableCollection<DirectMailing> _directMailingOrders;
         public ObservableCollection<DirectMailing> directMailingOrders
         {
             get { return _directMailingOrders; }
@@ -240,10 +376,44 @@ namespace SchoolsMailing.ViewModels
 
             }
         }
+
+        private RelayCommand _duplicateDirectMailing;
+        public RelayCommand duplicateDirectMailing
+        {
+            get
+            {
+                if (_duplicateDirectMailing == null)
+                {
+                    _duplicateDirectMailing = new RelayCommand(() =>
+                    {
+                        Debug.WriteLine("Duplicate");
+                    });
+                }
+
+                return _duplicateDirectMailing;
+            }
+        }
+
+        private RelayCommand _deleteDirectMailing;
+        public RelayCommand deleteDirectMailing
+        {
+            get
+            {
+                if (_deleteDirectMailing == null)
+                {
+                    _deleteDirectMailing = new RelayCommand(() =>
+                    {
+                        Debug.WriteLine("delete");
+                    });
+                }
+
+                return _deleteDirectMailing;
+            }
+        }
         #endregion
 
         #region Print Order
-        private ObservableCollection<Print> _printOrders = new ObservableCollection<Print>();
+        private ObservableCollection<Print> _printOrders;
         public ObservableCollection<Print> printOrders
         {
             get { return _printOrders; }
@@ -294,10 +464,44 @@ namespace SchoolsMailing.ViewModels
 
             }
         }
+
+        private RelayCommand _duplicatePrint;
+        public RelayCommand duplicatePrint
+        {
+            get
+            {
+                if (_duplicatePrint == null)
+                {
+                    _duplicatePrint = new RelayCommand(() =>
+                    {
+                        Debug.WriteLine("Duplicate");
+                    });
+                }
+
+                return _duplicatePrint;
+            }
+        }
+
+        private RelayCommand _deletePrint;
+        public RelayCommand deletePrint
+        {
+            get
+            {
+                if (_deletePrint == null)
+                {
+                    _deletePrint = new RelayCommand(() =>
+                    {
+                        Debug.WriteLine("delete");
+                    });
+                }
+
+                return _deletePrint;
+            }
+        }
         #endregion
 
         #region SchoolSend Order
-        private ObservableCollection<SchoolSend> _schoolSendOrders = new ObservableCollection<SchoolSend>();
+        private ObservableCollection<SchoolSend> _schoolSendOrders;
         public ObservableCollection<SchoolSend> schoolSendOrders
         {
             get { return _schoolSendOrders; }
@@ -366,10 +570,44 @@ namespace SchoolsMailing.ViewModels
                 return _setCredits;
             }
         }
+
+        private RelayCommand _duplicateSchoolSend;
+        public RelayCommand duplicateSchoolSend
+        {
+            get
+            {
+                if (_duplicateSchoolSend == null)
+                {
+                    _duplicateSchoolSend = new RelayCommand(() =>
+                    {
+                        Debug.WriteLine("Duplicate");
+                    });
+                }
+
+                return _duplicateSchoolSend;
+            }
+        }
+
+        private RelayCommand _deleteSchoolSend;
+        public RelayCommand deleteSchoolSend
+        {
+            get
+            {
+                if (_deleteSchoolSend == null)
+                {
+                    _deleteSchoolSend = new RelayCommand(() =>
+                    {
+                        Debug.WriteLine("delete");
+                    });
+                }
+
+                return _deleteSchoolSend;
+            }
+        }
         #endregion
 
         #region Shared Mailing Order
-        private ObservableCollection<SharedMailing> _sharedMailingOrders = new ObservableCollection<SharedMailing>();
+        private ObservableCollection<SharedMailing> _sharedMailingOrders;
         public ObservableCollection<SharedMailing> sharedMailingOrders
         {
             get { return _sharedMailingOrders; }
@@ -420,10 +658,44 @@ namespace SchoolsMailing.ViewModels
 
             }
         }
+
+        private RelayCommand _duplicateSharedMailing;
+        public RelayCommand duplicateSharedMailing
+        {
+            get
+            {
+                if (_duplicateSharedMailing == null)
+                {
+                    _duplicateSharedMailing = new RelayCommand(() =>
+                    {
+                        Debug.WriteLine("Duplicate");
+                    });
+                }
+
+                return _duplicateSharedMailing;
+            }
+        }
+
+        private RelayCommand _deleteSharedMailing;
+        public RelayCommand deleteSharedMailing
+        {
+            get
+            {
+                if (_deleteSharedMailing == null)
+                {
+                    _deleteSharedMailing = new RelayCommand(() =>
+                    {
+                        Debug.WriteLine("delete");
+                    });
+                }
+
+                return _deleteSharedMailing;
+            }
+        }
         #endregion
 
         #region Surcharge Order
-        private ObservableCollection<Surcharge> _surchargeOrders = new ObservableCollection<Surcharge>();
+        private ObservableCollection<Surcharge> _surchargeOrders;
         public ObservableCollection<Surcharge> surchargeOrders
         {
             get { return _surchargeOrders; }
@@ -472,6 +744,40 @@ namespace SchoolsMailing.ViewModels
 
                 return _cancelSurcharge;
 
+            }
+        }
+
+        private RelayCommand _duplicateSurcharge;
+        public RelayCommand duplicateSurcharge
+        {
+            get
+            {
+                if (_duplicateSurcharge == null)
+                {
+                    _duplicateSurcharge = new RelayCommand(() =>
+                    {
+                        Debug.WriteLine("Duplicate");
+                    });
+                }
+
+                return _duplicateSurcharge;
+            }
+        }
+
+        private RelayCommand _deleteSurcharge;
+        public RelayCommand deleteSurcharge
+        {
+            get
+            {
+                if (_deleteSurcharge == null)
+                {
+                    _deleteSurcharge = new RelayCommand(() =>
+                    {
+                        Debug.WriteLine("delete");
+                    });
+                }
+
+                return _deleteSurcharge;
             }
         }
         #endregion

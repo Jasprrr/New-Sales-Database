@@ -21,5 +21,6 @@ namespace SchoolsMailing.Models
         public double directPrintCost { get; set; }
         public double directPostageCost { get; set; }
         public double directTotal { get; set; }
+        public long orderID { get; set; }
     }
 }

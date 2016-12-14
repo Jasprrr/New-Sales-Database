@@ -184,7 +184,6 @@
     <Compile Include="ViewModels\NewCompanyViewModel.cs" />
     <Compile Include="ViewModels\NewContactViewModel.cs" />
     <Compile Include="ViewModels\NewOrderViewModel.cs" />
-    <Compile Include="ViewModels\OrdersViewModel.cs" />
     <Compile Include="Views\CompaniesView2.xaml.cs">
       <DependentUpon>CompaniesView2.xaml</DependentUpon>
     </Compile>
@@ -232,9 +231,6 @@
     </Compile>
     <Compile Include="Views\NewSurchargeView.xaml.cs">
       <DependentUpon>NewSurchargeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\OrdersView.xaml.cs">
-      <DependentUpon>OrdersView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -390,10 +386,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NewSurchargeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\OrdersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

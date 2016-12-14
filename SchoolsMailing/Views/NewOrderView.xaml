@@ -45,11 +45,25 @@
                         <TextBlock Text="Company"
                                    Style="{StaticResource inputTextBlock}"/>
                         <ComboBox Style="{StaticResource inputComboBox}"
-                                  Width="300"/>
+                                  Width="300"
+                                  DisplayMemberPath="companyName" 
+                                  ItemsSource="{Binding companies}"
+                                  SelectedItem="{Binding selectedCompany, Mode=TwoWay}">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="SelectionChanged">
+                                    <core:InvokeCommandAction Command="{Binding Path=companyChanged}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </ComboBox>
                         <TextBlock Text="Contact"
                                    Style="{StaticResource inputTextBlock}"/>
                         <ComboBox Style="{StaticResource inputComboBox}"
-                                  Width="300"/>
+                                  Width="300"
+                                  DisplayMemberPath="contactForename" 
+                                  ItemsSource="{Binding contacts}"
+                                  SelectedItem="{Binding selectedContact}">
+                            
+                        </ComboBox>
                         <TextBlock Text="Order Code"
                                    Style="{StaticResource inputTextBlock}"/>
                         <TextBox Style="{StaticResource inputTextBox}"
@@ -72,10 +86,23 @@
                               IsItemClickEnabled="True">
                         <GridView.ItemTemplate>
                             <DataTemplate>
-                                <ctrl:OrderEmailList>
+                                <ctrl:OrderEmailList RightTapped="OrderEmailList_RightTapped">
                                     <FlyoutBase.AttachedFlyout>
-                                        <MenuFlyout>
-                                            <MenuFlyoutItem Text="123"/>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem Text="Duplicate">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <core:EventTriggerBehavior EventName="Click">
+                                                        <core:InvokeCommandAction Command="{Binding NewOrderViewModel.duplicateEmail, Source={StaticResource VmLocator}}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem Text="Delete">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <core:EventTriggerBehavior EventName="Click">
+                                                        <core:InvokeCommandAction Command="{Binding NewOrderViewModel.deleteEmail, Source={StaticResource VmLocator}}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                            </MenuFlyoutItem>
                                         </MenuFlyout>
                                     </FlyoutBase.AttachedFlyout>
                                 </ctrl:OrderEmailList>
@@ -93,7 +120,26 @@
                               CanDragItems="True">
                         <GridView.ItemTemplate>
                             <DataTemplate>
-                                <ctrl:OrderDataList/>
+                                <ctrl:OrderDataList RightTapped="OrderDataList_RightTapped">
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem Text="Duplicate">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <core:EventTriggerBehavior EventName="Click">
+                                                        <core:InvokeCommandAction Command="{Binding NewOrderViewModel.duplicateData, Source={StaticResource VmLocator}}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem Text="Delete">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <core:EventTriggerBehavior EventName="Click">
+                                                        <core:InvokeCommandAction Command="{Binding NewOrderViewModel.deleteData, Source={StaticResource VmLocator}}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                </ctrl:OrderDataList>
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
@@ -108,7 +154,26 @@
                               CanDragItems="True">
                         <GridView.ItemTemplate>
                             <DataTemplate>
-                                <ctrl:OrderSchoolSendList/>
+                                <ctrl:OrderSchoolSendList RightTapped="OrderSchoolSendList_RightTapped">
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem Text="Duplicate">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <core:EventTriggerBehavior EventName="Click">
+                                                        <core:InvokeCommandAction Command="{Binding NewOrderViewModel.duplicateSchoolSend, Source={StaticResource VmLocator}}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem Text="Delete">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <core:EventTriggerBehavior EventName="Click">
+                                                        <core:InvokeCommandAction Command="{Binding NewOrderViewModel.deleteSchoolSend, Source={StaticResource VmLocator}}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                </ctrl:OrderSchoolSendList>
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
@@ -123,7 +188,26 @@
                               CanDragItems="True">
                         <GridView.ItemTemplate>
                             <DataTemplate>
-                                <ctrl:OrderDirectMailingList/>
+                                <ctrl:OrderDirectMailingList RightTapped="OrderDirectMailingList_RightTapped">
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem Text="Duplicate">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <core:EventTriggerBehavior EventName="Click">
+                                                        <core:InvokeCommandAction Command="{Binding NewOrderViewModel.duplicateDirectMailing, Source={StaticResource VmLocator}}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem Text="Delete">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <core:EventTriggerBehavior EventName="Click">
+                                                        <core:InvokeCommandAction Command="{Binding NewOrderViewModel.deleteDirectMailing, Source={StaticResource VmLocator}}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                </ctrl:OrderDirectMailingList>
                             </DataTemplate>
 
                         </GridView.ItemTemplate>
@@ -139,7 +223,26 @@
                               CanDragItems="True">
                         <GridView.ItemTemplate>
                             <DataTemplate>
-                                <ctrl:OrderSharedMailingList/>
+                                <ctrl:OrderSharedMailingList RightTapped="OrderSharedMailingList_RightTapped">
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem Text="Duplicate">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <core:EventTriggerBehavior EventName="Click">
+                                                        <core:InvokeCommandAction Command="{Binding NewOrderViewModel.duplicateSharedMailing, Source={StaticResource VmLocator}}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem Text="Delete">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <core:EventTriggerBehavior EventName="Click">
+                                                        <core:InvokeCommandAction Command="{Binding NewOrderViewModel.deleteSharedMailing, Source={StaticResource VmLocator}}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                </ctrl:OrderSharedMailingList>
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
@@ -154,7 +257,26 @@
                               CanDragItems="True">
                         <GridView.ItemTemplate>
                             <DataTemplate>
-                                <ctrl:OrderPrintList/>
+                                <ctrl:OrderPrintList RightTapped="OrderPrintList_RightTapped">
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem Text="Duplicate">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <core:EventTriggerBehavior EventName="Click">
+                                                        <core:InvokeCommandAction Command="{Binding NewOrderViewModel.duplicatePrint, Source={StaticResource VmLocator}}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem Text="Delete">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <core:EventTriggerBehavior EventName="Click">
+                                                        <core:InvokeCommandAction Command="{Binding NewOrderViewModel.deletePrint, Source={StaticResource VmLocator}}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                </ctrl:OrderPrintList>
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
@@ -169,7 +291,26 @@
                               CanDragItems="True">
                         <GridView.ItemTemplate>
                             <DataTemplate>
-                                <ctrl:OrderSurchargeList/>
+                                <ctrl:OrderSurchargeList RightTapped="OrderSurchargeList_RightTapped">
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem Text="Duplicate">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <core:EventTriggerBehavior EventName="Click">
+                                                        <core:InvokeCommandAction Command="{Binding NewOrderViewModel.duplicateSurcharge, Source={StaticResource VmLocator}}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem Text="Delete">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <core:EventTriggerBehavior EventName="Click">
+                                                        <core:InvokeCommandAction Command="{Binding NewOrderViewModel.deleteSurcharge, Source={StaticResource VmLocator}}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                </ctrl:OrderSurchargeList>
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
@@ -179,7 +320,6 @@
         <CommandBar Grid.Row="1">
             <AppBarButton Icon="Save"
                           Label="Save">
-                
             </AppBarButton>
             <AppBarButton Icon="Add"
                           Label="Add">
@@ -239,7 +379,6 @@
             </AppBarButton>
             <AppBarButton Icon="Delete"
                           Label="Delete">
-
             </AppBarButton>
         </CommandBar>
     </Grid>
