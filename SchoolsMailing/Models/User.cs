@@ -12,5 +12,6 @@ namespace SchoolsMailing.Models
         public string userName { get; set; }
         public string userPassword { get; set; }
         public string userInitials { get; set; }
+        public long userCode { get; set; }
     }
 }

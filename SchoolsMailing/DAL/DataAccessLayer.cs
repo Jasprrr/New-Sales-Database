@@ -555,6 +555,7 @@ namespace SchoolsMailing.DAL
             using(var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
             {
                 c = (from p in db.Table<Contact>()
+                     where p.companyID == companyID
                      select p).ToList();
             }
             c2 = new ObservableCollection<Contact>(c);

@@ -22,19 +22,20 @@ namespace SchoolsMailing.ViewModels
             companies = DataAccessLayer.GetAllCompanies2();
             MessengerInstance.Register<NotificationMessage<Int64>>(this, SetUp); // register company parameter
         }
-        
-        public async void SetUp(NotificationMessage<Int64> obj)
+
+        public void SetUp(NotificationMessage<Int64> obj)
         {
-            if(obj.Notification == "OrderViewModel")
+            if (obj.Notification == "OrderViewModel")
             {
-                if(obj.Content != 0)
+                if (obj.Content != 0)
                 {
                     //TODO: Get Order Code
-                    selectedOrder = DAL.DataAccessLayer.GetOrder(obj.Content);
+                    selectedOrder = DataAccessLayer.GetOrder(obj.Content);
                 }
                 else
                 {
                     //TODO: Set new order code
+                    selectedOrder = new Orders();
                 }
                 companies = DataAccessLayer.GetAllCompanies2();
             }
