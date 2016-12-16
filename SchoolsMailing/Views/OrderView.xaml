@@ -98,10 +98,6 @@
                                                        TargetObject="{Binding Mode=OneWay}"/>
                             </core:EventTriggerBehavior>
                         </interactivity:Interaction.Behaviors>
-                        <GridView.Header>
-                            <Button Content="+" 
-                                    HorizontalAlignment="Center"/>
-                        </GridView.Header>
                         <GridView.ItemTemplate>
                             <DataTemplate>
                                 <ctrl:OrderEmailList RightTapped="OrderEmailList_RightTapped">
@@ -114,10 +110,13 @@
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                             </MenuFlyoutItem>
-                                            <MenuFlyoutItem Text="Delete">
+                                            <MenuFlyoutItem Text="Delete" 
+                                                            x:Name="deleteEmailFlyout" 
+                                                            RightTapped="deleteEmailFlyout_RightTapped">
                                                 <interactivity:Interaction.Behaviors>
                                                     <core:EventTriggerBehavior EventName="Click">
-                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.deleteEmail, Source={StaticResource VmLocator}}" />
+                                                        <core:CallMethodAction MethodName="deleteEmail" 
+                                                                               TargetObject="{Binding Mode=OneWay, Source={StaticResource VmLocator}}"/>
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                             </MenuFlyoutItem>
@@ -135,7 +134,14 @@
                 </PivotItem.Header>
                 <PivotItem.Content>
                     <GridView ItemsSource="{Binding dataOrders, Mode=OneWay}" 
-                              CanDragItems="True">
+                              CanDragItems="True"
+                              IsItemClickEnabled="True">
+                        <interactivity:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="ItemClick">
+                                <core:CallMethodAction MethodName="dataInvoked" 
+                                                       TargetObject="{Binding Mode=OneWay}"/>
+                            </core:EventTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
                         <GridView.ItemTemplate>
                             <DataTemplate>
                                 <ctrl:OrderDataList RightTapped="OrderDataList_RightTapped">
@@ -169,7 +175,14 @@
                 </PivotItem.Header>
                 <PivotItem.Content>
                     <GridView ItemsSource="{Binding schoolSendOrders, Mode=OneWay}" 
-                              CanDragItems="True">
+                              CanDragItems="True"
+                              IsItemClickEnabled="True">
+                        <interactivity:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="ItemClick">
+                                <core:CallMethodAction MethodName="schoolsendInvoked" 
+                                                       TargetObject="{Binding Mode=OneWay}"/>
+                            </core:EventTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
                         <GridView.ItemTemplate>
                             <DataTemplate>
                                 <ctrl:OrderSchoolSendList RightTapped="OrderSchoolSendList_RightTapped">
@@ -203,7 +216,14 @@
                 </PivotItem.Header>
                 <PivotItem.Content>
                     <GridView ItemsSource="{Binding directMailingOrders, Mode=OneWay}" 
-                              CanDragItems="True">
+                              CanDragItems="True"
+                              IsItemClickEnabled="True">
+                        <interactivity:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="ItemClick">
+                                <core:CallMethodAction MethodName="directMailingInvoked" 
+                                                       TargetObject="{Binding Mode=OneWay}"/>
+                            </core:EventTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
                         <GridView.ItemTemplate>
                             <DataTemplate>
                                 <ctrl:OrderDirectMailingList RightTapped="OrderDirectMailingList_RightTapped">
@@ -238,7 +258,14 @@
                 </PivotItem.Header>
                 <PivotItem.Content>
                     <GridView ItemsSource="{Binding sharedMailingOrders, Mode=OneWay}" 
-                              CanDragItems="True">
+                              CanDragItems="True"
+                              IsItemClickEnabled="True">
+                        <interactivity:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="ItemClick">
+                                <core:CallMethodAction MethodName="sharedMailingInvoked" 
+                                                       TargetObject="{Binding Mode=OneWay}"/>
+                            </core:EventTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
                         <GridView.ItemTemplate>
                             <DataTemplate>
                                 <ctrl:OrderSharedMailingList RightTapped="OrderSharedMailingList_RightTapped">
@@ -272,7 +299,14 @@
                 </PivotItem.Header>
                 <PivotItem.Content>
                     <GridView ItemsSource="{Binding printOrders, Mode=OneWay}" 
-                              CanDragItems="True">
+                              CanDragItems="True"
+                              IsItemClickEnabled="True">
+                        <interactivity:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="ItemClick">
+                                <core:CallMethodAction MethodName="printInvoked" 
+                                                       TargetObject="{Binding Mode=OneWay}"/>
+                            </core:EventTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
                         <GridView.ItemTemplate>
                             <DataTemplate>
                                 <ctrl:OrderPrintList RightTapped="OrderPrintList_RightTapped">
@@ -288,7 +322,8 @@
                                             <MenuFlyoutItem Text="Delete">
                                                 <interactivity:Interaction.Behaviors>
                                                     <core:EventTriggerBehavior EventName="Click">
-                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.deletePrint, Source={StaticResource VmLocator}}" />
+                                                        <core:CallMethodAction MethodName="deleteEmail" 
+                                                                               TargetObject="{Binding Mode=OneWay, Source={StaticResource VmLocator}}"/>
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                             </MenuFlyoutItem>
@@ -306,7 +341,14 @@
                 </PivotItem.Header>
                 <PivotItem.Content>
                     <GridView ItemsSource="{Binding surchargeOrders, Mode=OneWay}" 
-                              CanDragItems="True">
+                              CanDragItems="True"
+                              IsItemClickEnabled="True">
+                        <interactivity:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="ItemClick">
+                                <core:CallMethodAction MethodName="surchargeInvoked" 
+                                                       TargetObject="{Binding Mode=OneWay}"/>
+                            </core:EventTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
                         <GridView.ItemTemplate>
                             <DataTemplate>
                                 <ctrl:OrderSurchargeList RightTapped="OrderSurchargeList_RightTapped">

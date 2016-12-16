@@ -208,8 +208,8 @@
     <Compile Include="Views\NewContact.xaml.cs">
       <DependentUpon>NewContact.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewDataView.xaml.cs">
-      <DependentUpon>NewDataView.xaml</DependentUpon>
+    <Compile Include="Views\DataView.xaml.cs">
+      <DependentUpon>DataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DirectMailingView.xaml.cs">
       <DependentUpon>DirectMailingView.xaml</DependentUpon>
@@ -357,7 +357,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NewDataView.xaml">
+    <Page Include="Views\DataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

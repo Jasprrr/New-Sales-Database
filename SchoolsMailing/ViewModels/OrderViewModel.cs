@@ -71,10 +71,12 @@ namespace SchoolsMailing.ViewModels
                     _newEmail = new RelayCommand(() => {
                         NavigationService.Navigate(typeof(EmailView));
                         selectedEmailOrder = new Email() { emailDate = DateTime.Now };
+                        originalEmailOrder = new Email();
                     });
                 } return _newEmail;
             }
         }
+
         private RelayCommand _newData;
         public RelayCommand newData
         {
@@ -82,10 +84,12 @@ namespace SchoolsMailing.ViewModels
                     _newData = new RelayCommand(() => {
                         NavigationService.Navigate(typeof(DataView));
                         selectedDataOrder = new Data() { dataStart = DateTime.Now, dataEnd = DateTime.Now };
+                        originalDataOrder = new Data();
                     });
                 } return _newData;
             }
         }
+
         private RelayCommand _newSchoolSend;
         public RelayCommand newSchoolSend
         {
@@ -93,10 +97,12 @@ namespace SchoolsMailing.ViewModels
                     _newSchoolSend = new RelayCommand(() => {
                         NavigationService.Navigate(typeof(SchoolSendView));
                         selectedSchoolSendOrder = new SchoolSend() { schoolsendStart = DateTime.Now, schoolsendEnd = DateTime.Now };
+                        originalSchoolSendOrder = new SchoolSend();
                     });
                 } return _newSchoolSend;
             }
         }
+
         private RelayCommand _newDirectMailing;
         public RelayCommand newDirectMailing
         {
@@ -104,20 +110,24 @@ namespace SchoolsMailing.ViewModels
                     _newDirectMailing = new RelayCommand(() => {
                         NavigationService.Navigate(typeof(DirectMailingView));
                         selectedDirectMailingOrder = new DirectMailing() { directArtworkDate = DateTime.Now, directDate = DateTime.Now, directDataDate = DateTime.Now, directInsertDate = DateTime.Now };
+                        originalDirectMailingOrder = new DirectMailing();
                     });
                 } return _newDirectMailing;
             }
         }
+
         private RelayCommand _newSharedMailing;
         public RelayCommand newSharedMailing
         {
             get { if (_newSharedMailing == null) {
                     _newSharedMailing = new RelayCommand(() => {
                         NavigationService.Navigate(typeof(SharedMailingView));
+                        originalSharedMailingOrder = new SharedMailing();
                     });
                 } return _newSharedMailing;
             }
         }
+
         private RelayCommand _newSurcharge;
         public RelayCommand newSurcharge
         {
@@ -125,10 +135,12 @@ namespace SchoolsMailing.ViewModels
                     _newSurcharge = new RelayCommand(() => {
                         NavigationService.Navigate(typeof(SurchargeView));
                         selectedSurchargeOrder = new Surcharge() { surchargeDate = DateTime.Now };
+                        originalSurchargeOrder = new Surcharge();
                     });
                 } return _newSurcharge;
             }
         }
+
         private RelayCommand _newPrint;
         public RelayCommand newPrint
         {
@@ -136,12 +148,11 @@ namespace SchoolsMailing.ViewModels
                     _newPrint = new RelayCommand(() => {
                         NavigationService.Navigate(typeof(PrintView));
                         selectedPrintOrder = new Print() { printDate = DateTime.Now };
+                        originalPrintOrder = new Print();
                     });
                 } return _newPrint;
             }
         }
-
-        
         #endregion
 
         private RelayCommand _cancelNew;
@@ -245,11 +256,25 @@ namespace SchoolsMailing.ViewModels
             set { if(_dataOrders != value) { _dataOrders = value; RaisePropertyChanged("dataOrders"); } }
         }
 
+        private ObservableCollection<Data> _deletedDataOrders;
+        public ObservableCollection<Data> deletedDataOrders
+        {
+            get { return _deletedDataOrders; }
+            set { if (_deletedDataOrders != value) { _deletedDataOrders = value; RaisePropertyChanged("deletedDataOrders"); } }
+        }
+
         private Data _selectedDataOrder;
         public Data selectedDataOrder
         {
             get { return _selectedDataOrder; }
             set { if (_selectedDataOrder != value) { _selectedDataOrder = value; RaisePropertyChanged("selectedDataOrder"); } }
+        }
+
+        private Data _originalDataOrder;
+        public Data originalDataOrder
+        {
+            get { return _originalDataOrder; }
+            set { if (_originalDataOrder != value) { _originalDataOrder = value; RaisePropertyChanged("deleteDataOrder"); } }
         }
 
         private RelayCommand _saveData;
@@ -261,14 +286,12 @@ namespace SchoolsMailing.ViewModels
                 {
                     _saveData = new RelayCommand(() =>
                     {
+                        dataOrders.Remove(originalDataOrder);
                         dataOrders.Add(selectedDataOrder);
-                        selectedDataOrder = new Data();
                         NavigationService.GoBack();
                     });
                 }
-
                 return _saveData;
-
             }
         }
 
@@ -325,6 +348,19 @@ namespace SchoolsMailing.ViewModels
 
             }
         }
+
+        public void dataInvoked(object sender, object parameter)
+        {
+            //Get selected item
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
+            //Get selected data from item
+            Data item = arg.ClickedItem as Data;
+            //Set selected order
+            originalDataOrder = dataOrders.Where(x => x == item).First();
+            selectedDataOrder = dataOrders.Where(x => x == item).First();
+            //Navigate to order
+            NavigationService.Navigate(typeof(DataView));
+        }
         #endregion
 
         #region Email Order
@@ -333,6 +369,13 @@ namespace SchoolsMailing.ViewModels
         {
             get { return _emailOrders; }
             set { if(_emailOrders != value) { _emailOrders = value; RaisePropertyChanged("emailOrders"); } }
+        }
+
+        private ObservableCollection<Email> _deletedEmailOrders;
+        public ObservableCollection<Email> deletedEmailOrders
+        {
+            get { return _deletedEmailOrders; }
+            set { if (_deletedEmailOrders != value) { _deletedEmailOrders = value; RaisePropertyChanged("deletedEmailOrders"); } }
         }
 
         private Email _selectedEmailOrder;
@@ -346,7 +389,7 @@ namespace SchoolsMailing.ViewModels
         public Email originalEmailOrder
         {
             get { return _originalEmailOrder; }
-            set { if (_originalEmailOrder != value) { _originalEmailOrder = value; RaisePropertyChanged("deleteEmailOrder"); } }
+            set { if (_originalEmailOrder != value) { _originalEmailOrder = value; RaisePropertyChanged("originalEmailOrder"); } }
         }
 
         private RelayCommand _saveEmail;
@@ -402,22 +445,11 @@ namespace SchoolsMailing.ViewModels
             }
         }
 
-        private RelayCommand _deleteEmail;
-        public RelayCommand deleteEmail
+        public void deleteEmail()
         {
-            get
-            {
-                if (_deleteEmail == null)
-                {
-                    _deleteEmail = new RelayCommand(() =>
-                    {
-                        Debug.WriteLine("delete");
-                    });
-                }
-
-                return _deleteEmail;
-            }
+            Debug.WriteLine("test");
         }
+
 
         public void emailInvoked(object sender, object parameter)
         {
@@ -426,7 +458,7 @@ namespace SchoolsMailing.ViewModels
             //Get selected email from item
             Email item = arg.ClickedItem as Email;
             //Set selected order
-            deleteEmailOrder = emailOrders.Where(x => x == item).First();
+            originalEmailOrder = emailOrders.Where(x => x == item).First();
             selectedEmailOrder = emailOrders.Where(x => x == item).First();
             //Navigate to order
             NavigationService.Navigate(typeof(EmailView));
@@ -441,11 +473,25 @@ namespace SchoolsMailing.ViewModels
             set { if(_directMailingOrders != value) { _directMailingOrders = value;  RaisePropertyChanged("directMailingOrders"); } }
         }
 
+        private ObservableCollection<DirectMailing> _deletedDirectMailingOrders;
+        public ObservableCollection<DirectMailing> deletedDirectMailingOrders
+        {
+            get { return _deletedDirectMailingOrders; }
+            set { if (_deletedDirectMailingOrders != value) { _deletedDirectMailingOrders = value; RaisePropertyChanged("deletedDirectMailingOrders"); } }
+        }
+
         private DirectMailing _selectedDirectMailingOrder;
         public DirectMailing selectedDirectMailingOrder
         {
             get { return _selectedDirectMailingOrder; }
             set { if(_selectedDirectMailingOrder != value) { _selectedDirectMailingOrder = value; RaisePropertyChanged("selectedDirectMailingOrder"); } }
+        }
+
+        private DirectMailing _originalDirectMailingOrder;
+        public DirectMailing originalDirectMailingOrder
+        {
+            get { return _originalDirectMailingOrder; }
+            set { if (_originalDirectMailingOrder != value) { _originalDirectMailingOrder = value; RaisePropertyChanged("originalDirectMailingOrder"); } }
         }
 
         private RelayCommand _saveDirectMailing;
@@ -457,14 +503,12 @@ namespace SchoolsMailing.ViewModels
                 {
                     _saveDirectMailing = new RelayCommand(() =>
                     {
+                        directMailingOrders.Remove(originalDirectMailingOrder);
                         directMailingOrders.Add(selectedDirectMailingOrder);
-                        selectedDirectMailingOrder = new DirectMailing();
                         NavigationService.GoBack();
                     });
                 }
-
                 return _saveDirectMailing;
-
             }
         }
 
@@ -519,6 +563,19 @@ namespace SchoolsMailing.ViewModels
                 return _deleteDirectMailing;
             }
         }
+
+        public void directMailingInvoked(object sender, object parameter)
+        {
+            //Get selected item
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
+            //Get selected directMailing from item
+            DirectMailing item = arg.ClickedItem as DirectMailing;
+            //Set selected order
+            originalDirectMailingOrder = directMailingOrders.Where(x => x == item).First();
+            selectedDirectMailingOrder = directMailingOrders.Where(x => x == item).First();
+            //Navigate to order
+            NavigationService.Navigate(typeof(DirectMailingView));
+        }
         #endregion
 
         #region Print Order
@@ -529,11 +586,25 @@ namespace SchoolsMailing.ViewModels
             set { if(_printOrders != value) { _printOrders = value; RaisePropertyChanged("printOrders"); } }
         }
 
+        private ObservableCollection<Print> _deletedPrintOrders;
+        public ObservableCollection<Print> deletedPrintOrders
+        {
+            get { return _deletedPrintOrders; }
+            set { if (_deletedPrintOrders != value) { _deletedPrintOrders = value; RaisePropertyChanged("deletedPrintOrders"); } }
+        }
+
         private Print _selectedPrintOrder;
         public Print selectedPrintOrder
         {
             get { return _selectedPrintOrder; }
             set { if(_selectedPrintOrder != value) { _selectedPrintOrder = value; RaisePropertyChanged("selectedPrintOrder"); } }
+        }
+
+        private Print _originalPrintOrder;
+        public Print originalPrintOrder
+        {
+            get { return _originalPrintOrder; }
+            set { if (_originalPrintOrder != value) { _originalPrintOrder = value; RaisePropertyChanged("originalPrintOrder"); } }
         }
 
         private RelayCommand _savePrint;
@@ -545,14 +616,12 @@ namespace SchoolsMailing.ViewModels
                 {
                     _savePrint = new RelayCommand(() =>
                     {
+                        printOrders.Remove(originalPrintOrder);
                         printOrders.Add(selectedPrintOrder);
-                        selectedPrintOrder = new Print();
                         NavigationService.GoBack();
                     });
                 }
-
                 return _savePrint;
-
             }
         }
 
@@ -607,6 +676,19 @@ namespace SchoolsMailing.ViewModels
                 return _deletePrint;
             }
         }
+
+        public void printInvoked(object sender, object parameter)
+        {
+            //Get selected item
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
+            //Get selected print from item
+            Print item = arg.ClickedItem as Print;
+            //Set selected order
+            originalPrintOrder = printOrders.Where(x => x == item).First();
+            selectedPrintOrder = printOrders.Where(x => x == item).First();
+            //Navigate to order
+            NavigationService.Navigate(typeof(PrintView));
+        }
         #endregion
 
         #region SchoolSend Order
@@ -617,11 +699,25 @@ namespace SchoolsMailing.ViewModels
             set { if(_schoolSendOrders != value) { _schoolSendOrders = value;  RaisePropertyChanged("schoolSendOrders"); } }
         }
 
+        private ObservableCollection<SchoolSend> _deletedSchoolSendOrders;
+        public ObservableCollection<SchoolSend> deletedSchoolSendOrders
+        {
+            get { return _deletedSchoolSendOrders; }
+            set { if (_deletedSchoolSendOrders != value) { _deletedSchoolSendOrders = value; RaisePropertyChanged("deletedSchoolSendOrders"); } }
+        }
+
         private SchoolSend _selectedSchoolSendOrder;
         public SchoolSend selectedSchoolSendOrder
         {
             get { return _selectedSchoolSendOrder; }
             set { if(_selectedSchoolSendOrder != value) { _selectedSchoolSendOrder = value; RaisePropertyChanged("selectedSchoolSendOrder"); } }
+        }
+
+        private SchoolSend _originalSchoolSendOrder;
+        public SchoolSend originalSchoolSendOrder
+        {
+            get { return _originalSchoolSendOrder; }
+            set { if (_originalSchoolSendOrder != value) { _originalSchoolSendOrder = value; RaisePropertyChanged("originalSchoolSendOrder"); } }
         }
 
         private RelayCommand _saveSchoolSend;
@@ -633,14 +729,12 @@ namespace SchoolsMailing.ViewModels
                 {
                     _saveSchoolSend = new RelayCommand(() =>
                     {
+                        schoolSendOrders.Remove(originalSchoolSendOrder);
                         schoolSendOrders.Add(selectedSchoolSendOrder);
-                        selectedSchoolSendOrder = new SchoolSend();
                         NavigationService.GoBack();
                     });
                 }
-
                 return _saveSchoolSend;
-
             }
         }
 
@@ -713,6 +807,19 @@ namespace SchoolsMailing.ViewModels
                 return _deleteSchoolSend;
             }
         }
+
+        public void schoolSendInvoked(object sender, object parameter)
+        {
+            //Get selected item
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
+            //Get selected SchoolSend from item
+            SchoolSend item = arg.ClickedItem as SchoolSend;
+            //Set selected order
+            originalSchoolSendOrder = schoolSendOrders.Where(x => x == item).First();
+            selectedSchoolSendOrder = schoolSendOrders.Where(x => x == item).First();
+            //Navigate to order
+            NavigationService.Navigate(typeof(SchoolSendView));
+        }
         #endregion
 
         #region Shared Mailing Order
@@ -723,11 +830,25 @@ namespace SchoolsMailing.ViewModels
             set { if(_sharedMailingOrders != value) { _sharedMailingOrders = value; RaisePropertyChanged("sharedMailingOrders"); } }
         }
 
+        private ObservableCollection<SharedMailing> _deletedSharedMailingOrders;
+        public ObservableCollection<SharedMailing> deletedSharedMailingOrders
+        {
+            get { return _deletedSharedMailingOrders; }
+            set { if (_deletedSharedMailingOrders != value) { _deletedSharedMailingOrders = value; RaisePropertyChanged("deletedSharedMailingOrders"); } }
+        }
+
         private SharedMailing _selectedSharedMailingOrder;
         public SharedMailing selectedSharedMailingOrder
         {
             get { return _selectedSharedMailingOrder; }
             set { if(_selectedSharedMailingOrder != value) { _selectedSharedMailingOrder = value; RaisePropertyChanged("selectedSharedMailingOrder"); } }
+        }
+
+        private SharedMailing _originalSharedMailingOrder;
+        public SharedMailing originalSharedMailingOrder
+        {
+            get { return _originalSharedMailingOrder; }
+            set { if (_originalSharedMailingOrder != value) { _originalSharedMailingOrder = value; RaisePropertyChanged("originalSharedMailingOrder"); } }
         }
 
         private RelayCommand _saveSharedMailing;
@@ -739,14 +860,12 @@ namespace SchoolsMailing.ViewModels
                 {
                     _saveSharedMailing = new RelayCommand(() =>
                     {
+                        sharedMailingOrders.Remove(originalSharedMailingOrder);
                         sharedMailingOrders.Add(selectedSharedMailingOrder);
-                        selectedSharedMailingOrder = new SharedMailing();
                         NavigationService.GoBack();
                     });
                 }
-
                 return _saveSharedMailing;
-
             }
         }
 
@@ -801,6 +920,19 @@ namespace SchoolsMailing.ViewModels
                 return _deleteSharedMailing;
             }
         }
+
+        public void sharedMailingInvoked(object sender, object parameter)
+        {
+            //Get selected item
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
+            //Get selected SharedMailing from item
+            SharedMailing item = arg.ClickedItem as SharedMailing;
+            //Set selected order
+            originalSharedMailingOrder = sharedMailingOrders.Where(x => x == item).First();
+            selectedSharedMailingOrder = sharedMailingOrders.Where(x => x == item).First();
+            //Navigate to order
+            NavigationService.Navigate(typeof(SharedMailingView));
+        }
         #endregion
 
         #region Surcharge Order
@@ -811,11 +943,25 @@ namespace SchoolsMailing.ViewModels
             set { if(_surchargeOrders != value) { _surchargeOrders = value; RaisePropertyChanged("surchargeOrders"); } }
         }
 
+        private ObservableCollection<Surcharge> _deletedSurchargeOrders;
+        public ObservableCollection<Surcharge> deletedSurchargeOrders
+        {
+            get { return _deletedSurchargeOrders; }
+            set { if (_deletedSurchargeOrders != value) { _deletedSurchargeOrders = value; RaisePropertyChanged("deletedSurchargeOrders"); } }
+        }
+
         private Surcharge _selectedSurchargeOrder;
         public Surcharge selectedSurchargeOrder
         {
             get { return _selectedSurchargeOrder; }
             set { if(_selectedSurchargeOrder != value) { _selectedSurchargeOrder = value; RaisePropertyChanged("selectedSurchargeOrder"); } }
+        }
+
+        private Surcharge _originalSurchargeOrder;
+        public Surcharge originalSurchargeOrder
+        {
+            get { return _originalSurchargeOrder; }
+            set { if (_originalSurchargeOrder != value) { _originalSurchargeOrder = value; RaisePropertyChanged("originalSurchargeOrder"); } }
         }
 
         private RelayCommand _saveSurcharge;
@@ -827,14 +973,12 @@ namespace SchoolsMailing.ViewModels
                 {
                     _saveSurcharge = new RelayCommand(() =>
                     {
+                        surchargeOrders.Remove(originalSurchargeOrder);
                         surchargeOrders.Add(selectedSurchargeOrder);
-                        selectedSurchargeOrder = new Surcharge();
                         NavigationService.GoBack();
                     });
                 }
-
                 return _saveSurcharge;
-
             }
         }
 
@@ -888,6 +1032,19 @@ namespace SchoolsMailing.ViewModels
 
                 return _deleteSurcharge;
             }
+        }
+
+        public void surchargeInvoked(object sender, object parameter)
+        {
+            //Get selected item
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
+            //Get selected Surcharge from item
+            Surcharge item = arg.ClickedItem as Surcharge;
+            //Set selected order
+            originalSurchargeOrder = surchargeOrders.Where(x => x == item).First();
+            selectedSurchargeOrder = surchargeOrders.Where(x => x == item).First();
+            //Navigate to order
+            NavigationService.Navigate(typeof(SurchargeView));
         }
         #endregion
         #endregion

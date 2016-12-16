@@ -61,5 +61,10 @@ namespace SchoolsMailing.Views
         {
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
+
+        private void deleteEmailFlyout_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            var item = e.OriginalSource;
+        }
     }
 }
