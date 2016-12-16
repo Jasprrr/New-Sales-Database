@@ -9,6 +9,7 @@ using System.IO;
 using GalaSoft.MvvmLight.Command;
 using SchoolsMailing.DAL;
 using SchoolsMailing.Views;
+using System.Linq;
 
 namespace SchoolsMailing.ViewModels
 {
@@ -62,6 +63,7 @@ namespace SchoolsMailing.ViewModels
             {
                 _companies = DataAccessLayer.GetAllCompanies();
                 //companies.GroupBy()
+                _companies.GroupBy(x => x.companyInitial);
                 return _companies;
             }
         }

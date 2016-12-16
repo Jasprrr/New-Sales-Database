@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="SchoolsMailing.Views.NewEmailView"
+    x:Class="SchoolsMailing.Views.PrintView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SchoolsMailing.Views"
@@ -9,7 +9,7 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:conv="using:SchoolsMailing.Converters"
     mc:Ignorable="d"
-    DataContext="{Binding NewOrderViewModel, Source={StaticResource VmLocator}}">
+    DataContext="{Binding OrderViewModel, Source={StaticResource VmLocator}}">
     <Page.Resources>
         <conv:StringFormatter x:Key="CurrencyConverter"/>
         <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
@@ -23,11 +23,11 @@
             <HubSection Header="Dates">
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="Send Date"
+                        <TextBlock Text="Print Date"
                                    Style="{StaticResource inputTextBlock}"/>
                         <CalendarDatePicker Width="120" 
                                             MinWidth="120"
-                                            Date="{Binding newEmailOrder.emailDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                            Date="{Binding selectedPrintOrder.printDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                             Style="{StaticResource inputCalendarDatePicker}"/>
                     </StackPanel>
                 </DataTemplate>
@@ -35,45 +35,36 @@
             <HubSection Header="Details">
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="Subject"
-                                   Style="{StaticResource inputTextBlock}"/>
-                        <TextBox Style="{StaticResource inputTextBox}"
-                                 Width="300"
-                                 Text="{Binding newEmailOrder.emailSubject, Mode=TwoWay}"/>
+                        <TextBlock Text="Printer"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text="{Binding selectedPrintOrder.printDetails, Mode=TwoWay}"
+                                 Style="{StaticResource inputTextBox}"
+                                 Width="400"/>
                         <TextBlock Text="Details" 
-                                   Style="{StaticResource inputTextBlock}"/>
-                        <TextBox Text="{Binding newEmailOrder.emailDetails, Mode=TwoWay}"
+                                   Style="{StaticResource inputTextBlock}"
+                                   Width="400"/>
+                        <TextBox Text="{Binding selectedPrintOrder.printDetails, Mode=TwoWay}"
                                  Style="{StaticResource inputLargeTextBox}"
-                                 Width="300" 
+                                 Width="400" 
                                  ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                                 TextWrapping="Wrap" 
-                                 AcceptsReturn="True"/>
+                                 TextWrapping="Wrap"/>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
             <HubSection Header="Costs">
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="Set Up"
+                        <TextBlock Text="Print Cost"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <CheckBox Content="+ 125"/>
-                        <TextBlock Text="Admin Cost"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="200"/>
-                        <TextBox Text="{Binding newEmailOrder.emailAdminCost, Mode=TwoWay}"
+                        <TextBox Text="{Binding selectedPrintOrder.printCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
-                        <TextBlock Text="Direct Cost"
+                        <TextBlock Text="Print Charge"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text="{Binding newEmailOrder.emailDirectCost, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="200"/>
-                        <TextBlock Text="Total Cost"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="200"/>
-                        <TextBox Text="{Binding newEmailOrder.emailCost, Mode=TwoWay}"
+                        <TextBox Text="{Binding selectedPrintOrder.printCharge, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
                     </StackPanel>
@@ -82,19 +73,11 @@
         </Hub>
         <CommandBar VerticalAlignment="Bottom"
                     Grid.Row="1">
-            <AppBarButton Icon="Calculator"
-                          Label="Calculator">
-                <interactivity:Interaction.Behaviors>
-                    <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=saveEmail}" />
-                    </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
-            </AppBarButton>
             <AppBarButton Icon="Save"
                           Label="Save">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=saveEmail}" />
+                        <core:InvokeCommandAction Command="{Binding Path=savePrint}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
@@ -109,4 +92,3 @@
         </CommandBar>
     </Grid>
 </Page>
-

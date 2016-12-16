@@ -15,5 +15,6 @@ namespace SchoolsMailing.Models
         public DateTime schoolsendEnd { get; set; }
         public double schoolsendCost { get; set; }
         public long schoolsendCredits { get; set; }
+        public DateTime schoolsendCreated { get; set; }
     }
 }

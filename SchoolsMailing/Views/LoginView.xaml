@@ -38,9 +38,10 @@
                 <PasswordBox Password="{Binding password, Mode=TwoWay}" 
                              Width="300"
                              SelectionHighlightColor="White"
-                             Style="{StaticResource inputPasswordBox}"/>
+                             Style="{StaticResource inputPasswordBox}" PasswordChar="●">
+                </PasswordBox>
                 <cntrl:InvalidFlag Visibility="{Binding invalidPassword, Converter={StaticResource InvalidTextBox}}" 
-                                   ToolTipService.ToolTip="Invalid Username"/>
+                                   ToolTipService.ToolTip="Invalid Password"/>
             </StackPanel>
             
             <Button Content="Login"

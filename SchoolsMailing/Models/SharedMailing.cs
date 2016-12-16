@@ -22,5 +22,6 @@ namespace SchoolsMailing.Models
         public DateTime sharedDeliveryDate { get; set; }
         public long sharedPackage { get; set; }
         public double sharedCost { get; set; }
+        public DateTime sharedCreated { get; set; }
     }
 }

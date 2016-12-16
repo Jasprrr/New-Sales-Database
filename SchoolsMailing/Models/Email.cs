@@ -17,5 +17,6 @@ namespace SchoolsMailing.Models
         public double emailCost { get; set; }
         public string emailSubject { get; set; }
         public bool emailSetUp { get; set; }
+        public DateTime emailCreated { get; set; }
     }
 }

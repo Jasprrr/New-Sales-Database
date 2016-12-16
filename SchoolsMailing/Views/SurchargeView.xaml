@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="SchoolsMailing.Views.NewSurchargeView"
+    x:Class="SchoolsMailing.Views.SurchargeView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SchoolsMailing.Views"
@@ -9,7 +9,7 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:conv="using:SchoolsMailing.Converters"
     mc:Ignorable="d"
-    DataContext="{Binding NewOrderViewModel, Source={StaticResource VmLocator}}">
+    DataContext="{Binding OrderViewModel, Source={StaticResource VmLocator}}">
     <Page.Resources>
         <conv:StringFormatter x:Key="CurrencyConverter"/>
         <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
@@ -20,11 +20,11 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="Date"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="200"/>
-                        <CalendarDatePicker Style="{StaticResource inputCalendarDatePicker}"
-                                            Width="200"
-                                            Date="{Binding surchargeDate, Mode=TwoWay}"/>
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <CalendarDatePicker Width="120" 
+                                            MinWidth="120"
+                                            Date="{Binding selectedSurchargeOrder.surchargeDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                            Style="{StaticResource inputCalendarDatePicker}"/>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -34,7 +34,7 @@
                         <TextBlock Text="Details" 
                                    Style="{StaticResource inputTextBlock}"
                                     Width="400"/>
-                        <TextBox Text="{Binding newSurchargeOrder.surchargeDetails, Mode=TwoWay}"
+                        <TextBox Text="{Binding selectedSurchargeOrder.surchargeDetails, Mode=TwoWay}"
                                  Style="{StaticResource inputLargeTextBox}"
                                  Width="400"/>
                     </StackPanel>
@@ -46,18 +46,13 @@
                         <TextBlock Text="Cost"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text="{Binding newSurchargeOrder.surchargeCost, Mode=TwoWay}"
+                        <TextBox Text="{Binding selectedSurchargeOrder.surchargeCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
         </Hub>
-        <StackPanel Margin="12">
-            
-            
-            
-        </StackPanel>
         <CommandBar VerticalAlignment="Bottom"
                     Grid.Row="1">
             <AppBarButton Icon="Save"

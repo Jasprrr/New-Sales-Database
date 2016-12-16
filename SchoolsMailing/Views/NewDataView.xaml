@@ -9,7 +9,7 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:conv="using:SchoolsMailing.Converters"
     mc:Ignorable="d"
-    DataContext="{Binding NewOrderViewModel, Source={StaticResource VmLocator}}">
+    DataContext="{Binding OrderViewModel, Source={StaticResource VmLocator}}">
     <Page.Resources>
         <conv:StringFormatter x:Key="CurrencyConverter"/>
         <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
@@ -27,13 +27,13 @@
                                    Style="{StaticResource inputTextBlock}"/>
                         <CalendarDatePicker Width="120" 
                                             MinWidth="120"
-                                            Date="{Binding newDataOrder.dataStart, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                            Date="{Binding selectedDataOrder.dataStart, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                             Style="{StaticResource inputCalendarDatePicker}"/>
                         <TextBlock Text="End Date" 
                                    Style="{StaticResource inputTextBlock}"/>
                         <CalendarDatePicker Width="120" 
                                             MinWidth="120"
-                                            Date="{Binding newDataOrder.dataEnd, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                            Date="{Binding selectedDataOrder.dataEnd, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                             Style="{StaticResource inputCalendarDatePicker}"/>
                     </StackPanel>
                 </DataTemplate>
@@ -44,7 +44,7 @@
                         <TextBlock Text="Data" 
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text="{Binding newDataOrder.dataDetails, Mode=TwoWay}"
+                        <TextBox Text="{Binding selectedDataOrder.dataDetails, Mode=TwoWay}"
                                  Style="{StaticResource inputLargeTextBox}"
                                  Width="400" 
                                  ScrollViewer.VerticalScrollBarVisibility="Visible" 
@@ -58,7 +58,7 @@
                     <StackPanel>
                         <TextBlock Text="Total" 
                                 Style="{StaticResource inputTextBlock}"/>
-                        <TextBox Text="{Binding newDataOrder.dataCost, Mode=TwoWay}"
+                        <TextBox Text="{Binding selectedDataOrder.dataCost, Mode=TwoWay}"
                                 Style="{StaticResource inputTextBox}"
                                 Width="200"/>
                     </StackPanel>

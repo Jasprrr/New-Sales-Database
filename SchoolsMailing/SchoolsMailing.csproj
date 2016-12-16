@@ -183,7 +183,7 @@
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\NewCompanyViewModel.cs" />
     <Compile Include="ViewModels\NewContactViewModel.cs" />
-    <Compile Include="ViewModels\NewOrderViewModel.cs" />
+    <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="Views\CompaniesView2.xaml.cs">
       <DependentUpon>CompaniesView2.xaml</DependentUpon>
     </Compile>
@@ -211,26 +211,26 @@
     <Compile Include="Views\NewDataView.xaml.cs">
       <DependentUpon>NewDataView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewDirectMailingView.xaml.cs">
-      <DependentUpon>NewDirectMailingView.xaml</DependentUpon>
+    <Compile Include="Views\DirectMailingView.xaml.cs">
+      <DependentUpon>DirectMailingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewEmailView.xaml.cs">
-      <DependentUpon>NewEmailView.xaml</DependentUpon>
+    <Compile Include="Views\EmailView.xaml.cs">
+      <DependentUpon>EmailView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewOrderView.xaml.cs">
-      <DependentUpon>NewOrderView.xaml</DependentUpon>
+    <Compile Include="Views\OrderView.xaml.cs">
+      <DependentUpon>OrderView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewPrintView.xaml.cs">
-      <DependentUpon>NewPrintView.xaml</DependentUpon>
+    <Compile Include="Views\PrintView.xaml.cs">
+      <DependentUpon>PrintView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewSchoolSendView.xaml.cs">
-      <DependentUpon>NewSchoolSendView.xaml</DependentUpon>
+    <Compile Include="Views\SchoolSendView.xaml.cs">
+      <DependentUpon>SchoolSendView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewSharedMailingView.xaml.cs">
-      <DependentUpon>NewSharedMailingView.xaml</DependentUpon>
+    <Compile Include="Views\SharedMailingView.xaml.cs">
+      <DependentUpon>SharedMailingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewSurchargeView.xaml.cs">
-      <DependentUpon>NewSurchargeView.xaml</DependentUpon>
+    <Compile Include="Views\SurchargeView.xaml.cs">
+      <DependentUpon>SurchargeView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -361,31 +361,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NewDirectMailingView.xaml">
+    <Page Include="Views\DirectMailingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NewEmailView.xaml">
+    <Page Include="Views\EmailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NewOrderView.xaml">
+    <Page Include="Views\OrderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NewPrintView.xaml">
+    <Page Include="Views\PrintView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NewSchoolSendView.xaml">
+    <Page Include="Views\SchoolSendView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NewSharedMailingView.xaml">
+    <Page Include="Views\SharedMailingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NewSurchargeView.xaml">
+    <Page Include="Views\SurchargeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

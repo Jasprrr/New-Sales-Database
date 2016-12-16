@@ -20,9 +20,9 @@ namespace SchoolsMailing.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class NewOrderView : Page
+    public sealed partial class OrderView : Page
     {
-        public NewOrderView()
+        public OrderView()
         {
             this.InitializeComponent();
         }

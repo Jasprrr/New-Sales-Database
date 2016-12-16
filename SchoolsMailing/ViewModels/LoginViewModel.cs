@@ -63,6 +63,8 @@ namespace SchoolsMailing.ViewModels
             set { if (_invalidUsername != value) { _invalidUsername = !invalidUsername; RaisePropertyChanged("invalidUsername"); } }
         }
 
+        //TODO: add enter event to login
+
         private RelayCommand _authenticateLogin;
         public RelayCommand authenticateLogin
         {

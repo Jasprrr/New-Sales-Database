@@ -15,11 +15,11 @@ using SchoolsMailing.DAL;
 
 namespace SchoolsMailing.ViewModels
 {
-    public class NewOrderViewModel : PageViewModel
+    public class OrderViewModel : PageViewModel
     {
-        public NewOrderViewModel(IMessenger messenger, NavigationService navigationService) : base(messenger, navigationService)
+        public OrderViewModel(IMessenger messenger, NavigationService navigationService) : base(messenger, navigationService)
         {
-            companies = DataAccessLayer.GetAllCompanies2();
+            companies = DataAccessLayer.GetAllCompanies2(); //TODO: replace
             MessengerInstance.Register<NotificationMessage<Int64>>(this, SetUp); // register company parameter
         }
 
@@ -27,15 +27,30 @@ namespace SchoolsMailing.ViewModels
         {
             if (obj.Notification == "OrderViewModel")
             {
-                if (obj.Content != 0)
+                if (obj.Content != 0) //Get order
                 {
-                    //TODO: Get Order Code
                     selectedOrder = DataAccessLayer.GetOrder(obj.Content);
+                    emailOrders = DataAccessLayer.GetAllEmails(obj.Content);
+                    dataOrders = DataAccessLayer.GetAllData(obj.Content);
+                    schoolSendOrders = DataAccessLayer.GetAllSchoolSends(obj.Content);
+                    sharedMailingOrders = DataAccessLayer.GetAllSharedMailings(obj.Content);
+                    directMailingOrders = DataAccessLayer.GetAllDirectMailings(obj.Content);
+                    printOrders = DataAccessLayer.GetAllPrint(obj.Content);
+                    surchargeOrders = DataAccessLayer.GetAllSurcharges(obj.Content);
+
+                    //TODO: set company
+                    //TODO: set contact
                 }
-                else
+                else //Create order
                 {
-                    //TODO: Set new order code
-                    selectedOrder = new Orders();
+                    selectedOrder = new Orders() { orderDate = DateTime.Now };
+                    emailOrders = new ObservableCollection<Email>();
+                    dataOrders = new ObservableCollection<Data>();
+                    schoolSendOrders = new ObservableCollection<SchoolSend>();
+                    sharedMailingOrders = new ObservableCollection<SharedMailing>();
+                    directMailingOrders = new ObservableCollection<DirectMailing>();
+                    printOrders = new ObservableCollection<Print>();
+                    surchargeOrders = new ObservableCollection<Surcharge>();
                 }
                 companies = DataAccessLayer.GetAllCompanies2();
             }
@@ -52,38 +67,81 @@ namespace SchoolsMailing.ViewModels
         private RelayCommand _newEmail;
         public RelayCommand newEmail
         {
-            get { if (_newEmail == null) { _newEmail = new RelayCommand(() => { NavigationService.Navigate(typeof(NewEmailView)); }); } return _newEmail; }
+            get { if (_newEmail == null) {
+                    _newEmail = new RelayCommand(() => {
+                        NavigationService.Navigate(typeof(EmailView));
+                        selectedEmailOrder = new Email() { emailDate = DateTime.Now };
+                    });
+                } return _newEmail;
+            }
         }
         private RelayCommand _newData;
         public RelayCommand newData
         {
-            get { if (_newData == null) { _newData = new RelayCommand(() => { NavigationService.Navigate(typeof(NewDataView)); }); } return _newData; }
+            get { if (_newData == null) {
+                    _newData = new RelayCommand(() => {
+                        NavigationService.Navigate(typeof(DataView));
+                        selectedDataOrder = new Data() { dataStart = DateTime.Now, dataEnd = DateTime.Now };
+                    });
+                } return _newData;
+            }
         }
         private RelayCommand _newSchoolSend;
         public RelayCommand newSchoolSend
         {
-            get { if (_newSchoolSend == null) { _newSchoolSend = new RelayCommand(() => { NavigationService.Navigate(typeof(NewSchoolSendView)); }); } return _newSchoolSend; }
+            get { if (_newSchoolSend == null) {
+                    _newSchoolSend = new RelayCommand(() => {
+                        NavigationService.Navigate(typeof(SchoolSendView));
+                        selectedSchoolSendOrder = new SchoolSend() { schoolsendStart = DateTime.Now, schoolsendEnd = DateTime.Now };
+                    });
+                } return _newSchoolSend;
+            }
         }
         private RelayCommand _newDirectMailing;
         public RelayCommand newDirectMailing
         {
-            get { if (_newDirectMailing == null) { _newDirectMailing = new RelayCommand(() => { NavigationService.Navigate(typeof(NewDirectMailingView)); }); } return _newDirectMailing; }
+            get { if (_newDirectMailing == null) {
+                    _newDirectMailing = new RelayCommand(() => {
+                        NavigationService.Navigate(typeof(DirectMailingView));
+                        selectedDirectMailingOrder = new DirectMailing() { directArtworkDate = DateTime.Now, directDate = DateTime.Now, directDataDate = DateTime.Now, directInsertDate = DateTime.Now };
+                    });
+                } return _newDirectMailing;
+            }
         }
         private RelayCommand _newSharedMailing;
         public RelayCommand newSharedMailing
         {
-            get { if (_newSharedMailing == null) { _newSharedMailing = new RelayCommand(() => { NavigationService.Navigate(typeof(NewSharedMailingView)); }); } return _newSharedMailing; }
+            get { if (_newSharedMailing == null) {
+                    _newSharedMailing = new RelayCommand(() => {
+                        NavigationService.Navigate(typeof(SharedMailingView));
+                    });
+                } return _newSharedMailing;
+            }
         }
         private RelayCommand _newSurcharge;
         public RelayCommand newSurcharge
         {
-            get { if (_newSurcharge == null) { _newSurcharge = new RelayCommand(() => { NavigationService.Navigate(typeof(NewSurchargeView)); }); } return _newSurcharge; }
+            get { if (_newSurcharge == null) {
+                    _newSurcharge = new RelayCommand(() => {
+                        NavigationService.Navigate(typeof(SurchargeView));
+                        selectedSurchargeOrder = new Surcharge() { surchargeDate = DateTime.Now };
+                    });
+                } return _newSurcharge;
+            }
         }
         private RelayCommand _newPrint;
         public RelayCommand newPrint
         {
-            get { if (_newPrint == null) { _newPrint = new RelayCommand(() => { NavigationService.Navigate(typeof(NewPrintView)); }); } return _newPrint; }
+            get { if (_newPrint == null) {
+                    _newPrint = new RelayCommand(() => {
+                        NavigationService.Navigate(typeof(PrintView));
+                        selectedPrintOrder = new Print() { printDate = DateTime.Now };
+                    });
+                } return _newPrint;
+            }
         }
+
+        
         #endregion
 
         private RelayCommand _cancelNew;
@@ -137,13 +195,45 @@ namespace SchoolsMailing.ViewModels
                 {
                     _companyChanged = new RelayCommand(() =>
                     {
-                        contacts = DataAccessLayer.GetContactsByCompany(selectedCompany.ID);
+                        if (selectedCompany != null)
+                        {
+                            if (selectedCompany.companyInvoiceName != null) { selectedOrder.companyName = selectedCompany.companyInvoiceName.ToString(); }
+                            if (selectedCompany.companyInvoiceAddress1 != null) { selectedOrder.companyAddress1 = selectedCompany.companyInvoiceAddress1.ToString(); }
+                            if (selectedCompany.companyInvoiceAddress2 != null) { selectedOrder.companyAddress2 = selectedCompany.companyInvoiceAddress2.ToString(); }
+                            if (selectedCompany.companyInvoiceCity != null) { selectedOrder.companyCity = selectedCompany.companyInvoiceCity.ToString(); }
+                            if (selectedCompany.companyInvoiceCounty != null) { selectedOrder.companyCounty = selectedCompany.companyInvoiceCounty.ToString(); }
+                            if (selectedCompany.companyInvoicePostCode != null) { selectedOrder.companyPostCode = selectedCompany.companyInvoicePostCode.ToString(); }
+
+                            contacts = DataAccessLayer.GetContactsByCompany(selectedCompany.ID);
+                        }
                     });
                 }
                 return _companyChanged;
             }
         }
-        
+
+        private RelayCommand _contactChanged;
+        public RelayCommand contactChanged
+        {
+            get
+            {
+                if (_contactChanged == null)
+                {
+                    _contactChanged = new RelayCommand(() =>
+                    {
+                        if(selectedContact != null)
+                        {
+                            if (selectedContact.contactTitle != null) { selectedOrder.contactTitle = selectedContact.contactTitle.ToString(); }
+                            if (selectedContact.contactForename != null) { selectedOrder.contactForename = selectedContact.contactForename.ToString(); }
+                            if (selectedContact.contactSurname != null) { selectedOrder.contactSurname = selectedContact.contactSurname.ToString(); }
+                            if (selectedContact.contactTelephone != null) { selectedOrder.contactTelephone = selectedContact.contactTelephone.ToString(); }
+                            if (selectedContact.contactEmail != null) { selectedOrder.contactEmail = selectedContact.contactEmail.ToString(); }
+                        }
+                    });
+                }
+                return _contactChanged;
+            }
+        }
         #endregion
 
         #region Orders
@@ -155,11 +245,11 @@ namespace SchoolsMailing.ViewModels
             set { if(_dataOrders != value) { _dataOrders = value; RaisePropertyChanged("dataOrders"); } }
         }
 
-        private Data _newDataOrder = new Data();
-        public Data newDataOrder
+        private Data _selectedDataOrder;
+        public Data selectedDataOrder
         {
-            get { return _newDataOrder; }
-            set { if (_newDataOrder != value) { _newDataOrder = value; RaisePropertyChanged("newDataOrder"); } }
+            get { return _selectedDataOrder; }
+            set { if (_selectedDataOrder != value) { _selectedDataOrder = value; RaisePropertyChanged("selectedDataOrder"); } }
         }
 
         private RelayCommand _saveData;
@@ -171,8 +261,8 @@ namespace SchoolsMailing.ViewModels
                 {
                     _saveData = new RelayCommand(() =>
                     {
-                        dataOrders.Add(newDataOrder);
-                        newDataOrder = new Data();
+                        dataOrders.Add(selectedDataOrder);
+                        selectedDataOrder = new Data();
                         NavigationService.GoBack();
                     });
                 }
@@ -245,11 +335,18 @@ namespace SchoolsMailing.ViewModels
             set { if(_emailOrders != value) { _emailOrders = value; RaisePropertyChanged("emailOrders"); } }
         }
 
-        private Email _newEmailOrder = new Email();
-        public Email newEmailOrder
+        private Email _selectedEmailOrder;
+        public Email selectedEmailOrder
         {
-            get { return _newEmailOrder; }
-            set { if(_newEmailOrder != value) { _newEmailOrder = value; RaisePropertyChanged("newEmailOrder"); } }
+            get { return _selectedEmailOrder; }
+            set { if(_selectedEmailOrder != value) { _selectedEmailOrder = value; RaisePropertyChanged("selectedEmailOrder"); } }
+        }
+
+        private Email _originalEmailOrder;
+        public Email originalEmailOrder
+        {
+            get { return _originalEmailOrder; }
+            set { if (_originalEmailOrder != value) { _originalEmailOrder = value; RaisePropertyChanged("deleteEmailOrder"); } }
         }
 
         private RelayCommand _saveEmail;
@@ -261,14 +358,12 @@ namespace SchoolsMailing.ViewModels
                 {
                     _saveEmail = new RelayCommand(() =>
                     {
-                        emailOrders.Add(newEmailOrder);
-                        newEmailOrder = new Email();
+                        emailOrders.Remove(originalEmailOrder);
+                        emailOrders.Add(selectedEmailOrder);
                         NavigationService.GoBack();
                     });
                 }
-
                 return _saveEmail;
-
             }
         }
 
@@ -323,6 +418,19 @@ namespace SchoolsMailing.ViewModels
                 return _deleteEmail;
             }
         }
+
+        public void emailInvoked(object sender, object parameter)
+        {
+            //Get selected item
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
+            //Get selected email from item
+            Email item = arg.ClickedItem as Email;
+            //Set selected order
+            deleteEmailOrder = emailOrders.Where(x => x == item).First();
+            selectedEmailOrder = emailOrders.Where(x => x == item).First();
+            //Navigate to order
+            NavigationService.Navigate(typeof(EmailView));
+        }
         #endregion
 
         #region Direct Mailing Order
@@ -333,11 +441,11 @@ namespace SchoolsMailing.ViewModels
             set { if(_directMailingOrders != value) { _directMailingOrders = value;  RaisePropertyChanged("directMailingOrders"); } }
         }
 
-        private DirectMailing _newDirectMailingOrder = new DirectMailing();
-        public DirectMailing newDirectMailingOrder
+        private DirectMailing _selectedDirectMailingOrder;
+        public DirectMailing selectedDirectMailingOrder
         {
-            get { return _newDirectMailingOrder; }
-            set { if(_newDirectMailingOrder != value) { _newDirectMailingOrder = value; RaisePropertyChanged("newDirectMailingOrder"); } }
+            get { return _selectedDirectMailingOrder; }
+            set { if(_selectedDirectMailingOrder != value) { _selectedDirectMailingOrder = value; RaisePropertyChanged("selectedDirectMailingOrder"); } }
         }
 
         private RelayCommand _saveDirectMailing;
@@ -349,8 +457,8 @@ namespace SchoolsMailing.ViewModels
                 {
                     _saveDirectMailing = new RelayCommand(() =>
                     {
-                        directMailingOrders.Add(newDirectMailingOrder);
-                        newDirectMailingOrder = new DirectMailing();
+                        directMailingOrders.Add(selectedDirectMailingOrder);
+                        selectedDirectMailingOrder = new DirectMailing();
                         NavigationService.GoBack();
                     });
                 }
@@ -421,11 +529,11 @@ namespace SchoolsMailing.ViewModels
             set { if(_printOrders != value) { _printOrders = value; RaisePropertyChanged("printOrders"); } }
         }
 
-        private Print _newPrintOrder = new Print();
-        public Print newPrintOrder
+        private Print _selectedPrintOrder;
+        public Print selectedPrintOrder
         {
-            get { return _newPrintOrder; }
-            set { if(_newPrintOrder != value) { _newPrintOrder = value; RaisePropertyChanged("newPrintOrder"); } }
+            get { return _selectedPrintOrder; }
+            set { if(_selectedPrintOrder != value) { _selectedPrintOrder = value; RaisePropertyChanged("selectedPrintOrder"); } }
         }
 
         private RelayCommand _savePrint;
@@ -437,8 +545,8 @@ namespace SchoolsMailing.ViewModels
                 {
                     _savePrint = new RelayCommand(() =>
                     {
-                        printOrders.Add(newPrintOrder);
-                        newPrintOrder = new Print();
+                        printOrders.Add(selectedPrintOrder);
+                        selectedPrintOrder = new Print();
                         NavigationService.GoBack();
                     });
                 }
@@ -509,11 +617,11 @@ namespace SchoolsMailing.ViewModels
             set { if(_schoolSendOrders != value) { _schoolSendOrders = value;  RaisePropertyChanged("schoolSendOrders"); } }
         }
 
-        private SchoolSend _newSchoolSendOrder = new SchoolSend();
-        public SchoolSend newSchoolSendOrder
+        private SchoolSend _selectedSchoolSendOrder;
+        public SchoolSend selectedSchoolSendOrder
         {
-            get { return _newSchoolSendOrder; }
-            set { if(_newSchoolSendOrder != value) { _newSchoolSendOrder = value; RaisePropertyChanged("newSchoolSendOrder"); } }
+            get { return _selectedSchoolSendOrder; }
+            set { if(_selectedSchoolSendOrder != value) { _selectedSchoolSendOrder = value; RaisePropertyChanged("selectedSchoolSendOrder"); } }
         }
 
         private RelayCommand _saveSchoolSend;
@@ -525,8 +633,8 @@ namespace SchoolsMailing.ViewModels
                 {
                     _saveSchoolSend = new RelayCommand(() =>
                     {
-                        schoolSendOrders.Add(newSchoolSendOrder);
-                        newSchoolSendOrder = new SchoolSend();
+                        schoolSendOrders.Add(selectedSchoolSendOrder);
+                        selectedSchoolSendOrder = new SchoolSend();
                         NavigationService.GoBack();
                     });
                 }
@@ -565,7 +673,7 @@ namespace SchoolsMailing.ViewModels
                             //    case "Ruby":
                             //        break;
                             //}
-                            Debug.WriteLine(string.Format(newSchoolSendOrder.schoolsendPackage.ToString()));
+                            Debug.WriteLine(string.Format(selectedSchoolSendOrder.schoolsendPackage.ToString()));
                         });
                 }
                 return _setCredits;
@@ -615,11 +723,11 @@ namespace SchoolsMailing.ViewModels
             set { if(_sharedMailingOrders != value) { _sharedMailingOrders = value; RaisePropertyChanged("sharedMailingOrders"); } }
         }
 
-        private SharedMailing _newSharedMailingOrder = new SharedMailing();
-        public SharedMailing newSharedMailingOrder
+        private SharedMailing _selectedSharedMailingOrder;
+        public SharedMailing selectedSharedMailingOrder
         {
-            get { return _newSharedMailingOrder; }
-            set { if(_newSharedMailingOrder != value) { _newSharedMailingOrder = value; RaisePropertyChanged("newSharedMailingOrder"); } }
+            get { return _selectedSharedMailingOrder; }
+            set { if(_selectedSharedMailingOrder != value) { _selectedSharedMailingOrder = value; RaisePropertyChanged("selectedSharedMailingOrder"); } }
         }
 
         private RelayCommand _saveSharedMailing;
@@ -631,8 +739,8 @@ namespace SchoolsMailing.ViewModels
                 {
                     _saveSharedMailing = new RelayCommand(() =>
                     {
-                        sharedMailingOrders.Add(newSharedMailingOrder);
-                        newSharedMailingOrder = new SharedMailing();
+                        sharedMailingOrders.Add(selectedSharedMailingOrder);
+                        selectedSharedMailingOrder = new SharedMailing();
                         NavigationService.GoBack();
                     });
                 }
@@ -703,11 +811,11 @@ namespace SchoolsMailing.ViewModels
             set { if(_surchargeOrders != value) { _surchargeOrders = value; RaisePropertyChanged("surchargeOrders"); } }
         }
 
-        private Surcharge _newSurchargeOrder = new Surcharge();
-        public Surcharge newSurchargeOrder
+        private Surcharge _selectedSurchargeOrder;
+        public Surcharge selectedSurchargeOrder
         {
-            get { return _newSurchargeOrder; }
-            set { if(_newSurchargeOrder != value) { _newSurchargeOrder = value; RaisePropertyChanged("newSurchargeOrder"); } }
+            get { return _selectedSurchargeOrder; }
+            set { if(_selectedSurchargeOrder != value) { _selectedSurchargeOrder = value; RaisePropertyChanged("selectedSurchargeOrder"); } }
         }
 
         private RelayCommand _saveSurcharge;
@@ -719,8 +827,8 @@ namespace SchoolsMailing.ViewModels
                 {
                     _saveSurcharge = new RelayCommand(() =>
                     {
-                        surchargeOrders.Add(newSurchargeOrder);
-                        newSurchargeOrder = new Surcharge();
+                        surchargeOrders.Add(selectedSurchargeOrder);
+                        selectedSurchargeOrder = new Surcharge();
                         NavigationService.GoBack();
                     });
                 }

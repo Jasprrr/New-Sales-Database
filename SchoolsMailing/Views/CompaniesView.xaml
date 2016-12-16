@@ -20,9 +20,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <ListView ItemsSource="{Binding companies, Mode=TwoWay}"
-                      IsItemClickEnabled="True"
-                      Grid.Row="0" 
-                      Header="Companies">
+                      IsItemClickEnabled="True">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="ItemClick">
                         <core:CallMethodAction MethodName="companyInvoked" 

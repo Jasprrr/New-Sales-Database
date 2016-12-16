@@ -159,6 +159,17 @@ namespace SchoolsMailing.DAL
                 return m;
             }
         }
+        public static Contact GetContactById(long ContactID)
+        {
+            // Create a new connection
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                Contact m = (from p in db.Table<Contact>()
+                             where p.ID == ContactID
+                             select p).FirstOrDefault();
+                return m;
+            }
+        }
 
         public static CompanyHistory GetHistoryByID(long historyID)
         {

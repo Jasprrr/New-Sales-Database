@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="SchoolsMailing.Views.NewSchoolSendView"
+    x:Class="SchoolsMailing.Views.SchoolSendView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SchoolsMailing.Views"
@@ -9,7 +9,7 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:conv="using:SchoolsMailing.Converters"
     mc:Ignorable="d"
-    DataContext="{Binding NewOrderViewModel, Source={StaticResource VmLocator}}">
+    DataContext="{Binding OrderViewModel, Source={StaticResource VmLocator}}">
     <Page.Resources>
         <conv:StringFormatter x:Key="CurrencyConverter"/>
         <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
@@ -27,13 +27,13 @@
                                    Style="{StaticResource inputTextBlock}"/>
                         <CalendarDatePicker Width="120" 
                                             MinWidth="120"
-                                            Date="{Binding newSchoolSendOrder.schoolsendStart, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                            Date="{Binding selectedSchoolSendOrder.schoolsendStart, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                             Style="{StaticResource inputCalendarDatePicker}"/>
                         <TextBlock Text="End"
                                    Style="{StaticResource inputTextBlock}"/>
                         <CalendarDatePicker Width="120" 
                                             MinWidth="120"
-                                            Date="{Binding newSchoolSendOrder.schoolsendEnd, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                            Date="{Binding selectedSchoolSendOrder.schoolsendEnd, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                             Style="{StaticResource inputCalendarDatePicker}"/>
                     </StackPanel>
                 </DataTemplate>
@@ -45,7 +45,7 @@
                                    Style="{StaticResource inputTextBlock}"/>
                         <ComboBox Style="{StaticResource inputComboBox}"
                                   Width="300"
-                                  SelectedItem="{Binding newSchoolSendOrder.schoolsendPackage, Mode=TwoWay}">
+                                  SelectedItem="{Binding selectedSchoolSendOrder.schoolsendPackage, Mode=TwoWay}">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="SelectionChanged">
                                     <core:InvokeCommandAction Command="{Binding Path=setCredits}" />
@@ -72,7 +72,7 @@
                         </ComboBox>
                         <TextBlock Text="Max Credits"
                                    Style="{StaticResource inputTextBlock}"/>
-                        <TextBox Text="{Binding newSchoolSendOrder.schoolsendCredits, Mode=TwoWay}"
+                        <TextBox Text="{Binding selectedSchoolSendOrder.schoolsendCredits, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="300"/>
                     </StackPanel>
@@ -84,7 +84,7 @@
                         <TextBlock Text="Total"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text="{Binding newSchoolSendOrder.schoolsendCost, Mode=TwoWay}"
+                        <TextBox Text="{Binding selectedSchoolSendOrder.schoolsendCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
                     </StackPanel>

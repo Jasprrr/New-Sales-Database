@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="SchoolsMailing.Views.NewDirectMailingView"
+    x:Class="SchoolsMailing.Views.DirectMailingView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SchoolsMailing.Views"
@@ -9,7 +9,7 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:conv="using:SchoolsMailing.Converters"
     mc:Ignorable="d"
-    DataContext="{Binding NewOrderViewModel, Source={StaticResource VmLocator}}">
+    DataContext="{Binding OrderViewModel, Source={StaticResource VmLocator}}">
     <Page.Resources>
         <conv:StringFormatter x:Key="CurrencyConverter"/>
         <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
@@ -27,25 +27,25 @@
                                    Style="{StaticResource inputTextBlock}"/>
                         <CalendarDatePicker Width="120" 
                                             MinWidth="120"
-                                            Date="{Binding newDirectMailingOrder.directDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                            Date="{Binding selectedDirectMailingOrder.directDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                             Style="{StaticResource inputCalendarDatePicker}"/>
                         <TextBlock Text="Data Date"
                                    Style="{StaticResource inputTextBlock}"/>
                         <CalendarDatePicker Width="120" 
                                             MinWidth="120"
-                                            Date="{Binding newDirectMailingOrder.directDataDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                            Date="{Binding selectedDirectMailingOrder.directDataDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                             Style="{StaticResource inputCalendarDatePicker}"/>
                         <TextBlock Text="Insert Date"
                                    Style="{StaticResource inputTextBlock}"/>
                         <CalendarDatePicker Width="120" 
                                             MinWidth="120"
-                                            Date="{Binding newDirectMailingOrder.directInsertDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                            Date="{Binding selectedDirectMailingOrder.directInsertDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                             Style="{StaticResource inputCalendarDatePicker}"/>
                         <TextBlock Text="Artwork Date"
                                    Style="{StaticResource inputTextBlock}"/>
                         <CalendarDatePicker Width="120" 
                                             MinWidth="120"
-                                            Date="{Binding newDirectMailingOrder.directArtworkDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                            Date="{Binding selectedDirectMailingOrder.directArtworkDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                             Style="{StaticResource inputCalendarDatePicker}"/>
                     </StackPanel>
                 </DataTemplate>
@@ -56,25 +56,25 @@
                         <TextBlock Text="Leaflet Code"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text="{Binding newDirectMailingOrder.directLeafletCode, Mode=TwoWay}"
+                        <TextBox Text="{Binding selectedDirectMailingOrder.directLeafletCode, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                         <TextBlock Text="Delivery Code"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text="{Binding newDirectMailingOrder.directDeliveryCode, Mode=TwoWay}"
+                        <TextBox Text="{Binding selectedDirectMailingOrder.directDeliveryCode, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                         <TextBlock Text="Mailing To"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text="{Binding newDirectMailingOrder.directMailingTo, Mode=TwoWay}"
+                        <TextBox Text="{Binding selectedDirectMailingOrder.directMailingTo, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="400"/>
                         <TextBlock Text="Details" 
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text="{Binding newDirectMailingOrder.directDetails, Mode=TwoWay}"
+                        <TextBox Text="{Binding selectedDirectMailingOrder.directDetails, Mode=TwoWay}"
                                  Style="{StaticResource inputLargeTextBox}"
                                  Width="400" 
                                  AcceptsReturn="True" 
@@ -89,25 +89,25 @@
                         <TextBlock Text="Fulfilment"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text="{Binding newDirectMailingOrder.directFulfilmentCost, Mode=TwoWay}"
+                        <TextBox Text="{Binding selectedDirectMailingOrder.directFulfilmentCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
                         <TextBlock Text="Print"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text="{Binding newDirectMailingOrder.directPrintCost, Mode=TwoWay}"
+                        <TextBox Text="{Binding selectedDirectMailingOrder.directPrintCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
                         <TextBlock Text="Postage"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text="{Binding newDirectMailingOrder.directPostageCost, Mode=TwoWay}"
+                        <TextBox Text="{Binding selectedDirectMailingOrder.directPostageCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
                         <TextBlock Text="Total"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text="{Binding newDirectMailingOrder.directTotal, Mode=TwoWay}"
+                        <TextBox Text="{Binding selectedDirectMailingOrder.directTotal, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
                     </StackPanel>

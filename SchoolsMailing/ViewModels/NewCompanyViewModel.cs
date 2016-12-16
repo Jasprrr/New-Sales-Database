@@ -11,6 +11,7 @@ using SchoolsMailing.DAL;
 using GalaSoft.MvvmLight.Command;
 using System.Diagnostics;
 using SchoolsMailing.Views;
+using Windows.UI.Xaml.Controls;
 
 namespace SchoolsMailing.ViewModels
 {
@@ -22,7 +23,7 @@ namespace SchoolsMailing.ViewModels
         }
 
         #region Company Data
-        private Company _newCompany = new Company();
+        private Company _newCompany = new Company() { companyCallBack = DateTime.Now, companyLastCall = DateTime.Now };
         public Company newCompany
         {
             get { return _newCompany; }
@@ -39,25 +40,48 @@ namespace SchoolsMailing.ViewModels
                 {
                     _saveCompany = new RelayCommand(() =>
                     {
-                        //if(asd.Value != null) { newCompany.companyCallBackDate = asd.Value.Date; }
-                        newCompany.companyCreated = DateTime.Now;
-                        newCompany.companyModified = DateTime.Now;
-                        newCompany.companyInitial = newCompany.companyName.Substring(0, 1);
-                        //DateTimeOffset
-                        DataAccessLayer.SaveCompany(newCompany); 
-
-                        //string _companyID = c.ID.ToString();
-                        //this.NavigationService.GoBack();
-                        //this.NavigationService.Navigate(typeof(CompanyView));
-                        //MessengerInstance.Send<NotificationMessage<string>>(new NotificationMessage<string>("CompanyID", _companyID));
-
-                        newCompany = null;
+                        DALSave();
                     });
                 }
-
                 return _saveCompany;
-
             }
+        }
+
+        public async void DALSave()
+        {
+            if(newCompany.companyInvoiceAddress1 == null &&
+                newCompany.companyInvoiceAddress2 == null &&
+                newCompany.companyInvoiceCity == null &&
+                newCompany.companyInvoiceCounty == null &&
+                newCompany.companyInvoiceName == null && 
+                newCompany.companyInvoicePostCode == null)
+            {
+                ContentDialog deleteContactDialog = new ContentDialog()
+                {
+                    Title = "Auto Fill Invoice Fields",
+                    Content = "Do you want to automatically fill invoice data from company data?",
+                    PrimaryButtonText = "Yes",
+                    SecondaryButtonText = "No"
+                };
+                var result = await deleteContactDialog.ShowAsync();
+                if (result == ContentDialogResult.Primary)
+                {
+                    if (newCompany.companyName != null) { newCompany.companyInvoiceName = newCompany.companyName; }
+                    if (newCompany.companyAddress1 != null) { newCompany.companyInvoiceAddress1 = newCompany.companyAddress1; }
+                    if (newCompany.companyAddress2 != null) { newCompany.companyInvoiceAddress2 = newCompany.companyAddress2; }
+                    if (newCompany.companyCity != null) { newCompany.companyInvoiceCity = newCompany.companyCity; }
+                    if (newCompany.companyCounty != null) { newCompany.companyInvoiceCounty = newCompany.companyCounty; }
+                    if (newCompany.companyPostCode != null) { newCompany.companyInvoicePostCode = newCompany.companyPostCode; }
+                }
+            }
+            
+            newCompany.companyCreated = DateTime.Now;
+            newCompany.companyModified = DateTime.Now;
+            newCompany.companyInitial = newCompany.companyName.Substring(0, 1);
+            //DateTimeOffset
+            DataAccessLayer.SaveCompany(newCompany);
+            newCompany = null;
+            NavigationService.GoBack();
         }
 
         private RelayCommand _cancelCompany;

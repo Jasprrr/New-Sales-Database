@@ -38,7 +38,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="324"/>
                                     <ColumnDefinition Width="324"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="456"/>
                                     <ColumnDefinition Width="424"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Margin="12,0">
@@ -101,7 +101,7 @@
                                     <ComboBox Style="{StaticResource inputComboBox}"
                                               Width="300"
                                               ItemsSource="{Binding companyContacts, Mode=OneWay}"
-                                              DisplayMemberPath="contactForename" 
+                                              DisplayMemberPath="contactFullname" 
                                               SelectedItem="{Binding selectedContact, Mode=TwoWay}">
                                     </ComboBox>
                                     <TextBlock Text="Title"
@@ -159,7 +159,6 @@
                                         </ListView.Footer>
                                     </ListView>
                                 </StackPanel>
-
                                 <StackPanel Grid.Column="2" 
                                             Margin="12,0">
                                 </StackPanel>

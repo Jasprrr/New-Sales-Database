@@ -44,11 +44,6 @@
             <TextBox Text="{Binding newContact.contactEmail, Mode=TwoWay}"
                      Style="{StaticResource inputTextBox}"
                      Width="300"/>
-            <ToggleSwitch Header="Primary Contact" 
-                          IsOn="{Binding newContact.contactPrimary, Mode=TwoWay}"/>
-            <TextBox Text="{Binding newContact.companyID}"
-                     Width="20"
-                     Style="{StaticResource inputTextBox}"/>
         </StackPanel>
         <CommandBar Grid.Row="1">
             <AppBarButton Icon="Save"

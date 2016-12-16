@@ -15,5 +15,6 @@ namespace SchoolsMailing.Models
         public double printCharge { get; set; }
         public double printCost { get; set; }
         public DateTime printDate { get; set; }
+        public DateTime printCreated { get; set; }
     }
 }

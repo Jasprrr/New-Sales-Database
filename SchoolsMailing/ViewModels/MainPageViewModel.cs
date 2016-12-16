@@ -43,6 +43,13 @@
             conn.CreateTable<CompanyHistory>();
             conn.CreateTable<Contact>();
             conn.CreateTable<SharedPack>();
+            conn.CreateTable<Email>();
+            conn.CreateTable<Data>();
+            conn.CreateTable<SchoolSend>();
+            conn.CreateTable<SharedMailing>();
+            conn.CreateTable<DirectMailing>();
+            conn.CreateTable<Print>();
+            conn.CreateTable<Surcharge>();
 
             this.ItemInvokedCommand = new RelayCommand<ListViewItem>(this.ItemInvoked);
 
@@ -117,7 +124,7 @@
                 {
                     Label = "Reports",
                     Symbol = Symbol.Folder,
-                    AssociatedPage = typeof(NewOrderView)
+                    AssociatedPage = typeof(OrderView)
                     
                 }
             };
@@ -154,8 +161,18 @@
             var menuItem = obj?.Content as SplitViewPaneMenuItem;
             if (menuItem != null)
             {
-                this.NavigationService.Navigate(menuItem.AssociatedPage, menuItem.Parameters);
-                //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+                if(menuItem.Label == "Reports")
+                {
+                    this.NavigationService.Navigate(typeof(OrderView));
+                    //Pass ID parameter
+                    MessengerInstance.Send<NotificationMessage<Int64>>(new NotificationMessage<Int64>(0, "OrderViewModel"));
+                }
+                else
+                {
+                    this.NavigationService.Navigate(menuItem.AssociatedPage, menuItem.Parameters);
+                    //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+                }
+
             }
         }
 
