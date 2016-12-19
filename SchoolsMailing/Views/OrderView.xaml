@@ -64,7 +64,7 @@
                                   Width="300"
                                   DisplayMemberPath="contactFullname" 
                                   ItemsSource="{Binding contacts}"
-                                  SelectedItem="{Binding selectedContact}">
+                                  SelectedItem="{Binding selectedContact, Mode=TwoWay}">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="SelectionChanged">
                                     <core:InvokeCommandAction Command="{Binding Path=contactChanged}" />
@@ -94,35 +94,38 @@
                               IsItemClickEnabled="True">
                         <interactivity:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="ItemClick">
-                                <core:CallMethodAction MethodName="emailInvoked" 
+                                <core:CallMethodAction MethodName="emailClicked" 
+                                                       TargetObject="{Binding Mode=OneWay}"/>
+                            </core:EventTriggerBehavior>
+                            <core:EventTriggerBehavior EventName="RightTapped">
+                                <core:CallMethodAction MethodName="emailRightClicked" 
                                                        TargetObject="{Binding Mode=OneWay}"/>
                             </core:EventTriggerBehavior>
                         </interactivity:Interaction.Behaviors>
                         <GridView.ItemTemplate>
                             <DataTemplate>
-                                <ctrl:OrderEmailList RightTapped="OrderEmailList_RightTapped">
-                                    <FlyoutBase.AttachedFlyout>
-                                        <MenuFlyout Placement="Bottom">
-                                            <MenuFlyoutItem Text="Duplicate">
-                                                <interactivity:Interaction.Behaviors>
-                                                    <core:EventTriggerBehavior EventName="Click">
-                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.duplicateEmail, Source={StaticResource VmLocator}}" />
-                                                    </core:EventTriggerBehavior>
-                                                </interactivity:Interaction.Behaviors>
-                                            </MenuFlyoutItem>
-                                            <MenuFlyoutItem Text="Delete" 
-                                                            x:Name="deleteEmailFlyout" 
-                                                            RightTapped="deleteEmailFlyout_RightTapped">
-                                                <interactivity:Interaction.Behaviors>
-                                                    <core:EventTriggerBehavior EventName="Click">
-                                                        <core:CallMethodAction MethodName="deleteEmail" 
-                                                                               TargetObject="{Binding Mode=OneWay, Source={StaticResource VmLocator}}"/>
-                                                    </core:EventTriggerBehavior>
-                                                </interactivity:Interaction.Behaviors>
-                                            </MenuFlyoutItem>
-                                        </MenuFlyout>
-                                    </FlyoutBase.AttachedFlyout>
-                                </ctrl:OrderEmailList>
+                                <Grid>
+                                    <ctrl:OrderEmailList RightTapped="OrderEmailList_RightTapped">
+                                        <FlyoutBase.AttachedFlyout>
+                                            <MenuFlyout Placement="Top">
+                                                <MenuFlyoutItem Text="Duplicate">
+                                                    <interactivity:Interaction.Behaviors>
+                                                        <core:EventTriggerBehavior EventName="Click">
+                                                            <core:InvokeCommandAction Command="{Binding OrderViewModel.duplicateEmail, Source={StaticResource VmLocator}}"/>
+                                                        </core:EventTriggerBehavior>
+                                                    </interactivity:Interaction.Behaviors>
+                                                </MenuFlyoutItem>
+                                                <MenuFlyoutItem Text="Delete">
+                                                    <interactivity:Interaction.Behaviors>
+                                                        <core:EventTriggerBehavior EventName="Click">
+                                                            <core:InvokeCommandAction Command="{Binding OrderViewModel.deleteEmail, Source={StaticResource VmLocator}}"/>
+                                                        </core:EventTriggerBehavior>
+                                                    </interactivity:Interaction.Behaviors>
+                                                </MenuFlyoutItem>
+                                            </MenuFlyout>
+                                        </FlyoutBase.AttachedFlyout>
+                                    </ctrl:OrderEmailList>
+                                </Grid>
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
@@ -138,7 +141,11 @@
                               IsItemClickEnabled="True">
                         <interactivity:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="ItemClick">
-                                <core:CallMethodAction MethodName="dataInvoked" 
+                                <core:CallMethodAction MethodName="dataClicked" 
+                                                       TargetObject="{Binding Mode=OneWay}"/>
+                            </core:EventTriggerBehavior>
+                            <core:EventTriggerBehavior EventName="RightTapped">
+                                <core:CallMethodAction MethodName="dataRightClicked" 
                                                        TargetObject="{Binding Mode=OneWay}"/>
                             </core:EventTriggerBehavior>
                         </interactivity:Interaction.Behaviors>
@@ -179,7 +186,11 @@
                               IsItemClickEnabled="True">
                         <interactivity:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="ItemClick">
-                                <core:CallMethodAction MethodName="schoolsendInvoked" 
+                                <core:CallMethodAction MethodName="schoolSendClicked" 
+                                                       TargetObject="{Binding Mode=OneWay}"/>
+                            </core:EventTriggerBehavior>
+                            <core:EventTriggerBehavior EventName="RightTapped">
+                                <core:CallMethodAction MethodName="schoolSendRightClicked" 
                                                        TargetObject="{Binding Mode=OneWay}"/>
                             </core:EventTriggerBehavior>
                         </interactivity:Interaction.Behaviors>
@@ -220,7 +231,11 @@
                               IsItemClickEnabled="True">
                         <interactivity:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="ItemClick">
-                                <core:CallMethodAction MethodName="directMailingInvoked" 
+                                <core:CallMethodAction MethodName="directMailingClicked" 
+                                                       TargetObject="{Binding Mode=OneWay}"/>
+                            </core:EventTriggerBehavior>
+                            <core:EventTriggerBehavior EventName="RightTapped">
+                                <core:CallMethodAction MethodName="directMailingRightClicked" 
                                                        TargetObject="{Binding Mode=OneWay}"/>
                             </core:EventTriggerBehavior>
                         </interactivity:Interaction.Behaviors>
@@ -262,7 +277,11 @@
                               IsItemClickEnabled="True">
                         <interactivity:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="ItemClick">
-                                <core:CallMethodAction MethodName="sharedMailingInvoked" 
+                                <core:CallMethodAction MethodName="sharedMailingClicked" 
+                                                       TargetObject="{Binding Mode=OneWay}"/>
+                            </core:EventTriggerBehavior>
+                            <core:EventTriggerBehavior EventName="RightTapped">
+                                <core:CallMethodAction MethodName="sharedMailingRightClicked" 
                                                        TargetObject="{Binding Mode=OneWay}"/>
                             </core:EventTriggerBehavior>
                         </interactivity:Interaction.Behaviors>
@@ -303,7 +322,11 @@
                               IsItemClickEnabled="True">
                         <interactivity:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="ItemClick">
-                                <core:CallMethodAction MethodName="printInvoked" 
+                                <core:CallMethodAction MethodName="printClicked" 
+                                                       TargetObject="{Binding Mode=OneWay}"/>
+                            </core:EventTriggerBehavior>
+                            <core:EventTriggerBehavior EventName="RightTapped">
+                                <core:CallMethodAction MethodName="printRightClicked" 
                                                        TargetObject="{Binding Mode=OneWay}"/>
                             </core:EventTriggerBehavior>
                         </interactivity:Interaction.Behaviors>
@@ -322,8 +345,7 @@
                                             <MenuFlyoutItem Text="Delete">
                                                 <interactivity:Interaction.Behaviors>
                                                     <core:EventTriggerBehavior EventName="Click">
-                                                        <core:CallMethodAction MethodName="deleteEmail" 
-                                                                               TargetObject="{Binding Mode=OneWay, Source={StaticResource VmLocator}}"/>
+                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.deletePrint, Source={StaticResource VmLocator}}" />
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                             </MenuFlyoutItem>
@@ -345,7 +367,11 @@
                               IsItemClickEnabled="True">
                         <interactivity:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="ItemClick">
-                                <core:CallMethodAction MethodName="surchargeInvoked" 
+                                <core:CallMethodAction MethodName="surchargeClicked" 
+                                                       TargetObject="{Binding Mode=OneWay}"/>
+                            </core:EventTriggerBehavior>
+                            <core:EventTriggerBehavior EventName="RightTapped">
+                                <core:CallMethodAction MethodName="surchargeRightClicked" 
                                                        TargetObject="{Binding Mode=OneWay}"/>
                             </core:EventTriggerBehavior>
                         </interactivity:Interaction.Behaviors>
@@ -436,6 +462,11 @@
             </AppBarButton>
             <AppBarButton Icon="Save"
                           Label="Save">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:InvokeCommandAction Command="{Binding Path=saveOrder}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
             </AppBarButton>
             <AppBarButton Icon="Delete"
                           Label="Delete">

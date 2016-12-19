@@ -13,5 +13,7 @@ namespace SchoolsMailing.Models
         public DateTime surchargeDate { get; set; }
         public string surchargeDetails { get; set; }
         public double surchargeCost { get; set; }
+        public DateTime surchargeCreated { get; set; }
+        public DateTime surchargeModified { get; set; }
     }
 }

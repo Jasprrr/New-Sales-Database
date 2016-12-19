@@ -50,7 +50,7 @@
                                                Style="{StaticResource inputTextBlock}"/>
                                     <TextBox Text="{Binding selectedCompany.companyName, Mode=TwoWay}"
                                              Style="{StaticResource inputTextBox}"
-                                             Width="300"/>
+                                             Width="300" Template="{StaticResource validatingTextBox}"/>
                                     <TextBlock Text="Telephone"
                                                Style="{StaticResource inputTextBlock}"/>
                                     <TextBox Text="{Binding selectedCompany.companyTelephone, Mode=TwoWay}"

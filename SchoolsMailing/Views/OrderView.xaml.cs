@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -60,11 +61,6 @@ namespace SchoolsMailing.Views
         private void OrderSurchargeList_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
-        }
-
-        private void deleteEmailFlyout_RightTapped(object sender, RightTappedRoutedEventArgs e)
-        {
-            var item = e.OriginalSource;
         }
     }
 }

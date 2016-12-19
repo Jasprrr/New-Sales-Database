@@ -31,8 +31,7 @@
         /// <param name="navigationService">
         /// The navigation service.
         /// </param>
-        public MainPageViewModel(IMessenger messenger, NavigationService navigationService)
-            : base(messenger, navigationService)
+        public MainPageViewModel(IMessenger messenger, NavigationService navigationService) : base(messenger, navigationService)
         {
             this.InitializeMenu();
 
@@ -50,14 +49,30 @@
             conn.CreateTable<DirectMailing>();
             conn.CreateTable<Print>();
             conn.CreateTable<Surcharge>();
+            conn.CreateTable<Orders>();
+            conn.CreateTable<User>();
+            conn.CreateTable<SchoolSendPack>();
 
             this.ItemInvokedCommand = new RelayCommand<ListViewItem>(this.ItemInvoked);
 
-            MessengerInstance.Register<string>(this, backButtonVisible);
+            MessengerInstance.Register<NotificationMessage<string>>(this, RegisterMessages);
         }
 
-        public bool backVisisble;
+        public void RegisterMessages(NotificationMessage<string> obj)
+        {
+            if(obj.Notification == "frameTitle")
+            {
+                string newTitle = obj.Content.ToString();
+                frameTitle = newTitle;
+            }
+            else if(obj.Notification == "backButtonVisible")
+            {
 
+            }
+        }
+
+
+        public bool backVisisble;
         public void backButtonVisible(string obj)
         {
             backVisisble = Convert.ToBoolean(obj);

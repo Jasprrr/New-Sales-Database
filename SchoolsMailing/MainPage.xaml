@@ -43,7 +43,9 @@
                           Grid.Row="0" 
                           RelativePanel.AlignTopWithPanel="True" 
                           RelativePanel.AlignLeftWithPanel="True"/>
-            <TextBlock Text="Page Title" RelativePanel.RightOf="ToggleMenuButton" Margin="15,15,0,0"/>
+            <TextBlock Text="{Binding frameTitle, Mode=TwoWay}" 
+                       RelativePanel.RightOf="ToggleMenuButton" 
+                       Margin="15,8,0,0" FontSize="24"/>
             <Button x:Name="UserInitial"
                     Content="{Binding loggedInAs.userInitials, Mode=TwoWay}"
                     Margin="10,4" 

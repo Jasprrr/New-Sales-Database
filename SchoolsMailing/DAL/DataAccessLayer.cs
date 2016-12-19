@@ -63,7 +63,6 @@ namespace SchoolsMailing.DAL
                 //db.Execute("DELETE FROM Person WHERE Id = ?", company.companyID);
             }
         }
-
         public static void DeleteCompany(Company company)
         {
             using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
@@ -195,6 +194,26 @@ namespace SchoolsMailing.DAL
                 return o;
             }
         }
+
+        public static void SaveOrder(Orders order)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                if (order.ID == 0)
+                {
+                    // New
+                    order.orderDate = DateTime.Now;
+                    order.orderModified = DateTime.Now;
+                    db.Insert(order);
+                }
+                else
+                {
+                    // Update
+                    order.orderModified = DateTime.Now;
+                    db.Update(order);
+                }
+            }
+        }
         #endregion
 
         #region Data
@@ -230,13 +249,23 @@ namespace SchoolsMailing.DAL
                 if (data.ID == 0)
                 {
                     // New
+                    data.dataCreated = DateTime.Now;
+                    data.dataModified = DateTime.Now;
                     db.Insert(data);
                 }
                 else
                 {
                     // Update
+                    data.dataModified = DateTime.Now;
                     db.Update(data);
                 }
+            }
+        }
+        public static void DeleteData(Data data)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                db.Delete(data);
             }
         }
         #endregion
@@ -274,13 +303,23 @@ namespace SchoolsMailing.DAL
                 if (email.ID == 0)
                 {
                     // New
+                    email.emailCreated = DateTime.Now;
+                    email.emailModified = DateTime.Now;
                     db.Insert(email);
                 }
                 else
                 {
                     // Update
+                    email.emailModified = DateTime.Now;
                     db.Update(email);
                 }
+            }
+        }
+        public static void DeleteEmail(Email email)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                db.Delete(email);
             }
         }
         #endregion
@@ -318,13 +357,23 @@ namespace SchoolsMailing.DAL
                 if (directmailing.ID == 0)
                 {
                     // New
+                    directmailing.directCreated = DateTime.Now;
+                    directmailing.directModified = DateTime.Now;
                     db.Insert(directmailing);
                 }
                 else
                 {
                     // Update
+                    directmailing.directModified = DateTime.Now;
                     db.Update(directmailing);
                 }
+            }
+        }
+        public static void DeleteDirectMailing(DirectMailing directmailing)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                db.Delete(directmailing);
             }
         }
         #endregion
@@ -362,13 +411,23 @@ namespace SchoolsMailing.DAL
                 if (sharedmailing.ID == 0)
                 {
                     // New
+                    sharedmailing.sharedCreated = DateTime.Now;
+                    sharedmailing.sharedModified = DateTime.Now;
                     db.Insert(sharedmailing);
                 }
                 else
                 {
                     // Update
+                    sharedmailing.sharedModified = DateTime.Now;
                     db.Update(sharedmailing);
                 }
+            }
+        }
+        public static void DeleteSharedMailing(SharedMailing sharedmailing)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                db.Delete(sharedmailing);
             }
         }
         #endregion
@@ -406,13 +465,23 @@ namespace SchoolsMailing.DAL
                 if (surcharge.ID == 0)
                 {
                     // New
+                    surcharge.surchargeCreated = DateTime.Now;
+                    surcharge.surchargeModified = DateTime.Now;
                     db.Insert(surcharge);
                 }
                 else
                 {
                     // Update
+                    surcharge.surchargeModified = DateTime.Now;
                     db.Update(surcharge);
                 }
+            }
+        }
+        public static void DeleteSurcharge(Surcharge surcharge)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                db.Delete(surcharge);
             }
         }
         #endregion
@@ -450,13 +519,23 @@ namespace SchoolsMailing.DAL
                 if (schoolsend.ID == 0)
                 {
                     // New
+                    schoolsend.schoolsendCreated = DateTime.Now;
+                    schoolsend.schoolsendModified = DateTime.Now;
                     db.Insert(schoolsend);
                 }
                 else
                 {
                     // Update
+                    schoolsend.schoolsendModified = DateTime.Now;
                     db.Update(schoolsend);
                 }
+            }
+        }
+        public static void DeleteSchoolSend(SchoolSend schoolsend)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                db.Delete(schoolsend);
             }
         }
         #endregion
@@ -494,13 +573,23 @@ namespace SchoolsMailing.DAL
                 if (print.ID == 0)
                 {
                     // New
+                    print.printCreated = DateTime.Now;
+                    print.printModified = DateTime.Now;
                     db.Insert(print);
                 }
                 else
                 {
                     // Update
+                    print.printModified = DateTime.Now;
                     db.Update(print);
                 }
+            }
+        }
+        public static void DeletePrint(Print print)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                db.Delete(print);
             }
         }
         #endregion
@@ -514,11 +603,14 @@ namespace SchoolsMailing.DAL
                 if (company.ID == 0)
                 {
                     // New
+                    company.companyCreated = DateTime.Now;
+                    company.companyModified = DateTime.Now;
                     db.Insert(company);
                 }
                 else
                 {
                     // Update
+                    company.companyModified = DateTime.Now;
                     db.Update(company);
                 }
             }
@@ -548,11 +640,14 @@ namespace SchoolsMailing.DAL
                 if (contact.ID == 0)
                 {
                     // New
+                    contact.contactCreated = DateTime.Now;
+                    contact.contactModified = DateTime.Now;
                     db.Insert(contact);
                 }
                 else
                 {
                     // Update
+                    contact.contactModified = DateTime.Now;
                     db.Update(contact);
                 }
             }

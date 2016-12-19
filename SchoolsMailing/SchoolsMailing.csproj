@@ -168,6 +168,7 @@
     <Compile Include="Models\Orders.cs" />
     <Compile Include="Models\Print.cs" />
     <Compile Include="Models\SchoolSend.cs" />
+    <Compile Include="Models\SchoolSendPack.cs" />
     <Compile Include="Models\SharedMailing.cs" />
     <Compile Include="Models\SharedPack.cs" />
     <Compile Include="Models\Surcharge.cs" />

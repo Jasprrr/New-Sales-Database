@@ -41,6 +41,8 @@ namespace SchoolsMailing.ViewModels
                 GetCompany(id);
                 GetContacts(id);
                 GetHistory(id);
+
+                MessengerInstance.Send<NotificationMessage<string>>(new NotificationMessage<string>(string.Format(selectedCompany.companyName), "frameTitle"));
             }
             //MobileServiceInvalidOperationException exception = null;
             //try

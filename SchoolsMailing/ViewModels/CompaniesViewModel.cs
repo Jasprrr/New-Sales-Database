@@ -78,7 +78,6 @@ namespace SchoolsMailing.ViewModels
                     //Get db path
                     dbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Sales.sqlite");
                 }
-
                 return dbPath;
             }
         }
@@ -95,9 +94,7 @@ namespace SchoolsMailing.ViewModels
                         NavigationService.Navigate(typeof(NewCompanyView));
                     });
                 }
-
                 return _newCompany;
-
             }
         }
 

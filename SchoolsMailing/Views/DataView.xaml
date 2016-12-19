@@ -60,7 +60,13 @@
                                 Style="{StaticResource inputTextBlock}"/>
                         <TextBox Text="{Binding selectedDataOrder.dataCost, Mode=TwoWay}"
                                 Style="{StaticResource inputTextBox}"
-                                Width="200"/>
+                                Width="200">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="TextChanged">
+                                    <core:InvokeCommandAction Command="{Binding Path=dataTextChanged}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </TextBox>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>

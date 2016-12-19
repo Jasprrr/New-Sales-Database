@@ -17,5 +17,6 @@ namespace SchoolsMailing.Models
         public DateTime dataStart { get; set; }
         public DateTime dataEnd { get; set; }
         public DateTime dataCreated { get; set; }
+        public DateTime dataModified { get; set; }
     }
 }

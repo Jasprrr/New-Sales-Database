@@ -18,5 +18,6 @@ namespace SchoolsMailing.Models
         public string emailSubject { get; set; }
         public bool emailSetUp { get; set; }
         public DateTime emailCreated { get; set; }
+        public DateTime emailModified { get; set; }
     }
 }

@@ -80,7 +80,7 @@ namespace SchoolsMailing.ViewModels
             newCompany.companyInitial = newCompany.companyName.Substring(0, 1);
             //DateTimeOffset
             DataAccessLayer.SaveCompany(newCompany);
-            newCompany = null;
+            newCompany = new Company();
             NavigationService.GoBack();
         }
 
