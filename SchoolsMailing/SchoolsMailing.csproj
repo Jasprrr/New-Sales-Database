@@ -115,6 +115,9 @@
     <Compile Include="Controls\HistoryDialog.xaml.cs">
       <DependentUpon>HistoryDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\InvalidFlagLarge.xaml.cs">
+      <DependentUpon>InvalidFlagLarge.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\InvalidFlag.xaml.cs">
       <DependentUpon>InvalidFlag.xaml</DependentUpon>
     </Compile>
@@ -179,6 +182,7 @@
     <Compile Include="ViewModels\Common\ViewModelLocator.cs" />
     <Compile Include="ViewModels\CompaniesViewModel.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />
+    <Compile Include="ViewModels\EmailViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
@@ -279,6 +283,10 @@
     <Page Include="Controls\HistoryDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\InvalidFlagLarge.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\InvalidFlag.xaml">
       <SubType>Designer</SubType>

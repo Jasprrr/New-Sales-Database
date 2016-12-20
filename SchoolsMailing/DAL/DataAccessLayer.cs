@@ -430,6 +430,35 @@ namespace SchoolsMailing.DAL
                 db.Delete(sharedmailing);
             }
         }
+
+        public static ObservableCollection<SharedPack> GetAllSharedPacks()
+        {
+            List<SharedPack> o;
+            ObservableCollection<SharedPack> o2;
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                o = (from p in db.Table<SharedPack>()
+                     select p).ToList();
+            }
+            o2 = new ObservableCollection<SharedPack>(o);
+            return o2;
+        }
+        public static void SaveSharedPack(SharedPack sharedPack)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                if (sharedPack.ID == 0)
+                {
+                    // New
+                    db.Insert(sharedPack);
+                }
+                else
+                {
+                    // Update
+                    db.Update(sharedPack);
+                }
+            }
+        }
         #endregion
 
         #region Surcharge
@@ -536,6 +565,35 @@ namespace SchoolsMailing.DAL
             using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
             {
                 db.Delete(schoolsend);
+            }
+        }
+
+        public static ObservableCollection<SchoolSendPack> GetAllSchoolSendPacks()
+        {
+            List<SchoolSendPack> o;
+            ObservableCollection<SchoolSendPack> o2;
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                o = (from p in db.Table<SchoolSendPack>()
+                     select p).ToList();
+            }
+            o2 = new ObservableCollection<SchoolSendPack>(o);
+            return o2;
+        }
+        public static void SaveSchoolSendPack(SchoolSendPack schoolsendpack)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                if (schoolsendpack.ID == 0)
+                {
+                    // New
+                    db.Insert(schoolsendpack);
+                }
+                else
+                {
+                    // Update
+                    db.Update(schoolsendpack);
+                }
             }
         }
         #endregion

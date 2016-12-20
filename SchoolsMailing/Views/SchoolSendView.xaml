@@ -45,30 +45,16 @@
                                    Style="{StaticResource inputTextBlock}"/>
                         <ComboBox Style="{StaticResource inputComboBox}"
                                   Width="300"
-                                  SelectedItem="{Binding selectedSchoolSendOrder.schoolsendPackage, Mode=TwoWay}">
+                                  DisplayMemberPath="packName"
+                                  ItemsSource="{Binding schoolsendPacks, Mode=TwoWay}"
+                                  SelectedItem="{Binding selectedSchoolSendPack, Mode=TwoWay}"
+                                  SelectedValue="{Binding selectedSchoolSendOrder.schoolsendPackage, Mode=TwoWay}"
+                                  SelectedValuePath="ID">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="SelectionChanged">
                                     <core:InvokeCommandAction Command="{Binding Path=setCredits}" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
-                            <ComboBoxItem>
-                                <TextBlock Text="Ruby"/>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="Sapphire"/>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="Emerald"/>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="Silver"/>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="Gold"/>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="Platinum"/>
-                            </ComboBoxItem>
                         </ComboBox>
                         <TextBlock Text="Max Credits"
                                    Style="{StaticResource inputTextBlock}"/>

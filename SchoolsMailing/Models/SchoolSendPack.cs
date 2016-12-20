@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SchoolsMailing.Models
 {
-    class SchoolSendPack
+    public class SchoolSendPack
     {
         [PrimaryKey, AutoIncrement]
         public long ID { get; set; }

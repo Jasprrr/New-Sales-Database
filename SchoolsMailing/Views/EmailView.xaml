@@ -8,11 +8,13 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:conv="using:SchoolsMailing.Converters"
+    xmlns:cntrl="using:SchoolsMailing.Controls"
     mc:Ignorable="d"
     DataContext="{Binding OrderViewModel, Source={StaticResource VmLocator}}">
     <Page.Resources>
         <conv:StringFormatter x:Key="CurrencyConverter"/>
         <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
+        <conv:BooleanToVisibilityConverter x:Key="InvalidTextBox"/>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -25,10 +27,14 @@
                     <StackPanel>
                         <TextBlock Text="Send Date"
                                    Style="{StaticResource inputTextBlock}"/>
-                        <CalendarDatePicker Width="120" 
+                        <StackPanel Orientation="Horizontal">
+                            <CalendarDatePicker Width="120" 
                                             MinWidth="120"
                                             Date="{Binding selectedEmailOrder.emailDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                             Style="{StaticResource inputCalendarDatePicker}"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidEmailDate, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Send Date"/>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -42,40 +48,74 @@
                                  Text="{Binding selectedEmailOrder.emailSubject, Mode=TwoWay}"/>
                         <TextBlock Text="Details" 
                                    Style="{StaticResource inputTextBlock}"/>
-                        <TextBox Text="{Binding selectedEmailOrder.emailDetails, Mode=TwoWay}"
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedEmailOrder.emailDetails, Mode=TwoWay}"
                                  Style="{StaticResource inputLargeTextBox}"
                                  Width="300" 
                                  ScrollViewer.VerticalScrollBarVisibility="Visible" 
                                  TextWrapping="Wrap" 
-                                 AcceptsReturn="True"/>
+                                 AcceptsReturn="True" PlaceholderText="Email details"/>
+                            <cntrl:InvalidFlagLarge Visibility="{Binding isValidEmailDetails, Converter={StaticResource InvalidTextBox}}" 
+                                                    ToolTipService.ToolTip="Invalid Email Details"/>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
             <HubSection Header="Costs">
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="Set Up"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="200"/>
-                        <CheckBox Content="+ 125"/>
+                        <CheckBox Content="Set Up Charge"
+                                  Style="{StaticResource inputCheckBox}"
+                                  IsChecked="{Binding selectedEmailOrder.emailSetUp, Mode=TwoWay}">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Click">
+                                    <core:InvokeCommandAction Command="{Binding Path=validateEmailSetUp}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </CheckBox>
                         <TextBlock Text="Admin Cost"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text="{Binding selectedEmailOrder.emailAdminCost, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="200"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedEmailOrder.emailAdminCost, Mode=TwoWay}"
+                                     Style="{StaticResource inputTextBox}"
+                                     Width="200">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="LostFocus">
+                                        <core:InvokeCommandAction Command="{Binding Path=validateEmailAdminCost}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </TextBox>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidEmailAdminCost, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Admin Cost"/>
+                        </StackPanel>
+                        
                         <TextBlock Text="Direct Cost"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text="{Binding selectedEmailOrder.emailDirectCost, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="200"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedEmailOrder.emailDirectCost, Mode=TwoWay}"
+                                         Style="{StaticResource inputTextBox}"
+                                         Width="200">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="LostFocus">
+                                        <core:InvokeCommandAction Command="{Binding Path=validateEmailDirectCost}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </TextBox>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidEmailDirectCost, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Direct Cost"/>
+                        </StackPanel>
                         <TextBlock Text="Total Cost"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text="{Binding selectedEmailOrder.emailCost, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="200"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedEmailOrder.emailCost, Mode=TwoWay}"
+                                     Style="{StaticResource inputTextBox}"
+                                     Width="200"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidEmailCost, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Email Cost"/>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>

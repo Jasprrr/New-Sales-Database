@@ -30,6 +30,7 @@ namespace SchoolsMailing.Models
         public string companyCity { get; set; }
         public string companyCounty { get; set; }
         public string companyPostCode { get; set; }
+        public string companyProspects { get; set; }
 
         //Contact Details
         public string contactTitle { get; set; }

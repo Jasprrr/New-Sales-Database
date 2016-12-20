@@ -4,9 +4,9 @@
 
 namespace SchoolsMailing.Controls
 {
-    public sealed partial class InvalidFlag : UserControl
+    public sealed partial class InvalidFlagLarge : UserControl
     {
-        public InvalidFlag()
+        public InvalidFlagLarge()
         {
             this.InitializeComponent();
         }

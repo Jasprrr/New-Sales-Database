@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="SchoolsMailing.Controls.InvalidFlag"
+    x:Class="SchoolsMailing.Controls.InvalidFlagLarge"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SchoolsMailing.Controls"
@@ -10,15 +10,15 @@
     d:DesignWidth="20">
 
     <Grid Background="#FFE81123"
-          Height="32"
+          Height="102"
           Width="20"
           Margin="0,4,0,10">
         <TextBlock Text="&#xE8C9;"
                    Foreground="White" 
-                   HorizontalAlignment="Center"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
                    FontWeight="Bold" 
                    FontSize="16"
-                   FontFamily="Segoe MDL2 Assets" 
-                   VerticalAlignment="Center"/>
+                   FontFamily="Segoe MDL2 Assets" />
     </Grid>
 </UserControl>

@@ -24,19 +24,28 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="Select Package"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="200"/>
+                                   Style="{StaticResource inputTextBlock}"/>
                         <ComboBox Style="{StaticResource inputComboBox}"
                                   Width="200"
-                                  SelectedItem="{Binding selectedSharedMailingOrder.sharedPackage, Mode=TwoWay}"/>
+                                  DisplayMemberPath="packName"
+                                  ItemsSource="{Binding sharedPacks, Mode=TwoWay}"
+                                  SelectedItem="{Binding selectedSharedPack, Mode=TwoWay}"
+                                  SelectedValue="{Binding selectedSharedMailingOrder.sharedPackage, Mode=TwoWay}"
+                                  SelectedValuePath="ID">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="SelectionChanged">
+                                    <core:InvokeCommandAction Command="{Binding Path=setPack}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </ComboBox>
                         <TextBlock Text="Send Date"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="200"/>
-                        <TextBox Style="{StaticResource inputTextBox}"
-                                 Width="200"/>
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <CalendarDatePicker Width="200" 
+                                            MinWidth="200"
+                                            Date="{Binding selectedSharedMailingOrder.sharedDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                            Style="{StaticResource inputCalendarDatePicker}"/>
                         <TextBlock Text="To"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="200"/>
+                                   Style="{StaticResource inputTextBlock}"/>
                         <TextBox Text="{Binding selectedSharedMailingOrder.sharedMailingTo, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
@@ -59,7 +68,6 @@
                                             MinWidth="120"
                                             Date="{Binding selectedSharedMailingOrder.sharedDeliveryDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                             Style="{StaticResource inputCalendarDatePicker}"/>
-
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -67,29 +75,25 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="FAO"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
+                                   Style="{StaticResource inputTextBlock}"/>
                         <TextBox Text="{Binding selectedSharedMailingOrder.sharedFAO, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
+                                 Width="300"/>
                         <TextBlock Text="Name"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
+                                   Style="{StaticResource inputTextBlock}"/>
                         <TextBox Text="{Binding selectedSharedMailingOrder.sharedLeafletName, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
+                                 Width="300"/>
                         <TextBlock Text="Size"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
+                                   Style="{StaticResource inputTextBlock}"/>
                         <TextBox Text="{Binding selectedSharedMailingOrder.sharedLeafletSize, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
+                                 Width="300"/>
                         <TextBlock Text="Weight"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="400"/>
+                                   Style="{StaticResource inputTextBlock}"/>
                         <TextBox Text="{Binding selectedSharedMailingOrder.sharedLeafletWeight, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
+                                 Width="300"/>
                         
                     </StackPanel>
                 </DataTemplate>
@@ -98,8 +102,7 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="Total"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="200"/>
+                                   Style="{StaticResource inputTextBlock}"/>
                         <TextBox Text="{Binding selectedSharedMailingOrder.sharedCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>

@@ -29,7 +29,7 @@
             <Setter Property="Margin" Value="0,4,0,10"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
-        <conv:StringFormatter x:Key="CurrencyConverter"/>
+        <conv:StringFormatter x:Key="StringFormatter"/>
         <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
     </Page.Resources>
 
@@ -51,7 +51,9 @@
                                   Width="300"
                                   DisplayMemberPath="companyName" 
                                   ItemsSource="{Binding companies}"
-                                  SelectedItem="{Binding selectedCompany, Mode=TwoWay}">
+                                  SelectedItem="{Binding selectedCompany, Mode=TwoWay}"
+                                  SelectedValue="{Binding selectedOrder.companyID, Mode=TwoWay}"
+                                  SelectedValuePath="ID">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="SelectionChanged">
                                     <core:InvokeCommandAction Command="{Binding Path=companyChanged}" />
@@ -64,7 +66,9 @@
                                   Width="300"
                                   DisplayMemberPath="contactFullname" 
                                   ItemsSource="{Binding contacts}"
-                                  SelectedItem="{Binding selectedContact, Mode=TwoWay}">
+                                  SelectedItem="{Binding selectedContact, Mode=TwoWay}"
+                                  SelectedValue="{Binding selectedOrder.contactID, Mode=TwoWay}"
+                                  SelectedValuePath="ID">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="SelectionChanged">
                                     <core:InvokeCommandAction Command="{Binding Path=contactChanged}" />
@@ -86,7 +90,7 @@
             </PivotItem>
             <PivotItem>
                 <PivotItem.Header>
-                    <TextBlock Text="Email"/>
+                    <TextBlock Text="{Binding emailOrders.Count, Converter={StaticResource StringFormatter}, ConverterParameter='Emails [{0}]'}"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
                     <GridView ItemsSource="{Binding emailOrders, Mode=OneWay}"
@@ -133,7 +137,7 @@
             </PivotItem>
             <PivotItem>
                 <PivotItem.Header>
-                    <TextBlock Text="Data"/>
+                    <TextBlock Text="{Binding dataOrders.Count, Converter={StaticResource StringFormatter}, ConverterParameter='Data [{0}]'}"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
                     <GridView ItemsSource="{Binding dataOrders, Mode=OneWay}" 
@@ -178,7 +182,7 @@
             </PivotItem>
             <PivotItem>
                 <PivotItem.Header>
-                    <TextBlock Text="SchoolSend"/>
+                    <TextBlock Text="{Binding schoolSendOrders.Count, Converter={StaticResource StringFormatter}, ConverterParameter='SchoolSend [{0}]'}"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
                     <GridView ItemsSource="{Binding schoolSendOrders, Mode=OneWay}" 
@@ -223,7 +227,7 @@
             </PivotItem>
             <PivotItem>
                 <PivotItem.Header>
-                    <TextBlock Text="Direct Mailing"/>
+                    <TextBlock Text="{Binding directMailingOrders.Count, Converter={StaticResource StringFormatter}, ConverterParameter='Direct Mailing [{0}]'}"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
                     <GridView ItemsSource="{Binding directMailingOrders, Mode=OneWay}" 
@@ -269,7 +273,7 @@
             </PivotItem>
             <PivotItem>
                 <PivotItem.Header>
-                    <TextBlock Text="Shared Mailing"/>
+                    <TextBlock Text="{Binding sharedMailingOrders.Count, Converter={StaticResource StringFormatter}, ConverterParameter='Shared Mailing [{0}]'}"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
                     <GridView ItemsSource="{Binding sharedMailingOrders, Mode=OneWay}" 
@@ -314,7 +318,7 @@
             </PivotItem>
             <PivotItem>
                 <PivotItem.Header>
-                    <TextBlock Text="Print"/>
+                    <TextBlock Text="{Binding printOrders.Count, Converter={StaticResource StringFormatter}, ConverterParameter='Print [{0}]'}"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
                     <GridView ItemsSource="{Binding printOrders, Mode=OneWay}" 
@@ -359,7 +363,7 @@
             </PivotItem>
             <PivotItem>
                 <PivotItem.Header>
-                    <TextBlock Text="Surcharge"/>
+                    <TextBlock Text="{Binding surchargeOrders.Count, Converter={StaticResource StringFormatter}, ConverterParameter='Surcharge [{0}]'}"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
                     <GridView ItemsSource="{Binding surchargeOrders, Mode=OneWay}" 

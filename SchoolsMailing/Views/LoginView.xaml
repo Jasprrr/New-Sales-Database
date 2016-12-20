@@ -33,12 +33,13 @@
             <TextBlock Text="Password"
                        FontSize="20" 
                        Width="100"
-                       HorizontalAlignment="Left"/>
+                       HorizontalAlignment="Left"
+                       Style="{StaticResource inputTextBlock}"/>
             <StackPanel Orientation="Horizontal">
                 <PasswordBox Password="{Binding password, Mode=TwoWay}" 
                              Width="300"
                              SelectionHighlightColor="White"
-                             Style="{StaticResource inputPasswordBox}" PasswordChar="●">
+                             Style="{StaticResource inputPasswordBox}">
                 </PasswordBox>
                 <cntrl:InvalidFlag Visibility="{Binding invalidPassword, Converter={StaticResource InvalidTextBox}}" 
                                    ToolTipService.ToolTip="Invalid Password"/>

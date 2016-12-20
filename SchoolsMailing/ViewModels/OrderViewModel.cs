@@ -65,6 +65,8 @@ namespace SchoolsMailing.ViewModels
                     deletedSurchargeOrders = new ObservableCollection<Surcharge>();
                 }
                 companies = DataAccessLayer.GetAllCompanies2();
+                schoolsendPacks = DataAccessLayer.GetAllSchoolSendPacks();
+                sharedPacks = DataAccessLayer.GetAllSharedPacks();
             }
             //else if(obj.Notification == "NewOrder")
             //{
@@ -105,7 +107,7 @@ namespace SchoolsMailing.ViewModels
             get { if (_newSchoolSend == null) {
                     _newSchoolSend = new RelayCommand(() => {
                         NavigationService.Navigate(typeof(SchoolSendView));
-                        selectedSchoolSendOrder = new SchoolSend() { schoolsendStart = DateTime.Now, schoolsendEnd = DateTime.Now };
+                        selectedSchoolSendOrder = new SchoolSend() { schoolsendStart = DateTime.Now, schoolsendEnd = DateTime.Now.AddDays(365) };
                         originalSchoolSendOrder = new SchoolSend();
                     });
                 } return _newSchoolSend;
@@ -131,6 +133,7 @@ namespace SchoolsMailing.ViewModels
             get { if (_newSharedMailing == null) {
                     _newSharedMailing = new RelayCommand(() => {
                         NavigationService.Navigate(typeof(SharedMailingView));
+                        selectedSharedMailingOrder = new SharedMailing();
                         originalSharedMailingOrder = new SharedMailing();
                     });
                 } return _newSharedMailing;
@@ -653,6 +656,240 @@ namespace SchoolsMailing.ViewModels
             }
             catch(Exception x) { } //Catch null exception
         }
+
+        #region Email Validation
+        private bool _isValidEmailAdminCost = false;
+        public bool isValidEmailAdminCost
+        {
+            get { return _isValidEmailAdminCost; }
+            set { if (_isValidEmailAdminCost != value) { _isValidEmailAdminCost = !_isValidEmailAdminCost; RaisePropertyChanged("isValidEmailAdminCost"); } }
+        }
+        private bool _isValidEmailDirectCost = false;
+        public bool isValidEmailDirectCost
+        {
+            get { return _isValidEmailAdminCost; }
+            set { if (_isValidEmailDirectCost != value) { _isValidEmailDirectCost = !_isValidEmailDirectCost; RaisePropertyChanged("isValidEmailDirectCost"); } }
+        }
+        private bool _isValidEmailCost = false;
+        public bool isValidEmailCost
+        {
+            get { return _isValidEmailCost; }
+            set { if (_isValidEmailCost != value) { _isValidEmailCost = !_isValidEmailCost; RaisePropertyChanged("isValidEmailCost"); } }
+        }
+        private bool _isValidEmailDate = false;
+        public bool isValidEmailDate
+        {
+            get { return _isValidEmailDate; }
+            set { if (_isValidEmailDate != value) { _isValidEmailDate = !_isValidEmailDate; RaisePropertyChanged("isValidEmailDate"); } }
+        }
+        private bool _isValidEmailDetails = false;
+        public bool isValidEmailDetails
+        {
+            get { return _isValidEmailDetails; }
+            set { if (_isValidEmailDetails != value) { _isValidEmailDetails = !_isValidEmailDetails; RaisePropertyChanged("isValidEmailDetails"); } }
+        }
+
+
+        public bool validateEmailOrder(Email email)
+        {
+            if(email.emailDate == null)
+            {
+                isValidEmailDate = true;
+            }
+            else
+            {
+                isValidEmailDate = false;
+            }
+            if(email.emailDetails == null)
+            {
+                isValidEmailDetails = true;
+            }
+            else
+            {
+                isValidEmailDetails = false;
+            }
+            if (email.emailAdminCost < 0)
+            {
+                isValidEmailAdminCost = true;
+            }
+            else
+            {
+                isValidEmailAdminCost = false;
+            }
+            if (email.emailDirectCost < 0)
+            {
+                isValidEmailDirectCost = true;
+            }
+            else
+            {
+                isValidEmailDirectCost = false;
+            }
+            if (email.emailCost < 0)
+            {
+                isValidEmailCost = true;
+            }
+            else
+            {
+                isValidEmailCost = false;
+            }
+            if (isValidEmailAdminCost == true ||
+                isValidEmailCost == true ||
+                isValidEmailDate == true ||
+                isValidEmailDetails == true ||
+                isValidEmailDirectCost == true)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private RelayCommand _validateEmailAdminCost;
+        public RelayCommand validateEmailAdminCost
+        {
+            get
+            {
+                if (_validateEmailAdminCost == null)
+                {
+                    _validateEmailAdminCost = new RelayCommand(() =>
+                    {
+                        if (validateEmailAdminCost != null)
+                        {
+                            double d;
+                            bool isDouble = Double.TryParse(selectedEmailOrder.emailAdminCost.ToString(), out d);
+                            if (isDouble)
+                            {
+                                if (selectedEmailOrder.emailSetUp)
+                                {
+                                    selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost + 125;
+                                }
+                                else
+                                {
+                                    selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost;
+                                }
+                                validateEmailOrder(selectedEmailOrder);
+                                RaisePropertyChanged("selectedEmailOrder");
+                            }
+                            else
+                            {
+                                validateEmailOrder(selectedEmailOrder);
+                            }
+                        }
+                    });
+                } return _validateEmailAdminCost;
+            }
+        }
+        private RelayCommand _validateEmailDirectCost;
+        public RelayCommand validateEmailDirectCost
+        {
+            get
+            {
+                if (_validateEmailDirectCost == null)
+                {
+                    _validateEmailDirectCost = new RelayCommand(() =>
+                    {
+                        if (validateEmailDirectCost != null)
+                        {
+                            double d;
+                            bool isDouble = Double.TryParse(selectedEmailOrder.emailDirectCost.ToString(), out d);
+                            if (isDouble)
+                            {
+                                if (selectedEmailOrder.emailSetUp)
+                                {
+                                    selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost + 125;
+                                }
+                                else
+                                {
+                                    selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost;
+                                }
+                                validateEmailOrder(selectedEmailOrder);
+                                RaisePropertyChanged("selectedEmailOrder");
+                            }
+                            else
+                            {
+                                validateEmailOrder(selectedEmailOrder);
+                            }
+                        }
+                    });
+                } return _validateEmailDirectCost;
+            }
+        }
+        private RelayCommand _validateEmailSetUp;
+        public RelayCommand validateEmailSetUp
+        {
+            get
+            {
+                if (_validateEmailSetUp == null)
+                {
+                    _validateEmailSetUp = new RelayCommand(() =>
+                    {
+                        if (validateEmailSetUp != null)
+                        {
+                            double d;
+                            bool isDouble = Double.TryParse(selectedEmailOrder.emailDirectCost.ToString(), out d);
+                            if (isDouble)
+                            {
+                                if (selectedEmailOrder.emailSetUp)
+                                {
+                                    selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost + 125;
+                                }
+                                else
+                                {
+                                    selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost;
+                                }
+                                validateEmailOrder(selectedEmailOrder);
+                                RaisePropertyChanged("selectedEmailOrder");
+                            }
+                            else
+                            {
+                                validateEmailOrder(selectedEmailOrder);
+                            }
+                        }
+                    });
+                }
+                return _validateEmailSetUp;
+            }
+        }
+        private RelayCommand _validateEmailDate;
+        public RelayCommand validateEmailDate
+        {
+            get
+            {
+                if (_validateEmailDate == null)
+                {
+                    _validateEmailDate = new RelayCommand(() =>
+                    {
+                        if (validateEmailDate != null)
+                        {
+                            
+                        }
+                    });
+                }
+                return _validateEmailDate;
+            }
+        }
+        private RelayCommand _validateEmailDetails;
+        public RelayCommand validateEmailDetails
+        {
+            get
+            {
+                if (_validateEmailDetails == null)
+                {
+                    _validateEmailDetails = new RelayCommand(() =>
+                    {
+                        if (validateEmailDetails != null)
+                        {
+
+                        }
+                    });
+                }
+                return _validateEmailDetails;
+            }
+        }
+
+        #endregion
         #endregion
 
         #region Direct Mailing Order
@@ -930,6 +1167,20 @@ namespace SchoolsMailing.ViewModels
             set { if (_deletedSchoolSendOrders != value) { _deletedSchoolSendOrders = value; RaisePropertyChanged("deletedSchoolSendOrders"); } }
         }
 
+        private ObservableCollection<SchoolSendPack> _schoolsendPacks;
+        public ObservableCollection<SchoolSendPack> schoolsendPacks
+        {
+            get { return _schoolsendPacks; }
+            set { if(_schoolsendPacks != value) { _schoolsendPacks = value;  RaisePropertyChanged("schoolsendPacks"); } }
+        }
+
+        private SchoolSendPack _selectedSchoolSendPack;
+        public SchoolSendPack selectedSchoolSendPack
+        {
+            get { return _selectedSchoolSendPack; }
+            set { if(_selectedSchoolSendPack != value) { _selectedSchoolSendPack = value;  RaisePropertyChanged("selectedSchoolSendPack"); } }
+        }
+
         private SchoolSend _selectedSchoolSendOrder;
         public SchoolSend selectedSchoolSendOrder
         {
@@ -986,12 +1237,13 @@ namespace SchoolsMailing.ViewModels
             get {
                 if (_setCredits == null) {
                         _setCredits = new RelayCommand(() => {
-                            //switch (newSchoolSendOrder.schoolsendPackage)
-                            //{
-                            //    case "Ruby":
-                            //        break;
-                            //}
-                            Debug.WriteLine(string.Format(selectedSchoolSendOrder.schoolsendPackage.ToString()));
+                            if(selectedSchoolSendPack != null)
+                            {
+                                selectedSchoolSendOrder.schoolsendPackage = selectedSchoolSendPack.ID;
+                                selectedSchoolSendOrder.schoolsendCredits = selectedSchoolSendPack.packCredits;
+                                selectedSchoolSendOrder.schoolsendCost = selectedSchoolSendPack.packCost;
+                                RaisePropertyChanged("selectedSchoolSendOrder");
+                            }
                         });
                 }
                 return _setCredits;
@@ -1056,8 +1308,8 @@ namespace SchoolsMailing.ViewModels
             try
             {
                 var schoolSendSource = args.OriginalSource; //Gets right clicked item
-                var schoolSendSchoolSendContext = (schoolSendSource as TextBlock).DataContext; //Gets the SchoolSend context
-                rightClickedSchoolSend = (SchoolSend)schoolSendSchoolSendContext; //Convert to class
+                var SchoolSendContext = (schoolSendSource as TextBlock).DataContext; //Gets the SchoolSend context
+                rightClickedSchoolSend = (SchoolSend)SchoolSendContext; //Convert to class
             }
             catch (Exception x) { } //Catch null exception
         }
@@ -1078,6 +1330,20 @@ namespace SchoolsMailing.ViewModels
             set { if (_deletedSharedMailingOrders != value) { _deletedSharedMailingOrders = value; RaisePropertyChanged("deletedSharedMailingOrders"); } }
         }
 
+        private ObservableCollection<SharedPack> _sharedPacks;
+        public ObservableCollection<SharedPack> sharedPacks
+        {
+            get { return _sharedPacks; }
+            set { if(_sharedPacks != value) { _sharedPacks = value; RaisePropertyChanged("sharedPacks"); } }
+        }
+
+        private SharedPack _selectedSharedPack;
+        public SharedPack selectedSharedPack
+        {
+            get { return _selectedSharedPack; }
+            set { if(_selectedSharedPack != value) { _selectedSharedPack = value; RaisePropertyChanged("selectedSharedPack"); } }
+        }
+
         private SharedMailing _selectedSharedMailingOrder;
         public SharedMailing selectedSharedMailingOrder
         {
@@ -1090,6 +1356,28 @@ namespace SchoolsMailing.ViewModels
         {
             get { return _originalSharedMailingOrder; }
             set { if (_originalSharedMailingOrder != value) { _originalSharedMailingOrder = value; RaisePropertyChanged("originalSharedMailingOrder"); } }
+        }
+
+        private RelayCommand _setPack;
+        public RelayCommand setPack
+        {
+            get
+            {
+                if (_setPack == null) {
+                    _setPack = new RelayCommand(() => {
+                        if (selectedSharedPack != null)
+                        {
+                            selectedSharedMailingOrder.sharedArtworkDate = selectedSharedPack.packArtworkDate;
+                            selectedSharedMailingOrder.sharedDate = selectedSharedPack.packDate;
+                            selectedSharedMailingOrder.sharedDeliveryDate = selectedSharedPack.packDeliveryDate;
+                            selectedSharedMailingOrder.sharedMailingTo = selectedSharedPack.packTo;
+                            selectedSharedMailingOrder.sharedCost = selectedSharedPack.packCost;
+                            RaisePropertyChanged("selectedSharedMailingOrder");
+                        }
+                    });
+                }
+                return _setPack;
+            }
         }
 
         private RelayCommand _saveSharedMailing;
