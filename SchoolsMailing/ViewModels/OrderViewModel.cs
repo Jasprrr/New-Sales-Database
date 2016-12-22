@@ -274,6 +274,99 @@ namespace SchoolsMailing.ViewModels
                 return _saveOrder;
             }
         }
+
+        private double _emailCosts = 0;
+        public double emailCosts
+        {
+            get { return _emailCosts; }
+            set { if(_emailCosts != value) { _emailCosts = value; RaisePropertyChanged("emailCost"); } }
+        }
+
+        private double _dataCosts = 0;
+        public double dataCosts
+        {
+            get { return _dataCosts; }
+            set { if (_dataCosts != value) { _dataCosts = value; RaisePropertyChanged("dataCosts"); } }
+        }
+
+        private double _schoolSendCosts = 0;
+        public double schoolSendCosts
+        {
+            get { return _schoolSendCosts; }
+            set { if (_schoolSendCosts != value) { _schoolSendCosts = value; RaisePropertyChanged("schoolSendCosts"); } }
+        }
+
+        private double _directMailingCosts = 0;
+        public double directMailingCosts
+        {
+            get { return _directMailingCosts; }
+            set { if (_directMailingCosts != value) { _directMailingCosts = value; RaisePropertyChanged("directMailingCosts"); } }
+        }
+
+        private double _sharedMailingCosts = 0;
+        public double sharedMailingCosts
+        {
+            get { return _sharedMailingCosts; }
+            set { if(_sharedMailingCosts != value) { _sharedMailingCosts = value; RaisePropertyChanged("sharedMailingCosts"); } }
+        }
+
+        private double _printCosts = 0;
+        public double printCosts
+        {
+            get { return _printCosts; }
+            set { if (_printCosts != value) { _printCosts = value; RaisePropertyChanged("printCosts"); } }
+        }
+
+        private double _surchargeCosts = 0;
+        public double surchargeCosts
+        {
+            get { return _surchargeCosts; }
+            set { if (_surchargeCosts != value) { _surchargeCosts = value; RaisePropertyChanged("surchargeCosts"); } }
+        }
+
+        public void CalculateCosts()
+        {
+            emailCosts = 0;
+            dataCosts = 0;
+            schoolSendCosts = 0;
+            directMailingCosts = 0;
+            sharedMailingCosts = 0;
+            printCosts = 0;
+            surchargeCosts = 0;
+
+            foreach(Email p in emailOrders)
+            {
+                emailCosts = emailCosts + p.emailCost;
+                RaisePropertyChanged("emailCosts");
+            }
+            foreach (Data p in dataOrders)
+            {
+                dataCosts = dataCosts + p.dataCost;
+                RaisePropertyChanged("dataCosts");
+            }
+            foreach (DirectMailing p in directMailingOrders)
+            {
+                directMailingCosts = directMailingCosts + p.directCost;
+                RaisePropertyChanged("directMailingCosts");
+            }
+            foreach (SharedMailing p in sharedMailingOrders)
+            {
+                sharedMailingCosts = sharedMailingCosts + p.sharedCost;
+                RaisePropertyChanged("sharedMailingCosts");
+            }
+            foreach (Print p in printOrders)
+            {
+                printCosts = printCosts + p.printCost;
+                RaisePropertyChanged("printCosts");
+            }
+            foreach (Surcharge p in surchargeOrders)
+            {
+                surchargeCosts = surchargeCosts + p.surchargeCost;
+                RaisePropertyChanged("surchargeCosts");
+            }
+            selectedOrder.orderTotal = emailCosts + dataCosts + directMailingCosts + sharedMailingCosts + printCosts + surchargeCosts;
+            RaisePropertyChanged("selectedOrder");
+        }
         #endregion
 
         #region Company
@@ -401,6 +494,7 @@ namespace SchoolsMailing.ViewModels
                             dataOrders.Remove(originalDataOrder);
                             dataOrders.Add(selectedDataOrder);
                             NavigationService.GoBack();
+                            CalculateCosts();
                         }
                         else
                         {
@@ -425,9 +519,7 @@ namespace SchoolsMailing.ViewModels
                         NavigationService.GoBack();
                     });
                 }
-
                 return _cancelData;
-
             }
         }
 
@@ -443,9 +535,7 @@ namespace SchoolsMailing.ViewModels
                         Debug.WriteLine("Duplicate");
                     });
                 }
-
                 return _duplicateData;
-
             }
         }
 
@@ -462,12 +552,11 @@ namespace SchoolsMailing.ViewModels
                         {
                             deletedDataOrders.Add(rightClickedData);
                             dataOrders.Remove(rightClickedData);
+                            CalculateCosts();
                         }
                     });
                 }
-
                 return _deleteData;
-
             }
         }
 
@@ -522,9 +611,7 @@ namespace SchoolsMailing.ViewModels
                         Debug.WriteLine("text changed");
                     });
                 }
-
                 return _dataTextChanged;
-
             }
         }
         #endregion
@@ -570,6 +657,7 @@ namespace SchoolsMailing.ViewModels
                         emailOrders.Remove(originalEmailOrder);
                         emailOrders.Add(selectedEmailOrder);
                         NavigationService.GoBack();
+                        CalculateCosts();
                     });
                 }
                 return _saveEmail;
@@ -588,9 +676,7 @@ namespace SchoolsMailing.ViewModels
                         NavigationService.GoBack();
                     });
                 }
-
                 return _cancelEmail;
-
             }
         }
 
@@ -606,7 +692,6 @@ namespace SchoolsMailing.ViewModels
                         Debug.WriteLine("Duplicate");
                     });
                 }
-
                 return _duplicateEmail;
             }
         }
@@ -624,6 +709,7 @@ namespace SchoolsMailing.ViewModels
                         {
                             deletedEmailOrders.Add(rightClickedEmail);
                             emailOrders.Remove(rightClickedEmail);
+                            CalculateCosts();
                         }
                     });
                 }
@@ -933,6 +1019,7 @@ namespace SchoolsMailing.ViewModels
                         directMailingOrders.Remove(originalDirectMailingOrder);
                         directMailingOrders.Add(selectedDirectMailingOrder);
                         NavigationService.GoBack();
+                        CalculateCosts();
                     });
                 }
                 return _saveDirectMailing;
@@ -987,6 +1074,7 @@ namespace SchoolsMailing.ViewModels
                         {
                             deletedDirectMailingOrders.Add(rightClickedDirectMailing);
                             directMailingOrders.Remove(rightClickedDirectMailing);
+                            CalculateCosts();
                         }
                     });
                 }
@@ -1019,6 +1107,46 @@ namespace SchoolsMailing.ViewModels
                 rightClickedDirectMailing = (DirectMailing)directMailingDataContext; //Convert to class
             }
             catch (Exception x) { } //Catch null exception
+        }
+
+        private RelayCommand _validateDirectFulfilmentCost;
+        public RelayCommand validateDirectFulfilmentCost
+        {
+            get
+            {
+                if (_validateDirectFulfilmentCost == null)
+                {
+                    _validateDirectFulfilmentCost = new RelayCommand(() =>
+                    {
+                        if (rightClickedDirectMailing != null)
+                        {
+                            //TODO add direct mailing costs
+                        }
+                    });
+                }
+
+                return _validateDirectFulfilmentCost;
+            }
+        }
+
+        private RelayCommand _validateDirectPrintCost;
+        public RelayCommand validateDirectPrintCost
+        {
+            get
+            {
+                if (_validateDirectPrintCost == null)
+                {
+                    _validateDirectPrintCost = new RelayCommand(() =>
+                    {
+                        if (rightClickedDirectMailing != null)
+                        {
+                            //TODO add direct mailing costs
+                        }
+                    });
+                }
+
+                return _validateDirectPrintCost;
+            }
         }
         #endregion
 
@@ -1063,6 +1191,7 @@ namespace SchoolsMailing.ViewModels
                         printOrders.Remove(originalPrintOrder);
                         printOrders.Add(selectedPrintOrder);
                         NavigationService.GoBack();
+                        CalculateCosts();
                     });
                 }
                 return _savePrint;
@@ -1207,6 +1336,7 @@ namespace SchoolsMailing.ViewModels
                         schoolSendOrders.Remove(originalSchoolSendOrder);
                         schoolSendOrders.Add(selectedSchoolSendOrder);
                         NavigationService.GoBack();
+                        CalculateCosts();
                     });
                 }
                 return _saveSchoolSend;
@@ -1280,6 +1410,7 @@ namespace SchoolsMailing.ViewModels
                         {
                             deletedSchoolSendOrders.Add(rightClickedSchoolSend);
                             schoolSendOrders.Remove(rightClickedSchoolSend);
+                            CalculateCosts();
                         }
                     });
                 }
@@ -1392,6 +1523,7 @@ namespace SchoolsMailing.ViewModels
                         sharedMailingOrders.Remove(originalSharedMailingOrder);
                         sharedMailingOrders.Add(selectedSharedMailingOrder);
                         NavigationService.GoBack();
+                        CalculateCosts();
                     });
                 }
                 return _saveSharedMailing;
@@ -1446,6 +1578,7 @@ namespace SchoolsMailing.ViewModels
                         {
                             deletedSharedMailingOrders.Add(rightClickedSharedMailing);
                             sharedMailingOrders.Remove(rightClickedSharedMailing);
+                            CalculateCosts();
                         }
                     });
                 }
@@ -1522,6 +1655,7 @@ namespace SchoolsMailing.ViewModels
                         surchargeOrders.Remove(originalSurchargeOrder);
                         surchargeOrders.Add(selectedSurchargeOrder);
                         NavigationService.GoBack();
+                        CalculateCosts();
                     });
                 }
                 return _saveSurcharge;
@@ -1576,6 +1710,7 @@ namespace SchoolsMailing.ViewModels
                         {
                             deletedSurchargeOrders.Add(rightClickedSurcharge);
                             surchargeOrders.Remove(rightClickedSurcharge);
+                            CalculateCosts();
                         }
                     });
                 }

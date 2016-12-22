@@ -22,9 +22,9 @@ namespace SchoolsMailing.Models
         public double directFulfilmentCost { get; set; }
         public double directPrintCost { get; set; }
         public double directPostageCost { get; set; }
-        public double directTotal { get; set; }
         public long orderID { get; set; }
         public DateTime directCreated { get; set; }
         public DateTime directModified { get; set; }
+        public double directCost { get; set; }
     }
 }

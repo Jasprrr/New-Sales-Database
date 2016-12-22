@@ -91,25 +91,49 @@
                                    Width="200"/>
                         <TextBox Text="{Binding selectedDirectMailingOrder.directFulfilmentCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
-                                 Width="200"/>
+                                 Width="200">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="LostFocus">
+                                    <core:InvokeCommandAction Command="{Binding Path=validateDirectFulfilmentCost}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </TextBox>
                         <TextBlock Text="Print"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
                         <TextBox Text="{Binding selectedDirectMailingOrder.directPrintCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
-                                 Width="200"/>
+                                 Width="200">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="LostFocus">
+                                    <core:InvokeCommandAction Command="{Binding Path=validateDirectPrintCost}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </TextBox>
                         <TextBlock Text="Postage"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
                         <TextBox Text="{Binding selectedDirectMailingOrder.directPostageCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
-                                 Width="200"/>
+                                 Width="200">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="LostFocus">
+                                    <core:InvokeCommandAction Command="{Binding Path=validateDirectPostageCost}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </TextBox>
                         <TextBlock Text="Total"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text="{Binding selectedDirectMailingOrder.directTotal, Mode=TwoWay}"
+                        <TextBox Text="{Binding selectedDirectMailingOrder.directCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
-                                 Width="200"/>
+                                 Width="200">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="LostFocus">
+                                    <core:InvokeCommandAction Command="{Binding Path=validateDirectCost}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </TextBox>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
