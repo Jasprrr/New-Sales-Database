@@ -44,7 +44,7 @@
                                                 Date="{Binding selectedDataOrder.dataEnd, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                                 Style="{StaticResource inputCalendarDatePicker}"/>
                             <cntrl:InvalidFlag Visibility="{Binding isValidDataEnd, Converter={StaticResource InvalidTextBox}}" 
-                                               ToolTipService.ToolTip="Invalid Start Date"/>
+                                               ToolTipService.ToolTip="Invalid End Date"/>
                         </StackPanel>
                         
                     </StackPanel>
@@ -64,7 +64,7 @@
                                      AcceptsReturn="True" 
                                      TextWrapping="Wrap"/>
                             <cntrl:InvalidFlagLarge Visibility="{Binding isValidDataDetails, Converter={StaticResource InvalidTextBox}}" 
-                                               ToolTipService.ToolTip="Invalid Start Date"/>
+                                               ToolTipService.ToolTip="Invalid Data Details"/>
                         </StackPanel>
                     </StackPanel>
                 </DataTemplate>
@@ -79,7 +79,7 @@
                                     Style="{StaticResource inputTextBox}"
                                     Width="200"/>
                             <cntrl:InvalidFlag Visibility="{Binding isValidDataCost, Converter={StaticResource InvalidTextBox}}" 
-                                               ToolTipService.ToolTip="Invalid Start Date"/>
+                                               ToolTipService.ToolTip="Invalid Cost"/>
                         </StackPanel>
                     </StackPanel>
                 </DataTemplate>
@@ -107,7 +107,7 @@
                           Label="Cancel">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=cancelOrderPart}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cancelDataPart}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

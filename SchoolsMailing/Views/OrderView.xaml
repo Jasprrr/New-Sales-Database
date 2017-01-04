@@ -38,7 +38,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Pivot>
+        <Pivot SelectedIndex="{Binding pivotIndex}">
             <PivotItem>
                 <PivotItem.Header>
                     <TextBlock Text="Company"/>
@@ -130,54 +130,7 @@
                                      Width="200"/>
                         </StackPanel>
                     </Grid>
-                    
-                </PivotItem.Content>
-            </PivotItem>
-            <PivotItem>
-                <PivotItem.Header>
-                    <TextBlock Text="{Binding emailOrders.Count, Converter={StaticResource StringFormatter}, ConverterParameter='Emails [{0}]'}"/>
-                </PivotItem.Header>
-                <PivotItem.Content>
-                    <GridView ItemsSource="{Binding emailOrders, Mode=OneWay}"
-                              CanDragItems="True" 
-                              IsItemClickEnabled="True">
-                        <interactivity:Interaction.Behaviors>
-                            <core:EventTriggerBehavior EventName="ItemClick">
-                                <core:CallMethodAction MethodName="emailClicked" 
-                                                       TargetObject="{Binding Mode=OneWay}"/>
-                            </core:EventTriggerBehavior>
-                            <core:EventTriggerBehavior EventName="RightTapped">
-                                <core:CallMethodAction MethodName="emailRightClicked" 
-                                                       TargetObject="{Binding Mode=OneWay}"/>
-                            </core:EventTriggerBehavior>
-                        </interactivity:Interaction.Behaviors>
-                        <GridView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <ctrl:OrderEmailList RightTapped="OrderEmailList_RightTapped">
-                                        <FlyoutBase.AttachedFlyout>
-                                            <MenuFlyout Placement="Top">
-                                                <MenuFlyoutItem Text="Duplicate">
-                                                    <interactivity:Interaction.Behaviors>
-                                                        <core:EventTriggerBehavior EventName="Click">
-                                                            <core:InvokeCommandAction Command="{Binding OrderViewModel.duplicateEmail, Source={StaticResource VmLocator}}"/>
-                                                        </core:EventTriggerBehavior>
-                                                    </interactivity:Interaction.Behaviors>
-                                                </MenuFlyoutItem>
-                                                <MenuFlyoutItem Text="Delete">
-                                                    <interactivity:Interaction.Behaviors>
-                                                        <core:EventTriggerBehavior EventName="Click">
-                                                            <core:InvokeCommandAction Command="{Binding OrderViewModel.deleteEmail, Source={StaticResource VmLocator}}"/>
-                                                        </core:EventTriggerBehavior>
-                                                    </interactivity:Interaction.Behaviors>
-                                                </MenuFlyoutItem>
-                                            </MenuFlyout>
-                                        </FlyoutBase.AttachedFlyout>
-                                    </ctrl:OrderEmailList>
-                                </Grid>
-                            </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>
+
                 </PivotItem.Content>
             </PivotItem>
             <PivotItem>
@@ -220,6 +173,53 @@
                                         </MenuFlyout>
                                     </FlyoutBase.AttachedFlyout>
                                 </ctrl:OrderDataList>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </PivotItem.Content>
+            </PivotItem>
+            <PivotItem>
+                <PivotItem.Header>
+                    <TextBlock Text="{Binding emailOrders.Count, Converter={StaticResource StringFormatter}, ConverterParameter='Emails [{0}]'}"/>
+                </PivotItem.Header>
+                <PivotItem.Content>
+                    <GridView ItemsSource="{Binding emailOrders, Mode=OneWay}"
+                              CanDragItems="True" 
+                              IsItemClickEnabled="True">
+                        <interactivity:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="ItemClick">
+                                <core:CallMethodAction MethodName="emailClicked" 
+                                                       TargetObject="{Binding Mode=OneWay}"/>
+                            </core:EventTriggerBehavior>
+                            <core:EventTriggerBehavior EventName="RightTapped">
+                                <core:CallMethodAction MethodName="emailRightClicked" 
+                                                       TargetObject="{Binding Mode=OneWay}"/>
+                            </core:EventTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <ctrl:OrderEmailList RightTapped="OrderEmailList_RightTapped">
+                                        <FlyoutBase.AttachedFlyout>
+                                            <MenuFlyout Placement="Bottom">
+                                                <MenuFlyoutItem Text="Duplicate">
+                                                    <interactivity:Interaction.Behaviors>
+                                                        <core:EventTriggerBehavior EventName="Click">
+                                                            <core:InvokeCommandAction Command="{Binding OrderViewModel.duplicateEmail, Source={StaticResource VmLocator}}"/>
+                                                        </core:EventTriggerBehavior>
+                                                    </interactivity:Interaction.Behaviors>
+                                                </MenuFlyoutItem>
+                                                <MenuFlyoutItem Text="Delete">
+                                                    <interactivity:Interaction.Behaviors>
+                                                        <core:EventTriggerBehavior EventName="Click">
+                                                            <core:InvokeCommandAction Command="{Binding OrderViewModel.deleteEmail, Source={StaticResource VmLocator}}"/>
+                                                        </core:EventTriggerBehavior>
+                                                    </interactivity:Interaction.Behaviors>
+                                                </MenuFlyoutItem>
+                                            </MenuFlyout>
+                                        </FlyoutBase.AttachedFlyout>
+                                    </ctrl:OrderEmailList>
+                                </Grid>
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
@@ -471,20 +471,6 @@
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="Direct Mailing">
-                            <interactivity:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="Click">
-                                    <core:InvokeCommandAction Command="{Binding Path=newDirectMailing}" />
-                                </core:EventTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="Print">
-                            <interactivity:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="Click">
-                                    <core:InvokeCommandAction Command="{Binding Path=newPrint}" />
-                                </core:EventTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-                        </MenuFlyoutItem>
                         <MenuFlyoutItem Text="SchoolSend">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Click">
@@ -492,10 +478,24 @@
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Direct Mailing">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Click">
+                                    <core:InvokeCommandAction Command="{Binding Path=newDirectMailing}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </MenuFlyoutItem>
                         <MenuFlyoutItem Text="Shared Mailing">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Click">
                                     <core:InvokeCommandAction Command="{Binding Path=newSharedMailing}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Print">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Click">
+                                    <core:InvokeCommandAction Command="{Binding Path=newPrint}" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </MenuFlyoutItem>

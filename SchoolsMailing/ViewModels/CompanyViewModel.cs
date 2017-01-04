@@ -74,14 +74,6 @@ namespace SchoolsMailing.ViewModels
         }
 
         #region Data Lists
-
-        private ObservableCollection<CompanyDataOrder> _companyDataOrder;
-        public ObservableCollection<CompanyDataOrder> companyDataOrder
-        {
-            get { return _companyDataOrder; }
-            set { if(_companyDataOrder != value) { _companyDataOrder = value; RaisePropertyChanged("companyDataOrder"); } }
-        }
-
         private ObservableCollection<CompanyHistory> _selectedCompanyHistory;
         public ObservableCollection<CompanyHistory> selectedCompanyHistory
         {

@@ -1,9 +1,5 @@
 ﻿using SQLite.Net.Attributes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SchoolsMailing.Models
 {
@@ -11,6 +7,7 @@ namespace SchoolsMailing.Models
     {
         [PrimaryKey, AutoIncrement]
         public long ID { get; set; }
+        public long orderID { get; set; }
         public string directDeliveryCode { get; set; }
         public DateTime directDataDate { get; set; }
         public DateTime directInsertDate { get; set; }
@@ -22,7 +19,6 @@ namespace SchoolsMailing.Models
         public double directFulfilmentCost { get; set; }
         public double directPrintCost { get; set; }
         public double directPostageCost { get; set; }
-        public long orderID { get; set; }
         public DateTime directCreated { get; set; }
         public DateTime directModified { get; set; }
         public double directCost { get; set; }

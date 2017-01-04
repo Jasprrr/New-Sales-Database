@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SQLite.Net.Attributes;
+using System;
 
 namespace SchoolsMailing.Models
 {
     public class Surcharge
     {
+        [PrimaryKey, AutoIncrement]
         public long ID { get; set; }
         public long orderID { get; set; }
         public DateTime surchargeDate { get; set; }

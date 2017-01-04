@@ -42,7 +42,10 @@
                         <StackPanel Orientation="Horizontal">
                             <TextBox Text="{Binding selectedSurchargeOrder.surchargeDetails, Mode=TwoWay}"
                                      Style="{StaticResource inputLargeTextBox}"
-                                     Width="400"/>
+                                     Width="400" 
+                                     AcceptsReturn="True" 
+                                     TextWrapping="Wrap" 
+                                     ScrollViewer.VerticalScrollBarVisibility="Visible"/>
                             <cntrl:InvalidFlagLarge Visibility="{Binding isValidSurchargeDetails, Converter={StaticResource InvalidTextBox}}" 
                                                     ToolTipService.ToolTip="Invalid Details"/>
                         </StackPanel>
@@ -75,7 +78,7 @@
                           Label="Cancel">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=cancelOrderPart}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cancelSurchargePart}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

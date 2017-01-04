@@ -31,7 +31,13 @@
                             <CalendarDatePicker Width="120" 
                                                 MinWidth="120"
                                                 Date="{Binding selectedDirectMailingOrder.directDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
-                                                Style="{StaticResource inputCalendarDatePicker}"/>
+                                                Style="{StaticResource inputCalendarDatePicker}">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="DateChanged">
+                                        <core:InvokeCommandAction Command="{Binding Path=setDirectMailingDate}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </CalendarDatePicker>
                             <cntrl:InvalidFlag Visibility="{Binding isValidDirectMailingDate, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Send Date"/>
                         </StackPanel>
@@ -194,7 +200,7 @@
                           Label="Cancel">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=cancelOrderPart}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cancelDirectMailingPart}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

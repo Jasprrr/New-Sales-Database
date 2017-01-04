@@ -15,6 +15,7 @@ using SchoolsMailing.DAL;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using System.Text.RegularExpressions;
+using SchoolsMailing.Controls;
 
 namespace SchoolsMailing.ViewModels
 {
@@ -33,13 +34,13 @@ namespace SchoolsMailing.ViewModels
                 if (obj.Content != 0) //Get order
                 {
                     selectedOrder = DataAccessLayer.GetOrder(obj.Content);
-                    emailOrders = DataAccessLayer.GetAllEmails(obj.Content);
-                    dataOrders = DataAccessLayer.GetAllData(obj.Content);
-                    schoolSendOrders = DataAccessLayer.GetAllSchoolSends(obj.Content);
-                    sharedMailingOrders = DataAccessLayer.GetAllSharedMailings(obj.Content);
-                    directMailingOrders = DataAccessLayer.GetAllDirectMailings(obj.Content);
-                    printOrders = DataAccessLayer.GetAllPrint(obj.Content);
-                    surchargeOrders = DataAccessLayer.GetAllSurcharges(obj.Content);
+                    emailOrders = DataAccessLayer.GetAllEmailsByOrderID(obj.Content);
+                    dataOrders = DataAccessLayer.GetAllDataByOrderID(obj.Content);
+                    schoolSendOrders = DataAccessLayer.GetAllSchoolSendsByOrderID(obj.Content);
+                    sharedMailingOrders = DataAccessLayer.GetAllSharedMailingsByOrderID(obj.Content);
+                    directMailingOrders = DataAccessLayer.GetAllDirectMailingsByOrderID(obj.Content);
+                    printOrders = DataAccessLayer.GetAllPrintByOrderID(obj.Content);
+                    surchargeOrders = DataAccessLayer.GetAllSurchargesByOrderID(obj.Content);
 
                     selectedCompany = DataAccessLayer.GetCompanyById(selectedOrder.companyID);
                     selectedContact = DataAccessLayer.GetContactById(selectedOrder.contactID);
@@ -67,29 +68,18 @@ namespace SchoolsMailing.ViewModels
                 companies = DataAccessLayer.GetAllCompanies2();
                 schoolsendPacks = DataAccessLayer.GetAllSchoolSendPacks();
                 sharedPacks = DataAccessLayer.GetAllSharedPacks();
+                pivotIndex = 0;
             }
         }
-
-        private RelayCommand _cancelOrderPart;
-        public RelayCommand cancelOrderPart
+        
+        private int _pivotIndex;
+        public int pivotIndex
         {
-            get { if (_cancelOrderPart == null) { _cancelOrderPart = new RelayCommand(() => { NavigationService.GoBack(); }); } return _cancelOrderPart; }
+            get { return _pivotIndex; }
+            set { if (_pivotIndex != value) { _pivotIndex = value; RaisePropertyChanged("pivotIndex"); } }
         }
 
         #region Navigate to new orders
-        private RelayCommand _newEmail;
-        public RelayCommand newEmail
-        {
-            get { if (_newEmail == null) {
-                    _newEmail = new RelayCommand(() => {
-                        NavigationService.Navigate(typeof(EmailView));
-                        selectedEmailOrder = new Email() { emailDate = DateTime.Now };
-                        originalEmailOrder = new Email();
-                    });
-                } return _newEmail;
-            }
-        }
-
         private RelayCommand _newData;
         public RelayCommand newData
         {
@@ -103,13 +93,30 @@ namespace SchoolsMailing.ViewModels
             }
         }
 
+        private RelayCommand _newEmail;
+        public RelayCommand newEmail
+        {
+            get
+            {
+                if (_newEmail == null)
+                {
+                    _newEmail = new RelayCommand(() => {
+                        NavigationService.Navigate(typeof(EmailView));
+                        selectedEmailOrder = new Email() { emailDate = DateTime.Now };
+                        originalEmailOrder = new Email();
+                    });
+                }
+                return _newEmail;
+            }
+        }
+        
         private RelayCommand _newSchoolSend;
         public RelayCommand newSchoolSend
         {
             get { if (_newSchoolSend == null) {
                     _newSchoolSend = new RelayCommand(() => {
                         NavigationService.Navigate(typeof(SchoolSendView));
-                        selectedSchoolSendOrder = new SchoolSend() { schoolsendStart = DateTime.Now, schoolsendEnd = DateTime.Now.AddDays(365) };
+                        selectedSchoolSendOrder = new SchoolSend() { schoolsendStart = DateTime.Now, schoolsendEnd = DateTime.Now.AddYears(1) };
                         originalSchoolSendOrder = new SchoolSend();
                     });
                 } return _newSchoolSend;
@@ -142,6 +149,23 @@ namespace SchoolsMailing.ViewModels
             }
         }
 
+        private RelayCommand _newPrint;
+        public RelayCommand newPrint
+        {
+            get
+            {
+                if (_newPrint == null)
+                {
+                    _newPrint = new RelayCommand(() => {
+                        NavigationService.Navigate(typeof(PrintView));
+                        selectedPrintOrder = new Print() { printDate = DateTime.Now };
+                        originalPrintOrder = new Print();
+                    });
+                }
+                return _newPrint;
+            }
+        }
+
         private RelayCommand _newSurcharge;
         public RelayCommand newSurcharge
         {
@@ -155,16 +179,19 @@ namespace SchoolsMailing.ViewModels
             }
         }
 
-        private RelayCommand _newPrint;
-        public RelayCommand newPrint
+        private RelayCommand _newSharedPack;
+        public RelayCommand newSharedPack
         {
-            get { if (_newPrint == null) {
-                    _newPrint = new RelayCommand(() => {
-                        NavigationService.Navigate(typeof(PrintView));
-                        selectedPrintOrder = new Print() { printDate = DateTime.Now };
-                        originalPrintOrder = new Print();
+            get
+            {
+                if (_newSharedPack == null)
+                {
+                    _newSharedPack = new RelayCommand(() => {
+                        NavigationService.Navigate(typeof(SharedPackageView));
+                        selectedSharedPack = new SharedPack() { packArtworkDate = DateTime.Now, packDate = DateTime.Now, packDeliveryDate = DateTime.Now};
                     });
-                } return _newPrint;
+                }
+                return _newSharedPack;
             }
         }
         #endregion
@@ -196,14 +223,14 @@ namespace SchoolsMailing.ViewModels
                         DataAccessLayer.SaveOrder(selectedOrder);
                         long orderID = selectedOrder.ID;
                         //Email
-                        foreach (Email e in emailOrders) //Add emails
+                        foreach (Email e in emailOrders) //Loop through emails
                         {
                             e.orderID = orderID;
-                            DataAccessLayer.SaveEmail(e);
+                            DataAccessLayer.SaveEmail(e); //Add emails
                         }
-                        foreach (Email e in deletedEmailOrders)
+                        foreach (Email e in deletedEmailOrders) //Loop through emails
                         {
-                            DataAccessLayer.DeleteEmail(e);
+                            DataAccessLayer.DeleteEmail(e); //Delete emails
                         }
                         //Data
                         foreach (Data d in dataOrders)
@@ -271,18 +298,18 @@ namespace SchoolsMailing.ViewModels
             }
         }
 
-        private double _emailCosts = 0;
-        public double emailCosts
-        {
-            get { return _emailCosts; }
-            set { if (_emailCosts != value) { _emailCosts = value; RaisePropertyChanged("emailCost"); } }
-        }
-
         private double _dataCosts = 0;
         public double dataCosts
         {
             get { return _dataCosts; }
             set { if (_dataCosts != value) { _dataCosts = value; RaisePropertyChanged("dataCosts"); } }
+        }
+
+        private double _emailCosts = 0;
+        public double emailCosts
+        {
+            get { return _emailCosts; }
+            set { if (_emailCosts != value) { _emailCosts = value; RaisePropertyChanged("emailCost"); } }
         }
 
         private double _schoolSendCosts = 0;
@@ -496,19 +523,6 @@ namespace SchoolsMailing.ViewModels
             get { return _isValidDataCost; }
             set { if (_isValidDataCost != value) { _isValidDataCost = !_isValidDataCost; RaisePropertyChanged("isValidDataCost"); } }
         }
-
-        public void dataClicked(object sender, object parameter)
-        {
-            //Get selected item
-            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
-            //Get selected data from item
-            Data item = arg.ClickedItem as Data;
-            //Set selected order
-            originalDataOrder = dataOrders.Where(x => x == item).First();
-            selectedDataOrder = dataOrders.Where(x => x == item).First();
-            //Navigate to order
-            NavigationService.Navigate(typeof(DataView));
-        }
         #endregion
 
         #region Email Order
@@ -567,19 +581,7 @@ namespace SchoolsMailing.ViewModels
             get { return _isValidEmailCost; }
             set { if (_isValidEmailCost != value) { _isValidEmailCost = !_isValidEmailCost; RaisePropertyChanged("isValidEmailCost"); } }
         }
-
-        public void emailClicked(object sender, object parameter)
-        {
-            //Get selected item
-            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
-            //Get selected email from item
-            Email item = arg.ClickedItem as Email;
-            //Set selected order
-            originalEmailOrder = emailOrders.Where(x => x == item).First();
-            selectedEmailOrder = emailOrders.Where(x => x == item).First();
-            ////Navigate to order
-            NavigationService.Navigate(typeof(EmailView));
-        }
+        public DateTime duplicateEmailDate;
         #endregion
 
         #region Direct Mailing Order
@@ -663,17 +665,24 @@ namespace SchoolsMailing.ViewModels
             set { if (_isValidDirectMailingInsertDate != value) { _isValidDirectMailingInsertDate = !_isValidDirectMailingInsertDate; RaisePropertyChanged("isValidDirectMailingInsertDate"); } }
         }
 
-        public void directMailingClicked(object sender, object parameter)
+        private RelayCommand _setDirectMailingDate;
+        public RelayCommand setDirectMailingDate
         {
-            //Get selected item
-            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
-            //Get selected directMailing from item
-            DirectMailing item = arg.ClickedItem as DirectMailing;
-            //Set selected order
-            originalDirectMailingOrder = directMailingOrders.Where(x => x == item).First();
-            selectedDirectMailingOrder = directMailingOrders.Where(x => x == item).First();
-            //Navigate to order
-            NavigationService.Navigate(typeof(DirectMailingView));
+            get
+            {
+                if (_setDirectMailingDate == null)
+                {
+                    _setDirectMailingDate = new RelayCommand(() => {
+                        if (setDirectMailingDate != null)
+                        {
+                            selectedDirectMailingOrder.directArtworkDate = selectedDirectMailingOrder.directDate.AddDays(-14);
+                            selectedDirectMailingOrder.directInsertDate = selectedDirectMailingOrder.directDate.AddDays(-5);
+                            RaisePropertyChanged("selectedDirectMailingOrder");
+                        }
+                    });
+                }
+                return _setDirectMailingDate;
+            }
         }
         #endregion
 
@@ -732,19 +741,6 @@ namespace SchoolsMailing.ViewModels
         {
             get { return _isValidPrintDate; }
             set { if (_isValidPrintDate != value) { _isValidPrintDate = !_isValidPrintDate; RaisePropertyChanged("isValidPrintDate"); } }
-        }
-
-        public void printClicked(object sender, object parameter)
-        {
-            //Get selected item
-            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
-            //Get selected print from item
-            Print item = arg.ClickedItem as Print;
-            //Set selected order
-            originalPrintOrder = printOrders.Where(x => x == item).First();
-            selectedPrintOrder = printOrders.Where(x => x == item).First();
-            //Navigate to order
-            NavigationService.Navigate(typeof(PrintView));
         }
         #endregion
 
@@ -811,6 +807,24 @@ namespace SchoolsMailing.ViewModels
             set { if (_isValidSchoolSendCost != value) { _isValidSchoolSendCost = !_isValidSchoolSendCost; RaisePropertyChanged("isValidSchoolSendCost"); } }
         }
 
+        private RelayCommand _setSchoolSendDate;
+        public RelayCommand setSchoolSendDate
+        {
+            get
+            {
+                if (_setSchoolSendDate == null)
+                {
+                    _setSchoolSendDate = new RelayCommand(() => {
+                        if (setSchoolSendDate != null)
+                        {
+                            selectedSchoolSendOrder.schoolsendEnd = selectedSchoolSendOrder.schoolsendStart.AddYears(1);
+                            RaisePropertyChanged("selectedSchoolSendOrder");
+                        }
+                    });
+                }
+                return _setSchoolSendDate;
+            }
+        }
         private RelayCommand _setCredits;
         public RelayCommand setCredits
         {
@@ -829,19 +843,6 @@ namespace SchoolsMailing.ViewModels
                 return _setCredits;
             }
         }
-
-        public void schoolSendClicked(object sender, object parameter)
-        {
-            //Get selected item
-            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
-            //Get selected SchoolSend from item
-            SchoolSend item = arg.ClickedItem as SchoolSend;
-            //Set selected order
-            originalSchoolSendOrder = schoolSendOrders.Where(x => x == item).First();
-            selectedSchoolSendOrder = schoolSendOrders.Where(x => x == item).First();
-            //Navigate to order
-            NavigationService.Navigate(typeof(SchoolSendView));
-        }
         #endregion
 
         #region Shared Mailing Order
@@ -856,18 +857,6 @@ namespace SchoolsMailing.ViewModels
         {
             get { return _deletedSharedMailingOrders; }
             set { if (_deletedSharedMailingOrders != value) { _deletedSharedMailingOrders = value; RaisePropertyChanged("deletedSharedMailingOrders"); } }
-        }
-        private ObservableCollection<SharedPack> _sharedPacks;
-        public ObservableCollection<SharedPack> sharedPacks
-        {
-            get { return _sharedPacks; }
-            set { if (_sharedPacks != value) { _sharedPacks = value; RaisePropertyChanged("sharedPacks"); } }
-        }
-        private SharedPack _selectedSharedPack;
-        public SharedPack selectedSharedPack
-        {
-            get { return _selectedSharedPack; }
-            set { if (_selectedSharedPack != value) { _selectedSharedPack = value; RaisePropertyChanged("selectedSharedPack"); } }
         }
         private SharedMailing _selectedSharedMailingOrder;
         public SharedMailing selectedSharedMailingOrder
@@ -934,19 +923,6 @@ namespace SchoolsMailing.ViewModels
                 return _setPack;
             }
         }
-
-        public void sharedMailingClicked(object sender, object parameter)
-        {
-            //Get selected item
-            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
-            //Get selected SharedMailing from item
-            SharedMailing item = arg.ClickedItem as SharedMailing;
-            //Set selected order
-            originalSharedMailingOrder = sharedMailingOrders.Where(x => x == item).First();
-            selectedSharedMailingOrder = sharedMailingOrders.Where(x => x == item).First();
-            //Navigate to order
-            NavigationService.Navigate(typeof(SharedMailingView));
-        }
         #endregion
 
         #region Surcharge Order
@@ -993,18 +969,63 @@ namespace SchoolsMailing.ViewModels
             get { return _isValidSurchargeCost; }
             set { if (_isValidSurchargeCost != value) { _isValidSurchargeCost = !_isValidSurchargeCost; RaisePropertyChanged("isValidSurchargeCost"); } }
         }
+        #endregion
 
-        public void surchargeClicked(object sender, object parameter)
+        #region School Send Package
+        private ObservableCollection<SharedPack> _sharedPacks;
+        public ObservableCollection<SharedPack> sharedPacks
         {
-            //Get selected item
-            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
-            //Get selected Surcharge from item
-            Surcharge item = arg.ClickedItem as Surcharge;
-            //Set selected order
-            originalSurchargeOrder = surchargeOrders.Where(x => x == item).First();
-            selectedSurchargeOrder = surchargeOrders.Where(x => x == item).First();
-            //Navigate to order
-            NavigationService.Navigate(typeof(SurchargeView));
+            get { return _sharedPacks; }
+            set { if (_sharedPacks != value) { _sharedPacks = value; RaisePropertyChanged("sharedPacks"); } }
+        }
+        private SharedPack _selectedSharedPack;
+        public SharedPack selectedSharedPack
+        {
+            get { return _selectedSharedPack; }
+            set { if (_selectedSharedPack != value) { _selectedSharedPack = value; RaisePropertyChanged("selectedSharedPack"); } }
+        }
+
+        private bool _isValidPackageName = false;
+        public bool isValidPackageName
+        {
+            get { return _isValidPackageName; }
+            set { if (_isValidPackageName != value) { _isValidPackageName = !_isValidPackageName; RaisePropertyChanged("isValidPackageName"); } }
+        }
+        private bool _isValidPackageTo = false;
+        public bool isValidPackageTo
+        {
+            get { return _isValidPackageTo; }
+            set { if (_isValidPackageTo != value) { _isValidPackageTo = !_isValidPackageTo; RaisePropertyChanged("isValidPackageTo"); } }
+        }
+        private bool _isValidPackageDate = false;
+        public bool isValidPackageDate
+        {
+            get { return _isValidPackageDate; }
+            set { if (_isValidPackageDate != value) { _isValidPackageDate = !_isValidPackageDate; RaisePropertyChanged("isValidPackageDate"); } }
+        }
+        private bool _isValidPackageArtworkDate = false;
+        public bool isValidPackageArtworkDate
+        {
+            get { return _isValidPackageArtworkDate; }
+            set { if (_isValidPackageArtworkDate != value) { _isValidPackageArtworkDate = !_isValidPackageArtworkDate; RaisePropertyChanged("isValidPackageArtworkDate"); } }
+        }
+        private bool _isValidPackageDeliveryDate = false;
+        public bool isValidPackageDeliveryDate
+        {
+            get { return _isValidPackageDeliveryDate; }
+            set { if (_isValidPackageDeliveryDate != value) { _isValidPackageDeliveryDate = !_isValidPackageDeliveryDate; RaisePropertyChanged("isValidPackageDeliveryDate"); } }
+        }
+        private bool _isValidPackageCost = false;
+        public bool isValidPackageCost
+        {
+            get { return _isValidPackageCost; }
+            set { if (_isValidPackageCost != value) { _isValidPackageCost = !_isValidPackageCost; RaisePropertyChanged("isValidPackageCost"); } }
+        }
+        private bool _isValidPackageMaxInserts = false;
+        public bool isValidPackageMaxInserts
+        {
+            get { return _isValidPackageMaxInserts; }
+            set { if (_isValidPackageMaxInserts != value) { _isValidPackageMaxInserts = !_isValidPackageMaxInserts; RaisePropertyChanged("isValidPackageMaxInserts"); } }
         }
         #endregion
 
@@ -1019,6 +1040,7 @@ namespace SchoolsMailing.ViewModels
                         dataOrders.Remove(originalDataOrder);
                         dataOrders.Add(selectedDataOrder);
                         NavigationService.GoBack();
+                        pivotIndex = 1;
                         CalculateCosts();
                     }
                     break;
@@ -1028,6 +1050,7 @@ namespace SchoolsMailing.ViewModels
                     {
                         emailOrders.Remove(originalEmailOrder);
                         emailOrders.Add(selectedEmailOrder);
+                        pivotIndex = 2;
                         NavigationService.GoBack();
                         CalculateCosts();
                     }
@@ -1039,6 +1062,7 @@ namespace SchoolsMailing.ViewModels
                         schoolSendOrders.Remove(originalSchoolSendOrder);
                         schoolSendOrders.Add(selectedSchoolSendOrder);
                         NavigationService.GoBack();
+                        pivotIndex = 3;
                         CalculateCosts();
                     }
                     break;
@@ -1049,6 +1073,7 @@ namespace SchoolsMailing.ViewModels
                         directMailingOrders.Remove(originalDirectMailingOrder);
                         directMailingOrders.Add(selectedDirectMailingOrder);
                         NavigationService.GoBack();
+                        pivotIndex = 4;
                         CalculateCosts();
                     }
                     break;
@@ -1059,6 +1084,7 @@ namespace SchoolsMailing.ViewModels
                         sharedMailingOrders.Remove(originalSharedMailingOrder);
                         sharedMailingOrders.Add(selectedSharedMailingOrder);
                         NavigationService.GoBack();
+                        pivotIndex = 5;
                         CalculateCosts();
                     }
                     break;
@@ -1069,6 +1095,7 @@ namespace SchoolsMailing.ViewModels
                         printOrders.Remove(originalPrintOrder);
                         printOrders.Add(selectedPrintOrder);
                         NavigationService.GoBack();
+                        pivotIndex = 6;
                         CalculateCosts();
                     }
                     break;
@@ -1079,7 +1106,17 @@ namespace SchoolsMailing.ViewModels
                         surchargeOrders.Remove(originalSurchargeOrder);
                         surchargeOrders.Add(selectedSurchargeOrder);
                         NavigationService.GoBack();
+                        pivotIndex = 7;
                         CalculateCosts();
+                    }
+                    break;
+                case "SharedPack":
+                    if (validateSharedPackOrder(selectedSharedPack))
+                    {
+                        DataAccessLayer.SaveSharedPack(selectedSharedPack);
+                        sharedPacks = DataAccessLayer.GetAllSharedPacks();
+                        
+                        NavigationService.GoBack();
                     }
                     break;
             }
@@ -1126,6 +1163,12 @@ namespace SchoolsMailing.ViewModels
         {
             get { if (_saveSurcharge == null) { _saveSurcharge = new RelayCommand(() => { SaveOrderPart("Surcharge"); }); } return _saveSurcharge; }
         }
+
+        private RelayCommand _saveSharedPack;
+        public RelayCommand saveSharedPack
+        {
+            get { if (_saveSharedPack == null) { _saveSharedPack = new RelayCommand(() => { SaveOrderPart("SharedPack"); }); } return _saveSharedPack; }
+        }
         #endregion
 
         #region Duplicate
@@ -1136,11 +1179,16 @@ namespace SchoolsMailing.ViewModels
         }
         public void duplicateDataOrder(Data data)
         {
-            Data newData = new Data();
-            newData = dataOrders.Where(x => x == data).First();
-            newData.dataCreated = DateTime.Now;
-            newData.dataModified = DateTime.Now;
-            dataOrders.Add(newData);
+            Data dupData = new Data()
+            {
+                dataStart = data.dataStart,
+                dataEnd = data.dataEnd,
+                dataDetails = data.dataDetails,
+                dataCost = data.dataCost,
+                dataCreated = DateTime.Now,
+                dataModified = DateTime.Now
+            };
+            dataOrders.Add(dupData);
         }
 
         private RelayCommand _duplicateEmail;
@@ -1148,11 +1196,29 @@ namespace SchoolsMailing.ViewModels
         {
             get { if (_duplicateEmail == null) { _duplicateEmail = new RelayCommand(() => { duplicateEmailOrder(rightClickedEmail); }); } return _duplicateEmail; }
         }
-        public void duplicateEmailOrder(Email email)
+        public async void duplicateEmailOrder(Email email)
         {
-            email.emailCreated = DateTime.Now;
-            email.emailModified = DateTime.Now;
-            emailOrders.Add(email);
+            var newDuplicateDialog = new DuplicateDialog(); //Create new input dialog
+            var result = await newDuplicateDialog.ShowAsync(); //Show dialog & await result
+            if (result == ContentDialogResult.Primary) //If primary option chosen
+            {
+                var item = newDuplicateDialog.Content; //Get user input
+                String dateString = item.ToString(); //Convert to string
+                duplicateEmailDate = Convert.ToDateTime(dateString); //Convert to DateTime
+            }
+            Email dupEmail = new Email()
+            {
+                emailDate = duplicateEmailDate,
+                emailAdminCost = email.emailAdminCost,
+                emailCost = email.emailCost,
+                emailDetails = email.emailDetails,
+                emailDirectCost = email.emailDirectCost,
+                emailSetUp = email.emailSetUp,
+                emailSubject = email.emailSubject,
+                emailCreated = DateTime.Now,
+                emailModified = DateTime.Now
+            };
+            emailOrders.Add(dupEmail);
         }
 
         private RelayCommand _duplicateSchoolSend;
@@ -1162,9 +1228,17 @@ namespace SchoolsMailing.ViewModels
         }
         public void duplicateSchoolSendOrder(SchoolSend schoolSend)
         {
-            schoolSend.schoolsendCreated = DateTime.Now;
-            schoolSend.schoolsendModified = DateTime.Now;
-            schoolSendOrders.Add(schoolSend);
+            SchoolSend dupSchoolSend = new SchoolSend()
+            {
+                schoolsendCost = schoolSend.schoolsendCost,
+                schoolsendCredits = schoolSend.schoolsendCredits,
+                schoolsendEnd = schoolSend.schoolsendEnd,
+                schoolsendPackage = schoolSend.schoolsendPackage,
+                schoolsendStart = schoolSend.schoolsendStart,
+                schoolsendCreated = DateTime.Now,
+                schoolsendModified = DateTime.Now
+            };
+            schoolSendOrders.Add(dupSchoolSend);
         }
 
         private RelayCommand _duplicateDirectMailing;
@@ -1174,9 +1248,24 @@ namespace SchoolsMailing.ViewModels
         }
         public void duplicateDirectMailingOrder(DirectMailing directMailing)
         {
-            directMailing.directCreated = DateTime.Now;
-            directMailing.directModified = DateTime.Now;
-            directMailingOrders.Add(directMailing);
+            DirectMailing dupDirectMailing = new DirectMailing()
+            {
+                directArtworkDate = directMailing.directArtworkDate,
+                directCost = directMailing.directCost,
+                directCreated = DateTime.Now,
+                directDataDate = directMailing.directDataDate,
+                directDate = directMailing.directDate,
+                directDeliveryCode = directMailing.directDeliveryCode,
+                directDetails = directMailing.directDetails,
+                directFulfilmentCost = directMailing.directFulfilmentCost,
+                directInsertDate = directMailing.directInsertDate,
+                directLeafletCode = directMailing.directLeafletCode,
+                directMailingTo = directMailing.directMailingTo,
+                directModified = DateTime.Now,
+                directPostageCost = directMailing.directPostageCost,
+                directPrintCost = directMailing.directPrintCost
+            };
+            directMailingOrders.Add(dupDirectMailing);
         }
 
         private RelayCommand _duplicateSharedMailing;
@@ -1186,11 +1275,24 @@ namespace SchoolsMailing.ViewModels
         }
         public void duplicateSharedMailingOrder(SharedMailing sharedMailing)
         {
-            SharedMailing newShared = new SharedMailing();
-            newShared = sharedMailing;
-            sharedMailing.sharedCreated = DateTime.Now;
-            sharedMailing.sharedModified = DateTime.Now;
-            sharedMailingOrders.Add(newShared);
+            SharedMailing dupSharedMailing = new SharedMailing()
+            {
+                sharedArtworkDate = sharedMailing.sharedArtworkDate,
+                sharedCost = sharedMailing.sharedCost,
+                sharedCreated = DateTime.Now,
+                sharedDate = sharedMailing.sharedDate,
+                sharedDeliveryCode = sharedMailing.sharedDeliveryCode,
+                sharedDeliveryDate = sharedMailing.sharedDeliveryDate,
+                sharedFAO = sharedMailing.sharedFAO,
+                sharedLeafletName = sharedMailing.sharedLeafletName,
+                sharedLeafletSize = sharedMailing.sharedLeafletSize,
+                sharedLeafletWeight = sharedMailing.sharedLeafletWeight,
+                sharedMailingTo = sharedMailing.sharedMailingTo,
+                sharedModified = DateTime.Now,
+                sharedNumberOfLeaflets = sharedMailing.sharedNumberOfLeaflets,
+                sharedPackage = sharedMailing.sharedPackage
+            };
+            sharedMailingOrders.Add(dupSharedMailing);
         }
 
         private RelayCommand _duplicatePrint;
@@ -1200,9 +1302,17 @@ namespace SchoolsMailing.ViewModels
         }
         public void duplicatePrintOrder(Print print)
         {
-            print.printCreated = DateTime.Now;
-            print.printModified = DateTime.Now;
-            printOrders.Add(print);
+            Print dupPrint = new Print()
+            {
+                printCharge = print.printCharge,
+                printCost = print.printCost,
+                printCreated = DateTime.Now,
+                printDate = print.printDate,
+                printDetails = print.printDetails,
+                printModified = DateTime.Now,
+                printPrinter = print.printPrinter
+            };
+            printOrders.Add(dupPrint);
         }
 
         private RelayCommand _duplicateSurcharge;
@@ -1212,8 +1322,14 @@ namespace SchoolsMailing.ViewModels
         }
         public void duplicateSurchargeOrder(Surcharge surcharge)
         {
-            surcharge.surchargeCreated = DateTime.Now;
-            surcharge.surchargeModified = DateTime.Now;
+            Surcharge dupSurcharge = new Surcharge()
+            {
+                surchargeCost = surcharge.surchargeCost,
+                surchargeCreated = DateTime.Now,
+                surchargeDate = surcharge.surchargeDate,
+                surchargeDetails = surcharge.surchargeDetails,
+                surchargeModified = DateTime.Now
+            };
             surchargeOrders.Add(surcharge);
         }
         #endregion
@@ -1553,6 +1669,47 @@ namespace SchoolsMailing.ViewModels
             }
             else { return true; }
         }
+
+        private RelayCommand _validateSharedPack;
+        public RelayCommand validateSharedPack
+        {
+            get { if (_validateSharedPack == null) { _validateSharedPack = new RelayCommand(() => { if (_validateSharedPack != null) { validateSharedPackOrder(selectedSharedPack); } }); } return _validateSharedPack; }
+        }
+        public bool validateSharedPackOrder(SharedPack pack)
+        {
+            if(pack.packArtworkDate == null || pack.packArtworkDate > pack.packDate) { isValidPackageArtworkDate = true; }
+            else { isValidPackageArtworkDate = false; }
+
+            if(pack.packCost < 0) { isValidPackageCost = true; }
+            else { isValidPackageCost = false; }
+
+            if(pack.packDate == null || pack.packDate < pack.packArtworkDate || pack.packDate < pack.packDeliveryDate) { isValidPackageDate = true; }
+            else { isValidPackageDate = false; }
+
+            if(pack.packDeliveryDate == null || pack.packDeliveryDate > pack.packDate) { isValidPackageDeliveryDate = true; }
+            else { isValidPackageDeliveryDate = false; }
+
+            if(pack.packMaxInserts < 0) { isValidPackageMaxInserts = true; }
+            else { isValidPackageMaxInserts = false; }
+
+            if(pack.packName == null) { isValidPackageName = true; }
+            else { isValidPackageName = false; }
+
+            if (pack.packTo == null) { isValidPackageTo = true; }
+            else { isValidPackageTo = false; }
+
+            if(isValidPackageArtworkDate == true ||
+                isValidPackageCost == true ||
+                isValidPackageDate == true ||
+                isValidPackageDeliveryDate == true ||
+                isValidPackageMaxInserts == true ||
+                isValidPackageName == true ||
+                isValidPackageTo == true)
+            {
+                return false;
+            }
+            else { return true; }
+        }
         #endregion
 
         #region Sum Totals
@@ -1583,6 +1740,99 @@ namespace SchoolsMailing.ViewModels
         {
             selectedDirectMailingOrder.directCost = selectedDirectMailingOrder.directFulfilmentCost + selectedDirectMailingOrder.directPostageCost + selectedDirectMailingOrder.directPrintCost;
             RaisePropertyChanged("selectedDirectMailingOrder");
+        }
+        #endregion
+
+        #region Left Click
+        public void dataClicked(object sender, object parameter)
+        {
+            //Get selected item
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
+            //Get selected data from item
+            Data item = arg.ClickedItem as Data;
+            //Set selected order
+            originalDataOrder = dataOrders.Where(x => x == item).First();
+            selectedDataOrder = dataOrders.Where(x => x == item).First();
+            //Navigate to order
+            NavigationService.Navigate(typeof(DataView));
+        }
+
+        public void emailClicked(object sender, object parameter)
+        {
+            //Get selected item
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
+            //Get selected email from item
+            Email item = arg.ClickedItem as Email;
+            //Set selected order
+            originalEmailOrder = emailOrders.Where(x => x == item).First();
+            selectedEmailOrder = emailOrders.Where(x => x == item).First();
+            ////Navigate to order
+            NavigationService.Navigate(typeof(EmailView));
+        }
+
+        public void schoolSendClicked(object sender, object parameter)
+        {
+            //Get selected item
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
+            //Get selected SchoolSend from item
+            SchoolSend item = arg.ClickedItem as SchoolSend;
+            //Set selected order
+            originalSchoolSendOrder = schoolSendOrders.Where(x => x == item).First();
+            selectedSchoolSendOrder = schoolSendOrders.Where(x => x == item).First();
+            //Navigate to order
+            NavigationService.Navigate(typeof(SchoolSendView));
+        }
+
+        public void directMailingClicked(object sender, object parameter)
+        {
+            //Get selected item
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
+            //Get selected directMailing from item
+            DirectMailing item = arg.ClickedItem as DirectMailing;
+            //Set selected order
+            originalDirectMailingOrder = directMailingOrders.Where(x => x == item).First();
+            selectedDirectMailingOrder = directMailingOrders.Where(x => x == item).First();
+            //Navigate to order
+            NavigationService.Navigate(typeof(DirectMailingView));
+        }
+
+        public void sharedMailingClicked(object sender, object parameter)
+        {
+            //Get selected item
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
+            //Get selected SharedMailing from item
+            SharedMailing item = arg.ClickedItem as SharedMailing;
+            //Set selected order
+            originalSharedMailingOrder = sharedMailingOrders.Where(x => x == item).First();
+            selectedSharedMailingOrder = sharedMailingOrders.Where(x => x == item).First();
+            //Navigate to order
+            NavigationService.Navigate(typeof(SharedMailingView));
+        }
+
+        public void printClicked(object sender, object parameter)
+        {
+            //Get selected item
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
+            //Get selected print from item
+            Print item = arg.ClickedItem as Print;
+            //Set selected order
+            originalPrintOrder = printOrders.Where(x => x == item).First();
+            selectedPrintOrder = printOrders.Where(x => x == item).First();
+            //Navigate to order
+            NavigationService.Navigate(typeof(PrintView));
+        }
+
+        public void surchargeClicked(object sender, object parameter)
+        {
+            //Get selected item
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
+            //Get selected Surcharge from item
+            Surcharge item = arg.ClickedItem as Surcharge;
+            //Set selected order
+            originalSurchargeOrder = surchargeOrders.Where(x => x == item).First();
+            selectedSurchargeOrder = surchargeOrders.Where(x => x == item).First();
+            //Navigate to order
+            NavigationService.Navigate(typeof(SurchargeView));
         }
         #endregion
 
@@ -1662,6 +1912,56 @@ namespace SchoolsMailing.ViewModels
                 rightClickedSurcharge = (Surcharge)surchargeSurchargeContext; //Convert to class
             }
             catch (Exception e) { } //Catch null exception
+        }
+        #endregion
+
+        #region Go Back
+        private RelayCommand _cancelDataPart;
+        public RelayCommand cancelDataPart
+        {
+            get { if (_cancelDataPart == null) { _cancelDataPart = new RelayCommand(() => { NavigationService.GoBack(); pivotIndex = 1; }); } return _cancelDataPart; }
+        }
+
+        private RelayCommand _cancelEmailPart;
+        public RelayCommand cancelEmailPart
+        {
+            get { if (_cancelEmailPart == null) { _cancelEmailPart = new RelayCommand(() => { NavigationService.GoBack(); pivotIndex = 2; }); } return _cancelEmailPart; }
+        }
+
+        private RelayCommand _cancelSchoolSendPart;
+        public RelayCommand cancelSchoolSendPart
+        {
+            get { if (_cancelSchoolSendPart == null) { _cancelSchoolSendPart = new RelayCommand(() => { NavigationService.GoBack(); pivotIndex = 3; }); } return _cancelSchoolSendPart; }
+        }
+
+        private RelayCommand _cancelDirectMailingPart;
+        public RelayCommand cancelDirectMailingPart
+        {
+            get { if (_cancelDirectMailingPart == null) { _cancelDirectMailingPart = new RelayCommand(() => { NavigationService.GoBack(); pivotIndex = 4; }); } return _cancelDirectMailingPart; }
+        }
+
+        private RelayCommand _cancelSharedMailingPart;
+        public RelayCommand cancelSharedMailingPart
+        {
+            get { if (_cancelSharedMailingPart == null) { _cancelSharedMailingPart = new RelayCommand(() => { NavigationService.GoBack(); pivotIndex = 5; }); } return _cancelSharedMailingPart; }
+        }
+
+        private RelayCommand _cancelPrintPart;
+        public RelayCommand cancelPrintPart
+        {
+            get { if (_cancelPrintPart == null) { _cancelPrintPart = new RelayCommand(() => { NavigationService.GoBack(); pivotIndex = 6; }); } return _cancelPrintPart; }
+        }
+
+        private RelayCommand _cancelSurchargePart;
+        public RelayCommand cancelSurchargePart
+        {
+            get { if (_cancelSurchargePart == null) { _cancelSurchargePart = new RelayCommand(() => { NavigationService.GoBack(); pivotIndex = 7; }); } return _cancelSurchargePart; }
+        }
+
+        private RelayCommand _cancelSharedPack;
+        public RelayCommand cancelSharedPack
+        {
+            get { if (_cancelSharedPack == null) { _cancelSharedPack = new RelayCommand(() => { NavigationService.GoBack(); }); } return _cancelSharedPack; }
         }
         #endregion
     }

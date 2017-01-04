@@ -1,0 +1,120 @@
+﻿<Page
+    x:Class="SchoolsMailing.Views.SharedPackageView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SchoolsMailing.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:conv="using:SchoolsMailing.Converters"
+    xmlns:cntrl="using:SchoolsMailing.Controls"
+    mc:Ignorable="d"
+    DataContext="{Binding OrderViewModel, Source={StaticResource VmLocator}}">
+    <Page.Resources>
+        <conv:StringFormatter x:Key="CurrencyConverter"/>
+        <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
+        <conv:BooleanToVisibilityConverter x:Key="InvalidTextBox"/>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Hub>
+            <HubSection>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="Name"
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedSharedPack.packName, Mode=TwoWay}"
+                                     Style="{StaticResource inputTextBox}"
+                                     Width="200"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidPackageName, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Name"/>
+                        </StackPanel>
+                        <TextBlock Text="Mailing To"
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedSharedPack.packTo, Mode=TwoWay}"
+                                     Style="{StaticResource inputTextBox}"
+                                     Width="200"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidPackageTo, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Mailing To"/>
+                        </StackPanel>
+                        <TextBlock Text="Send Date"
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CalendarDatePicker Width="120" 
+                                                MinWidth="120"
+                                                Date="{Binding selectedSharedPack.packDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                                Style="{StaticResource inputCalendarDatePicker}"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidPackageDate, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Send Date"/>
+                        </StackPanel>
+                        <TextBlock Text="Artwork Date"
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CalendarDatePicker Width="120" 
+                                                MinWidth="120"
+                                                Date="{Binding selectedSharedPack.packArtworkDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                                Style="{StaticResource inputCalendarDatePicker}"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidPackageArtworkDate, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Artwork Date"/>
+                        </StackPanel>
+                        <TextBlock Text="Delivery Date"
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CalendarDatePicker Width="120" 
+                                                MinWidth="120"
+                                                Date="{Binding selectedSharedPack.packDeliveryDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                                Style="{StaticResource inputCalendarDatePicker}"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidPackageDeliveryDate, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Delivery Date"/>
+                        </StackPanel>
+                        <TextBlock Text="Cost"
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedSharedPack.packCost, Mode=TwoWay}"
+                                     Style="{StaticResource inputTextBox}"
+                                     Width="200"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidPackageCost, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Cost"/>
+                        </StackPanel>
+                        <TextBlock Text="Maximum Inserts"
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedSharedPack.packMaxInserts, Mode=TwoWay}"
+                                     Style="{StaticResource inputTextBox}"
+                                     Width="200"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidPackageCost, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Maximum Inserts"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </HubSection>
+        </Hub>
+        <CommandBar VerticalAlignment="Bottom"
+                    Grid.Row="1">
+            
+            <AppBarButton Icon="Save"
+                          Label="Save">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:InvokeCommandAction Command="{Binding Path=saveSharedPack}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AppBarButton>
+            <AppBarButton Icon="Cancel"
+                          Label="Cancel">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:InvokeCommandAction Command="{Binding Path=cancelSharedPack}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AppBarButton>
+        </CommandBar>
+    </Grid>
+</Page>

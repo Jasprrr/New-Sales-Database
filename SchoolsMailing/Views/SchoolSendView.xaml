@@ -31,7 +31,13 @@
                             <CalendarDatePicker Width="120" 
                                                 MinWidth="120"
                                                 Date="{Binding selectedSchoolSendOrder.schoolsendStart, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
-                                                Style="{StaticResource inputCalendarDatePicker}"/>
+                                                Style="{StaticResource inputCalendarDatePicker}">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="DateChanged">
+                                        <core:InvokeCommandAction Command="{Binding Path=setSchoolSendDate}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </CalendarDatePicker>
                             <cntrl:InvalidFlag Visibility="{Binding isValidSchoolSendStart, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Start Date"/>
                         </StackPanel>
@@ -111,7 +117,7 @@
                           Label="Cancel">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=cancelOrderPart}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cancelSchoolSendPart}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

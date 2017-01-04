@@ -31,7 +31,7 @@
         public LoginViewModel LoginViewModel => SimpleIoc.Default.GetInstance<LoginViewModel>();
         public NewContactViewModel NewContactViewModel => SimpleIoc.Default.GetInstance<NewContactViewModel>();
         public OrderViewModel OrderViewModel => SimpleIoc.Default.GetInstance<OrderViewModel>();
-        public EmailViewModel EmailViewModel => SimpleIoc.Default.GetInstance<EmailViewModel>();
+        public OrdersViewModel OrdersViewModel => SimpleIoc.Default.GetInstance<OrdersViewModel>();
 
         //this, name=> { NameProperty = name}
         private static void RegisterViewModels()
@@ -44,7 +44,7 @@
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<OrderViewModel>();
             SimpleIoc.Default.Register<NewContactViewModel>();
-            SimpleIoc.Default.Register<EmailViewModel>();
+            SimpleIoc.Default.Register<OrdersViewModel>();
         }
 
         private static void RegisterServiceProviders()

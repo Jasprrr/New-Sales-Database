@@ -115,6 +115,9 @@
     <Compile Include="Controls\HistoryDialog.xaml.cs">
       <DependentUpon>HistoryDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DuplicateDialog.xaml.cs">
+      <DependentUpon>DuplicateDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\InvalidFlagLarge.xaml.cs">
       <DependentUpon>InvalidFlagLarge.xaml</DependentUpon>
     </Compile>
@@ -155,20 +158,21 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Company.cs" />
-    <Compile Include="Models\CompanyDirectMailingOrder.cs" />
-    <Compile Include="Models\CompanyEmailOrder.cs" />
     <Compile Include="Models\CompanyHistory.cs" />
-    <Compile Include="Models\CompanyPrintOrder.cs" />
-    <Compile Include="Models\CompanySchoolSendOrder.cs" />
-    <Compile Include="Models\CompanySharedMailingOrder.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\ContactHistory.cs" />
     <Compile Include="Models\Data.cs" />
-    <Compile Include="Models\CompanyDataOrder.cs" />
     <Compile Include="Models\DirectMailing.cs" />
     <Compile Include="Models\Email.cs" />
     <Compile Include="Models\EmailOrder.cs" />
+    <Compile Include="Models\OrdersData.cs" />
+    <Compile Include="Models\OrdersDirectMailing.cs" />
+    <Compile Include="Models\OrdersEmail.cs" />
     <Compile Include="Models\Orders.cs" />
+    <Compile Include="Models\OrdersPrint.cs" />
+    <Compile Include="Models\OrdersSchoolSend.cs" />
+    <Compile Include="Models\OrdersSharedMailing.cs" />
+    <Compile Include="Models\OrdersSurcharge.cs" />
     <Compile Include="Models\Print.cs" />
     <Compile Include="Models\SchoolSend.cs" />
     <Compile Include="Models\SchoolSendPack.cs" />
@@ -188,6 +192,7 @@
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\NewCompanyViewModel.cs" />
     <Compile Include="ViewModels\NewContactViewModel.cs" />
+    <Compile Include="ViewModels\OrdersViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="Views\CompaniesView2.xaml.cs">
       <DependentUpon>CompaniesView2.xaml</DependentUpon>
@@ -222,6 +227,9 @@
     <Compile Include="Views\EmailView.xaml.cs">
       <DependentUpon>EmailView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\OrdersView.xaml.cs">
+      <DependentUpon>OrdersView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\OrderView.xaml.cs">
       <DependentUpon>OrderView.xaml</DependentUpon>
     </Compile>
@@ -230,6 +238,9 @@
     </Compile>
     <Compile Include="Views\SchoolSendView.xaml.cs">
       <DependentUpon>SchoolSendView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SharedPackageView.xaml.cs">
+      <DependentUpon>SharedPackageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SharedMailingView.xaml.cs">
       <DependentUpon>SharedMailingView.xaml</DependentUpon>
@@ -281,8 +292,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\HistoryDialog.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DuplicateDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\InvalidFlagLarge.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -378,6 +393,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\OrdersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\OrderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -387,6 +406,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SchoolSendView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SharedPackageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

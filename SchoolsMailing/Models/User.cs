@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SQLite.Net.Attributes;
 
 namespace SchoolsMailing.Models
 {
     public class User
     {
+        [PrimaryKey, AutoIncrement]
         public long ID { get; set; }
         public string userName { get; set; }
         public string userPassword { get; set; }
