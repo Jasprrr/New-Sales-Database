@@ -147,23 +147,18 @@
                 },
                 new SplitViewPaneMenuItem
                 {
-                    Label = "Contacts",
-                    Symbol = Symbol.People,
-                    AssociatedPage = typeof(CompaniesView)
-                },
-                new SplitViewPaneMenuItem
-                {
-                    Label = "New Company",
-                    Symbol = Symbol.Add,
-                    AssociatedPage = typeof(NewCompanyView)
-                },
-                new SplitViewPaneMenuItem
-                {
-                    Label = "Reports",
-                    Symbol = Symbol.Folder,
+                    Label = "Orders",
+                    Symbol = Symbol.Shop,
                     AssociatedPage = typeof(OrderView)
                     
-                }
+                },
+                //new SplitViewPaneMenuItem
+                //{
+                //    Label = "Reports",
+                //    Symbol = Symbol.Shop,
+                //    AssociatedPage = typeof(OrderView)
+
+                //}
             };
 
         }
@@ -198,7 +193,7 @@
             var menuItem = obj?.Content as SplitViewPaneMenuItem;
             if (menuItem != null)
             {
-                if(menuItem.Label == "Reports")
+                if(menuItem.Label == "Orders")
                 {
                     this.NavigationService.Navigate(typeof(OrderView));
                     //Pass ID parameter

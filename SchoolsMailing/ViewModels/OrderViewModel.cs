@@ -68,12 +68,14 @@ namespace SchoolsMailing.ViewModels
                 schoolsendPacks = DataAccessLayer.GetAllSchoolSendPacks();
                 sharedPacks = DataAccessLayer.GetAllSharedPacks();
             }
-            //else if(obj.Notification == "NewOrder")
-            //{
-            //    selectedCompany = DataAccessLayer.GetCompanyById(obj.Content);
-            //}
         }
-        
+
+        private RelayCommand _cancelOrderPart;
+        public RelayCommand cancelOrderPart
+        {
+            get { if (_cancelOrderPart == null) { _cancelOrderPart = new RelayCommand(() => { NavigationService.GoBack(); }); } return _cancelOrderPart; }
+        }
+
         #region Navigate to new orders
         private RelayCommand _newEmail;
         public RelayCommand newEmail
@@ -166,7 +168,7 @@ namespace SchoolsMailing.ViewModels
             }
         }
         #endregion
-        
+
         #region Order information
 
         private string _orderCode;
@@ -183,12 +185,6 @@ namespace SchoolsMailing.ViewModels
             set { if (_selectedOrder != value) { _selectedOrder = value; RaisePropertyChanged("selectedOrder"); } }
         }
 
-        private RelayCommand _cancelNew; //Cancels new email/data/direct mailing/schoolsend/shared mailing/surcharge
-        public RelayCommand cancelNew
-        {
-            get { if (_cancelNew == null) { _cancelNew = new RelayCommand(() => { NavigationService.GoBack(); }); } return _cancelNew; }
-        }
-
         private RelayCommand _saveOrder; //Save order & loops through lists
         public RelayCommand saveOrder
         {
@@ -200,72 +196,72 @@ namespace SchoolsMailing.ViewModels
                         DataAccessLayer.SaveOrder(selectedOrder);
                         long orderID = selectedOrder.ID;
                         //Email
-                        foreach(Email e in emailOrders) //Add emails
+                        foreach (Email e in emailOrders) //Add emails
                         {
                             e.orderID = orderID;
                             DataAccessLayer.SaveEmail(e);
                         }
-                        foreach(Email e in deletedEmailOrders)
+                        foreach (Email e in deletedEmailOrders)
                         {
                             DataAccessLayer.DeleteEmail(e);
                         }
                         //Data
-                        foreach(Data d in dataOrders)
+                        foreach (Data d in dataOrders)
                         {
                             d.orderID = orderID;
                             DataAccessLayer.SaveData(d);
                         }
-                        foreach(Data d in deletedDataOrders)
+                        foreach (Data d in deletedDataOrders)
                         {
                             DataAccessLayer.DeleteData(d);
                         }
                         //Direct mailing
-                        foreach(DirectMailing dm in directMailingOrders)
+                        foreach (DirectMailing dm in directMailingOrders)
                         {
                             dm.orderID = orderID;
                             DataAccessLayer.SaveDirectMailing(dm);
                         }
-                        foreach(DirectMailing dm in deletedDirectMailingOrders)
+                        foreach (DirectMailing dm in deletedDirectMailingOrders)
                         {
                             DataAccessLayer.DeleteDirectMailing(dm);
                         }
                         //Shared mailing
-                        foreach(SharedMailing sm in sharedMailingOrders)
+                        foreach (SharedMailing sm in sharedMailingOrders)
                         {
                             sm.orderID = orderID;
                             DataAccessLayer.SaveSharedMailing(sm);
                         }
-                        foreach(SharedMailing sm in deletedSharedMailingOrders)
+                        foreach (SharedMailing sm in deletedSharedMailingOrders)
                         {
                             DataAccessLayer.DeleteSharedMailing(sm);
                         }
                         //Surcharge
-                        foreach(Surcharge s in surchargeOrders)
+                        foreach (Surcharge s in surchargeOrders)
                         {
                             s.orderID = orderID;
                             DataAccessLayer.SaveSurcharge(s);
                         }
-                        foreach(Surcharge s in deletedSurchargeOrders)
+                        foreach (Surcharge s in deletedSurchargeOrders)
                         {
                             DataAccessLayer.DeleteSurcharge(s);
                         }
                         //Print
-                        foreach(Print p in printOrders)
+                        foreach (Print p in printOrders)
                         {
                             p.orderID = orderID;
                             DataAccessLayer.SavePrint(p);
                         }
-                        foreach(Print p in deletedPrintOrders)
+                        foreach (Print p in deletedPrintOrders)
                         {
                             DataAccessLayer.DeletePrint(p);
                         }
                         //SchoolSend
-                        foreach(SchoolSend ss in schoolSendOrders)
+                        foreach (SchoolSend ss in schoolSendOrders)
                         {
                             ss.orderID = orderID;
                             DataAccessLayer.SaveSchoolSend(ss);
                         }
-                        foreach(SchoolSend ss in deletedSchoolSendOrders)
+                        foreach (SchoolSend ss in deletedSchoolSendOrders)
                         {
                             DataAccessLayer.DeleteSchoolSend(ss);
                         }
@@ -279,7 +275,7 @@ namespace SchoolsMailing.ViewModels
         public double emailCosts
         {
             get { return _emailCosts; }
-            set { if(_emailCosts != value) { _emailCosts = value; RaisePropertyChanged("emailCost"); } }
+            set { if (_emailCosts != value) { _emailCosts = value; RaisePropertyChanged("emailCost"); } }
         }
 
         private double _dataCosts = 0;
@@ -307,7 +303,7 @@ namespace SchoolsMailing.ViewModels
         public double sharedMailingCosts
         {
             get { return _sharedMailingCosts; }
-            set { if(_sharedMailingCosts != value) { _sharedMailingCosts = value; RaisePropertyChanged("sharedMailingCosts"); } }
+            set { if (_sharedMailingCosts != value) { _sharedMailingCosts = value; RaisePropertyChanged("sharedMailingCosts"); } }
         }
 
         private double _printCosts = 0;
@@ -334,7 +330,7 @@ namespace SchoolsMailing.ViewModels
             printCosts = 0;
             surchargeCosts = 0;
 
-            foreach(Email p in emailOrders)
+            foreach (Email p in emailOrders)
             {
                 emailCosts = emailCosts + p.emailCost;
                 RaisePropertyChanged("emailCosts");
@@ -448,7 +444,6 @@ namespace SchoolsMailing.ViewModels
                 return _contactChanged;
             }
         }
-
         #endregion
 
         #region Data Order
@@ -456,108 +451,50 @@ namespace SchoolsMailing.ViewModels
         public ObservableCollection<Data> dataOrders
         {
             get { return _dataOrders; }
-            set { if(_dataOrders != value) { _dataOrders = value; RaisePropertyChanged("dataOrders"); } }
+            set { if (_dataOrders != value) { _dataOrders = value; RaisePropertyChanged("dataOrders"); } }
         }
-
         private ObservableCollection<Data> _deletedDataOrders;
         public ObservableCollection<Data> deletedDataOrders
         {
             get { return _deletedDataOrders; }
             set { if (_deletedDataOrders != value) { _deletedDataOrders = value; RaisePropertyChanged("deletedDataOrders"); } }
         }
-
         private Data _selectedDataOrder;
         public Data selectedDataOrder
         {
             get { return _selectedDataOrder; }
             set { if (_selectedDataOrder != value) { _selectedDataOrder = value; RaisePropertyChanged("selectedDataOrder"); } }
         }
-
         private Data _originalDataOrder;
         public Data originalDataOrder
         {
             get { return _originalDataOrder; }
             set { if (_originalDataOrder != value) { _originalDataOrder = value; RaisePropertyChanged("deleteDataOrder"); } }
         }
-
-        private RelayCommand _saveData;
-        public RelayCommand saveData
+        public Data rightClickedData = new Data(); //Holds right clicked item for flyout
+        private bool _isValidDataStart = false;
+        public bool isValidDataStart
         {
-            get
-            {
-                if (_saveData == null)
-                {
-                    _saveData = new RelayCommand(() =>
-                    {
-                        if(ValidData(selectedDataOrder))
-                        {
-                            dataOrders.Remove(originalDataOrder);
-                            dataOrders.Add(selectedDataOrder);
-                            NavigationService.GoBack();
-                            CalculateCosts();
-                        }
-                        else
-                        {
-                            Debug.WriteLine("Invalid data cost");
-                        }
-                        
-                    });
-                }
-                return _saveData;
-            }
+            get { return _isValidDataStart; }
+            set { if (_isValidDataStart != value) { _isValidDataStart = !_isValidDataStart; RaisePropertyChanged("isValidDataStart"); } }
         }
-
-        private RelayCommand _cancelData;
-        public RelayCommand cancelData
+        private bool _isValidDataEnd = false;
+        public bool isValidDataEnd
         {
-            get
-            {
-                if (_cancelData == null)
-                {
-                    _cancelData = new RelayCommand(() =>
-                    {
-                        NavigationService.GoBack();
-                    });
-                }
-                return _cancelData;
-            }
+            get { return _isValidDataEnd; }
+            set { if (_isValidDataEnd != value) { _isValidDataEnd = !_isValidDataEnd; RaisePropertyChanged("isValidDataEnd"); } }
         }
-
-        private RelayCommand _duplicateData;
-        public RelayCommand duplicateData
+        private bool _isValidDataDetails = false;
+        public bool isValidDataDetails
         {
-            get
-            {
-                if (_duplicateData == null)
-                {
-                    _duplicateData = new RelayCommand(() =>
-                    {
-                        Debug.WriteLine("Duplicate");
-                    });
-                }
-                return _duplicateData;
-            }
+            get { return _isValidDataDetails; }
+            set { if (_isValidDataDetails != value) { _isValidDataDetails = !_isValidDataDetails; RaisePropertyChanged("isValidDataDetails"); } }
         }
-
-        private RelayCommand _deleteData;
-        public RelayCommand deleteData
+        private bool _isValidDataCost = false;
+        public bool isValidDataCost
         {
-            get
-            {
-                if (_deleteData == null)
-                {
-                    _deleteData = new RelayCommand(() =>
-                    {
-                        if(rightClickedData != null)
-                        {
-                            deletedDataOrders.Add(rightClickedData);
-                            dataOrders.Remove(rightClickedData);
-                            CalculateCosts();
-                        }
-                    });
-                }
-                return _deleteData;
-            }
+            get { return _isValidDataCost; }
+            set { if (_isValidDataCost != value) { _isValidDataCost = !_isValidDataCost; RaisePropertyChanged("isValidDataCost"); } }
         }
 
         public void dataClicked(object sender, object parameter)
@@ -572,48 +509,6 @@ namespace SchoolsMailing.ViewModels
             //Navigate to order
             NavigationService.Navigate(typeof(DataView));
         }
-
-        public Data rightClickedData = new Data(); //Holds right clicked item for flyout
-
-        public void dataRightClicked(object sender, RightTappedRoutedEventArgs args)
-        {
-            try
-            {
-                var dataSource = args.OriginalSource; //Gets right clicked item
-                var dataDataContext = (dataSource as TextBlock).DataContext; //Gets the Data context
-                rightClickedData = (Data)dataDataContext; //Convert to class
-            }
-            catch (Exception x) { } //Catch null exception
-        }
-
-        public bool ValidData(Data data)
-        {
-            try
-            {
-                double x = Convert.ToDouble(data.dataCost);
-            }
-            catch(Exception e)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        private RelayCommand _dataTextChanged;
-        public RelayCommand dataTextChanged
-        {
-            get
-            {
-                if (_dataTextChanged == null)
-                {
-                    _dataTextChanged = new RelayCommand(() =>
-                    {
-                        Debug.WriteLine("text changed");
-                    });
-                }
-                return _dataTextChanged;
-            }
-        }
         #endregion
 
         #region Email Order
@@ -621,147 +516,27 @@ namespace SchoolsMailing.ViewModels
         public ObservableCollection<Email> emailOrders
         {
             get { return _emailOrders; }
-            set { if(_emailOrders != value) { _emailOrders = value; RaisePropertyChanged("emailOrders"); } }
+            set { if (_emailOrders != value) { _emailOrders = value; RaisePropertyChanged("emailOrders"); } }
         }
-
         private ObservableCollection<Email> _deletedEmailOrders;
         public ObservableCollection<Email> deletedEmailOrders
         {
             get { return _deletedEmailOrders; }
             set { if (_deletedEmailOrders != value) { _deletedEmailOrders = value; RaisePropertyChanged("deletedEmailOrders"); } }
         }
-
         private Email _selectedEmailOrder;
         public Email selectedEmailOrder
         {
             get { return _selectedEmailOrder; }
-            set { if(_selectedEmailOrder != value) { _selectedEmailOrder = value; RaisePropertyChanged("selectedEmailOrder"); } }
+            set { if (_selectedEmailOrder != value) { _selectedEmailOrder = value; RaisePropertyChanged("selectedEmailOrder"); } }
         }
-
         private Email _originalEmailOrder;
         public Email originalEmailOrder
         {
             get { return _originalEmailOrder; }
             set { if (_originalEmailOrder != value) { _originalEmailOrder = value; RaisePropertyChanged("originalEmailOrder"); } }
         }
-
-        private RelayCommand _saveEmail;
-        public RelayCommand saveEmail
-        {
-            get
-            {
-                if (_saveEmail == null)
-                {
-                    _saveEmail = new RelayCommand(() =>
-                    {
-                        emailOrders.Remove(originalEmailOrder);
-                        emailOrders.Add(selectedEmailOrder);
-                        NavigationService.GoBack();
-                        CalculateCosts();
-                    });
-                }
-                return _saveEmail;
-            }
-        }
-
-        private RelayCommand _cancelEmail;
-        public RelayCommand cancelEmail
-        {
-            get
-            {
-                if (_cancelEmail == null)
-                {
-                    _cancelEmail = new RelayCommand(() =>
-                    {
-                        NavigationService.GoBack();
-                    });
-                }
-                return _cancelEmail;
-            }
-        }
-
-        private RelayCommand _duplicateEmail;
-        public RelayCommand duplicateEmail
-        {
-            get
-            {
-                if (_duplicateEmail == null)
-                {
-                    _duplicateEmail = new RelayCommand(() =>
-                    {
-                        Debug.WriteLine("Duplicate");
-                    });
-                }
-                return _duplicateEmail;
-            }
-        }
-
-        private RelayCommand _deleteEmail;
-        public RelayCommand deleteEmail
-        {
-            get
-            {
-                if (_deleteEmail == null)
-                {
-                    _deleteEmail = new RelayCommand(() =>
-                    {
-                        if(rightClickedEmail != null)
-                        {
-                            deletedEmailOrders.Add(rightClickedEmail);
-                            emailOrders.Remove(rightClickedEmail);
-                            CalculateCosts();
-                        }
-                    });
-                }
-                return _deleteEmail;
-            }
-        }
-        
-        public void emailClicked(object sender, object parameter)
-        {
-            //Get selected item
-            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
-            //Get selected email from item
-            Email item = arg.ClickedItem as Email;
-            //Set selected order
-            originalEmailOrder = emailOrders.Where(x => x == item).First();
-            selectedEmailOrder = emailOrders.Where(x => x == item).First();
-            ////Navigate to order
-            NavigationService.Navigate(typeof(EmailView));
-        }
-        
         public Email rightClickedEmail = new Email(); //Holds right clicked item for flyout
-
-        public void emailRightClicked(object sender, RightTappedRoutedEventArgs args)
-        {
-            try
-            {
-                var emailSource = args.OriginalSource; //Gets right clicked item
-                var emailDataContext = (emailSource as TextBlock).DataContext; //Gets the data context
-                rightClickedEmail = (Email)emailDataContext; //Convert to class
-            }
-            catch(Exception x) { } //Catch null exception
-        }
-
-        #region Email Validation
-        private bool _isValidEmailAdminCost = false;
-        public bool isValidEmailAdminCost
-        {
-            get { return _isValidEmailAdminCost; }
-            set { if (_isValidEmailAdminCost != value) { _isValidEmailAdminCost = !_isValidEmailAdminCost; RaisePropertyChanged("isValidEmailAdminCost"); } }
-        }
-        private bool _isValidEmailDirectCost = false;
-        public bool isValidEmailDirectCost
-        {
-            get { return _isValidEmailAdminCost; }
-            set { if (_isValidEmailDirectCost != value) { _isValidEmailDirectCost = !_isValidEmailDirectCost; RaisePropertyChanged("isValidEmailDirectCost"); } }
-        }
-        private bool _isValidEmailCost = false;
-        public bool isValidEmailCost
-        {
-            get { return _isValidEmailCost; }
-            set { if (_isValidEmailCost != value) { _isValidEmailCost = !_isValidEmailCost; RaisePropertyChanged("isValidEmailCost"); } }
-        }
         private bool _isValidEmailDate = false;
         public bool isValidEmailDate
         {
@@ -774,208 +549,37 @@ namespace SchoolsMailing.ViewModels
             get { return _isValidEmailDetails; }
             set { if (_isValidEmailDetails != value) { _isValidEmailDetails = !_isValidEmailDetails; RaisePropertyChanged("isValidEmailDetails"); } }
         }
-
-
-        public bool validateEmailOrder(Email email)
+        private bool _isValidEmailAdminCost = false;
+        public bool isValidEmailAdminCost
         {
-            if(email.emailDate == null)
-            {
-                isValidEmailDate = true;
-            }
-            else
-            {
-                isValidEmailDate = false;
-            }
-            if(email.emailDetails == null)
-            {
-                isValidEmailDetails = true;
-            }
-            else
-            {
-                isValidEmailDetails = false;
-            }
-            if (email.emailAdminCost < 0)
-            {
-                isValidEmailAdminCost = true;
-            }
-            else
-            {
-                isValidEmailAdminCost = false;
-            }
-            if (email.emailDirectCost < 0)
-            {
-                isValidEmailDirectCost = true;
-            }
-            else
-            {
-                isValidEmailDirectCost = false;
-            }
-            if (email.emailCost < 0)
-            {
-                isValidEmailCost = true;
-            }
-            else
-            {
-                isValidEmailCost = false;
-            }
-            if (isValidEmailAdminCost == true ||
-                isValidEmailCost == true ||
-                isValidEmailDate == true ||
-                isValidEmailDetails == true ||
-                isValidEmailDirectCost == true)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            get { return _isValidEmailAdminCost; }
+            set { if (_isValidEmailAdminCost != value) { _isValidEmailAdminCost = !_isValidEmailAdminCost; RaisePropertyChanged("isValidEmailAdminCost"); } }
+        }
+        private bool _isValidEmailDirectCost = false;
+        public bool isValidEmailDirectCost
+        {
+            get { return _isValidEmailDirectCost; }
+            set { if (_isValidEmailDirectCost != value) { _isValidEmailDirectCost = !_isValidEmailDirectCost; RaisePropertyChanged("isValidEmailDirectCost"); } }
+        }
+        private bool _isValidEmailCost = false;
+        public bool isValidEmailCost
+        {
+            get { return _isValidEmailCost; }
+            set { if (_isValidEmailCost != value) { _isValidEmailCost = !_isValidEmailCost; RaisePropertyChanged("isValidEmailCost"); } }
         }
 
-        private RelayCommand _validateEmailAdminCost;
-        public RelayCommand validateEmailAdminCost
+        public void emailClicked(object sender, object parameter)
         {
-            get
-            {
-                if (_validateEmailAdminCost == null)
-                {
-                    _validateEmailAdminCost = new RelayCommand(() =>
-                    {
-                        if (validateEmailAdminCost != null)
-                        {
-                            double d;
-                            bool isDouble = Double.TryParse(selectedEmailOrder.emailAdminCost.ToString(), out d);
-                            if (isDouble)
-                            {
-                                if (selectedEmailOrder.emailSetUp)
-                                {
-                                    selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost + 125;
-                                }
-                                else
-                                {
-                                    selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost;
-                                }
-                                validateEmailOrder(selectedEmailOrder);
-                                RaisePropertyChanged("selectedEmailOrder");
-                            }
-                            else
-                            {
-                                validateEmailOrder(selectedEmailOrder);
-                            }
-                        }
-                    });
-                } return _validateEmailAdminCost;
-            }
+            //Get selected item
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
+            //Get selected email from item
+            Email item = arg.ClickedItem as Email;
+            //Set selected order
+            originalEmailOrder = emailOrders.Where(x => x == item).First();
+            selectedEmailOrder = emailOrders.Where(x => x == item).First();
+            ////Navigate to order
+            NavigationService.Navigate(typeof(EmailView));
         }
-        private RelayCommand _validateEmailDirectCost;
-        public RelayCommand validateEmailDirectCost
-        {
-            get
-            {
-                if (_validateEmailDirectCost == null)
-                {
-                    _validateEmailDirectCost = new RelayCommand(() =>
-                    {
-                        if (validateEmailDirectCost != null)
-                        {
-                            double d;
-                            bool isDouble = Double.TryParse(selectedEmailOrder.emailDirectCost.ToString(), out d);
-                            if (isDouble)
-                            {
-                                if (selectedEmailOrder.emailSetUp)
-                                {
-                                    selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost + 125;
-                                }
-                                else
-                                {
-                                    selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost;
-                                }
-                                validateEmailOrder(selectedEmailOrder);
-                                RaisePropertyChanged("selectedEmailOrder");
-                            }
-                            else
-                            {
-                                validateEmailOrder(selectedEmailOrder);
-                            }
-                        }
-                    });
-                } return _validateEmailDirectCost;
-            }
-        }
-        private RelayCommand _validateEmailSetUp;
-        public RelayCommand validateEmailSetUp
-        {
-            get
-            {
-                if (_validateEmailSetUp == null)
-                {
-                    _validateEmailSetUp = new RelayCommand(() =>
-                    {
-                        if (validateEmailSetUp != null)
-                        {
-                            double d;
-                            bool isDouble = Double.TryParse(selectedEmailOrder.emailDirectCost.ToString(), out d);
-                            if (isDouble)
-                            {
-                                if (selectedEmailOrder.emailSetUp)
-                                {
-                                    selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost + 125;
-                                }
-                                else
-                                {
-                                    selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost;
-                                }
-                                validateEmailOrder(selectedEmailOrder);
-                                RaisePropertyChanged("selectedEmailOrder");
-                            }
-                            else
-                            {
-                                validateEmailOrder(selectedEmailOrder);
-                            }
-                        }
-                    });
-                }
-                return _validateEmailSetUp;
-            }
-        }
-        private RelayCommand _validateEmailDate;
-        public RelayCommand validateEmailDate
-        {
-            get
-            {
-                if (_validateEmailDate == null)
-                {
-                    _validateEmailDate = new RelayCommand(() =>
-                    {
-                        if (validateEmailDate != null)
-                        {
-                            
-                        }
-                    });
-                }
-                return _validateEmailDate;
-            }
-        }
-        private RelayCommand _validateEmailDetails;
-        public RelayCommand validateEmailDetails
-        {
-            get
-            {
-                if (_validateEmailDetails == null)
-                {
-                    _validateEmailDetails = new RelayCommand(() =>
-                    {
-                        if (validateEmailDetails != null)
-                        {
-
-                        }
-                    });
-                }
-                return _validateEmailDetails;
-            }
-        }
-
-        #endregion
         #endregion
 
         #region Direct Mailing Order
@@ -983,104 +587,80 @@ namespace SchoolsMailing.ViewModels
         public ObservableCollection<DirectMailing> directMailingOrders
         {
             get { return _directMailingOrders; }
-            set { if(_directMailingOrders != value) { _directMailingOrders = value;  RaisePropertyChanged("directMailingOrders"); } }
+            set { if (_directMailingOrders != value) { _directMailingOrders = value; RaisePropertyChanged("directMailingOrders"); } }
         }
-
         private ObservableCollection<DirectMailing> _deletedDirectMailingOrders;
         public ObservableCollection<DirectMailing> deletedDirectMailingOrders
         {
             get { return _deletedDirectMailingOrders; }
             set { if (_deletedDirectMailingOrders != value) { _deletedDirectMailingOrders = value; RaisePropertyChanged("deletedDirectMailingOrders"); } }
         }
-
         private DirectMailing _selectedDirectMailingOrder;
         public DirectMailing selectedDirectMailingOrder
         {
             get { return _selectedDirectMailingOrder; }
-            set { if(_selectedDirectMailingOrder != value) { _selectedDirectMailingOrder = value; RaisePropertyChanged("selectedDirectMailingOrder"); } }
+            set { if (_selectedDirectMailingOrder != value) { _selectedDirectMailingOrder = value; RaisePropertyChanged("selectedDirectMailingOrder"); } }
         }
-
         private DirectMailing _originalDirectMailingOrder;
         public DirectMailing originalDirectMailingOrder
         {
             get { return _originalDirectMailingOrder; }
             set { if (_originalDirectMailingOrder != value) { _originalDirectMailingOrder = value; RaisePropertyChanged("originalDirectMailingOrder"); } }
         }
-
-        private RelayCommand _saveDirectMailing;
-        public RelayCommand saveDirectMailing
+        public DirectMailing rightClickedDirectMailing = new DirectMailing(); //Holds right clicked item for flyout
+        private bool _isValidDirectMailingFulfilmentCost = false;
+        public bool isValidDirectMailingFulfilmentCost
         {
-            get
-            {
-                if (_saveDirectMailing == null)
-                {
-                    _saveDirectMailing = new RelayCommand(() =>
-                    {
-                        directMailingOrders.Remove(originalDirectMailingOrder);
-                        directMailingOrders.Add(selectedDirectMailingOrder);
-                        NavigationService.GoBack();
-                        CalculateCosts();
-                    });
-                }
-                return _saveDirectMailing;
-            }
+            get { return _isValidDirectMailingFulfilmentCost; }
+            set { if (_isValidDirectMailingFulfilmentCost != value) { _isValidDirectMailingFulfilmentCost = !_isValidDirectMailingFulfilmentCost; RaisePropertyChanged("isValidDirectMailingFulfilmentCost"); } }
         }
-
-        private RelayCommand _cancelDirectMailing;
-        public RelayCommand cancelDirectMailing
+        public bool isValidDirectMailingPrintCost
         {
-            get
-            {
-                if (_cancelDirectMailing == null)
-                {
-                    _cancelDirectMailing = new RelayCommand(() =>
-                    {
-                        NavigationService.GoBack();
-                    });
-                }
-
-                return _cancelDirectMailing;
-
-            }
+            get { return _isValidDirectMailingPrintCost; }
+            set { if (_isValidDirectMailingPrintCost != value) { _isValidDirectMailingPrintCost = !_isValidDirectMailingPrintCost; RaisePropertyChanged("isValidDirectMailingPrintCost"); } }
         }
-
-        private RelayCommand _duplicateDirectMailing;
-        public RelayCommand duplicateDirectMailing
+        private bool _isValidDirectMailingPostageCost = false;
+        public bool isValidDirectMailingPostageCost
         {
-            get
-            {
-                if (_duplicateDirectMailing == null)
-                {
-                    _duplicateDirectMailing = new RelayCommand(() =>
-                    {
-                        Debug.WriteLine("Duplicate");
-                    });
-                }
-
-                return _duplicateDirectMailing;
-            }
+            get { return _isValidDirectMailingPostageCost; }
+            set { if (_isValidDirectMailingPostageCost != value) { _isValidDirectMailingPostageCost = !_isValidDirectMailingPostageCost; RaisePropertyChanged("isValidDirectMailingPostageCost"); } }
         }
-
-        private RelayCommand _deleteDirectMailing;
-        public RelayCommand deleteDirectMailing
+        private bool _isValidDirectMailingPrintCost = false;
+        private bool _isValidDirectMailingDate = false;
+        public bool isValidDirectMailingDate
         {
-            get
-            {
-                if (_deleteDirectMailing == null)
-                {
-                    _deleteDirectMailing = new RelayCommand(() =>
-                    {
-                        if(rightClickedDirectMailing != null)
-                        {
-                            deletedDirectMailingOrders.Add(rightClickedDirectMailing);
-                            directMailingOrders.Remove(rightClickedDirectMailing);
-                            CalculateCosts();
-                        }
-                    });
-                }
-
-                return _deleteDirectMailing;
-            }
+            get { return _isValidDirectMailingDate; }
+            set { if (_isValidDirectMailingDate != value) { _isValidDirectMailingDate = !_isValidDirectMailingDate; RaisePropertyChanged("isValidDirectMailingDate"); } }
+        }
+        private bool _isValidDirectMailingDetails = false;
+        public bool isValidDirectMailingDetails
+        {
+            get { return _isValidDirectMailingDetails; }
+            set { if (_isValidDirectMailingDetails != value) { _isValidDirectMailingDetails = !_isValidDirectMailingDetails; RaisePropertyChanged("isValidDirectMailingDetails"); } }
+        }
+        private bool _isValidDirectMailingDeliveryCode = false;
+        public bool isValidDirectMailingDeliveryCode
+        {
+            get { return _isValidDirectMailingDeliveryCode; }
+            set { if (_isValidDirectMailingDeliveryCode != value) { _isValidDirectMailingDeliveryCode = !_isValidDirectMailingDeliveryCode; RaisePropertyChanged("isValidDirectMailingDeliveryCode"); } }
+        }
+        private bool _isValidDirectMailingArtworkDate = false;
+        public bool isValidDirectMailingArtworkDate
+        {
+            get { return _isValidDirectMailingArtworkDate; }
+            set { if (_isValidDirectMailingArtworkDate != value) { _isValidDirectMailingArtworkDate = !_isValidDirectMailingArtworkDate; RaisePropertyChanged("isValidDirectMailingArtworkDate"); } }
+        }
+        private bool _isValidDirectMailingDataDate = false;
+        public bool isValidDirectMailingDataDate
+        {
+            get { return _isValidDirectMailingDataDate; }
+            set { if (_isValidDirectMailingDataDate != value) { _isValidDirectMailingDataDate = !_isValidDirectMailingDataDate; RaisePropertyChanged("isValidDirectMailingDataDate"); } }
+        }
+        private bool _isValidDirectMailingInsertDate = false;
+        public bool isValidDirectMailingInsertDate
+        {
+            get { return _isValidDirectMailingInsertDate; }
+            set { if (_isValidDirectMailingInsertDate != value) { _isValidDirectMailingInsertDate = !_isValidDirectMailingInsertDate; RaisePropertyChanged("isValidDirectMailingInsertDate"); } }
         }
 
         public void directMailingClicked(object sender, object parameter)
@@ -1095,59 +675,6 @@ namespace SchoolsMailing.ViewModels
             //Navigate to order
             NavigationService.Navigate(typeof(DirectMailingView));
         }
-
-        public DirectMailing rightClickedDirectMailing = new DirectMailing(); //Holds right clicked item for flyout
-
-        public void directMailingRightClicked(object sender, RightTappedRoutedEventArgs args)
-        {
-            try
-            {
-                var directMailingSource = args.OriginalSource; //Gets right clicked item
-                var directMailingDataContext = (directMailingSource as TextBlock).DataContext; //Gets the data context
-                rightClickedDirectMailing = (DirectMailing)directMailingDataContext; //Convert to class
-            }
-            catch (Exception x) { } //Catch null exception
-        }
-
-        private RelayCommand _validateDirectFulfilmentCost;
-        public RelayCommand validateDirectFulfilmentCost
-        {
-            get
-            {
-                if (_validateDirectFulfilmentCost == null)
-                {
-                    _validateDirectFulfilmentCost = new RelayCommand(() =>
-                    {
-                        if (rightClickedDirectMailing != null)
-                        {
-                            //TODO add direct mailing costs
-                        }
-                    });
-                }
-
-                return _validateDirectFulfilmentCost;
-            }
-        }
-
-        private RelayCommand _validateDirectPrintCost;
-        public RelayCommand validateDirectPrintCost
-        {
-            get
-            {
-                if (_validateDirectPrintCost == null)
-                {
-                    _validateDirectPrintCost = new RelayCommand(() =>
-                    {
-                        if (rightClickedDirectMailing != null)
-                        {
-                            //TODO add direct mailing costs
-                        }
-                    });
-                }
-
-                return _validateDirectPrintCost;
-            }
-        }
         #endregion
 
         #region Print Order
@@ -1155,103 +682,56 @@ namespace SchoolsMailing.ViewModels
         public ObservableCollection<Print> printOrders
         {
             get { return _printOrders; }
-            set { if(_printOrders != value) { _printOrders = value; RaisePropertyChanged("printOrders"); } }
+            set { if (_printOrders != value) { _printOrders = value; RaisePropertyChanged("printOrders"); } }
         }
-
         private ObservableCollection<Print> _deletedPrintOrders;
         public ObservableCollection<Print> deletedPrintOrders
         {
             get { return _deletedPrintOrders; }
             set { if (_deletedPrintOrders != value) { _deletedPrintOrders = value; RaisePropertyChanged("deletedPrintOrders"); } }
         }
-
         private Print _selectedPrintOrder;
         public Print selectedPrintOrder
         {
             get { return _selectedPrintOrder; }
-            set { if(_selectedPrintOrder != value) { _selectedPrintOrder = value; RaisePropertyChanged("selectedPrintOrder"); } }
+            set { if (_selectedPrintOrder != value) { _selectedPrintOrder = value; RaisePropertyChanged("selectedPrintOrder"); } }
         }
-
         private Print _originalPrintOrder;
         public Print originalPrintOrder
         {
             get { return _originalPrintOrder; }
             set { if (_originalPrintOrder != value) { _originalPrintOrder = value; RaisePropertyChanged("originalPrintOrder"); } }
         }
-
-        private RelayCommand _savePrint;
-        public RelayCommand savePrint
+        public Print rightClickedPrint = new Print(); //Holds right clicked item for flyout
+        private bool _isValidPrintCharge = false;
+        public bool isValidPrintCharge
         {
-            get
-            {
-                if (_savePrint == null)
-                {
-                    _savePrint = new RelayCommand(() =>
-                    {
-                        printOrders.Remove(originalPrintOrder);
-                        printOrders.Add(selectedPrintOrder);
-                        NavigationService.GoBack();
-                        CalculateCosts();
-                    });
-                }
-                return _savePrint;
-            }
+            get { return _isValidPrintCharge; }
+            set { if (_isValidPrintCharge != value) { _isValidPrintCharge = !_isValidPrintCharge; RaisePropertyChanged("isValidPrintCharge"); } }
         }
-
-        private RelayCommand _cancelPrint;
-        public RelayCommand cancelPrint
+        private bool _isValidPrintCost = false;
+        public bool isValidPrintCost
         {
-            get
-            {
-                if (_cancelPrint == null)
-                {
-                    _cancelPrint = new RelayCommand(() =>
-                    {
-                        NavigationService.GoBack();
-                    });
-                }
-
-                return _cancelPrint;
-
-            }
+            get { return _isValidPrintCost; }
+            set { if (_isValidPrintCost != value) { _isValidPrintCost = !_isValidPrintCost; RaisePropertyChanged("isValidPrintCost"); } }
         }
-
-        private RelayCommand _duplicatePrint;
-        public RelayCommand duplicatePrint
+        private bool _isValidPrintDetails = false;
+        public bool isValidPrintDetails
         {
-            get
-            {
-                if (_duplicatePrint == null)
-                {
-                    _duplicatePrint = new RelayCommand(() =>
-                    {
-                        Debug.WriteLine("Duplicate");
-                    });
-                }
-
-                return _duplicatePrint;
-            }
+            get { return _isValidPrintDetails; }
+            set { if (_isValidPrintDetails != value) { _isValidPrintDetails = !_isValidPrintDetails; RaisePropertyChanged("isValidPrintDetails"); } }
         }
-
-        private RelayCommand _deletePrint;
-        public RelayCommand deletePrint
+        private bool _isValidPrintPrinter = false;
+        public bool isValidPrintPrinter
         {
-            get
-            {
-                if (_deletePrint == null)
-                {
-                    _deletePrint = new RelayCommand(() =>
-                    {
-                        if(rightClickedPrint != null)
-                        {
-                            deletedPrintOrders.Add(rightClickedPrint);
-                            printOrders.Remove(rightClickedPrint);
-                        }
-                    });
-                }
-
-                return _deletePrint;
-            }
+            get { return _isValidPrintPrinter; }
+            set { if (_isValidPrintPrinter != value) { _isValidPrintPrinter = !_isValidPrintPrinter; RaisePropertyChanged("isValidPrintPrinter"); } }
+        }
+        private bool _isValidPrintDate = false;
+        public bool isValidPrintDate
+        {
+            get { return _isValidPrintDate; }
+            set { if (_isValidPrintDate != value) { _isValidPrintDate = !_isValidPrintDate; RaisePropertyChanged("isValidPrintDate"); } }
         }
 
         public void printClicked(object sender, object parameter)
@@ -1266,19 +746,6 @@ namespace SchoolsMailing.ViewModels
             //Navigate to order
             NavigationService.Navigate(typeof(PrintView));
         }
-
-        public Print rightClickedPrint = new Print(); //Holds right clicked item for flyout
-
-        public void printRightClicked(object sender, RightTappedRoutedEventArgs args)
-        {
-            try
-            {
-                var printSource = args.OriginalSource; //Gets right clicked item
-                var printDataContext = (printSource as TextBlock).DataContext; //Gets the Print context
-                rightClickedPrint = (Print)printDataContext; //Convert to class
-            }
-            catch (Exception x) { } //Catch null exception
-        }
         #endregion
 
         #region SchoolSend Order
@@ -1286,79 +753,62 @@ namespace SchoolsMailing.ViewModels
         public ObservableCollection<SchoolSend> schoolSendOrders
         {
             get { return _schoolSendOrders; }
-            set { if(_schoolSendOrders != value) { _schoolSendOrders = value;  RaisePropertyChanged("schoolSendOrders"); } }
+            set { if (_schoolSendOrders != value) { _schoolSendOrders = value; RaisePropertyChanged("schoolSendOrders"); } }
         }
-
         private ObservableCollection<SchoolSend> _deletedSchoolSendOrders;
         public ObservableCollection<SchoolSend> deletedSchoolSendOrders
         {
             get { return _deletedSchoolSendOrders; }
             set { if (_deletedSchoolSendOrders != value) { _deletedSchoolSendOrders = value; RaisePropertyChanged("deletedSchoolSendOrders"); } }
         }
-
         private ObservableCollection<SchoolSendPack> _schoolsendPacks;
         public ObservableCollection<SchoolSendPack> schoolsendPacks
         {
             get { return _schoolsendPacks; }
-            set { if(_schoolsendPacks != value) { _schoolsendPacks = value;  RaisePropertyChanged("schoolsendPacks"); } }
+            set { if (_schoolsendPacks != value) { _schoolsendPacks = value; RaisePropertyChanged("schoolsendPacks"); } }
         }
-
         private SchoolSendPack _selectedSchoolSendPack;
         public SchoolSendPack selectedSchoolSendPack
         {
             get { return _selectedSchoolSendPack; }
-            set { if(_selectedSchoolSendPack != value) { _selectedSchoolSendPack = value;  RaisePropertyChanged("selectedSchoolSendPack"); } }
+            set { if (_selectedSchoolSendPack != value) { _selectedSchoolSendPack = value; RaisePropertyChanged("selectedSchoolSendPack"); } }
         }
-
         private SchoolSend _selectedSchoolSendOrder;
         public SchoolSend selectedSchoolSendOrder
         {
             get { return _selectedSchoolSendOrder; }
-            set { if(_selectedSchoolSendOrder != value) { _selectedSchoolSendOrder = value; RaisePropertyChanged("selectedSchoolSendOrder"); } }
+            set { if (_selectedSchoolSendOrder != value) { _selectedSchoolSendOrder = value; RaisePropertyChanged("selectedSchoolSendOrder"); } }
         }
-
         private SchoolSend _originalSchoolSendOrder;
         public SchoolSend originalSchoolSendOrder
         {
             get { return _originalSchoolSendOrder; }
             set { if (_originalSchoolSendOrder != value) { _originalSchoolSendOrder = value; RaisePropertyChanged("originalSchoolSendOrder"); } }
         }
-
-        private RelayCommand _saveSchoolSend;
-        public RelayCommand saveSchoolSend
+        public SchoolSend rightClickedSchoolSend = new SchoolSend(); //Holds right clicked item for flyout
+        private bool _isValidSchoolSendStart = false;
+        public bool isValidSchoolSendStart
         {
-            get
-            {
-                if (_saveSchoolSend == null)
-                {
-                    _saveSchoolSend = new RelayCommand(() =>
-                    {
-                        schoolSendOrders.Remove(originalSchoolSendOrder);
-                        schoolSendOrders.Add(selectedSchoolSendOrder);
-                        NavigationService.GoBack();
-                        CalculateCosts();
-                    });
-                }
-                return _saveSchoolSend;
-            }
+            get { return _isValidSchoolSendStart; }
+            set { if (_isValidSchoolSendStart != value) { _isValidSchoolSendStart = !_isValidSchoolSendStart; RaisePropertyChanged("isValidSchoolSendStart"); } }
         }
-
-        private RelayCommand _cancelSchoolSend;
-        public RelayCommand cancelSchoolSend
+        private bool _isValidSchoolSendEnd = false;
+        public bool isValidSchoolSendEnd
         {
-            get
-            {
-                if (_cancelSchoolSend == null)
-                {
-                    _cancelSchoolSend = new RelayCommand(() =>
-                    {
-                        NavigationService.GoBack();
-                    });
-                }
-
-                return _cancelSchoolSend;
-
-            }
+            get { return _isValidSchoolSendEnd; }
+            set { if (_isValidSchoolSendEnd != value) { _isValidSchoolSendEnd = !_isValidSchoolSendEnd; RaisePropertyChanged("isValidSchoolSendEnd"); } }
+        }
+        private bool _isValidSchoolSendPackage = false;
+        public bool isValidSchoolSendPackage
+        {
+            get { return _isValidSchoolSendPackage; }
+            set { if (_isValidSchoolSendPackage != value) { _isValidSchoolSendPackage = !_isValidSchoolSendPackage; RaisePropertyChanged("isValidSchoolSendPackage"); } }
+        }
+        private bool _isValidSchoolSendCost = false;
+        public bool isValidSchoolSendCost
+        {
+            get { return _isValidSchoolSendCost; }
+            set { if (_isValidSchoolSendCost != value) { _isValidSchoolSendCost = !_isValidSchoolSendCost; RaisePropertyChanged("isValidSchoolSendCost"); } }
         }
 
         private RelayCommand _setCredits;
@@ -1366,56 +816,17 @@ namespace SchoolsMailing.ViewModels
         {
             get {
                 if (_setCredits == null) {
-                        _setCredits = new RelayCommand(() => {
-                            if(selectedSchoolSendPack != null)
-                            {
-                                selectedSchoolSendOrder.schoolsendPackage = selectedSchoolSendPack.ID;
-                                selectedSchoolSendOrder.schoolsendCredits = selectedSchoolSendPack.packCredits;
-                                selectedSchoolSendOrder.schoolsendCost = selectedSchoolSendPack.packCost;
-                                RaisePropertyChanged("selectedSchoolSendOrder");
-                            }
-                        });
-                }
-                return _setCredits;
-            }
-        }
-
-        private RelayCommand _duplicateSchoolSend;
-        public RelayCommand duplicateSchoolSend
-        {
-            get
-            {
-                if (_duplicateSchoolSend == null)
-                {
-                    _duplicateSchoolSend = new RelayCommand(() =>
-                    {
-                        Debug.WriteLine("Duplicate");
-                    });
-                }
-
-                return _duplicateSchoolSend;
-            }
-        }
-
-        private RelayCommand _deleteSchoolSend;
-        public RelayCommand deleteSchoolSend
-        {
-            get
-            {
-                if (_deleteSchoolSend == null)
-                {
-                    _deleteSchoolSend = new RelayCommand(() =>
-                    {
-                        if(rightClickedSchoolSend != null)
+                    _setCredits = new RelayCommand(() => {
+                        if (selectedSchoolSendPack != null)
                         {
-                            deletedSchoolSendOrders.Add(rightClickedSchoolSend);
-                            schoolSendOrders.Remove(rightClickedSchoolSend);
-                            CalculateCosts();
+                            selectedSchoolSendOrder.schoolsendPackage = selectedSchoolSendPack.ID;
+                            selectedSchoolSendOrder.schoolsendCredits = selectedSchoolSendPack.packCredits;
+                            selectedSchoolSendOrder.schoolsendCost = selectedSchoolSendPack.packCost;
+                            RaisePropertyChanged("selectedSchoolSendOrder");
                         }
                     });
                 }
-
-                return _deleteSchoolSend;
+                return _setCredits;
             }
         }
 
@@ -1431,19 +842,6 @@ namespace SchoolsMailing.ViewModels
             //Navigate to order
             NavigationService.Navigate(typeof(SchoolSendView));
         }
-
-        public SchoolSend rightClickedSchoolSend = new SchoolSend(); //Holds right clicked item for flyout
-
-        public void schoolSendRightClicked(object sender, RightTappedRoutedEventArgs args)
-        {
-            try
-            {
-                var schoolSendSource = args.OriginalSource; //Gets right clicked item
-                var SchoolSendContext = (schoolSendSource as TextBlock).DataContext; //Gets the SchoolSend context
-                rightClickedSchoolSend = (SchoolSend)SchoolSendContext; //Convert to class
-            }
-            catch (Exception x) { } //Catch null exception
-        }
         #endregion
 
         #region Shared Mailing Order
@@ -1451,42 +849,68 @@ namespace SchoolsMailing.ViewModels
         public ObservableCollection<SharedMailing> sharedMailingOrders
         {
             get { return _sharedMailingOrders; }
-            set { if(_sharedMailingOrders != value) { _sharedMailingOrders = value; RaisePropertyChanged("sharedMailingOrders"); } }
+            set { if (_sharedMailingOrders != value) { _sharedMailingOrders = value; RaisePropertyChanged("sharedMailingOrders"); } }
         }
-
         private ObservableCollection<SharedMailing> _deletedSharedMailingOrders;
         public ObservableCollection<SharedMailing> deletedSharedMailingOrders
         {
             get { return _deletedSharedMailingOrders; }
             set { if (_deletedSharedMailingOrders != value) { _deletedSharedMailingOrders = value; RaisePropertyChanged("deletedSharedMailingOrders"); } }
         }
-
         private ObservableCollection<SharedPack> _sharedPacks;
         public ObservableCollection<SharedPack> sharedPacks
         {
             get { return _sharedPacks; }
-            set { if(_sharedPacks != value) { _sharedPacks = value; RaisePropertyChanged("sharedPacks"); } }
+            set { if (_sharedPacks != value) { _sharedPacks = value; RaisePropertyChanged("sharedPacks"); } }
         }
-
         private SharedPack _selectedSharedPack;
         public SharedPack selectedSharedPack
         {
             get { return _selectedSharedPack; }
-            set { if(_selectedSharedPack != value) { _selectedSharedPack = value; RaisePropertyChanged("selectedSharedPack"); } }
+            set { if (_selectedSharedPack != value) { _selectedSharedPack = value; RaisePropertyChanged("selectedSharedPack"); } }
         }
-
         private SharedMailing _selectedSharedMailingOrder;
         public SharedMailing selectedSharedMailingOrder
         {
             get { return _selectedSharedMailingOrder; }
-            set { if(_selectedSharedMailingOrder != value) { _selectedSharedMailingOrder = value; RaisePropertyChanged("selectedSharedMailingOrder"); } }
+            set { if (_selectedSharedMailingOrder != value) { _selectedSharedMailingOrder = value; RaisePropertyChanged("selectedSharedMailingOrder"); } }
         }
-
         private SharedMailing _originalSharedMailingOrder;
         public SharedMailing originalSharedMailingOrder
         {
             get { return _originalSharedMailingOrder; }
             set { if (_originalSharedMailingOrder != value) { _originalSharedMailingOrder = value; RaisePropertyChanged("originalSharedMailingOrder"); } }
+        }
+        public SharedMailing rightClickedSharedMailing = new SharedMailing(); //Holds right clicked item for flyout
+        private bool _isValidSharedPackage = false;
+        public bool isValidSharedPackage
+        {
+            get { return _isValidSharedPackage; }
+            set { if (_isValidSharedPackage != value) { _isValidSharedPackage = !_isValidSharedPackage; RaisePropertyChanged("isValidSharedPackage"); } }
+        }
+        private bool _isValidSharedDate = false;
+        public bool isValidSharedDate
+        {
+            get { return _isValidSharedDate; }
+            set { if (_isValidSharedDate != value) { _isValidSharedDate = !_isValidSharedDate; RaisePropertyChanged("isValidSharedDate"); } }
+        }
+        private bool _isValidSharedDeliveryDate = false;
+        public bool isValidSharedDeliveryDate
+        {
+            get { return _isValidSharedDeliveryDate; }
+            set { if (_isValidSharedDeliveryDate != value) { _isValidSharedDeliveryDate = !_isValidSharedDeliveryDate; RaisePropertyChanged("isValidSharedDeliveryDate"); } }
+        }
+        private bool _isValidSharedArtworkDate = false;
+        public bool isValidSharedArtworkDate
+        {
+            get { return _isValidSharedArtworkDate; }
+            set { if (_isValidSharedArtworkDate != value) { _isValidSharedArtworkDate = !_isValidSharedArtworkDate; RaisePropertyChanged("isValidSharedArtworkDate"); } }
+        }
+        private bool _isValidSharedCost = false;
+        public bool isValidSharedCost
+        {
+            get { return _isValidSharedCost; }
+            set { if (_isValidSharedCost != value) { _isValidSharedCost = !_isValidSharedCost; RaisePropertyChanged("isValidSharedCost"); } }
         }
 
         private RelayCommand _setPack;
@@ -1511,82 +935,6 @@ namespace SchoolsMailing.ViewModels
             }
         }
 
-        private RelayCommand _saveSharedMailing;
-        public RelayCommand saveSharedMailing
-        {
-            get
-            {
-                if (_saveSharedMailing == null)
-                {
-                    _saveSharedMailing = new RelayCommand(() =>
-                    {
-                        sharedMailingOrders.Remove(originalSharedMailingOrder);
-                        sharedMailingOrders.Add(selectedSharedMailingOrder);
-                        NavigationService.GoBack();
-                        CalculateCosts();
-                    });
-                }
-                return _saveSharedMailing;
-            }
-        }
-
-        private RelayCommand _cancelSharedMailing;
-        public RelayCommand cancelSharedMailing
-        {
-            get
-            {
-                if (_cancelSharedMailing == null)
-                {
-                    _cancelSharedMailing = new RelayCommand(() =>
-                    {
-                        NavigationService.GoBack();
-                    });
-                }
-
-                return _cancelSharedMailing;
-
-            }
-        }
-
-        private RelayCommand _duplicateSharedMailing;
-        public RelayCommand duplicateSharedMailing
-        {
-            get
-            {
-                if (_duplicateSharedMailing == null)
-                {
-                    _duplicateSharedMailing = new RelayCommand(() =>
-                    {
-                        Debug.WriteLine("Duplicate");
-                    });
-                }
-
-                return _duplicateSharedMailing;
-            }
-        }
-
-        private RelayCommand _deleteSharedMailing;
-        public RelayCommand deleteSharedMailing
-        {
-            get
-            {
-                if (_deleteSharedMailing == null)
-                {
-                    _deleteSharedMailing = new RelayCommand(() =>
-                    {
-                        if(rightClickedSharedMailing != null)
-                        {
-                            deletedSharedMailingOrders.Add(rightClickedSharedMailing);
-                            sharedMailingOrders.Remove(rightClickedSharedMailing);
-                            CalculateCosts();
-                        }
-                    });
-                }
-
-                return _deleteSharedMailing;
-            }
-        }
-
         public void sharedMailingClicked(object sender, object parameter)
         {
             //Get selected item
@@ -1599,19 +947,6 @@ namespace SchoolsMailing.ViewModels
             //Navigate to order
             NavigationService.Navigate(typeof(SharedMailingView));
         }
-
-        public SharedMailing rightClickedSharedMailing = new SharedMailing(); //Holds right clicked item for flyout
-
-        public void sharedMailingRightClicked(object sender, RightTappedRoutedEventArgs args)
-        {
-            try
-            {
-                var sharedMailingSource = args.OriginalSource; //Gets right clicked item
-                var sharedMailingSharedMailingContext = (sharedMailingSource as TextBlock).DataContext; //Gets the SharedMailing context
-                rightClickedSharedMailing = (SharedMailing)sharedMailingSharedMailingContext; //Convert to class
-            }
-            catch (Exception x) { } //Catch null exception
-        }
         #endregion
 
         #region Surcharge Order
@@ -1619,104 +954,44 @@ namespace SchoolsMailing.ViewModels
         public ObservableCollection<Surcharge> surchargeOrders
         {
             get { return _surchargeOrders; }
-            set { if(_surchargeOrders != value) { _surchargeOrders = value; RaisePropertyChanged("surchargeOrders"); } }
+            set { if (_surchargeOrders != value) { _surchargeOrders = value; RaisePropertyChanged("surchargeOrders"); } }
         }
-
         private ObservableCollection<Surcharge> _deletedSurchargeOrders;
         public ObservableCollection<Surcharge> deletedSurchargeOrders
         {
             get { return _deletedSurchargeOrders; }
             set { if (_deletedSurchargeOrders != value) { _deletedSurchargeOrders = value; RaisePropertyChanged("deletedSurchargeOrders"); } }
         }
-
         private Surcharge _selectedSurchargeOrder;
         public Surcharge selectedSurchargeOrder
         {
             get { return _selectedSurchargeOrder; }
-            set { if(_selectedSurchargeOrder != value) { _selectedSurchargeOrder = value; RaisePropertyChanged("selectedSurchargeOrder"); } }
+            set { if (_selectedSurchargeOrder != value) { _selectedSurchargeOrder = value; RaisePropertyChanged("selectedSurchargeOrder"); } }
         }
-
         private Surcharge _originalSurchargeOrder;
         public Surcharge originalSurchargeOrder
         {
             get { return _originalSurchargeOrder; }
             set { if (_originalSurchargeOrder != value) { _originalSurchargeOrder = value; RaisePropertyChanged("originalSurchargeOrder"); } }
         }
-
-        private RelayCommand _saveSurcharge;
-        public RelayCommand saveSurcharge
+        public Surcharge rightClickedSurcharge = new Surcharge(); //Holds right clicked item for flyout
+        private bool _isValidSurchargeDate = false;
+        public bool isValidSurchargeDate
         {
-            get
-            {
-                if (_saveSurcharge == null)
-                {
-                    _saveSurcharge = new RelayCommand(() =>
-                    {
-                        surchargeOrders.Remove(originalSurchargeOrder);
-                        surchargeOrders.Add(selectedSurchargeOrder);
-                        NavigationService.GoBack();
-                        CalculateCosts();
-                    });
-                }
-                return _saveSurcharge;
-            }
+            get { return _isValidSurchargeDate; }
+            set { if (_isValidSurchargeDate != value) { _isValidSurchargeDate = !_isValidSurchargeDate; RaisePropertyChanged("isValidSurchargeDate"); } }
         }
-
-        private RelayCommand _cancelSurcharge;
-        public RelayCommand cancelSurcharge
+        private bool _isValidSurchargeDetails = false;
+        public bool isValidSurchargeDetails
         {
-            get
-            {
-                if (_cancelSurcharge == null)
-                {
-                    _cancelSurcharge = new RelayCommand(() =>
-                    {
-                        NavigationService.GoBack();
-                    });
-                }
-
-                return _cancelSurcharge;
-
-            }
+            get { return _isValidSurchargeDetails; }
+            set { if (_isValidSurchargeDetails != value) { _isValidSurchargeDetails = !_isValidSurchargeDetails; RaisePropertyChanged("isValidSurchargeDetails"); } }
         }
-
-        private RelayCommand _duplicateSurcharge;
-        public RelayCommand duplicateSurcharge
+        private bool _isValidSurchargeCost = false;
+        public bool isValidSurchargeCost
         {
-            get
-            {
-                if (_duplicateSurcharge == null)
-                {
-                    _duplicateSurcharge = new RelayCommand(() =>
-                    {
-                        Debug.WriteLine("Duplicate");
-                    });
-                }
-
-                return _duplicateSurcharge;
-            }
-        }
-
-        private RelayCommand _deleteSurcharge;
-        public RelayCommand deleteSurcharge
-        {
-            get
-            {
-                if (_deleteSurcharge == null)
-                {
-                    _deleteSurcharge = new RelayCommand(() =>
-                    {
-                        if(rightClickedSurcharge != null)
-                        {
-                            deletedSurchargeOrders.Add(rightClickedSurcharge);
-                            surchargeOrders.Remove(rightClickedSurcharge);
-                            CalculateCosts();
-                        }
-                    });
-                }
-
-                return _deleteSurcharge;
-            }
+            get { return _isValidSurchargeCost; }
+            set { if (_isValidSurchargeCost != value) { _isValidSurchargeCost = !_isValidSurchargeCost; RaisePropertyChanged("isValidSurchargeCost"); } }
         }
 
         public void surchargeClicked(object sender, object parameter)
@@ -1731,8 +1006,652 @@ namespace SchoolsMailing.ViewModels
             //Navigate to order
             NavigationService.Navigate(typeof(SurchargeView));
         }
+        #endregion
 
-        public Surcharge rightClickedSurcharge = new Surcharge(); //Holds right clicked item for flyout
+        #region Save
+        public void SaveOrderPart(String orderPart)
+        {
+            switch (orderPart)
+            {
+                case "Data":
+                    if (ValidateDataOrder(selectedDataOrder))
+                    {
+                        dataOrders.Remove(originalDataOrder);
+                        dataOrders.Add(selectedDataOrder);
+                        NavigationService.GoBack();
+                        CalculateCosts();
+                    }
+                    break;
+
+                case "Email":
+                    if (validateEmailOrder(selectedEmailOrder))
+                    {
+                        emailOrders.Remove(originalEmailOrder);
+                        emailOrders.Add(selectedEmailOrder);
+                        NavigationService.GoBack();
+                        CalculateCosts();
+                    }
+                    break;
+
+                case "SchoolSend":
+                    if (validateSchoolSendOrder(selectedSchoolSendOrder))
+                    {
+                        schoolSendOrders.Remove(originalSchoolSendOrder);
+                        schoolSendOrders.Add(selectedSchoolSendOrder);
+                        NavigationService.GoBack();
+                        CalculateCosts();
+                    }
+                    break;
+
+                case "DirectMailing":
+                    if (validateDirectMailingOrder(selectedDirectMailingOrder))
+                    {
+                        directMailingOrders.Remove(originalDirectMailingOrder);
+                        directMailingOrders.Add(selectedDirectMailingOrder);
+                        NavigationService.GoBack();
+                        CalculateCosts();
+                    }
+                    break;
+
+                case "SharedMailing":
+                    if (validateSharedMailingOrder(selectedSharedMailingOrder))
+                    {
+                        sharedMailingOrders.Remove(originalSharedMailingOrder);
+                        sharedMailingOrders.Add(selectedSharedMailingOrder);
+                        NavigationService.GoBack();
+                        CalculateCosts();
+                    }
+                    break;
+
+                case "Print":
+                    if (validatePrintOrder(selectedPrintOrder))
+                    {
+                        printOrders.Remove(originalPrintOrder);
+                        printOrders.Add(selectedPrintOrder);
+                        NavigationService.GoBack();
+                        CalculateCosts();
+                    }
+                    break;
+
+                case "Surcharge":
+                    if (validateSurchargeOrder(selectedSurchargeOrder))
+                    {
+                        surchargeOrders.Remove(originalSurchargeOrder);
+                        surchargeOrders.Add(selectedSurchargeOrder);
+                        NavigationService.GoBack();
+                        CalculateCosts();
+                    }
+                    break;
+            }
+        }
+
+        private RelayCommand _saveData;
+        public RelayCommand saveData
+        {
+            get { if (_saveData == null) { _saveData = new RelayCommand(() => { SaveOrderPart("Data"); }); } return _saveData; }
+        }
+
+        private RelayCommand _saveEmail;
+        public RelayCommand saveEmail
+        {
+            get { if (_saveEmail == null) { _saveEmail = new RelayCommand(() => { SaveOrderPart("Email"); }); } return _saveEmail; }
+        }
+
+        private RelayCommand _saveSchoolSend;
+        public RelayCommand saveSchoolSend
+        {
+            get { if (_saveSchoolSend == null) { _saveSchoolSend = new RelayCommand(() => { SaveOrderPart("SchoolSend"); }); } return _saveSchoolSend; }
+        }
+
+        private RelayCommand _saveDirectMailing;
+        public RelayCommand saveDirectMailing
+        {
+            get { if (_saveDirectMailing == null) { _saveDirectMailing = new RelayCommand(() => { SaveOrderPart("DirectMailing"); }); } return _saveDirectMailing; }
+        }
+
+        private RelayCommand _saveSharedMailing;
+        public RelayCommand saveSharedMailing
+        {
+            get { if (_saveSharedMailing == null) { _saveSharedMailing = new RelayCommand(() => { SaveOrderPart("SharedMailing"); }); } return _saveSharedMailing; }
+        }
+
+        private RelayCommand _savePrint;
+        public RelayCommand savePrint
+        {
+            get { if (_savePrint == null) { _savePrint = new RelayCommand(() => { SaveOrderPart("Print"); }); } return _savePrint; }
+        }
+
+        private RelayCommand _saveSurcharge;
+        public RelayCommand saveSurcharge
+        {
+            get { if (_saveSurcharge == null) { _saveSurcharge = new RelayCommand(() => { SaveOrderPart("Surcharge"); }); } return _saveSurcharge; }
+        }
+        #endregion
+
+        #region Duplicate
+        private RelayCommand _duplicateData;
+        public RelayCommand duplicateData
+        {
+            get { if (_duplicateData == null) { _duplicateData = new RelayCommand(() => { duplicateDataOrder(rightClickedData); }); } return _duplicateData; }
+        }
+        public void duplicateDataOrder(Data data)
+        {
+            Data newData = new Data();
+            newData = dataOrders.Where(x => x == data).First();
+            newData.dataCreated = DateTime.Now;
+            newData.dataModified = DateTime.Now;
+            dataOrders.Add(newData);
+        }
+
+        private RelayCommand _duplicateEmail;
+        public RelayCommand duplicateEmail
+        {
+            get { if (_duplicateEmail == null) { _duplicateEmail = new RelayCommand(() => { duplicateEmailOrder(rightClickedEmail); }); } return _duplicateEmail; }
+        }
+        public void duplicateEmailOrder(Email email)
+        {
+            email.emailCreated = DateTime.Now;
+            email.emailModified = DateTime.Now;
+            emailOrders.Add(email);
+        }
+
+        private RelayCommand _duplicateSchoolSend;
+        public RelayCommand duplicateSchoolSend
+        {
+            get { if (_duplicateSchoolSend == null) { _duplicateSchoolSend = new RelayCommand(() => { duplicateSchoolSendOrder(rightClickedSchoolSend); }); } return _duplicateSchoolSend; }
+        }
+        public void duplicateSchoolSendOrder(SchoolSend schoolSend)
+        {
+            schoolSend.schoolsendCreated = DateTime.Now;
+            schoolSend.schoolsendModified = DateTime.Now;
+            schoolSendOrders.Add(schoolSend);
+        }
+
+        private RelayCommand _duplicateDirectMailing;
+        public RelayCommand duplicateDirectMailing
+        {
+            get { if (_duplicateDirectMailing == null) { _duplicateDirectMailing = new RelayCommand(() => { duplicateDirectMailingOrder(rightClickedDirectMailing); }); } return _duplicateDirectMailing; }
+        }
+        public void duplicateDirectMailingOrder(DirectMailing directMailing)
+        {
+            directMailing.directCreated = DateTime.Now;
+            directMailing.directModified = DateTime.Now;
+            directMailingOrders.Add(directMailing);
+        }
+
+        private RelayCommand _duplicateSharedMailing;
+        public RelayCommand duplicateSharedMailing
+        {
+            get { if (_duplicateSharedMailing == null) { _duplicateSharedMailing = new RelayCommand(() => { duplicateSharedMailingOrder(rightClickedSharedMailing); }); } return _duplicateSharedMailing; }
+        }
+        public void duplicateSharedMailingOrder(SharedMailing sharedMailing)
+        {
+            SharedMailing newShared = new SharedMailing();
+            newShared = sharedMailing;
+            sharedMailing.sharedCreated = DateTime.Now;
+            sharedMailing.sharedModified = DateTime.Now;
+            sharedMailingOrders.Add(newShared);
+        }
+
+        private RelayCommand _duplicatePrint;
+        public RelayCommand duplicatePrint
+        {
+            get { if (_duplicatePrint == null) { _duplicatePrint = new RelayCommand(() => { duplicatePrintOrder(rightClickedPrint); }); } return _duplicatePrint; }
+        }
+        public void duplicatePrintOrder(Print print)
+        {
+            print.printCreated = DateTime.Now;
+            print.printModified = DateTime.Now;
+            printOrders.Add(print);
+        }
+
+        private RelayCommand _duplicateSurcharge;
+        public RelayCommand duplicateSurcharge
+        {
+            get { if (_duplicateSurcharge == null) { _duplicateSurcharge = new RelayCommand(() => { duplicateSurchargeOrder(rightClickedSurcharge); }); } return _duplicateSurcharge; }
+        }
+        public void duplicateSurchargeOrder(Surcharge surcharge)
+        {
+            surcharge.surchargeCreated = DateTime.Now;
+            surcharge.surchargeModified = DateTime.Now;
+            surchargeOrders.Add(surcharge);
+        }
+        #endregion
+
+        #region Delete
+        public void DeleteOrderPart(String orderPart)
+        {
+            switch (orderPart)
+            {
+                case "Data":
+                    deletedDataOrders.Add(rightClickedData);
+                    dataOrders.Remove(rightClickedData);
+                    break;
+
+                case "Email":
+                    deletedEmailOrders.Add(rightClickedEmail);
+                    emailOrders.Remove(rightClickedEmail);
+                    break;
+
+                case "SchoolSend":
+                    deletedSchoolSendOrders.Add(rightClickedSchoolSend);
+                    schoolSendOrders.Remove(rightClickedSchoolSend);
+                    break;
+
+                case "DirectMailing":
+                    deletedDirectMailingOrders.Add(rightClickedDirectMailing);
+                    directMailingOrders.Remove(rightClickedDirectMailing);
+                    break;
+
+                case "SharedMailing":
+                    deletedSharedMailingOrders.Add(rightClickedSharedMailing);
+                    sharedMailingOrders.Remove(rightClickedSharedMailing);
+                    break;
+
+                case "Print":
+                    deletedPrintOrders.Add(rightClickedPrint);
+                    printOrders.Remove(rightClickedPrint);
+                    break;
+
+                case "Surcharge":
+                    deletedSurchargeOrders.Add(rightClickedSurcharge);
+                    surchargeOrders.Remove(rightClickedSurcharge);
+                    break;
+            }
+
+            CalculateCosts();
+        }
+
+        private RelayCommand _deleteData;
+        public RelayCommand deleteData
+        {
+            get { if (_deleteData == null) { _deleteData = new RelayCommand(() => { if (rightClickedData != null) { DeleteOrderPart("Data"); } }); } return _deleteData; }
+        }
+
+        private RelayCommand _deleteEmail;
+        public RelayCommand deleteEmail
+        {
+            get { if (_deleteEmail == null) { _deleteEmail = new RelayCommand(() => { if (rightClickedEmail != null) { DeleteOrderPart("Email"); } }); } return _deleteEmail; }
+        }
+
+        private RelayCommand _deleteSchoolSend;
+        public RelayCommand deleteSchoolSend
+        {
+            get { if (_deleteSchoolSend == null) { _deleteSchoolSend = new RelayCommand(() => { if (rightClickedSchoolSend != null) { DeleteOrderPart("SchoolSend"); } }); } return _deleteSchoolSend; }
+        }
+
+        private RelayCommand _deleteDirectMailing;
+        public RelayCommand deleteDirectMailing
+        {
+            get { if (_deleteDirectMailing == null) { _deleteDirectMailing = new RelayCommand(() => { if (rightClickedDirectMailing != null) { DeleteOrderPart("DirectMailing"); } }); } return _deleteDirectMailing; }
+        }
+
+        private RelayCommand _deleteSharedMailing;
+        public RelayCommand deleteSharedMailing
+        {
+            get { if (_deleteSharedMailing == null) { _deleteSharedMailing = new RelayCommand(() => { if (rightClickedSharedMailing != null) { DeleteOrderPart("SharedMailing"); } }); } return _deleteSharedMailing; }
+        }
+
+        private RelayCommand _deletePrint;
+        public RelayCommand deletePrint
+        {
+            get { if (_deletePrint == null) { _deletePrint = new RelayCommand(() => { if (rightClickedPrint != null) { DeleteOrderPart("Print"); } }); } return _deletePrint; }
+        }
+
+        private RelayCommand _deleteSurcharge;
+        public RelayCommand deleteSurcharge
+        {
+            get { if (_deleteSurcharge == null) { _deleteSurcharge = new RelayCommand(() => { if (rightClickedSurcharge != null) { DeleteOrderPart("Surcharge"); } }); } return _deleteSurcharge; }
+        }
+        #endregion
+
+        #region Validation
+        private RelayCommand _validateData;
+        public RelayCommand validateData
+        {
+            get { if (_validateData == null) { _validateData = new RelayCommand(() => { ValidateDataOrder(selectedDataOrder); }); } return _validateData; }
+        }
+        public bool ValidateDataOrder(Data data)
+        {
+            if (data.dataStart == null) { isValidDataStart = true; }
+            else { isValidDataStart = false; }
+
+            if (data.dataEnd == null || data.dataEnd < data.dataStart) { isValidDataEnd = true; }
+            else { isValidDataEnd = false; }
+
+            if (data.dataCost < 0) { isValidDataCost = true; }
+            else { isValidDataCost = false; }
+
+            if (data.dataDetails == null) { isValidDataDetails = true; }
+            else { isValidDataDetails = false; }
+
+            if (isValidDataStart == true ||
+                isValidDataEnd == true ||
+                isValidDataCost == true ||
+                isValidDataDetails == true)
+            {
+                return false;
+            }
+            else { return true; }
+        }
+
+        private RelayCommand _validateEmail;
+        public RelayCommand validateEmail
+        {
+            get { if (_validateEmail == null) { _validateEmail = new RelayCommand(() => { if (_validateEmail != null) { validateEmailOrder(selectedEmailOrder); } }); } return _validateEmail; }
+        }
+        public bool validateEmailOrder(Email email)
+        {
+            if (email.emailDate == null) { isValidEmailDate = true; }
+            else { isValidEmailDate = false; }
+
+            if (email.emailDetails == null) { isValidEmailDetails = true; }
+            else { isValidEmailDetails = false; }
+
+            if (email.emailAdminCost < 0) { isValidEmailAdminCost = true; }
+            else { isValidEmailAdminCost = false; }
+
+            if (email.emailDirectCost < 0) { isValidEmailDirectCost = true; }
+            else { isValidEmailDirectCost = false; }
+
+            if (email.emailCost < 0) { isValidEmailCost = true; }
+            else { isValidEmailCost = false; }
+
+            if (isValidEmailAdminCost == true ||
+                isValidEmailCost == true ||
+                isValidEmailDate == true ||
+                isValidEmailDetails == true ||
+                isValidEmailDirectCost == true)
+            {
+                return false;
+            }
+            else
+            {
+                if (selectedEmailOrder.emailSetUp)
+                {
+                    selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost + 125;
+                }
+                else
+                {
+                    selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost;
+                }
+                RaisePropertyChanged("selectedEmailOrder");
+                return true;
+            }
+        }
+
+        private RelayCommand _validateSchoolSend;
+        public RelayCommand validateSchoolSend
+        {
+            get { if (_validateSchoolSend == null) { _validateSchoolSend = new RelayCommand(() => { if (_validateSchoolSend != null) { validateSchoolSendOrder(selectedSchoolSendOrder); } }); } return _validateSchoolSend; }
+        }
+        public bool validateSchoolSendOrder(SchoolSend schoolsend)
+        {
+            if (schoolsend.schoolsendStart == null) { isValidSchoolSendStart = true; }
+            else { isValidSchoolSendStart = false; }
+
+            if (schoolsend.schoolsendEnd == null || schoolsend.schoolsendEnd < schoolsend.schoolsendStart) { isValidSchoolSendEnd = true; }
+            else { isValidSchoolSendEnd = false; }
+
+            if (schoolsend.schoolsendPackage <= 0) { isValidSchoolSendPackage = true; }
+            else { isValidSchoolSendPackage = false; }
+
+            if (schoolsend.schoolsendCost < 0) { isValidSchoolSendCost = true; }
+            else { isValidSchoolSendCost = false; }
+
+            if (isValidSchoolSendStart == true ||
+                isValidSchoolSendEnd == true ||
+                isValidSchoolSendPackage == true ||
+                isValidSchoolSendCost == true)
+            {
+                return false;
+            }
+            else { return true; }
+        }
+
+        private RelayCommand _validateDirectMailing;
+        public RelayCommand validateDirectMailing
+        {
+            get { if (_validateDirectMailing == null) { _validateDirectMailing = new RelayCommand(() => { if (_validateDirectMailing != null) { validateDirectMailingOrder(selectedDirectMailingOrder); } }); } return _validateDirectMailing; }
+        }
+        public bool validateDirectMailingOrder(DirectMailing directMailing)
+        {
+            if (directMailing.directDate == null || directMailing.directDate < directMailing.directArtworkDate || directMailing.directDate < directMailing.directDataDate || directMailing.directDate < directMailing.directInsertDate) { isValidDirectMailingDate = true; }
+            else { isValidDirectMailingDate = false; }
+
+            if (directMailing.directArtworkDate == null || directMailing.directArtworkDate > directMailing.directDate) { isValidDirectMailingArtworkDate = true; }
+            else { isValidDirectMailingArtworkDate = false; }
+
+            if (directMailing.directDataDate == null || directMailing.directDataDate > directMailing.directDate) { isValidDirectMailingDataDate = true; }
+            else { isValidDirectMailingDataDate = false; }
+
+            if (directMailing.directInsertDate == null || directMailing.directInsertDate > directMailing.directDate) { isValidDirectMailingInsertDate = true; }
+            else { isValidDirectMailingInsertDate = false; }
+
+            if (directMailing.directDeliveryCode == null) { isValidDirectMailingDeliveryCode = true; }
+            else { isValidDirectMailingDeliveryCode = false; }
+
+            if (directMailing.directDetails == null) { isValidDirectMailingDetails = true; }
+            else { isValidDirectMailingDetails = false; }
+
+            if (directMailing.directFulfilmentCost < 0) { isValidDirectMailingFulfilmentCost = true; }
+            else { isValidDirectMailingFulfilmentCost = false; }
+
+            if (directMailing.directPostageCost < 0) { isValidDirectMailingPostageCost = true; }
+            else { isValidDirectMailingPostageCost = false; }
+
+            if (directMailing.directPrintCost < 0) { isValidDirectMailingPrintCost = true; }
+            else { isValidDirectMailingPrintCost = false; }
+
+            if (isValidDirectMailingDate == true ||
+                isValidDirectMailingArtworkDate == true ||
+                isValidDirectMailingInsertDate == true ||
+                isValidDirectMailingDataDate == true ||
+                isValidDirectMailingDeliveryCode == true ||
+                isValidDirectMailingDetails == true ||
+                isValidDirectMailingFulfilmentCost == true ||
+                isValidDirectMailingPostageCost == true ||
+                isValidDirectMailingPrintCost == true)
+            {
+                return false;
+            }
+            else
+            {
+                selectedDirectMailingOrder.directCost = selectedDirectMailingOrder.directFulfilmentCost + selectedDirectMailingOrder.directPostageCost + selectedDirectMailingOrder.directPrintCost;
+                RaisePropertyChanged("selectedDirectMailingOrder");
+                return true;
+            }
+        }
+
+        private RelayCommand _validateSharedMailing;
+        public RelayCommand validateSharedMailing
+        {
+            get { if (_validateSharedMailing == null) { _validateSharedMailing = new RelayCommand(() => { if (_validateSharedMailing != null) { validateSharedMailingOrder(selectedSharedMailingOrder); } }); } return _validateSharedMailing; }
+        }
+        public bool validateSharedMailingOrder(SharedMailing sharedMailing)
+        {
+            if (sharedMailing.sharedPackage <= 0) { isValidSharedPackage = true; }
+            else { isValidSharedPackage = false; }
+
+            if (sharedMailing.sharedDate == null || sharedMailing.sharedDate < sharedMailing.sharedDeliveryDate || sharedMailing.sharedDate < sharedMailing.sharedArtworkDate) { isValidSharedDate = true; }
+            else { isValidSharedDate = false; }
+
+            if (sharedMailing.sharedDeliveryDate == null || sharedMailing.sharedDeliveryDate > sharedMailing.sharedDate) { isValidSharedDeliveryDate = true; }
+            else { isValidSharedDeliveryDate = false; }
+
+            if (sharedMailing.sharedArtworkDate == null || sharedMailing.sharedArtworkDate > sharedMailing.sharedDate) { isValidSharedArtworkDate = true; }
+            else { isValidSharedArtworkDate = false; }
+
+            if (sharedMailing.sharedCost < 0) { isValidSharedCost = true; }
+            else { isValidSharedCost = false; }
+
+            if (isValidSharedPackage == true ||
+                isValidSharedDate == true ||
+                isValidSharedDeliveryDate == true ||
+                isValidSharedArtworkDate == true ||
+                isValidSharedCost == true)
+            {
+                return false;
+            }
+            else { return true; }
+        }
+
+        private RelayCommand _validatePrint;
+        public RelayCommand validatePrint
+        {
+            get { if (_validatePrint == null) { _validatePrint = new RelayCommand(() => { if (_validatePrint != null) { validatePrintOrder(selectedPrintOrder); } }); } return _validatePrint; }
+        }
+        public bool validatePrintOrder(Print print)
+        {
+            if (print.printDate == null) { isValidPrintDate = true; }
+            else { isValidPrintDate = false; }
+
+            if (print.printPrinter == null) { isValidPrintPrinter = true; }
+            else { isValidPrintPrinter = false; }
+
+            if (print.printDetails == null) { isValidPrintDetails = true; }
+            else { isValidPrintDetails = false; }
+
+            if (print.printCharge < 0) { isValidPrintCharge = true; }
+            else { isValidPrintCharge = false; }
+
+            if (print.printCost < 0) { isValidPrintCost = true; }
+            else { isValidPrintCost = false; }
+
+            if (isValidPrintCharge == true ||
+                isValidPrintDetails == true)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private RelayCommand _validateSurcharge;
+        public RelayCommand validateSurcharge
+        {
+            get { if (_validateSurcharge == null) { _validateSurcharge = new RelayCommand(() => { if (_validateSurcharge != null) { validateSurchargeOrder(selectedSurchargeOrder); } }); } return _validateSurcharge; }
+        }
+        public bool validateSurchargeOrder(Surcharge surcharge)
+        {
+            if (surcharge.surchargeDate == null) { isValidSurchargeDate = true; }
+            else { isValidSurchargeDate = false; }
+
+            if (surcharge.surchargeDetails == null) { isValidSurchargeDetails = true; }
+            else { isValidSurchargeDetails = false; }
+
+            if (surcharge.surchargeCost < 0) { isValidSurchargeCost = true; }
+            else { isValidSurchargeCost = false; }
+
+            if (isValidSurchargeDate == true ||
+                isValidSurchargeDetails == true ||
+                isValidSurchargeCost == true)
+            {
+                return false;
+            }
+            else { return true; }
+        }
+        #endregion
+
+        #region Sum Totals
+        private RelayCommand _sumEmail;
+        public RelayCommand sumEmail
+        {
+            get { if (_sumEmail == null) { _sumEmail = new RelayCommand(() => { if (sumEmail != null) { SumEmailOrder(); } }); } return _sumEmail; }
+        }
+        public void SumEmailOrder()
+        {
+            if (selectedEmailOrder.emailSetUp)
+            {
+                selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost + 125;
+            }
+            else
+            {
+                selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost;
+            }
+            RaisePropertyChanged("selectedEmailOrder");
+        }
+
+        private RelayCommand _sumDirectMailing;
+        public RelayCommand sumDirectMailing
+        {
+            get { if (_sumDirectMailing == null) { _sumDirectMailing = new RelayCommand(() => { if (sumDirectMailing != null) { SumDirectMailingOrder(); } }); } return _sumDirectMailing; }
+        }
+        public void SumDirectMailingOrder()
+        {
+            selectedDirectMailingOrder.directCost = selectedDirectMailingOrder.directFulfilmentCost + selectedDirectMailingOrder.directPostageCost + selectedDirectMailingOrder.directPrintCost;
+            RaisePropertyChanged("selectedDirectMailingOrder");
+        }
+        #endregion
+
+        #region Right Click
+        public void dataRightClicked(object sender, RightTappedRoutedEventArgs args)
+        {
+            try
+            {
+                var dataSource = args.OriginalSource; //Gets right clicked item
+                var dataDataContext = (dataSource as TextBlock).DataContext; //Gets the Data context
+                rightClickedData = (Data)dataDataContext; //Convert to class
+            }
+            catch (Exception e) { } //Catch null exception
+        }
+
+        public void emailRightClicked(object sender, RightTappedRoutedEventArgs args)
+        {
+            try
+            {
+                var emailSource = args.OriginalSource; //Gets right clicked item
+                var emailDataContext = (emailSource as TextBlock).DataContext; //Gets the data context
+                rightClickedEmail = (Email)emailDataContext; //Convert to class
+            }
+            catch (Exception e) { } //Catch null exception
+        }
+
+        public void schoolSendRightClicked(object sender, RightTappedRoutedEventArgs args)
+        {
+            try
+            {
+                var schoolSendSource = args.OriginalSource; //Gets right clicked item
+                var SchoolSendContext = (schoolSendSource as TextBlock).DataContext; //Gets the SchoolSend context
+                rightClickedSchoolSend = (SchoolSend)SchoolSendContext; //Convert to class
+            }
+            catch (Exception e) { } //Catch null exception
+        }
+
+        public void directMailingRightClicked(object sender, RightTappedRoutedEventArgs args)
+        {
+            try
+            {
+                var directMailingSource = args.OriginalSource; //Gets right clicked item
+                var directMailingDataContext = (directMailingSource as TextBlock).DataContext; //Gets the data context
+                rightClickedDirectMailing = (DirectMailing)directMailingDataContext; //Convert to class
+            }
+            catch (Exception e) { } //Catch null exception
+        }
+
+        public void sharedMailingRightClicked(object sender, RightTappedRoutedEventArgs args)
+        {
+            try
+            {
+                var sharedMailingSource = args.OriginalSource; //Gets right clicked item
+                var sharedMailingSharedMailingContext = (sharedMailingSource as TextBlock).DataContext; //Gets the SharedMailing context
+                rightClickedSharedMailing = (SharedMailing)sharedMailingSharedMailingContext; //Convert to class
+            }
+            catch (Exception e) { } //Catch null exception
+        }
+
+        public void printRightClicked(object sender, RightTappedRoutedEventArgs args)
+        {
+            try
+            {
+                var printSource = args.OriginalSource; //Gets right clicked item
+                var printDataContext = (printSource as TextBlock).DataContext; //Gets the Print context
+                rightClickedPrint = (Print)printDataContext; //Convert to class
+            }
+            catch (Exception e) { } //Catch null exception
+        }
 
         public void surchargeRightClicked(object sender, RightTappedRoutedEventArgs args)
         {
@@ -1742,7 +1661,7 @@ namespace SchoolsMailing.ViewModels
                 var surchargeSurchargeContext = (surchargeSource as TextBlock).DataContext; //Gets the Surcharge context
                 rightClickedSurcharge = (Surcharge)surchargeSurchargeContext; //Convert to class
             }
-            catch (Exception x) { } //Catch null exception
+            catch (Exception e) { } //Catch null exception
         }
         #endregion
     }

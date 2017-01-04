@@ -8,11 +8,13 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:conv="using:SchoolsMailing.Converters"
+    xmlns:cntrl="using:SchoolsMailing.Controls"
     mc:Ignorable="d"
     DataContext="{Binding OrderViewModel, Source={StaticResource VmLocator}}">
     <Page.Resources>
         <conv:StringFormatter x:Key="CurrencyConverter"/>
         <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
+        <conv:BooleanToVisibilityConverter x:Key="InvalidTextBox"/>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -25,25 +27,35 @@
                     <StackPanel>
                         <TextBlock Text="Select Package"
                                    Style="{StaticResource inputTextBlock}"/>
-                        <ComboBox Style="{StaticResource inputComboBox}"
-                                  Width="200"
-                                  DisplayMemberPath="packName"
-                                  ItemsSource="{Binding sharedPacks, Mode=TwoWay}"
-                                  SelectedItem="{Binding selectedSharedPack, Mode=TwoWay}"
-                                  SelectedValue="{Binding selectedSharedMailingOrder.sharedPackage, Mode=TwoWay}"
-                                  SelectedValuePath="ID">
-                            <interactivity:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="SelectionChanged">
-                                    <core:InvokeCommandAction Command="{Binding Path=setPack}" />
-                                </core:EventTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-                        </ComboBox>
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox Style="{StaticResource inputComboBox}"
+                                      Width="200"
+                                      DisplayMemberPath="packName"
+                                      ItemsSource="{Binding sharedPacks, Mode=TwoWay}"
+                                      SelectedItem="{Binding selectedSharedPack, Mode=TwoWay}"
+                                      SelectedValue="{Binding selectedSharedMailingOrder.sharedPackage, Mode=TwoWay}"
+                                      SelectedValuePath="ID">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="SelectionChanged">
+                                        <core:InvokeCommandAction Command="{Binding Path=setPack}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </ComboBox>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidSharedPackage, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Shared Package"/>
+                        </StackPanel>
+                        
                         <TextBlock Text="Send Date"
                                    Style="{StaticResource inputTextBlock}"/>
-                        <CalendarDatePicker Width="200" 
-                                            MinWidth="200"
-                                            Date="{Binding selectedSharedMailingOrder.sharedDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
-                                            Style="{StaticResource inputCalendarDatePicker}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CalendarDatePicker Width="200" 
+                                                MinWidth="200"
+                                                Date="{Binding selectedSharedMailingOrder.sharedDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                                Style="{StaticResource inputCalendarDatePicker}"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidSharedDate, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Send Date"/>
+                        </StackPanel>
+                        
                         <TextBlock Text="To"
                                    Style="{StaticResource inputTextBlock}"/>
                         <TextBox Text="{Binding selectedSharedMailingOrder.sharedMailingTo, Mode=TwoWay}"
@@ -58,16 +70,26 @@
                     <StackPanel>
                         <TextBlock Text="Artwork"
                                    Style="{StaticResource inputTextBlock}"/>
-                        <CalendarDatePicker Width="120" 
-                                            MinWidth="120"
-                                            Date="{Binding selectedSharedMailingOrder.sharedArtworkDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
-                                            Style="{StaticResource inputCalendarDatePicker}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CalendarDatePicker Width="120" 
+                                                MinWidth="120"
+                                                Date="{Binding selectedSharedMailingOrder.sharedArtworkDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                                Style="{StaticResource inputCalendarDatePicker}"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidSharedArtworkDate, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Artwork Date"/>
+                        </StackPanel>
+                        
                         <TextBlock Text="Delivery"
                                    Style="{StaticResource inputTextBlock}"/>
-                        <CalendarDatePicker Width="120" 
-                                            MinWidth="120"
-                                            Date="{Binding selectedSharedMailingOrder.sharedDeliveryDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
-                                            Style="{StaticResource inputCalendarDatePicker}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CalendarDatePicker Width="120" 
+                                                MinWidth="120"
+                                                Date="{Binding selectedSharedMailingOrder.sharedDeliveryDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                                Style="{StaticResource inputCalendarDatePicker}"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidSharedDeliveryDate, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Delivery Date"/>
+                        </StackPanel>
+                        
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -103,9 +125,13 @@
                     <StackPanel>
                         <TextBlock Text="Total"
                                    Style="{StaticResource inputTextBlock}"/>
-                        <TextBox Text="{Binding selectedSharedMailingOrder.sharedCost, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="200"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedSharedMailingOrder.sharedCost, Mode=TwoWay}"
+                                     Style="{StaticResource inputTextBox}"
+                                     Width="200"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidSharedCost, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Cost"/>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -124,7 +150,7 @@
                         Label="Cancel">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=cancelSharedMailing}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cancelOrderPart}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

@@ -8,11 +8,13 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:conv="using:SchoolsMailing.Converters"
+    xmlns:cntrl="using:SchoolsMailing.Controls"
     mc:Ignorable="d"
     DataContext="{Binding OrderViewModel, Source={StaticResource VmLocator}}">
     <Page.Resources>
         <conv:StringFormatter x:Key="CurrencyConverter"/>
         <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
+        <conv:BooleanToVisibilityConverter x:Key="InvalidTextBox"/>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -25,28 +27,45 @@
                     <StackPanel>
                         <TextBlock Text="Mailing Date"
                                    Style="{StaticResource inputTextBlock}"/>
-                        <CalendarDatePicker Width="120" 
-                                            MinWidth="120"
-                                            Date="{Binding selectedDirectMailingOrder.directDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
-                                            Style="{StaticResource inputCalendarDatePicker}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CalendarDatePicker Width="120" 
+                                                MinWidth="120"
+                                                Date="{Binding selectedDirectMailingOrder.directDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                                Style="{StaticResource inputCalendarDatePicker}"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidDirectMailingDate, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Send Date"/>
+                        </StackPanel>
                         <TextBlock Text="Data Date"
                                    Style="{StaticResource inputTextBlock}"/>
-                        <CalendarDatePicker Width="120" 
-                                            MinWidth="120"
-                                            Date="{Binding selectedDirectMailingOrder.directDataDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                        <StackPanel Orientation="Horizontal">
+                            <CalendarDatePicker Width="120" 
+                                                MinWidth="120"
+                                                Date="{Binding selectedDirectMailingOrder.directDataDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                             Style="{StaticResource inputCalendarDatePicker}"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidDirectMailingDataDate, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Data Date"/>
+                        </StackPanel>
                         <TextBlock Text="Insert Date"
                                    Style="{StaticResource inputTextBlock}"/>
-                        <CalendarDatePicker Width="120" 
-                                            MinWidth="120"
-                                            Date="{Binding selectedDirectMailingOrder.directInsertDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
-                                            Style="{StaticResource inputCalendarDatePicker}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CalendarDatePicker Width="120" 
+                                                MinWidth="120"
+                                                Date="{Binding selectedDirectMailingOrder.directInsertDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                                Style="{StaticResource inputCalendarDatePicker}"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidDirectMailingInsertDate, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Insert Date"/>
+                        </StackPanel>
+                        
                         <TextBlock Text="Artwork Date"
                                    Style="{StaticResource inputTextBlock}"/>
-                        <CalendarDatePicker Width="120" 
+                        <StackPanel Orientation="Horizontal">
+                            <CalendarDatePicker Width="120" 
                                             MinWidth="120"
                                             Date="{Binding selectedDirectMailingOrder.directArtworkDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                             Style="{StaticResource inputCalendarDatePicker}"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidDirectMailingArtworkDate, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Artwork Date"/>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -62,24 +81,33 @@
                         <TextBlock Text="Delivery Code"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text="{Binding selectedDirectMailingOrder.directDeliveryCode, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedDirectMailingOrder.directDeliveryCode, Mode=TwoWay}"
+                                     Style="{StaticResource inputTextBox}"
+                                     Width="400"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidDirectMailingDeliveryCode, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Delivery Code"/>
+                        </StackPanel>
                         <TextBlock Text="Mailing To"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
                         <TextBox Text="{Binding selectedDirectMailingOrder.directMailingTo, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="400"/>
+                                    Style="{StaticResource inputTextBox}"
+                                    Width="400"/>
                         <TextBlock Text="Details" 
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text="{Binding selectedDirectMailingOrder.directDetails, Mode=TwoWay}"
-                                 Style="{StaticResource inputLargeTextBox}"
-                                 Width="400" 
-                                 AcceptsReturn="True" 
-                                 ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                                 TextWrapping="Wrap"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedDirectMailingOrder.directDetails, Mode=TwoWay}"
+                                     Style="{StaticResource inputLargeTextBox}"
+                                     Width="400" 
+                                     AcceptsReturn="True" 
+                                     ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                                     TextWrapping="Wrap"/>
+                            <cntrl:InvalidFlagLarge Visibility="{Binding isValidDirectMailingDetails, Converter={StaticResource InvalidTextBox}}" 
+                                                    ToolTipService.ToolTip="Invalid Details"/>
+                        </StackPanel>
+                        
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -89,51 +117,57 @@
                         <TextBlock Text="Fulfilment"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text="{Binding selectedDirectMailingOrder.directFulfilmentCost, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="200">
-                            <interactivity:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="LostFocus">
-                                    <core:InvokeCommandAction Command="{Binding Path=validateDirectFulfilmentCost}" />
-                                </core:EventTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-                        </TextBox>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedDirectMailingOrder.directFulfilmentCost, Mode=TwoWay}"
+                                     Style="{StaticResource inputTextBox}"
+                                     Width="200">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="LostFocus">
+                                        <core:InvokeCommandAction Command="{Binding Path=sumDirectMailing}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </TextBox>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidDirectMailingFulfilmentCost, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Fulfilment Cost"/>
+                        </StackPanel>
                         <TextBlock Text="Print"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text="{Binding selectedDirectMailingOrder.directPrintCost, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="200">
-                            <interactivity:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="LostFocus">
-                                    <core:InvokeCommandAction Command="{Binding Path=validateDirectPrintCost}" />
-                                </core:EventTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-                        </TextBox>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedDirectMailingOrder.directPrintCost, Mode=TwoWay}"
+                                     Style="{StaticResource inputTextBox}"
+                                     Width="200">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="LostFocus">
+                                        <core:InvokeCommandAction Command="{Binding Path=sumDirectMailing}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </TextBox>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidDirectMailingPrintCost, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Print Cost"/>
+                        </StackPanel>
                         <TextBlock Text="Postage"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text="{Binding selectedDirectMailingOrder.directPostageCost, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="200">
-                            <interactivity:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="LostFocus">
-                                    <core:InvokeCommandAction Command="{Binding Path=validateDirectPostageCost}" />
-                                </core:EventTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-                        </TextBox>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedDirectMailingOrder.directPostageCost, Mode=TwoWay}"
+                                     Style="{StaticResource inputTextBox}"
+                                     Width="200">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="LostFocus">
+                                        <core:InvokeCommandAction Command="{Binding Path=sumDirectMailing}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </TextBox>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidDirectMailingPostageCost, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Postage Cost"/>
+                        </StackPanel>
                         <TextBlock Text="Total"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
                         <TextBox Text="{Binding selectedDirectMailingOrder.directCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
-                                 Width="200">
-                            <interactivity:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="LostFocus">
-                                    <core:InvokeCommandAction Command="{Binding Path=validateDirectCost}" />
-                                </core:EventTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-                        </TextBox>
+                                 Width="200"/>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -160,7 +194,7 @@
                           Label="Cancel">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=cancelDirectMailing}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cancelOrderPart}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

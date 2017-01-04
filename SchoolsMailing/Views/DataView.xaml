@@ -8,11 +8,13 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:conv="using:SchoolsMailing.Converters"
+    xmlns:cntrl="using:SchoolsMailing.Controls"
     mc:Ignorable="d"
     DataContext="{Binding OrderViewModel, Source={StaticResource VmLocator}}">
     <Page.Resources>
         <conv:StringFormatter x:Key="CurrencyConverter"/>
         <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
+        <conv:BooleanToVisibilityConverter x:Key="InvalidTextBox"/>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -25,16 +27,26 @@
                     <StackPanel>
                         <TextBlock Text="Start Date" 
                                    Style="{StaticResource inputTextBlock}"/>
-                        <CalendarDatePicker Width="120" 
-                                            MinWidth="120"
-                                            Date="{Binding selectedDataOrder.dataStart, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
-                                            Style="{StaticResource inputCalendarDatePicker}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CalendarDatePicker Width="120" 
+                                                MinWidth="120"
+                                                Date="{Binding selectedDataOrder.dataStart, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                                Style="{StaticResource inputCalendarDatePicker}"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidDataStart, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Start Date"/>
+                        </StackPanel>
+                        
                         <TextBlock Text="End Date" 
                                    Style="{StaticResource inputTextBlock}"/>
-                        <CalendarDatePicker Width="120" 
-                                            MinWidth="120"
-                                            Date="{Binding selectedDataOrder.dataEnd, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
-                                            Style="{StaticResource inputCalendarDatePicker}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CalendarDatePicker Width="120" 
+                                                MinWidth="120"
+                                                Date="{Binding selectedDataOrder.dataEnd, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                                Style="{StaticResource inputCalendarDatePicker}"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidDataEnd, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Start Date"/>
+                        </StackPanel>
+                        
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -44,12 +56,16 @@
                         <TextBlock Text="Data" 
                                    Style="{StaticResource inputTextBlock}"
                                    Width="400"/>
-                        <TextBox Text="{Binding selectedDataOrder.dataDetails, Mode=TwoWay}"
-                                 Style="{StaticResource inputLargeTextBox}"
-                                 Width="400" 
-                                 ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                                 AcceptsReturn="True" 
-                                 TextWrapping="Wrap"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedDataOrder.dataDetails, Mode=TwoWay}"
+                                     Style="{StaticResource inputLargeTextBox}"
+                                     Width="400" 
+                                     ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                                     AcceptsReturn="True" 
+                                     TextWrapping="Wrap"/>
+                            <cntrl:InvalidFlagLarge Visibility="{Binding isValidDataDetails, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Start Date"/>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -58,15 +74,13 @@
                     <StackPanel>
                         <TextBlock Text="Total" 
                                 Style="{StaticResource inputTextBlock}"/>
-                        <TextBox Text="{Binding selectedDataOrder.dataCost, Mode=TwoWay}"
-                                Style="{StaticResource inputTextBox}"
-                                Width="200">
-                            <interactivity:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="TextChanged">
-                                    <core:InvokeCommandAction Command="{Binding Path=dataTextChanged}" />
-                                </core:EventTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-                        </TextBox>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedDataOrder.dataCost, Mode=TwoWay}"
+                                    Style="{StaticResource inputTextBox}"
+                                    Width="200"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidDataCost, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Start Date"/>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -93,7 +107,7 @@
                           Label="Cancel">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=cancelData}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cancelOrderPart}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

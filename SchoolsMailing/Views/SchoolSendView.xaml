@@ -8,11 +8,13 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:conv="using:SchoolsMailing.Converters"
+    xmlns:cntrl="using:SchoolsMailing.Controls"
     mc:Ignorable="d"
     DataContext="{Binding OrderViewModel, Source={StaticResource VmLocator}}">
     <Page.Resources>
         <conv:StringFormatter x:Key="CurrencyConverter"/>
         <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
+        <conv:BooleanToVisibilityConverter x:Key="InvalidTextBox"/>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -25,16 +27,25 @@
                     <StackPanel>
                         <TextBlock Text="Start"
                                    Style="{StaticResource inputTextBlock}"/>
-                        <CalendarDatePicker Width="120" 
-                                            MinWidth="120"
-                                            Date="{Binding selectedSchoolSendOrder.schoolsendStart, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
-                                            Style="{StaticResource inputCalendarDatePicker}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CalendarDatePicker Width="120" 
+                                                MinWidth="120"
+                                                Date="{Binding selectedSchoolSendOrder.schoolsendStart, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                                Style="{StaticResource inputCalendarDatePicker}"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidSchoolSendStart, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Start Date"/>
+                        </StackPanel>
                         <TextBlock Text="End"
                                    Style="{StaticResource inputTextBlock}"/>
-                        <CalendarDatePicker Width="120" 
-                                            MinWidth="120"
-                                            Date="{Binding selectedSchoolSendOrder.schoolsendEnd, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
-                                            Style="{StaticResource inputCalendarDatePicker}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CalendarDatePicker Width="120" 
+                                                MinWidth="120"
+                                                Date="{Binding selectedSchoolSendOrder.schoolsendEnd, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                                Style="{StaticResource inputCalendarDatePicker}"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidSchoolSendEnd, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid End Date"/>
+                        </StackPanel>
+                        
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -43,19 +54,24 @@
                     <StackPanel>
                         <TextBlock Text="Package"
                                    Style="{StaticResource inputTextBlock}"/>
-                        <ComboBox Style="{StaticResource inputComboBox}"
-                                  Width="300"
-                                  DisplayMemberPath="packName"
-                                  ItemsSource="{Binding schoolsendPacks, Mode=TwoWay}"
-                                  SelectedItem="{Binding selectedSchoolSendPack, Mode=TwoWay}"
-                                  SelectedValue="{Binding selectedSchoolSendOrder.schoolsendPackage, Mode=TwoWay}"
-                                  SelectedValuePath="ID">
-                            <interactivity:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="SelectionChanged">
-                                    <core:InvokeCommandAction Command="{Binding Path=setCredits}" />
-                                </core:EventTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-                        </ComboBox>
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox Style="{StaticResource inputComboBox}"
+                                      Width="300"
+                                      DisplayMemberPath="packName"
+                                      ItemsSource="{Binding schoolsendPacks, Mode=TwoWay}"
+                                      SelectedItem="{Binding selectedSchoolSendPack, Mode=TwoWay}"
+                                      SelectedValue="{Binding selectedSchoolSendOrder.schoolsendPackage, Mode=TwoWay}"
+                                      SelectedValuePath="ID">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="SelectionChanged">
+                                        <core:InvokeCommandAction Command="{Binding Path=setCredits}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </ComboBox>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidSchoolSendPackage, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Package"/>
+                        </StackPanel>
+                        
                         <TextBlock Text="Max Credits"
                                    Style="{StaticResource inputTextBlock}"/>
                         <TextBox Text="{Binding selectedSchoolSendOrder.schoolsendCredits, Mode=TwoWay}"
@@ -70,17 +86,21 @@
                         <TextBlock Text="Total"
                                    Style="{StaticResource inputTextBlock}"
                                    Width="200"/>
-                        <TextBox Text="{Binding selectedSchoolSendOrder.schoolsendCost, Mode=TwoWay}"
-                                 Style="{StaticResource inputTextBox}"
-                                 Width="200"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedSchoolSendOrder.schoolsendCost, Mode=TwoWay}"
+                                     Style="{StaticResource inputTextBox}"
+                                     Width="200"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidSchoolSendCost, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Cost"/>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
         </Hub>
         <CommandBar VerticalAlignment="Bottom"
-                Grid.Row="1">
+                    Grid.Row="1">
             <AppBarButton Icon="Save"
-                        Label="Save">
+                          Label="Save">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
                         <core:InvokeCommandAction Command="{Binding Path=saveSchoolSend}" />
@@ -88,10 +108,10 @@
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
             <AppBarButton Icon="Cancel"
-                        Label="Cancel">
+                          Label="Cancel">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=cancelSchoolSend}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cancelOrderPart}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

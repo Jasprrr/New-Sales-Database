@@ -8,11 +8,13 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:conv="using:SchoolsMailing.Converters"
+    xmlns:cntrl="using:SchoolsMailing.Controls"
     mc:Ignorable="d"
     DataContext="{Binding OrderViewModel, Source={StaticResource VmLocator}}">
     <Page.Resources>
         <conv:StringFormatter x:Key="CurrencyConverter"/>
         <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
+        <conv:BooleanToVisibilityConverter x:Key="InvalidTextBox"/>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Hub>
@@ -21,10 +23,14 @@
                     <StackPanel>
                         <TextBlock Text="Date"
                                    Style="{StaticResource inputTextBlock}"/>
-                        <CalendarDatePicker Width="120" 
-                                            MinWidth="120"
-                                            Date="{Binding selectedSurchargeOrder.surchargeDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
-                                            Style="{StaticResource inputCalendarDatePicker}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CalendarDatePicker Width="120" 
+                                                MinWidth="120"
+                                                Date="{Binding selectedSurchargeOrder.surchargeDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                                                Style="{StaticResource inputCalendarDatePicker}"/>
+                            <cntrl:InvalidFlag Visibility="{Binding isValidSurchargeDate, Converter={StaticResource InvalidTextBox}}" 
+                                               ToolTipService.ToolTip="Invalid Date"/>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -32,11 +38,14 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="Details" 
-                                   Style="{StaticResource inputTextBlock}"
-                                    Width="400"/>
-                        <TextBox Text="{Binding selectedSurchargeOrder.surchargeDetails, Mode=TwoWay}"
-                                 Style="{StaticResource inputLargeTextBox}"
-                                 Width="400"/>
+                                   Style="{StaticResource inputTextBlock}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding selectedSurchargeOrder.surchargeDetails, Mode=TwoWay}"
+                                     Style="{StaticResource inputLargeTextBox}"
+                                     Width="400"/>
+                            <cntrl:InvalidFlagLarge Visibility="{Binding isValidSurchargeDetails, Converter={StaticResource InvalidTextBox}}" 
+                                                    ToolTipService.ToolTip="Invalid Details"/>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </HubSection>
@@ -44,12 +53,11 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="Cost"
-                                   Style="{StaticResource inputTextBlock}"
-                                   Width="200"/>
+                                   Style="{StaticResource inputTextBlock}"/>
                         <TextBox Text="{Binding selectedSurchargeOrder.surchargeCost, Mode=TwoWay}"
                                  Style="{StaticResource inputTextBox}"
                                  Width="200"/>
-                    </StackPanel>
+                        </StackPanel>
                 </DataTemplate>
             </HubSection>
         </Hub>
@@ -67,7 +75,7 @@
                           Label="Cancel">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=cancelSurcharge}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cancelOrderPart}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
