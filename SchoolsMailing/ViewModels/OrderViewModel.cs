@@ -36,13 +36,13 @@ namespace SchoolsMailing.ViewModels
                 if (obj.Content != 0) //Get order
                 {
                     selectedOrder = DataAccessLayer.GetOrder(obj.Content);
-                    emailOrders = DataAccessLayer.GetAllEmailsByOrderID(obj.Content);
-                    dataOrders = DataAccessLayer.GetAllDataByOrderID(obj.Content);
-                    schoolSendOrders = DataAccessLayer.GetAllSchoolSendsByOrderID(obj.Content);
-                    sharedMailingOrders = DataAccessLayer.GetAllSharedMailingsByOrderID(obj.Content);
-                    directMailingOrders = DataAccessLayer.GetAllDirectMailingsByOrderID(obj.Content);
-                    printOrders = DataAccessLayer.GetAllPrintByOrderID(obj.Content);
-                    surchargeOrders = DataAccessLayer.GetAllSurchargesByOrderID(obj.Content);
+                    emailOrders = new ObservableCollection<Email>(DataAccessLayer.GetAllEmailsByOrderID(obj.Content));
+                    dataOrders = new ObservableCollection<Data>(DataAccessLayer.GetAllDataByOrderID(obj.Content));
+                    schoolSendOrders = new ObservableCollection<SchoolSend>(DataAccessLayer.GetAllSchoolSendsByOrderID(obj.Content));
+                    sharedMailingOrders = new ObservableCollection<SharedMailing>(DataAccessLayer.GetAllSharedMailingsByOrderID(obj.Content));
+                    directMailingOrders = new ObservableCollection<DirectMailing>(DataAccessLayer.GetAllDirectMailingsByOrderID(obj.Content));
+                    printOrders = new ObservableCollection<Print>(DataAccessLayer.GetAllPrintByOrderID(obj.Content));
+                    surchargeOrders = new ObservableCollection<Surcharge>(DataAccessLayer.GetAllSurchargesByOrderID(obj.Content));
                 }
                 else //Create order
                 {
@@ -68,7 +68,7 @@ namespace SchoolsMailing.ViewModels
                 deletedSurchargeOrders = new ObservableCollection<Surcharge>();
             }
         }
-        
+
         private int _pivotIndex;
         public int pivotIndex
         {
@@ -106,15 +106,15 @@ namespace SchoolsMailing.ViewModels
                 return _newEmail;
             }
         }
-        
+
         private RelayCommand _newSchoolSend;
         public RelayCommand newSchoolSend
         {
             get { if (_newSchoolSend == null) {
                     _newSchoolSend = new RelayCommand(() => {
                         NavigationService.Navigate(typeof(SchoolSendView));
-                        selectedSchoolSendOrder = new SchoolSend() { schoolsendStart = DateTime.Now, schoolsendEnd = DateTime.Now.AddYears(1), schoolsendPackage = 1 };
-                        originalSchoolSendOrder = new SchoolSend() { schoolsendStart = DateTime.Now, schoolsendEnd = DateTime.Now.AddYears(1), schoolsendPackage = 1 };
+                        selectedSchoolSendOrder = new SchoolSend() { schoolsendStart = DateTime.Now, schoolsendEnd = DateTime.Now.AddYears(1), schoolsendPackage = 0 };
+                        originalSchoolSendOrder = new SchoolSend() { schoolsendStart = DateTime.Now, schoolsendEnd = DateTime.Now.AddYears(1), schoolsendPackage = 0 };
                     });
                 } return _newSchoolSend;
             }
@@ -139,8 +139,8 @@ namespace SchoolsMailing.ViewModels
             get { if (_newSharedMailing == null) {
                     _newSharedMailing = new RelayCommand(() => {
                         NavigationService.Navigate(typeof(SharedMailingView));
-                        selectedSharedMailingOrder = new SharedMailing();
-                        originalSharedMailingOrder = new SharedMailing();
+                        selectedSharedMailingOrder = new SharedMailing() { sharedPackage = 0 };
+                        originalSharedMailingOrder = new SharedMailing() { sharedPackage = 0 };
                     });
                 } return _newSharedMailing;
             }
@@ -185,7 +185,7 @@ namespace SchoolsMailing.ViewModels
                 {
                     _newSharedPack = new RelayCommand(() => {
                         NavigationService.Navigate(typeof(SharedPackageView));
-                        selectedSharedPack = new SharedPack() { packArtworkDate = DateTime.Now, packDate = DateTime.Now, packDeliveryDate = DateTime.Now};
+                        selectedSharedPack = new SharedPack() { packArtworkDate = DateTime.Now, packDate = DateTime.Now, packDeliveryDate = DateTime.Now };
                     });
                 }
                 return _newSharedPack;
@@ -193,7 +193,7 @@ namespace SchoolsMailing.ViewModels
         }
         #endregion
 
-        #region Order information
+        #region Order
         private string _orderCode;
         public string orderCode
         {
@@ -234,7 +234,7 @@ namespace SchoolsMailing.ViewModels
         public double emailCosts
         {
             get { return _emailCosts; }
-            set { if (_emailCosts != value) { _emailCosts = value; RaisePropertyChanged("emailCost"); } }
+            set { if (_emailCosts != value) { _emailCosts = value; RaisePropertyChanged("emailCosts"); } }
         }
 
         private double _schoolSendCosts = 0;
@@ -282,38 +282,62 @@ namespace SchoolsMailing.ViewModels
             printCosts = 0;
             surchargeCosts = 0;
 
-            foreach (Email p in emailOrders)
+            if (dataOrders != null)
             {
-                emailCosts = emailCosts + p.emailCost;
-                RaisePropertyChanged("emailCosts");
+                foreach (Data p in dataOrders)
+                {
+                    dataCosts = dataCosts + p.dataCost;
+                    RaisePropertyChanged("dataCosts");
+                }
             }
-            foreach (Data p in dataOrders)
+            else { RaisePropertyChanged("dataCosts"); }
+            if (directMailingOrders != null)
             {
-                dataCosts = dataCosts + p.dataCost;
-                RaisePropertyChanged("dataCosts");
+                foreach (DirectMailing p in directMailingOrders)
+                {
+                    directMailingCosts = directMailingCosts + p.directCost;
+                    RaisePropertyChanged("directMailingCosts");
+                }
             }
-            foreach (DirectMailing p in directMailingOrders)
+            else { RaisePropertyChanged("directMailingCosts"); }
+            if (sharedMailingOrders != null)
             {
-                directMailingCosts = directMailingCosts + p.directCost;
-                RaisePropertyChanged("directMailingCosts");
+                foreach (SharedMailing p in sharedMailingOrders)
+                {
+                    sharedMailingCosts = sharedMailingCosts + p.sharedCost;
+                    RaisePropertyChanged("sharedMailingCosts");
+                }
             }
-            foreach (SharedMailing p in sharedMailingOrders)
+            else { RaisePropertyChanged("sharedCosts"); }
+            if (printOrders != null)
             {
-                sharedMailingCosts = sharedMailingCosts + p.sharedCost;
-                RaisePropertyChanged("sharedMailingCosts");
+                foreach (Print p in printOrders)
+                {
+                    printCosts = printCosts + p.printCost;
+                    RaisePropertyChanged("printCosts");
+                }
             }
-            foreach (Print p in printOrders)
+            else { RaisePropertyChanged("printCosts"); }
+            if (surchargeOrders != null)
             {
-                printCosts = printCosts + p.printCost;
-                RaisePropertyChanged("printCosts");
+                foreach (Surcharge p in surchargeOrders)
+                {
+                    surchargeCosts = surchargeCosts + p.surchargeCost;
+                    RaisePropertyChanged("surchargeCosts");
+                }
             }
-            foreach (Surcharge p in surchargeOrders)
+            else { RaisePropertyChanged("surchargeCosts"); }
+
+            if (emailOrders != null)
             {
-                surchargeCosts = surchargeCosts + p.surchargeCost;
-                RaisePropertyChanged("surchargeCosts");
+                foreach (Email p in emailOrders)
+                {
+                    emailCosts = emailCosts + p.emailCost;
+                    RaisePropertyChanged("emailCosts");
+                }
             }
+            else { RaisePropertyChanged("emailCosts"); }
             selectedOrder.orderTotal = emailCosts + dataCosts + directMailingCosts + sharedMailingCosts + printCosts + surchargeCosts;
-            RaisePropertyChanged("selectedOrder");
         }
         #endregion
 
@@ -390,7 +414,7 @@ namespace SchoolsMailing.ViewModels
                     return _contacts;
                 }
             }
-           set { if (_contacts != value) { _contacts = value; RaisePropertyChanged("contacts"); } }
+            set { if (_contacts != value) { _contacts = value; RaisePropertyChanged("contacts"); } }
         }
 
         private RelayCommand _contactChanged;
@@ -712,8 +736,7 @@ namespace SchoolsMailing.ViewModels
         {
             get
             {
-                if (_selectedSchoolSendPack == null) { return new SchoolSendPack(); }
-                else { return _selectedSchoolSendPack; }
+                return _selectedSchoolSendPack;
             }
             set { if (_selectedSchoolSendPack != value) { _selectedSchoolSendPack = value; RaisePropertyChanged("selectedSchoolSendPack"); } }
         }
@@ -982,7 +1005,7 @@ namespace SchoolsMailing.ViewModels
         {
             DataAccessLayer.SaveOrder(selectedOrder);
             long orderID = selectedOrder.ID;
-            
+
             //Data
             if (dataOrders != null)
             {
@@ -1182,7 +1205,7 @@ namespace SchoolsMailing.ViewModels
                     {
                         DataAccessLayer.SaveSharedPack(selectedSharedPack);
                         sharedPacks = DataAccessLayer.GetAllSharedPacks();
-                        
+
                         NavigationService.GoBack();
                     }
                     break;
@@ -1489,6 +1512,22 @@ namespace SchoolsMailing.ViewModels
         #endregion
 
         #region Validation
+        private RelayCommand _validateOrder;
+        public RelayCommand validateOrder
+        {
+            get { if (_validateOrder == null) { _validateOrder = new RelayCommand(()=> { ValidateOrder(selectedOrder); }); } return _validateOrder; } 
+        }
+        public bool ValidateOrder(Orders order)
+        {
+            if (order.companyID != 0) { }
+            else { }
+            if(order.contactID == 0) { }
+            else { }
+            if(order.orderCode == null) { }
+            else { }
+            return true;
+        }
+
         private RelayCommand _validateData;
         public RelayCommand validateData
         {
@@ -1998,7 +2037,7 @@ namespace SchoolsMailing.ViewModels
         private RelayCommand _cancelSchoolSendPart;
         public RelayCommand cancelSchoolSendPart
         {
-            get { if (_cancelSchoolSendPart == null) { _cancelSchoolSendPart = new RelayCommand(() => { NavigationService.GoBack(); pivotIndex = 3; }); } return _cancelSchoolSendPart; }
+            get { if (_cancelSchoolSendPart == null) { _cancelSchoolSendPart = new RelayCommand(() => { NavigationService.GoBack(); pivotIndex = 0; }); } return _cancelSchoolSendPart; }
         }
 
         private RelayCommand _cancelDirectMailingPart;

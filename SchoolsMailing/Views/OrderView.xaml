@@ -13,6 +13,7 @@
     DataContext="{Binding OrderViewModel, Source={StaticResource VmLocator}}">
     
     <Page.Resources>
+        
         <Style x:Key="inputTextBlock" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Calibri"/>
             <Setter Property="FontSize" Value="20"/>
@@ -31,6 +32,7 @@
         </Style>
         <conv:StringFormatter x:Key="StringFormatter"/>
         <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
+        <conv:BooleanToVisibilityConverter x:Key="InvalidTextBox"/>
     </Page.Resources>
 
     <Grid Background="WhiteSmoke">
@@ -52,19 +54,24 @@
                         <StackPanel Margin="12,0">
                             <TextBlock Text="Company"
                                        Style="{StaticResource inputTextBlock}"/>
-                            <ComboBox Style="{StaticResource inputComboBox}"
-                                      Width="300"
-                                      DisplayMemberPath="companyName" 
-                                      ItemsSource="{Binding companies}"
-                                      SelectedItem="{Binding selectedCompany, Mode=TwoWay}"
-                                      SelectedValue="{Binding selectedOrder.companyID, Mode=TwoWay}"
-                                      SelectedValuePath="ID">
-                                <interactivity:Interaction.Behaviors>
-                                    <core:EventTriggerBehavior EventName="SelectionChanged">
-                                        <core:InvokeCommandAction Command="{Binding Path=companyChanged}" />
-                                    </core:EventTriggerBehavior>
-                                </interactivity:Interaction.Behaviors>
-                            </ComboBox>
+                            <StackPanel Orientation="Horizontal">
+                                <ComboBox Style="{StaticResource inputComboBox}"
+                                          Width="300"
+                                          DisplayMemberPath="companyName" 
+                                          ItemsSource="{Binding companies}"
+                                          SelectedItem="{Binding selectedCompany, Mode=TwoWay}"
+                                          SelectedValue="{Binding selectedOrder.companyID, Mode=TwoWay}"
+                                          SelectedValuePath="ID">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                                            <core:InvokeCommandAction Command="{Binding Path=companyChanged}" />
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                </ComboBox>
+                                <ctrl:InvalidFlag Visibility="{Binding isValidOrderCompany, Converter={StaticResource InvalidTextBox}}" 
+                                                   ToolTipService.ToolTip="Invalid Company"/>
+                            </StackPanel>
+                            
                             <TextBlock Text="Contact"
                                        Style="{StaticResource inputTextBlock}"/>
                             <ComboBox Style="{StaticResource inputComboBox}"

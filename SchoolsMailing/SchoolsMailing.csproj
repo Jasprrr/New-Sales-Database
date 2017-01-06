@@ -75,6 +75,8 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -103,9 +105,6 @@
     <Compile Include="Controls\CompanyHistoryList.xaml.cs">
       <DependentUpon>CompanyHistoryList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CompanyHistoryPopUp.xaml.cs">
-      <DependentUpon>CompanyHistoryPopUp.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\CompanyList.xaml.cs">
       <DependentUpon>CompanyList.xaml</DependentUpon>
     </Compile>
@@ -114,9 +113,6 @@
     </Compile>
     <Compile Include="Controls\DirectMailingList.xaml.cs">
       <DependentUpon>DirectMailingList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\EmailBox.xaml.cs">
-      <DependentUpon>EmailBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\HistoryDialog.xaml.cs">
       <DependentUpon>HistoryDialog.xaml</DependentUpon>
@@ -299,10 +295,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\CompanyHistoryPopUp.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\CompanyList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -312,10 +304,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DirectMailingList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\EmailBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
