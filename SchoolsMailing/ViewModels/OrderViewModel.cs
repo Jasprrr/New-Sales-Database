@@ -23,7 +23,6 @@ namespace SchoolsMailing.ViewModels
     {
         public OrderViewModel(IMessenger messenger, NavigationService navigationService) : base(messenger, navigationService)
         {
-            companies = DataAccessLayer.GetAllCompanies2(); //TODO: replace
             MessengerInstance.Register<NotificationMessage<Int64>>(this, SetUp); // register company parameter
         }
 
@@ -31,6 +30,9 @@ namespace SchoolsMailing.ViewModels
         {
             if (obj.Notification == "OrderViewModel")
             {
+                schoolsendPacks = DataAccessLayer.GetAllSchoolSendPacks();
+                sharedPacks = DataAccessLayer.GetAllSharedPacks();
+                pivotIndex = 0;
                 if (obj.Content != 0) //Get order
                 {
                     selectedOrder = DataAccessLayer.GetOrder(obj.Content);
@@ -41,13 +43,11 @@ namespace SchoolsMailing.ViewModels
                     directMailingOrders = DataAccessLayer.GetAllDirectMailingsByOrderID(obj.Content);
                     printOrders = DataAccessLayer.GetAllPrintByOrderID(obj.Content);
                     surchargeOrders = DataAccessLayer.GetAllSurchargesByOrderID(obj.Content);
-
-                    selectedCompany = DataAccessLayer.GetCompanyById(selectedOrder.companyID);
-                    selectedContact = DataAccessLayer.GetContactById(selectedOrder.contactID);
                 }
                 else //Create order
                 {
-                    selectedOrder = new Orders() { orderDate = DateTime.Now };
+                    selectedOrder = new Orders() { orderDate = DateTime.Now, contactID = 1, companyID = 1 };
+
                     //New & existing lists
                     emailOrders = new ObservableCollection<Email>();
                     dataOrders = new ObservableCollection<Data>();
@@ -56,19 +56,16 @@ namespace SchoolsMailing.ViewModels
                     directMailingOrders = new ObservableCollection<DirectMailing>();
                     printOrders = new ObservableCollection<Print>();
                     surchargeOrders = new ObservableCollection<Surcharge>();
-                    //Deleted lists 
-                    deletedEmailOrders = new ObservableCollection<Email>();
-                    deletedDataOrders = new ObservableCollection<Data>();
-                    deletedDirectMailingOrders = new ObservableCollection<DirectMailing>();
-                    deletedPrintOrders = new ObservableCollection<Print>();
-                    deletedSchoolSendOrders = new ObservableCollection<SchoolSend>();
-                    deletedSharedMailingOrders = new ObservableCollection<SharedMailing>();
-                    deletedSurchargeOrders = new ObservableCollection<Surcharge>();
                 }
-                companies = DataAccessLayer.GetAllCompanies2();
-                schoolsendPacks = DataAccessLayer.GetAllSchoolSendPacks();
-                sharedPacks = DataAccessLayer.GetAllSharedPacks();
-                pivotIndex = 0;
+                CalculateCosts();
+                //Deleted lists 
+                deletedEmailOrders = new ObservableCollection<Email>();
+                deletedDataOrders = new ObservableCollection<Data>();
+                deletedDirectMailingOrders = new ObservableCollection<DirectMailing>();
+                deletedPrintOrders = new ObservableCollection<Print>();
+                deletedSchoolSendOrders = new ObservableCollection<SchoolSend>();
+                deletedSharedMailingOrders = new ObservableCollection<SharedMailing>();
+                deletedSurchargeOrders = new ObservableCollection<Surcharge>();
             }
         }
         
@@ -116,8 +113,8 @@ namespace SchoolsMailing.ViewModels
             get { if (_newSchoolSend == null) {
                     _newSchoolSend = new RelayCommand(() => {
                         NavigationService.Navigate(typeof(SchoolSendView));
-                        selectedSchoolSendOrder = new SchoolSend() { schoolsendStart = DateTime.Now, schoolsendEnd = DateTime.Now.AddYears(1) };
-                        originalSchoolSendOrder = new SchoolSend();
+                        selectedSchoolSendOrder = new SchoolSend() { schoolsendStart = DateTime.Now, schoolsendEnd = DateTime.Now.AddYears(1), schoolsendPackage = 1 };
+                        originalSchoolSendOrder = new SchoolSend() { schoolsendStart = DateTime.Now, schoolsendEnd = DateTime.Now.AddYears(1), schoolsendPackage = 1 };
                     });
                 } return _newSchoolSend;
             }
@@ -197,7 +194,6 @@ namespace SchoolsMailing.ViewModels
         #endregion
 
         #region Order information
-
         private string _orderCode;
         public string orderCode
         {
@@ -220,78 +216,7 @@ namespace SchoolsMailing.ViewModels
                 if (_saveOrder == null)
                 {
                     _saveOrder = new RelayCommand(() => {
-                        DataAccessLayer.SaveOrder(selectedOrder);
-                        long orderID = selectedOrder.ID;
-                        //Email
-                        foreach (Email e in emailOrders) //Loop through emails
-                        {
-                            e.orderID = orderID;
-                            DataAccessLayer.SaveEmail(e); //Add emails
-                        }
-                        foreach (Email e in deletedEmailOrders) //Loop through emails
-                        {
-                            DataAccessLayer.DeleteEmail(e); //Delete emails
-                        }
-                        //Data
-                        foreach (Data d in dataOrders)
-                        {
-                            d.orderID = orderID;
-                            DataAccessLayer.SaveData(d);
-                        }
-                        foreach (Data d in deletedDataOrders)
-                        {
-                            DataAccessLayer.DeleteData(d);
-                        }
-                        //Direct mailing
-                        foreach (DirectMailing dm in directMailingOrders)
-                        {
-                            dm.orderID = orderID;
-                            DataAccessLayer.SaveDirectMailing(dm);
-                        }
-                        foreach (DirectMailing dm in deletedDirectMailingOrders)
-                        {
-                            DataAccessLayer.DeleteDirectMailing(dm);
-                        }
-                        //Shared mailing
-                        foreach (SharedMailing sm in sharedMailingOrders)
-                        {
-                            sm.orderID = orderID;
-                            DataAccessLayer.SaveSharedMailing(sm);
-                        }
-                        foreach (SharedMailing sm in deletedSharedMailingOrders)
-                        {
-                            DataAccessLayer.DeleteSharedMailing(sm);
-                        }
-                        //Surcharge
-                        foreach (Surcharge s in surchargeOrders)
-                        {
-                            s.orderID = orderID;
-                            DataAccessLayer.SaveSurcharge(s);
-                        }
-                        foreach (Surcharge s in deletedSurchargeOrders)
-                        {
-                            DataAccessLayer.DeleteSurcharge(s);
-                        }
-                        //Print
-                        foreach (Print p in printOrders)
-                        {
-                            p.orderID = orderID;
-                            DataAccessLayer.SavePrint(p);
-                        }
-                        foreach (Print p in deletedPrintOrders)
-                        {
-                            DataAccessLayer.DeletePrint(p);
-                        }
-                        //SchoolSend
-                        foreach (SchoolSend ss in schoolSendOrders)
-                        {
-                            ss.orderID = orderID;
-                            DataAccessLayer.SaveSchoolSend(ss);
-                        }
-                        foreach (SchoolSend ss in deletedSchoolSendOrders)
-                        {
-                            DataAccessLayer.DeleteSchoolSend(ss);
-                        }
+                        SaveOrder();
                     });
                 }
                 return _saveOrder;
@@ -393,11 +318,9 @@ namespace SchoolsMailing.ViewModels
         #endregion
 
         #region Company
-        private ObservableCollection<Company> _companies;
         public ObservableCollection<Company> companies
         {
-            get { return _companies; }
-            set { if (_companies != value) { _companies = value; RaisePropertyChanged("companies"); } }
+            get { return DataAccessLayer.GetAllCompanies2(); }
         }
 
         private Company _selectedCompany;
@@ -438,15 +361,36 @@ namespace SchoolsMailing.ViewModels
         private Contact _selectedContact;
         public Contact selectedContact
         {
-            get { return _selectedContact; }
-            set { if (_selectedContact != value) { _selectedContact = value; RaisePropertyChanged("selectedContact"); } }
+            get
+            {
+                if (_selectedContact == null) { return new Contact(); }
+                else { return _selectedContact; }
+            }
+            set {
+                if (_selectedContact != value) {
+                    if (value != null) { _selectedContact = value; }
+                    else { selectedContact = new Contact(); }
+                    RaisePropertyChanged("selectedContact");
+                }
+            }
         }
 
         private ObservableCollection<Contact> _contacts;
         public ObservableCollection<Contact> contacts
         {
-            get { return _contacts; }
-            set { if (_contacts != value) { _contacts = value; RaisePropertyChanged("contacts"); } }
+            get {
+                if (selectedOrder.companyID > 0)
+                {
+                    _contacts = DataAccessLayer.GetContactsByCompany(selectedCompany.ID);
+                    return _contacts;
+                }
+                else
+                {
+                    _contacts = DataAccessLayer.GetAllContacts();
+                    return _contacts;
+                }
+            }
+           set { if (_contacts != value) { _contacts = value; RaisePropertyChanged("contacts"); } }
         }
 
         private RelayCommand _contactChanged;
@@ -766,7 +710,11 @@ namespace SchoolsMailing.ViewModels
         private SchoolSendPack _selectedSchoolSendPack;
         public SchoolSendPack selectedSchoolSendPack
         {
-            get { return _selectedSchoolSendPack; }
+            get
+            {
+                if (_selectedSchoolSendPack == null) { return new SchoolSendPack(); }
+                else { return _selectedSchoolSendPack; }
+            }
             set { if (_selectedSchoolSendPack != value) { _selectedSchoolSendPack = value; RaisePropertyChanged("selectedSchoolSendPack"); } }
         }
         private SchoolSend _selectedSchoolSendOrder;
@@ -1030,6 +978,125 @@ namespace SchoolsMailing.ViewModels
         #endregion
 
         #region Save
+        public void SaveOrder()
+        {
+            DataAccessLayer.SaveOrder(selectedOrder);
+            long orderID = selectedOrder.ID;
+            
+            //Data
+            if (dataOrders != null)
+            {
+                foreach (Data d in dataOrders)
+                {
+                    d.orderID = orderID;
+                    DataAccessLayer.SaveData(d);
+                }
+            }
+            if (deletedDataOrders != null)
+            {
+                foreach (Data d in deletedDataOrders)
+                {
+                    DataAccessLayer.DeleteData(d);
+                }
+            }
+            //Email
+            if (emailOrders != null)
+            {
+                foreach (Email e in emailOrders) //Loop through emails
+                {
+                    e.orderID = orderID;
+                    DataAccessLayer.SaveEmail(e); //Add emails
+                }
+            }
+            if (deletedEmailOrders != null)
+            {
+                foreach (Email e in deletedEmailOrders) //Loop through emails
+                {
+                    DataAccessLayer.DeleteEmail(e); //Delete emails
+                }
+            }
+            //SchoolSend
+            if (sharedMailingOrders != null)
+            {
+                foreach (SchoolSend ss in schoolSendOrders)
+                {
+                    ss.orderID = orderID;
+                    DataAccessLayer.SaveSchoolSend(ss);
+                }
+            }
+            if (deletedSchoolSendOrders != null)
+            {
+                foreach (SchoolSend ss in deletedSchoolSendOrders)
+                {
+                    DataAccessLayer.DeleteSchoolSend(ss);
+                }
+            }
+            //Direct mailing
+            if (directMailingOrders != null)
+            {
+                foreach (DirectMailing dm in directMailingOrders)
+                {
+                    dm.orderID = orderID;
+                    DataAccessLayer.SaveDirectMailing(dm);
+                }
+            }
+            if (deletedDirectMailingOrders != null)
+            {
+                foreach (DirectMailing dm in deletedDirectMailingOrders)
+                {
+                    DataAccessLayer.DeleteDirectMailing(dm);
+                }
+            }
+            //Shared mailing
+            if (sharedMailingOrders != null)
+            {
+                foreach (SharedMailing sm in sharedMailingOrders)
+                {
+                    sm.orderID = orderID;
+                    DataAccessLayer.SaveSharedMailing(sm);
+                }
+            }
+            if (deletedSharedMailingOrders != null)
+            {
+                foreach (SharedMailing sm in deletedSharedMailingOrders)
+                {
+                    DataAccessLayer.DeleteSharedMailing(sm);
+                }
+            }
+            //Print
+            if (printOrders != null)
+            {
+                foreach (Print p in printOrders)
+                {
+                    p.orderID = orderID;
+                    DataAccessLayer.SavePrint(p);
+                }
+            }
+            if (deletedPrintOrders != null)
+            {
+                foreach (Print p in deletedPrintOrders)
+                {
+                    DataAccessLayer.DeletePrint(p);
+                }
+            }
+            //Surcharge
+            if (surchargeOrders != null)
+            {
+                foreach (Surcharge s in surchargeOrders)
+                {
+                    s.orderID = orderID;
+                    DataAccessLayer.SaveSurcharge(s);
+                }
+            }
+            if (deletedSurchargeOrders != null)
+            {
+                foreach (Surcharge s in deletedSurchargeOrders)
+                {
+                    DataAccessLayer.DeleteSurcharge(s);
+                }
+            }
+        }
+
         public void SaveOrderPart(String orderPart)
         {
             switch (orderPart)

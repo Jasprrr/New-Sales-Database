@@ -70,7 +70,7 @@
                             <ComboBox Style="{StaticResource inputComboBox}"
                                       Width="300"
                                       DisplayMemberPath="contactFullname" 
-                                      ItemsSource="{Binding contacts}"
+                                      ItemsSource="{Binding contacts, Mode=OneWay}"
                                       SelectedItem="{Binding selectedContact, Mode=TwoWay}"
                                       SelectedValue="{Binding selectedOrder.contactID, Mode=TwoWay}"
                                       SelectedValuePath="ID">

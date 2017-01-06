@@ -112,6 +112,12 @@
     <Compile Include="Controls\DataList.xaml.cs">
       <DependentUpon>DataList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DirectMailingList.xaml.cs">
+      <DependentUpon>DirectMailingList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EmailBox.xaml.cs">
+      <DependentUpon>EmailBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\HistoryDialog.xaml.cs">
       <DependentUpon>HistoryDialog.xaml</DependentUpon>
     </Compile>
@@ -143,10 +149,25 @@
     <Compile Include="Controls\OrderSharedMailingList.xaml.cs">
       <DependentUpon>OrderSharedMailingList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\OrdersList.xaml.cs">
+      <DependentUpon>OrdersList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\OrderSurchargeList.xaml.cs">
       <DependentUpon>OrderSurchargeList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PrintList.xaml.cs">
+      <DependentUpon>PrintList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SchoolSendList.xaml.cs">
+      <DependentUpon>SchoolSendList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SharedMailingList.xaml.cs">
+      <DependentUpon>SharedMailingList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SplitViewPaneMenu.cs" />
+    <Compile Include="Controls\SurchargeList.xaml.cs">
+      <DependentUpon>SurchargeList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\DateTimeToDateTimeOffsetConverter.cs" />
     <Compile Include="Converters\IntegerToInitial.cs" />
@@ -164,7 +185,6 @@
     <Compile Include="Models\Data.cs" />
     <Compile Include="Models\DirectMailing.cs" />
     <Compile Include="Models\Email.cs" />
-    <Compile Include="Models\EmailOrder.cs" />
     <Compile Include="Models\OrdersData.cs" />
     <Compile Include="Models\OrdersDirectMailing.cs" />
     <Compile Include="Models\OrdersEmail.cs" />
@@ -291,6 +311,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\DirectMailingList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\EmailBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\HistoryDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -331,7 +359,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\OrdersList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\OrderSurchargeList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PrintList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SchoolSendList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SharedMailingList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SurchargeList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

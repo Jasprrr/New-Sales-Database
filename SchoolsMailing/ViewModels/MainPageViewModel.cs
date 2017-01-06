@@ -152,6 +152,12 @@
                     AssociatedPage = typeof(OrderView)
                     
                 },
+                new SplitViewPaneMenuItem
+                {
+                    Label="Orders 2",
+                    Symbol = Symbol.Shop,
+                    AssociatedPage = typeof(OrdersView)
+                }
                 //new SplitViewPaneMenuItem
                 //{
                 //    Label = "Reports",

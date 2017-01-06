@@ -56,7 +56,7 @@
                        Grid.Row="2"
                        Margin="0,5" 
                        TextWrapping="Wrap"/>
-            <TextBlock Text="{Binding directTotal, Mode=OneWay, Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=\{0:C\}}"
+            <TextBlock Text="{Binding directCost, Mode=OneWay, Converter={StaticResource StringFormatterValueConverter}, ConverterParameter=\{0:C\}}"
                        Grid.Column="1"
                        Grid.Row="3"
                        Margin="0,5"/>

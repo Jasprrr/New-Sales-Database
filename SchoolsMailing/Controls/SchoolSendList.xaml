@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="SchoolsMailing.Controls.DataList"
+    x:Class="SchoolsMailing.Controls.SchoolSendList"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SchoolsMailing.Controls"
@@ -14,18 +14,19 @@
         <conv:StringFormatter x:Key="StringFormatter"/>
     </UserControl.Resources>
     <Grid Padding="0,3">
-        <Grid BorderBrush="#FFFF8700" 
+        <Grid BorderBrush="#FF00B74A" 
               Background="White" 
               BorderThickness="0,0,2,0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="250"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
-                <Border Background="#FFFF8700">
+                <Border Background="#FF00B74A">
                     <TextBlock Text="{Binding orderCode}" 
                                VerticalAlignment="Center" 
                                HorizontalAlignment="Center" 
@@ -33,26 +34,32 @@
                                Height="20"
                                Margin="5,0"/>
                 </Border>
-                <TextBlock Text="{Binding dataStart, Converter={StaticResource StringFormatter}, ConverterParameter=\{0:d\}}" 
+                <TextBlock Text="{Binding schoolsendStart, Converter={StaticResource StringFormatter}, ConverterParameter=\{0:d\}}" 
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Center"
                            Grid.Column="1" 
                            Height="20" 
                            Margin="5,0"/>
-                <TextBlock Text="{Binding companyName}"
-                           Grid.Column="2"
+                <TextBlock Text="{Binding schoolsendStart, Converter={StaticResource StringFormatter}, ConverterParameter=\{0:d\}}" 
                            VerticalAlignment="Center" 
-                           TextTrimming="CharacterEllipsis" 
+                           HorizontalAlignment="Center"
+                           Grid.Column="2" 
                            Height="20" 
                            Margin="5,0"/>
-                <TextBlock Text="{Binding dataDetails}"
+                <TextBlock Text="{Binding companyName}"
                            Grid.Column="3"
                            VerticalAlignment="Center" 
                            TextTrimming="CharacterEllipsis" 
                            Height="20" 
                            Margin="5,0"/>
-                <TextBlock Text="{Binding dataCost, Converter={StaticResource StringFormatter}, ConverterParameter=\{0:C\}}" 
-                           Grid.Column="4" 
+                <TextBlock Text="{Binding schoolsendCredits}"
+                           Grid.Column="4"
+                           VerticalAlignment="Center" 
+                           TextTrimming="CharacterEllipsis" 
+                           Height="20" 
+                           Margin="5,0"/>
+                <TextBlock Text="{Binding schoolsendCost, Converter={StaticResource StringFormatter}, ConverterParameter=\{0:C\}}" 
+                           Grid.Column="5" 
                            HorizontalAlignment="Center" 
                            VerticalAlignment="Center" 
                            Height="20"

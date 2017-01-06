@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SchoolsMailing.Models
 {
-    class OrdersSharedMailing
+    public class OrdersSharedMailing
     {
         public long ID { get; set; }
         public long userID { get; set; }

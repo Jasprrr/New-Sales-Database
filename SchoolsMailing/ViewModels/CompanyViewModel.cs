@@ -66,7 +66,7 @@ namespace SchoolsMailing.ViewModels
         }
         public void GetContacts(long id)
         {
-            companyContacts = DataAccessLayer.GetAllContactsByCompany(id);
+            companyContacts = DataAccessLayer.GetAllContactsByCompanyID(id);
         }
         public void GetHistory(long id)
         {

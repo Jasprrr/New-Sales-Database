@@ -3,41 +3,365 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SchoolsMailing.Views"
+    xmlns:ctrl="using:SchoolsMailing.Controls"
+    xmlns:conv="using:SchoolsMailing.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:conv="using:SchoolsMailing.Converters"
-    xmlns:cntrl="using:SchoolsMailing.Controls"
     mc:Ignorable="d"
     DataContext="{Binding OrdersViewModel, Source={StaticResource VmLocator}}">
+    
+    <Page.Resources>
+        <conv:StringFormatter x:Key="CurrencyConverter"/>
+        <conv:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
+        <conv:BooleanToVisibilityConverter x:Key="InvalidTextBox"/>
+    </Page.Resources>
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Pivot>
-            <PivotItem>
-                
-            </PivotItem>
-        </Pivot>
-        <CommandBar VerticalAlignment="Bottom"
-                    Grid.Row="1">
-            <AppBarButton Icon="Save"
-                          Label="Save">
-                <interactivity:Interaction.Behaviors>
+        <StackPanel>
+            <Pivot>
+                <PivotItem>
+                    <PivotItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Orders"/>
+                        </StackPanel>
+                    </PivotItem.Header>
+                    <Hub>
+                        <HubSection>
+                            <DataTemplate>
+                                <ListView ItemsSource="{Binding allOrders, Mode=TwoWay}"
+                                          IsItemClickEnabled="True">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="ItemClick">
+                                            <core:CallMethodAction MethodName="orderInvoked" 
+                                                                   TargetObject="{Binding Mode=OneWay}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ctrl:OrdersList/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </DataTemplate>
+                        </HubSection>
+                        <HubSection>
+                            <DataTemplate>
+                                <ScrollViewer MaxHeight="700">
+                                    <StackPanel>
+                                        <ListView ItemsSource="{Binding dataByOrder, Mode=TwoWay}"
+                                                  IsItemClickEnabled="True">
+                                            <interactivity:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="ItemClick">
+                                                    <core:CallMethodAction MethodName="orderPartInvoked" 
+                                                                           TargetObject="{Binding Mode=OneWay}"/>
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ctrl:DataList/>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                        <ListView ItemsSource="{Binding emailByOrder, Mode=TwoWay}"
+                                                  IsItemClickEnabled="True">
+                                            <interactivity:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="ItemClick">
+                                                    <core:CallMethodAction MethodName="orderPartInvoked" 
+                                                                           TargetObject="{Binding Mode=OneWay}"/>
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ctrl:EmailList/>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                        <ListView ItemsSource="{Binding schoolsendByOrder, Mode=TwoWay}"
+                                                  IsItemClickEnabled="True">
+                                            <interactivity:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="ItemClick">
+                                                    <core:CallMethodAction MethodName="orderPartInvoked" 
+                                                                           TargetObject="{Binding Mode=OneWay}"/>
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ctrl:SchoolSendList/>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                        <ListView ItemsSource="{Binding directMailingByOrder, Mode=TwoWay}"
+                                                  IsItemClickEnabled="True">
+                                            <interactivity:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="ItemClick">
+                                                    <core:CallMethodAction MethodName="orderPartInvoked" 
+                                                                           TargetObject="{Binding Mode=OneWay}"/>
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ctrl:DirectMailingList/>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                        <ListView ItemsSource="{Binding sharedMailingByOrder, Mode=TwoWay}"
+                                                  IsItemClickEnabled="True">
+                                            <interactivity:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="ItemClick">
+                                                    <core:CallMethodAction MethodName="orderPartInvoked" 
+                                                                           TargetObject="{Binding Mode=OneWay}"/>
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ctrl:SharedMailingList/>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                        <ListView ItemsSource="{Binding printByOrder, Mode=TwoWay}"
+                                                  IsItemClickEnabled="True">
+                                            <interactivity:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="ItemClick">
+                                                    <core:CallMethodAction MethodName="orderPartInvoked" 
+                                                                           TargetObject="{Binding Mode=OneWay}"/>
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ctrl:PrintList/>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                        <ListView ItemsSource="{Binding surchargeByOrder, Mode=TwoWay}"
+                                                  IsItemClickEnabled="True">
+                                            <interactivity:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="ItemClick">
+                                                    <core:CallMethodAction MethodName="orderPartInvoked" 
+                                                                           TargetObject="{Binding Mode=OneWay}"/>
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ctrl:SurchargeList/>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </DataTemplate>
+                        </HubSection>
+                    </Hub>
+                </PivotItem>
+                <PivotItem>
+                    <PivotItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Data"/>
+                        </StackPanel>
+                    </PivotItem.Header>
+                    <Hub>
+                        <HubSection>
+                            <DataTemplate>
+                                <Grid MaxHeight="700">
+                                    <ListView ItemsSource="{Binding allDataOrders, Mode=TwoWay}"
+                                              IsItemClickEnabled="True">
+                                        <interactivity:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="ItemClick">
+                                                <core:CallMethodAction MethodName="orderPartInvoked" 
+                                                                       TargetObject="{Binding Mode=OneWay}"/>
+                                            </core:EventTriggerBehavior>
+                                        </interactivity:Interaction.Behaviors>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <ctrl:DataList/>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </Grid>
+                            </DataTemplate>
+                        </HubSection>
+                    </Hub>
+                </PivotItem>
+                <PivotItem>
+                    <PivotItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Email"/>
+                        </StackPanel>
+                    </PivotItem.Header>
+                    <Hub>
+                        <HubSection>
+                            <DataTemplate>
+                                <ListView ItemsSource="{Binding allEmailOrders, Mode=TwoWay}"
+                                          IsItemClickEnabled="True">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="ItemClick">
+                                            <core:CallMethodAction MethodName="orderPartInvoked" 
+                                                                   TargetObject="{Binding Mode=OneWay}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ctrl:EmailList/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </DataTemplate>
+                        </HubSection>
+                    </Hub>
+                </PivotItem>
+                <PivotItem>
+                    <PivotItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="SchoolSend"/>
+                        </StackPanel>
+                    </PivotItem.Header>
+                    <Hub>
+                        <HubSection>
+                            <DataTemplate>
+                                <ListView ItemsSource="{Binding allSchoolSendOrders, Mode=TwoWay}"
+                                          IsItemClickEnabled="True">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="ItemClick">
+                                            <core:CallMethodAction MethodName="orderPartInvoked" 
+                                                                   TargetObject="{Binding Mode=OneWay}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ctrl:SchoolSendList/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </DataTemplate>
+                        </HubSection>
+                    </Hub>
+                </PivotItem>
+                <PivotItem>
+                    <PivotItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Direct Mailing"/>
+                        </StackPanel>
+                    </PivotItem.Header>
+                    <Hub>
+                        <HubSection>
+                            <DataTemplate>
+                                <ListView ItemsSource="{Binding allDirectMailingOrders, Mode=TwoWay}"
+                                          IsItemClickEnabled="True">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="ItemClick">
+                                            <core:CallMethodAction MethodName="orderPartInvoked" 
+                                                                   TargetObject="{Binding Mode=OneWay}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ctrl:DirectMailingList/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </DataTemplate>
+                        </HubSection>
+                    </Hub>
+                </PivotItem>
+                <PivotItem>
+                    <PivotItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Shared Mailing"/>
+                        </StackPanel>
+                    </PivotItem.Header>
+                    <Hub>
+                        <HubSection>
+                            <DataTemplate>
+                                <ListView ItemsSource="{Binding allSharedMailingOrders, Mode=TwoWay}"
+                                          IsItemClickEnabled="True">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="ItemClick">
+                                            <core:CallMethodAction MethodName="orderPartInvoked" 
+                                                                   TargetObject="{Binding Mode=OneWay}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ctrl:SharedMailingList/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </DataTemplate>
+                        </HubSection>
+                    </Hub>
+                </PivotItem>
+                <PivotItem>
+                    <PivotItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Print"/>
+                        </StackPanel>
+                    </PivotItem.Header>
+                    <Hub>
+                        <HubSection>
+                            <DataTemplate>
+                                <ListView ItemsSource="{Binding allPrintOrders, Mode=TwoWay}"
+                                          IsItemClickEnabled="True">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="ItemClick">
+                                            <core:CallMethodAction MethodName="orderPartInvoked" 
+                                                                   TargetObject="{Binding Mode=OneWay}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ctrl:PrintList/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </DataTemplate>
+                        </HubSection>
+                    </Hub>
+                </PivotItem>
+                <PivotItem>
+                    <PivotItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Surcharge"/>
+                        </StackPanel>
+                    </PivotItem.Header>
+                    <Hub>
+                        <HubSection>
+                            <DataTemplate>
+                                <ListView ItemsSource="{Binding allSurchargeOrders, Mode=TwoWay}"
+                                          IsItemClickEnabled="True">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="ItemClick">
+                                            <core:CallMethodAction MethodName="orderPartInvoked" 
+                                                                   TargetObject="{Binding Mode=OneWay}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ctrl:SurchargeList/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </DataTemplate>
+                        </HubSection>
+                    </Hub>
+                </PivotItem>
+            </Pivot>
+        </StackPanel>
+        <CommandBar Grid.Row="1">
+            <AppBarButton Icon="Add"
+                          Label="New">
+                <!--<interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=saveSharedPack}" />
+                        <core:InvokeCommandAction Command="{Binding Path=saveOrder}" />
                     </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
+                </interactivity:Interaction.Behaviors>-->
             </AppBarButton>
-            <AppBarButton Icon="Cancel"
-                          Label="Cancel">
-                <interactivity:Interaction.Behaviors>
-                    <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=cancelSharedPack}" />
-                    </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
+            <AppBarButton Icon="Refresh"
+                          Label="Refresh">
             </AppBarButton>
         </CommandBar>
     </Grid>
