@@ -26,7 +26,7 @@ namespace SchoolsMailing.ViewModels
         public Orders selectedOrder
         {
             get { return _selectedOrder; }
-            set { if (_selectedOrder != value) { } }
+            set { if (_selectedOrder != value) { _selectedOrder = value; RaisePropertyChanged("selectedOrder"); } }
         }
 
         public void orderInvoked(object sender, object parameter)

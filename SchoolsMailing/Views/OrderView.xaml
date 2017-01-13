@@ -37,107 +37,135 @@
 
     <Grid Background="WhiteSmoke">
         <Grid.RowDefinitions>
+            <RowDefinition Height="52"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Pivot SelectedIndex="{Binding pivotIndex}">
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Style="{StaticResource BackButton}">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Tapped">
+                        <core:InvokeCommandAction Command="{Binding Path=goBack}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <Border Style="{StaticResource BackBorder}">
+                    <SymbolIcon Symbol="Back" 
+                                Foreground="White"/>
+                </Border>
+            </Button>
+            <TextBlock Grid.Column="1"
+                       Text="{Binding pageTitle, Mode=OneWay}" 
+                       FontSize="32"/>
+        </Grid>
+        <Pivot SelectedIndex="{Binding pivotIndex}"
+               Grid.Row="1">
             <PivotItem>
                 <PivotItem.Header>
                     <TextBlock Text="Company"/>
                 </PivotItem.Header>
                 <PivotItem.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="324"/>
-                            <ColumnDefinition Width="324"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Margin="12,0">
-                            <TextBlock Text="Company"
-                                       Style="{StaticResource inputTextBlock}"/>
-                            <StackPanel Orientation="Horizontal">
-                                <ComboBox Style="{StaticResource inputComboBox}"
-                                          Width="300"
-                                          DisplayMemberPath="companyName" 
-                                          ItemsSource="{Binding companies}"
-                                          SelectedItem="{Binding selectedCompany, Mode=TwoWay}"
-                                          SelectedValue="{Binding selectedOrder.companyID, Mode=TwoWay}"
-                                          SelectedValuePath="ID">
-                                    <interactivity:Interaction.Behaviors>
-                                        <core:EventTriggerBehavior EventName="SelectionChanged">
-                                            <core:InvokeCommandAction Command="{Binding Path=companyChanged}" />
-                                        </core:EventTriggerBehavior>
-                                    </interactivity:Interaction.Behaviors>
-                                </ComboBox>
-                                <ctrl:InvalidFlag Visibility="{Binding isValidOrderCompany, Converter={StaticResource InvalidTextBox}}" 
-                                                   ToolTipService.ToolTip="Invalid Company"/>
-                            </StackPanel>
-                            
-                            <TextBlock Text="Contact"
-                                       Style="{StaticResource inputTextBlock}"/>
-                            <ComboBox Style="{StaticResource inputComboBox}"
-                                      Width="300"
-                                      DisplayMemberPath="contactFullname" 
-                                      ItemsSource="{Binding contacts, Mode=OneWay}"
-                                      SelectedItem="{Binding selectedContact, Mode=TwoWay}"
-                                      SelectedValue="{Binding selectedOrder.contactID, Mode=TwoWay}"
-                                      SelectedValuePath="ID">
-                                <interactivity:Interaction.Behaviors>
-                                    <core:EventTriggerBehavior EventName="SelectionChanged">
-                                        <core:InvokeCommandAction Command="{Binding Path=contactChanged}" />
-                                    </core:EventTriggerBehavior>
-                                </interactivity:Interaction.Behaviors>
-                            </ComboBox>
-                            <TextBlock Text="Order Code"
-                                       Style="{StaticResource inputTextBlock}"/>
-                            <TextBox Style="{StaticResource inputTextBox}"
-                                     Width="200"
-                                     Text="{Binding selectedOrder.orderCode, Mode=TwoWay}"/>
-                            <TextBlock Text="Order Date"
-                                       Style="{StaticResource inputTextBlock}"/>
-                            <CalendarDatePicker Width="120" 
-                                                Margin="0,4,0,10"
-                                                Date="{Binding selectedOrder.orderDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1"
-                                    Margin="12,0">
-                            <TextBlock Text="Email Costs"
-                                       Style="{StaticResource inputTextBlock}"/>
-                            <TextBox Text="{Binding emailCosts, Mode=OneWay}"
-                                     Style="{StaticResource inputTextBox}"
-                                     Width="200"/>
-                            <TextBlock Text="Data Costs"
-                                       Style="{StaticResource inputTextBlock}"/>
-                            <TextBox Text="{Binding dataCosts, Mode=OneWay}"
-                                     Style="{StaticResource inputTextBox}"
-                                     Width="200"/>
-                            <TextBlock Text="Direct Mailing Costs"
-                                       Style="{StaticResource inputTextBlock}"/>
-                            <TextBox Text="{Binding directMailingCosts, Mode=OneWay}"
-                                     Style="{StaticResource inputTextBox}"
-                                     Width="200"/>
-                            <TextBlock Text="Shared Mailing Costs"
-                                       Style="{StaticResource inputTextBlock}"/>
-                            <TextBox Text="{Binding sharedMailingCosts, Mode=OneWay}"
-                                     Style="{StaticResource inputTextBox}"
-                                     Width="200"/>
-                            <TextBlock Text="Print Costs"
-                                       Style="{StaticResource inputTextBlock}"/>
-                            <TextBox Text="{Binding printCosts, Mode=OneWay}"
-                                     Style="{StaticResource inputTextBox}"
-                                     Width="200"/>
-                            <TextBlock Text="Surcharge Costs"
-                                       Style="{StaticResource inputTextBlock}"/>
-                            <TextBox Text="{Binding surchargeCosts, Mode=OneWay}"
-                                     Style="{StaticResource inputTextBox}"
-                                     Width="200"/>
-                            <TextBlock Text="Total Costs"
-                                       Style="{StaticResource inputTextBlock}"/>
-                            <TextBox Text="{Binding selectedOrder.orderTotal, Mode=OneWay}"
-                                     Style="{StaticResource inputTextBox}"
-                                     Width="200"/>
-                        </StackPanel>
-                    </Grid>
-
+                    <Hub>
+                        <HubSection>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="Company"
+                                               Style="{StaticResource inputTextBlock}"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <ComboBox Style="{StaticResource inputComboBox}"
+                                                  Width="300"
+                                                  DisplayMemberPath="companyName" 
+                                                  ItemsSource="{Binding companies}"
+                                                  SelectedItem="{Binding selectedCompany, Mode=TwoWay}"
+                                                  SelectedValue="{Binding selectedOrder.companyID, Mode=TwoWay}"
+                                                  SelectedValuePath="ID">
+                                            <interactivity:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="SelectionChanged">
+                                                    <core:InvokeCommandAction Command="{Binding Path=companyChanged}" />
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                        </ComboBox>
+                                        <ctrl:InvalidFlag Visibility="{Binding isValidOrderCompany, Converter={StaticResource InvalidTextBox}}" 
+                                                          ToolTipService.ToolTip="Invalid Company"/>
+                                    </StackPanel>
+                                    <TextBlock Text="Contact"
+                                               Style="{StaticResource inputTextBlock}"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <ComboBox Style="{StaticResource inputComboBox}"
+                                                  Width="300"
+                                                  DisplayMemberPath="contactFullname" 
+                                                  ItemsSource="{Binding contacts, Mode=OneWay}"
+                                                  SelectedItem="{Binding selectedContact, Mode=TwoWay}"
+                                                  SelectedValue="{Binding selectedOrder.contactID, Mode=TwoWay}"
+                                                  SelectedValuePath="ID">
+                                            <interactivity:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="SelectionChanged">
+                                                    <core:InvokeCommandAction Command="{Binding Path=contactChanged}" />
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                        </ComboBox>
+                                        <ctrl:InvalidFlag Visibility="{Binding isValidOrderCompany, Converter={StaticResource InvalidTextBox}}" 
+                                                          ToolTipService.ToolTip="Invalid Company"/>
+                                    </StackPanel>
+                                    <TextBlock Text="Order Code"
+                                               Style="{StaticResource inputTextBlock}"/>
+                                    <TextBox Style="{StaticResource inputTextBox}"
+                                             Width="200"
+                                             Text="{Binding selectedOrder.orderCode, Mode=TwoWay}"/>
+                                    <TextBlock Text="Order Date"
+                                               Style="{StaticResource inputTextBlock}"/>
+                                    <CalendarDatePicker Width="120" 
+                                                        Margin="0,4,0,10"
+                                                        Date="{Binding selectedOrder.orderDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </HubSection>
+                        <HubSection>
+                            <DataTemplate>
+                                <StackPanel Grid.Column="1"
+                                            Margin="12,0">
+                                    <TextBlock Text="Email Costs"
+                                               Style="{StaticResource inputTextBlock}"/>
+                                    <TextBox Text="{Binding emailCosts, Mode=OneWay}"
+                                             Style="{StaticResource inputTextBox}"
+                                             Width="200"/>
+                                    <TextBlock Text="Data Costs"
+                                               Style="{StaticResource inputTextBlock}"/>
+                                    <TextBox Text="{Binding dataCosts, Mode=OneWay}"
+                                             Style="{StaticResource inputTextBox}"
+                                             Width="200"/>
+                                    <TextBlock Text="Direct Mailing Costs"
+                                               Style="{StaticResource inputTextBlock}"/>
+                                    <TextBox Text="{Binding directMailingCosts, Mode=OneWay}"
+                                             Style="{StaticResource inputTextBox}"
+                                             Width="200"/>
+                                    <TextBlock Text="Shared Mailing Costs"
+                                               Style="{StaticResource inputTextBlock}"/>
+                                    <TextBox Text="{Binding sharedMailingCosts, Mode=OneWay}"
+                                             Style="{StaticResource inputTextBox}"
+                                             Width="200"/>
+                                    <TextBlock Text="Print Costs"
+                                               Style="{StaticResource inputTextBlock}"/>
+                                    <TextBox Text="{Binding printCosts, Mode=OneWay}"
+                                             Style="{StaticResource inputTextBox}"
+                                             Width="200"/>
+                                    <TextBlock Text="Surcharge Costs"
+                                               Style="{StaticResource inputTextBlock}"/>
+                                    <TextBox Text="{Binding surchargeCosts, Mode=OneWay}"
+                                             Style="{StaticResource inputTextBox}"
+                                             Width="200"/>
+                                    <TextBlock Text="Total Costs"
+                                               Style="{StaticResource inputTextBlock}"/>
+                                    <TextBox Text="{Binding selectedOrder.orderTotal, Mode=OneWay}"
+                                             Style="{StaticResource inputTextBox}"
+                                             Width="200"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </HubSection>
+                    </Hub>
                 </PivotItem.Content>
             </PivotItem>
             <PivotItem>
@@ -459,7 +487,7 @@
                 </PivotItem.Content>
             </PivotItem>
         </Pivot>
-        <CommandBar Grid.Row="1">
+        <CommandBar Grid.Row="2">
             <AppBarButton Icon="Add"
                           Label="Add">
                 <AppBarButton.Flyout>

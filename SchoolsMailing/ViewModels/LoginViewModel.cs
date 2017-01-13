@@ -13,6 +13,10 @@ using Windows.UI.Xaml;
 using SchoolsMailing.Views;
 using Windows.UI.Xaml.Navigation;
 using Windows.ApplicationModel.Activation;
+using System.IO;
+using Windows.Storage;
+using System.IO.Compression;
+using Windows.Storage.AccessCache;
 
 namespace SchoolsMailing.ViewModels
 {
@@ -80,9 +84,11 @@ namespace SchoolsMailing.ViewModels
 
                             if(password == "@")
                             {
-                                var rootFrame = Window.Current.Content as Frame;
+                                DoMove();
+                                //ViewModels.MoveFile.DoMove();
+                                //var rootFrame = Window.Current.Content as Frame;
 
-                                rootFrame.Navigate(typeof(MainPage));
+                                //rootFrame.Navigate(typeof(MainPage));
                             }
                             else
                             {
@@ -99,6 +105,18 @@ namespace SchoolsMailing.ViewModels
                 return _authenticateLogin;
 
             }
+        }
+
+        public async void DoMove()
+        {
+            //StorageApplicationPermissions.FutureAccessList.A
+            StorageFolder storageFolder = KnownFolders.PicturesLibrary;
+            StorageFile file = await storageFolder.TryGetItemAsync("testzip.zip") as StorageFile;
+            if(file != null)
+            {
+                await file.RenameAsync("testzip.docx");
+            }
+            //ZipFile.CreateFromDirectory()
         }
     }
 }

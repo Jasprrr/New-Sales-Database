@@ -29,61 +29,13 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <RelativePanel>
-            <ToggleButton x:Name="ToggleMenuButton" 
-                          TabIndex="1"
-                          Style="{StaticResource ToggleMenuButtonStyle}"
-                          IsChecked="{Binding IsPaneOpen, ElementName=AppMenu, Mode=TwoWay}"
-                          Unchecked="OnMenuButtonChecked"
-                          ToolTipService.ToolTip="Menu"
-                          Grid.Row="0" 
-                          RelativePanel.AlignTopWithPanel="True" 
-                          RelativePanel.AlignLeftWithPanel="True"/>
-            <TextBlock Text="{Binding frameTitle, Mode=TwoWay}" 
-                       RelativePanel.RightOf="ToggleMenuButton" 
-                       Margin="15,8,0,0" FontSize="24"/>
-            <Button x:Name="UserInitial"
-                    Content="{Binding loggedInAs.userInitials, Mode=TwoWay}"
-                    Margin="10,4" 
-                    RelativePanel.AlignTopWithPanel="True" 
-                    RelativePanel.AlignRightWithPanel="True" 
-                    Width="40" 
-                    Height="40" 
-                    Padding="0" 
-                    Style="{StaticResource userButton}">
-                <Button.Flyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem Text="Settings">
-                            <interactivity:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="Click">
-                                    <core:InvokeCommandAction Command="{Binding openSettings}" />
-                                </core:EventTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="Logout"/>
-                    </MenuFlyout>
-                </Button.Flyout>
-            </Button>
-            <AutoSuggestBox Grid.Column="0" 
-                            HorizontalAlignment="Right" 
-                            Margin="0,9,10,0" 
-                            Width="250" 
-                            PlaceholderText="Search" 
-                            QueryIcon="Find" 
-                            RelativePanel.LeftOf="UserInitial"/>
-        </RelativePanel>
-
-
         <SplitView x:Name="AppMenu"
                    DisplayMode="CompactInline"
                    OpenPaneLength="180"
                    IsTabStop="False"
                    Grid.Row="1">
-
             <SplitView.Pane>
                 <controls:SplitViewPaneMenu x:Name="NavigationMenu"
                                             TabIndex="3"
@@ -96,7 +48,27 @@
                             <core:InvokeCommandAction Command="{Binding ItemInvokedCommand}" />
                         </core:EventTriggerBehavior>
                     </interactivity:Interaction.Behaviors>
+
+                    <ListView.Header>
+                        <ListViewItem HorizontalAlignment="Left"
+                                      Padding="0" 
+                                      MinWidth="48" 
+                                      Width="48">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48"/>
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton x:Name="ToggleMenuButton" 
+                                              TabIndex="1"
+                                              Style="{StaticResource ToggleMenuButtonStyle}"
+                                              IsChecked="{Binding IsPaneOpen, ElementName=AppMenu, Mode=TwoWay}"
+                                              Unchecked="OnMenuButtonChecked"
+                                              ToolTipService.ToolTip="Menu"/>
+                            </Grid>
+                        </ListViewItem>
+                    </ListView.Header>
                     <ListView.Footer>
+                        
                         <ListViewItem Padding="0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -123,6 +95,7 @@
                             </interactivity:Interaction.Behaviors>
                         </ListViewItem>
                     </ListView.Footer>
+                    
                 </controls:SplitViewPaneMenu>
             </SplitView.Pane>
             <SplitView.Content>

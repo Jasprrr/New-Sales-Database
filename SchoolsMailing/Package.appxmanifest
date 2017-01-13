@@ -29,5 +29,9 @@
     <uap:Capability Name="phoneCall" />
     <uap:Capability Name="userAccountInformation" />
     <uap:Capability Name="voipCall" />
+    <uap:Capability Name="picturesLibrary" />
+    <uap:Capability Name="videosLibrary" />
+    <uap:Capability Name="musicLibrary" />
+    <DeviceCapability Name="location" />
   </Capabilities>
 </Package>

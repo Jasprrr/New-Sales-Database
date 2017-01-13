@@ -22,8 +22,33 @@
         <cntrl:CompanyHistoryPopUp x:Key="companyHistoryDialog"/>
     </Page.Resources>
     
-    <Grid Background="WhiteSmoke">
-        <StackPanel>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="52"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Style="{StaticResource BackButton}">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Tapped">
+                        <core:InvokeCommandAction Command="{Binding Path=goBack}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <Border Style="{StaticResource BackBorder}">
+                    <SymbolIcon Symbol="Back" 
+                                Foreground="White"/>
+                </Border>
+            </Button>
+            <TextBlock Grid.Column="1"
+                       Text="{Binding selectedCompany.companyName, Mode=OneWay}" 
+                       FontSize="32"/>
+        </Grid>
+        <StackPanel Grid.Row="1">
             <Pivot>
                 <PivotItem>
                     <PivotItem.Header>
@@ -400,7 +425,8 @@
                 </PivotItem>
             </Pivot>
         </StackPanel>
-        <CommandBar ClosedDisplayMode="Compact"
+        <CommandBar Grid.Row="2"
+                    ClosedDisplayMode="Compact"
                     IsSticky="True" 
                     VerticalAlignment="Bottom">
             <AppBarButton Label="Save"

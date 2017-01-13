@@ -95,7 +95,7 @@ namespace SchoolsMailing.ViewModels
         //Selected company's ID
         public int ID { get; private set; }
 
-        private Company _selectedCompany;
+        private Company _selectedCompany = new Company();
         public Company selectedCompany {
             get { return _selectedCompany; }
             set { if (_selectedCompany != value) { _selectedCompany = value; RaisePropertyChanged("selectedCompany"); } }
@@ -326,6 +326,61 @@ namespace SchoolsMailing.ViewModels
             }
         }
 
+        public bool isDirty = false;
+
+        private RelayCommand _goBack;
+        public RelayCommand goBack
+        {
+            get
+            {
+                if (_goBack == null)
+                {
+                    _goBack = new RelayCommand(() =>
+                    {
+                        cmdGoBack();
+                    });
+                }
+                return _goBack;
+            }
+        }
+
+        public async void cmdGoBack()
+        {
+            if (isDirty == true)
+            {
+                ContentDialog isDirtyDialog = new ContentDialog()
+                {
+                    Title = "Unsaved Changes",
+                    Content = string.Format("Do you want to save changes to {0}", selectedCompany.companyName),
+                    PrimaryButtonText = "Save",
+                    SecondaryButtonText = "No"
+                };
+
+                var result = await isDirtyDialog.ShowAsync();
+                if (result == ContentDialogResult.Primary)
+                {
+                    selectedCompany.companyModified = DateTime.Now; //Set date modified
+                    selectedCompany.companyInitial = selectedCompany.companyName.Substring(0, 1); //Set company initial
+                    DataAccessLayer.SaveCompany(selectedCompany);
+                    foreach (Contact c in companyContacts) //Loop through contacts
+                    {
+                        DataAccessLayer.SaveContact(c); //Save contacts
+                    }
+                    isDirty = false;
+                    NavigationService.GoBack();
+                }
+                else if (result == ContentDialogResult.Secondary)
+                {
+                    isDirty = false;
+                    NavigationService.GoBack();
+                }
+            }
+            else
+            {
+                isDirty = false;
+                NavigationService.GoBack();
+            }
+        }
         #endregion
     }
 }

@@ -16,6 +16,10 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using System.Text.RegularExpressions;
 using SchoolsMailing.Controls;
+using System.IO.Compression;
+using Windows.UI.Xaml;
+using System.IO;
+using Windows.Storage;
 
 namespace SchoolsMailing.ViewModels
 {
@@ -43,10 +47,15 @@ namespace SchoolsMailing.ViewModels
                     directMailingOrders = new ObservableCollection<DirectMailing>(DataAccessLayer.GetAllDirectMailingsByOrderID(obj.Content));
                     printOrders = new ObservableCollection<Print>(DataAccessLayer.GetAllPrintByOrderID(obj.Content));
                     surchargeOrders = new ObservableCollection<Surcharge>(DataAccessLayer.GetAllSurchargesByOrderID(obj.Content));
+
+                    selectedCompany = DataAccessLayer.GetCompanyById(selectedOrder.companyID);
+                    selectedContact = DataAccessLayer.GetContactById(selectedOrder.contactID);
+
+                    pageTitle = selectedOrder.orderCode;
                 }
                 else //Create order
                 {
-                    selectedOrder = new Orders() { orderDate = DateTime.Now, contactID = 1, companyID = 1 };
+                    selectedOrder = new Orders() { orderDate = DateTime.Now };
 
                     //New & existing lists
                     emailOrders = new ObservableCollection<Email>();
@@ -56,6 +65,12 @@ namespace SchoolsMailing.ViewModels
                     directMailingOrders = new ObservableCollection<DirectMailing>();
                     printOrders = new ObservableCollection<Print>();
                     surchargeOrders = new ObservableCollection<Surcharge>();
+
+                    selectedSchoolSendPack = new SchoolSendPack();
+                    selectedSharedPack = new SharedPack();
+
+                    pageTitle = "New Order";
+
                 }
                 CalculateCosts();
                 //Deleted lists 
@@ -66,7 +81,27 @@ namespace SchoolsMailing.ViewModels
                 deletedSchoolSendOrders = new ObservableCollection<SchoolSend>();
                 deletedSharedMailingOrders = new ObservableCollection<SharedMailing>();
                 deletedSurchargeOrders = new ObservableCollection<Surcharge>();
+                //var savePicker = new Windows.Storage.Pickers.FileSavePicker();
+                //savePicker.FileTypeChoices.Add("Rich Text Format", new List<string>() { ".rtf" });
+                //var file = StorageFile.GetFileFromPathAsync(@"C:\Users\Jasper\Desktop\testzip.zip");
+                //System.IO.File.Move(@"C:\Users\Jasper\Desktop\testzip.zip", @"C:\Users\Jasper\Desktop\testzip.docx");
+                //FileInfo file = new FileInfo(@"C:\Users\Jasper\Desktop\testzip.zip");
+                
+                //var asd = Windows.System.Launcher.LaunchUriAsync(new Uri(@"ms-word:ofe|u|C:\Users\Jasper\Desktop\testRTF.rtf"));
+
+                //if (asd != null)
+                //{
+
+                //}
+                //File.Move(@"C:\Users\Jasper\Desktop\testzip.zip", @"C:\Users\Jasper\Desktop\testzip.docx");
             }
+        }
+
+        private string _pageTitle;
+        public string pageTitle
+        {
+            get { return _pageTitle; }
+            set { if(_pageTitle != value) { _pageTitle = value; RaisePropertyChanged("pageTitle"); } }
         }
 
         private int _pivotIndex;
@@ -194,6 +229,31 @@ namespace SchoolsMailing.ViewModels
         #endregion
 
         #region Order
+        private bool _isValidOrderCompany = false;
+        public bool isValidOrderCompany
+        {
+            get { return _isValidOrderCompany; }
+            set { if (_isValidOrderCompany != value) { _isValidOrderCompany = !_isValidOrderCompany; RaisePropertyChanged("isValidOrderCompany"); } }
+        }
+        private bool _isValidOrderContact = false;
+        public bool isValidOrderContact
+        {
+            get { return _isValidOrderContact; }
+            set { if (_isValidOrderContact != value) { _isValidOrderContact = !_isValidOrderContact; RaisePropertyChanged("isValidOrderContact"); } }
+        }
+        private bool _isValidOrderCode = false;
+        public bool isValidOrderCode
+        {
+            get { return _isValidOrderCode; }
+            set { if (_isValidOrderCode != value) { _isValidOrderCode = !_isValidOrderCode; RaisePropertyChanged("isValidOrderCode"); } }
+        }
+        private bool _isValidOrderDate = false;
+        public bool isValidOrderDate
+        {
+            get { return _isValidOrderDate; }
+            set { if (_isValidOrderDate != value) { _isValidOrderDate = !_isValidOrderDate; RaisePropertyChanged("isValidOrderDate"); } }
+        }
+        
         private string _orderCode;
         public string orderCode
         {
@@ -347,7 +407,7 @@ namespace SchoolsMailing.ViewModels
             get { return DataAccessLayer.GetAllCompanies2(); }
         }
 
-        private Company _selectedCompany;
+        private Company _selectedCompany = new Company();
         public Company selectedCompany
         {
             get { return _selectedCompany; }
@@ -382,21 +442,11 @@ namespace SchoolsMailing.ViewModels
         #endregion
 
         #region Contact
-        private Contact _selectedContact;
+        private Contact _selectedContact = new Contact();
         public Contact selectedContact
         {
-            get
-            {
-                if (_selectedContact == null) { return new Contact(); }
-                else { return _selectedContact; }
-            }
-            set {
-                if (_selectedContact != value) {
-                    if (value != null) { _selectedContact = value; }
-                    else { selectedContact = new Contact(); }
-                    RaisePropertyChanged("selectedContact");
-                }
-            }
+            get { return _selectedContact; }
+            set { if (_selectedContact != value) {  _selectedContact = value; RaisePropertyChanged("selectedContact"); } }
         }
 
         private ObservableCollection<Contact> _contacts;
@@ -731,13 +781,10 @@ namespace SchoolsMailing.ViewModels
             get { return _schoolsendPacks; }
             set { if (_schoolsendPacks != value) { _schoolsendPacks = value; RaisePropertyChanged("schoolsendPacks"); } }
         }
-        private SchoolSendPack _selectedSchoolSendPack;
+        private SchoolSendPack _selectedSchoolSendPack = new SchoolSendPack();
         public SchoolSendPack selectedSchoolSendPack
         {
-            get
-            {
-                return _selectedSchoolSendPack;
-            }
+            get { return _selectedSchoolSendPack; }
             set { if (_selectedSchoolSendPack != value) { _selectedSchoolSendPack = value; RaisePropertyChanged("selectedSchoolSendPack"); } }
         }
         private SchoolSend _selectedSchoolSendOrder;
@@ -949,7 +996,7 @@ namespace SchoolsMailing.ViewModels
             get { return _sharedPacks; }
             set { if (_sharedPacks != value) { _sharedPacks = value; RaisePropertyChanged("sharedPacks"); } }
         }
-        private SharedPack _selectedSharedPack;
+        private SharedPack _selectedSharedPack = new SharedPack();
         public SharedPack selectedSharedPack
         {
             get { return _selectedSharedPack; }
@@ -1519,13 +1566,23 @@ namespace SchoolsMailing.ViewModels
         }
         public bool ValidateOrder(Orders order)
         {
-            if (order.companyID != 0) { }
-            else { }
-            if(order.contactID == 0) { }
-            else { }
-            if(order.orderCode == null) { }
-            else { }
-            return true;
+            if (order.companyID != 0) { isValidOrderCompany = true; }
+            else { isValidOrderCompany = false; }
+            if(order.contactID == 0) { isValidOrderContact = true; }
+            else { isValidOrderContact = false; }
+            if(order.orderCode == null) { isValidOrderCode = true; }
+            else { isValidOrderCode = false; }
+            if (order.orderDate == null) { isValidOrderDate = true; }
+            else { isValidOrderDate = false; }
+            
+            if( isValidOrderCompany == true ||
+                isValidOrderContact == true ||
+                isValidOrderCode == true ||
+                isValidOrderDate == true)
+            {
+                return false;
+            }
+            else { return true; }
         }
 
         private RelayCommand _validateData;

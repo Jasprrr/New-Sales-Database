@@ -50,6 +50,19 @@ namespace SchoolsMailing.DAL
         //    }
         //}
 
+        public static List<Email> GetEmailByDate(DateTime date)
+        {
+            List<Email> email;
+
+            // Create a new connection
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                email = (from p in db.Table<Email>()
+                         select p).ToList();
+            }
+            return email.FindAll(p => p.emailDate.Date == date.Date);
+        }
+
         #region Get data list
         public static List<Company> GetAllCompanies()
         {
@@ -248,6 +261,94 @@ namespace SchoolsMailing.DAL
                                             WHERE Surcharge.orderID = Orders.ID 
                                             ORDER BY Surcharge.surchargeDate DESC;").ToList();
                 return os;
+            }
+        }
+        #endregion
+
+        #region Order part by date
+        //public static List<OrdersData> GetDataByOrderDate(DateTime date)
+        //{
+        //    // Create a new connection
+        //    using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+        //    {
+        //        List<OrdersData> od;
+        //        od = db.Query<OrdersData>(@"SELECT Orders.ID, Orders.userID, Orders.companyID, Orders.contactID, Orders.promotionID, Orders.orderCode, Orders.orderDate, Orders.orderModified, 
+        //                                           Orders.orderPayment, Orders.orderContent, Orders.orderRemove, Orders.companyName, Orders.companyAddress1, Orders.companyAddress2, Orders.companyCity, 
+        //                                           Orders.companyCounty, Orders.companyPostCode, Orders.companyProspects, Orders.contactTitle, Orders.contactForename, Orders.contactSurname, 
+        //                                           Orders.contactEmail, Orders.contactTelephone, Orders.orderTotal, Orders.orderTotalVAT, Data.dataDetails, Data.dataCost, Data.dataStart, 
+        //                                           Data.dataEnd, Data.dataCreated, Data.dataModified 
+        //                                    FROM Data, Orders 
+        //                                    WHERE Data.orderID = Orders.ID AND Data.dataEnd = ? 
+        //                                    ORDER BY Data.dataEnd DESC;", date).ToList();
+        //        return od;
+        //    }
+        //}
+        public static List<OrdersEmail> GetOrdersEmailByDate(DateTime date)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                List<OrdersEmail> o;
+                o = db.Query<OrdersEmail>(@"SELECT Orders.ID, Orders.userID, Orders.companyID, Orders.contactID, Orders.promotionID, Orders.orderCode, Orders.orderDate, Orders.orderModified, 
+                                                   Orders.orderPayment, Orders.orderContent, Orders.orderRemove, Orders.companyName, Orders.companyAddress1, Orders.companyAddress2, Orders.companyCity, 
+                                                   Orders.companyCounty, Orders.companyPostCode, Orders.companyProspects, Orders.contactTitle, Orders.contactForename, Orders.contactSurname, 
+                                                   Orders.contactEmail, Orders.contactTelephone, Orders.orderTotal, Orders.orderTotalVAT, Email.emailDate, Email.emailDetails, Email.emailAdminCost,
+                                                   Email.emailDirectCost, Email.emailCost, Email.emailSubject, Email.emailSetUp, Email.emailCreated, Email.emailModified
+                                             FROM Email, Orders 
+                                             WHERE Email.orderID = Orders.ID
+                                             ORDER BY Email.emailDate DESC;").ToList();
+                return o.FindAll(p => p.emailDate.Date == date.Date);
+            }
+        }
+        public static List<OrdersSchoolSend> GetOrdersSchoolSendByDate(DateTime date)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                List<OrdersSchoolSend> o;
+                o = db.Query<OrdersSchoolSend>(@"SELECT Orders.ID, Orders.userID, Orders.companyID, Orders.contactID, Orders.promotionID, Orders.orderCode, Orders.orderDate, Orders.orderModified, 
+                                                       Orders.orderPayment, Orders.orderContent, Orders.orderRemove, Orders.companyName, Orders.companyAddress1, Orders.companyAddress2, Orders.companyCity, 
+                                                       Orders.companyCounty, Orders.companyPostCode, Orders.companyProspects, Orders.contactTitle, Orders.contactForename, Orders.contactSurname, 
+                                                       Orders.contactEmail, Orders.contactTelephone, Orders.orderTotal, Orders.orderTotalVAT, SchoolSend.schoolsendPackage, SchoolSend.schoolsendStart, 
+                                                       SchoolSend.schoolsendEnd, SchoolSend.schoolsendCost, SchoolSend.schoolsendCredits, SchoolSend.schoolsendCreated, SchoolSend.schoolsendModified
+                                                 FROM SchoolSend, Orders 
+                                                 WHERE SchoolSend.orderID = Orders.ID
+                                                 ORDER BY SchoolSend.schoolsendEnd DESC;").ToList();
+                return o.FindAll(p => p.schoolsendEnd.Date == date.Date);
+            }
+        }
+        public static List<OrdersDirectMailing> GetOrdersDirectMailingByDate(DateTime date)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                List<OrdersDirectMailing> o;
+                o = db.Query<OrdersDirectMailing>(@"SELECT Orders.ID, Orders.userID, Orders.companyID, Orders.contactID, Orders.promotionID, Orders.orderCode, Orders.orderDate, Orders.orderModified, 
+                                                             Orders.orderPayment, Orders.orderContent, Orders.orderRemove, Orders.companyName, Orders.companyAddress1, Orders.companyAddress2, Orders.companyCity, 
+                                                             Orders.companyCounty, Orders.companyPostCode, Orders.companyProspects, Orders.contactTitle, Orders.contactForename, Orders.contactSurname, 
+                                                             Orders.contactEmail, Orders.contactTelephone, Orders.orderTotal, Orders.orderTotalVAT, DirectMailing.directDeliveryCode,
+                                                             DirectMailing.directDataDate, DirectMailing.directInsertDate, DirectMailing.directArtworkDate, DirectMailing.directDate, 
+                                                             DirectMailing.directMailingTo, DirectMailing.directLeafletCode, DirectMailing.directDetails, DirectMailing.directFulfilmentCost, 
+                                                             DirectMailing.directPrintCost, DirectMailing.directPostageCost, DirectMailing.directCreated, DirectMailing.directModified, DirectMailing.directCost
+                                                     FROM DirectMailing, Orders 
+                                                     WHERE DirectMailing.orderID = Orders.ID
+                                                     ORDER BY DirectMailing.directDate DESC;").ToList();
+                return o.FindAll(p => p.directDate.Date == date.Date);
+            }
+        }
+        public static List<OrdersSharedMailing> GetOrdersSharedMailingByDate(DateTime date)
+        {
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                List<OrdersSharedMailing> o;
+                o = db.Query<OrdersSharedMailing>(@"SELECT Orders.ID, Orders.userID, Orders.companyID, Orders.contactID, Orders.promotionID, Orders.orderCode, Orders.orderDate, Orders.orderModified, 
+                                                           Orders.orderPayment, Orders.orderContent, Orders.orderRemove, Orders.companyName, Orders.companyAddress1, Orders.companyAddress2, Orders.companyCity, 
+                                                           Orders.companyCounty, Orders.companyPostCode, Orders.companyProspects, Orders.contactTitle, Orders.contactForename, Orders.contactSurname, 
+                                                           Orders.contactEmail, Orders.contactTelephone, Orders.orderTotal, Orders.orderTotalVAT, SharedMailing.sharedDeliveryCode, SharedMailing.sharedDate,
+                                                           SharedMailing.sharedMailingTo, SharedMailing.sharedArtworkDate, SharedMailing.sharedLeafletName, SharedMailing.sharedNumberOfLeaflets, SharedMailing.sharedFAO, 
+                                                           SharedMailing.sharedLeafletSize, SharedMailing.sharedLeafletWeight, SharedMailing.sharedDeliveryDate, SharedMailing.sharedPackage, SharedMailing.sharedCost,
+                                                           SharedMailing.sharedCreated, SharedMailing.sharedModified
+                                                     FROM SharedMailing, Orders 
+                                                     WHERE SharedMailing.orderID = Orders.ID
+                                                     ORDER BY SharedMailing.sharedDate DESC;").ToList();
+                return o.FindAll(p => p.sharedDate.Date == date.Date);
             }
         }
         #endregion

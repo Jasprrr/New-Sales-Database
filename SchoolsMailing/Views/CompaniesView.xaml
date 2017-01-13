@@ -14,7 +14,21 @@
         <CollectionViewSource x:Key="groupCompanies" IsSourceGrouped="True" x:Name="groupCompanies" Source="{Binding}"/>
     </Page.Resources>
     <Grid Background="WhiteSmoke">
-        <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="52"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="1"
+                       Text="Companies" 
+                       FontSize="32"/>
+        </Grid>
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
@@ -24,7 +38,7 @@
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="ItemClick">
                         <core:CallMethodAction MethodName="companyInvoked" 
-                                               TargetObject="{Binding Mode=OneWay}"/>
+                                                TargetObject="{Binding Mode=OneWay}"/>
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <ListView.ItemTemplate>
@@ -33,24 +47,25 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <CommandBar VerticalAlignment="Bottom">
-                <AppBarButton Icon="Add"
-                              Label="New Company">
-                    <interactivity:Interaction.Behaviors>
-                        <core:EventTriggerBehavior EventName="Click">
-                            <core:InvokeCommandAction Command="{Binding Path=newCompany}" />
-                        </core:EventTriggerBehavior>
-                    </interactivity:Interaction.Behaviors>
-                </AppBarButton>
-                <AppBarButton Icon="Refresh"
-                              Label="Refresh">
-                    <interactivity:Interaction.Behaviors>
-                        <core:EventTriggerBehavior EventName="Click">
-                            <core:InvokeCommandAction Command="{Binding Path=refreshCompany}" />
-                        </core:EventTriggerBehavior>
-                    </interactivity:Interaction.Behaviors>
-                </AppBarButton>
-            </CommandBar>
         </Grid>
+        <CommandBar VerticalAlignment="Bottom"
+                    Grid.Row="2">
+            <AppBarButton Icon="Add"
+                          Label="New Company">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:InvokeCommandAction Command="{Binding Path=newCompany}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AppBarButton>
+            <AppBarButton Icon="Refresh"
+                          Label="Refresh">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:InvokeCommandAction Command="{Binding Path=refreshCompany}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AppBarButton>
+        </CommandBar>
     </Grid>
 </Page>
