@@ -17,6 +17,9 @@ using System.IO;
 using Windows.Storage;
 using System.IO.Compression;
 using Windows.Storage.AccessCache;
+using Windows.Data.Xml.Dom;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace SchoolsMailing.ViewModels
 {
@@ -89,6 +92,7 @@ namespace SchoolsMailing.ViewModels
                                 //var rootFrame = Window.Current.Content as Frame;
 
                                 //rootFrame.Navigate(typeof(MainPage));
+                                //ZipFile.
                             }
                             else
                             {
@@ -109,14 +113,45 @@ namespace SchoolsMailing.ViewModels
 
         public async void DoMove()
         {
-            //StorageApplicationPermissions.FutureAccessList.A
-            StorageFolder storageFolder = KnownFolders.PicturesLibrary;
-            StorageFile file = await storageFolder.TryGetItemAsync("testzip.zip") as StorageFile;
-            if(file != null)
+            //StorageFolder test = await StorageFolder.GetFolderFromPathAsync("");
+            Debug.WriteLine(string.Format(Windows.Storage.ApplicationData.Current.LocalFolder.Path.ToString()));
+            //string locPath = @"C:\Users\Jasper\AppData\Local\Packages\430d4efd-8648-4a35-8670-6dcecc88d151_7mzr475ysvhxg\LocalState\CreateDoc";
+            //string desPath = @"C:\Users\Jasper\AppData\Local\Packages\430d4efd-8648-4a35-8670-6dcecc88d151_7mzr475ysvhxg\LocalState\FinishDoc\test.docx";
+            //ZipFile.CreateFromDirectory(locPath, desPath);
+            
+            //XDocument doc = new XDocument(new XElement("test", new XAttribute("test_name", "test_Value"), new XElement("test_Child", "test_node")));
+            //XmlWriter writer = XmlWriter.Create()
+            //await doc.Save();
+
+            StorageFolder fol = ApplicationData.Current.LocalFolder;
+            StorageFile fil = await fol.CreateFileAsync("test.xml", CreationCollisionOption.ReplaceExisting);
+
+            XNamespace w = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+            XNamespace cx = "http://schemas.microsoft.com/office/drawing/2014/chartex";
+            XNamespace cx1 = "http://schemas.microsoft.com/office/drawing/2015/9/8/chartex";
+            XNamespace cx2 = "http://schemas.microsoft.com/office/drawing/2015/10/21/chartex";
+            XNamespace cx3 = "http://schemas.microsoft.com/office/drawing/2016/5/9/chartex";
+            XNamespace cx4 = "http://schemas.microsoft.com/office/drawing/2016/5/10/chartex";
+            XNamespace cx5 = "http://schemas.microsoft.com/office/drawing/2016/5/11/chartex";
+            XNamespace m = "http://schemas.openxmlformats.org/officeDocument/2006/math";
+            XNamespace mc = "http://schemas.openxmlformats.org/markup-compatibility/2006";
+            XNamespace o = "urn:schemas-microsoft-com:office:office";
+            XNamespace r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+            XNamespace v = "urn:schemas-microsoft-com:vml";
+
+            XDocument xdoc = new XDocument(new XElement(w + "document", new XAttribute(XNamespace.Xmlns+"w", w.NamespaceName)));
+
+            try
             {
-                await file.RenameAsync("testzip.docx");
+                using (var stream = await fil.OpenStreamForWriteAsync())
+                {
+                    xdoc.Save(stream);
+                }
             }
-            //ZipFile.CreateFromDirectory()
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
     }
 }
