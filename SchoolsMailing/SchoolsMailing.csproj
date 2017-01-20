@@ -17,7 +17,8 @@
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>AppTemplate_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>SchoolsMailing_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>5079CE690A99599210F72E7B9E077D7C525801E2</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -92,7 +93,9 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="Assets\OrderForm.zip" />
     <None Include="project.json" />
+    <None Include="SchoolsMailing_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -173,6 +176,7 @@
     <Compile Include="Converters\NativeTypeConverter.cs" />
     <Compile Include="Converters\StringFormatter.cs" />
     <Compile Include="DAL\DataAccessLayer.cs" />
+    <Compile Include="DAL\DocumentAccessLayer.cs" />
     <Compile Include="Extensions\VisualTreeHelperExtensions.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -274,9 +278,21 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\doc_DataTable.txt" />
+    <Content Include="Assets\doc_DirectMailingTable.txt" />
+    <Content Include="Assets\doc_EmailTable.txt" />
+    <Content Include="Assets\doc_Footer.txt" />
+    <Content Include="Assets\doc_Header.txt" />
+    <Content Include="Assets\doc_Spacer.txt" />
+    <Content Include="Assets\foot_Footer.txt" />
+    <Content Include="Assets\doc_SchoolSendTable.txt" />
+    <Content Include="Assets\doc_SharedMailingTable.txt" />
+    <Content Include="Assets\head_Header.txt" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\doc_SurchargeTable.txt" />
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
-    <Content Include="Assets\XMLFile1.xml" />
+    <Content Include="Assets\doc_CompanyTable.txt" />
+    <Content Include="Assets\word_Rels_Document.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

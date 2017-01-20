@@ -11,9 +11,9 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     DataContext="{Binding OrderViewModel, Source={StaticResource VmLocator}}">
-    
+
     <Page.Resources>
-        
+
         <Style x:Key="inputTextBlock" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Calibri"/>
             <Setter Property="FontSize" Value="20"/>
@@ -543,6 +543,14 @@
                         </MenuFlyoutItem>
                     </MenuFlyout>
                 </AppBarButton.Flyout>
+            </AppBarButton>
+            <AppBarButton Icon="Document"
+                          Label="Order Form">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:InvokeCommandAction Command="{Binding Path=saveOrder}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
             </AppBarButton>
             <AppBarButton Icon="Save"
                           Label="Save">

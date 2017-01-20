@@ -39,6 +39,8 @@ namespace SchoolsMailing.DAL
             }
         }
 
+
+
         //public static async Task CreateDatabase()
         //{
         //    Create a new connection
@@ -597,8 +599,169 @@ namespace SchoolsMailing.DAL
         }
         #endregion
 
-        #region List Get
+        public static List<Data> ListDataAll()
+        {
+            List<Data> l;
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                l = (from p in db.Table<Data>()
+                     orderby p.dataEnd descending
+                     select p).ToList();
+            }
+            return l;
+        }
+        public static List<Email> ListEmailAll()
+        {
+            List<Email> l;
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                l = (from p in db.Table<Email>()
+                     orderby p.emailDate descending
+                     select p).ToList();
+            }
+            return l;
+        }
+        public static List<SchoolSend> ListSchoolSendAll()
+        {
+            List<SchoolSend> l;
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                l = (from p in db.Table<SchoolSend>()
+                     orderby p.schoolsendEnd descending
+                     select p).ToList();
+            }
+            return l;
+        }
+        public static List<DirectMailing> ListDirectMailingAll()
+        {
+            List<DirectMailing> l;
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                l = (from p in db.Table<DirectMailing>()
+                     orderby p.directDate descending
+                     select p).ToList();
+            }
+            return l;
+        }
+        public static List<SharedMailing> ListSharedMailingAll()
+        {
+            List<SharedMailing> l;
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                l = (from p in db.Table<SharedMailing>()
+                     orderby p.sharedDate descending
+                     select p).ToList();
+            }
+            return l;
+        }
+        public static List<Print> ListPrintAll()
+        {
+            List<Print> l;
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                l = (from p in db.Table<Print>()
+                     orderby p.printDate descending
+                     select p).ToList();
+            }
+            return l;
+        }
+        public static List<Surcharge> ListSurchargeAll()
+        {
+            List<Surcharge> l;
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                l = (from p in db.Table<Surcharge>()
+                     orderby p.surchargeDate descending
+                     select p).ToList();
+            }
+            return l;
+        }
 
+        #region List Get
+        public static List<Data> ListDataByOrderID(long orderID)
+        {
+            List<Data> l;
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                l = (from p in db.Table<Data>()
+                     where p.orderID == orderID
+                     orderby p.dataEnd descending
+                     select p).ToList();
+            }
+            return l;
+        }
+        public static List<Email> ListEmailByOrderID(long orderID)
+        {
+            List<Email> l;
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                l = (from p in db.Table<Email>()
+                     where p.orderID == orderID
+                     orderby p.emailDate descending
+                     select p).ToList();
+            }
+            return l;
+        }
+        public static List<SchoolSend> ListSchoolSendByOrderID(long orderID)
+        {
+            List<SchoolSend> l;
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                l = (from p in db.Table<SchoolSend>()
+                     where p.orderID == orderID
+                     orderby p.schoolsendEnd descending
+                     select p).ToList();
+            }
+            return l;
+        }
+        public static List<DirectMailing> ListDirectMailingByOrderID(long orderID)
+        {
+            List<DirectMailing> l;
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                l = (from p in db.Table<DirectMailing>()
+                     where p.orderID == orderID
+                     orderby p.directDate descending
+                     select p).ToList();
+            }
+            return l;
+        }
+        public static List<SharedMailing> ListSharedMailingByOrderID(long orderID)
+        {
+            List<SharedMailing> l;
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                l = (from p in db.Table<SharedMailing>()
+                     where p.orderID == orderID
+                     orderby p.sharedDate descending
+                     select p).ToList();
+            }
+            return l;
+        }
+        public static List<Print> ListPrintByOrderID(long orderID)
+        {
+            List<Print> l;
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                l = (from p in db.Table<Print>()
+                     where p.orderID == orderID
+                     orderby p.printDate descending
+                     select p).ToList();
+            }
+            return l;
+        }
+        public static List<Surcharge> ListSurchargeByOrderID(long orderID)
+        {
+            List<Surcharge> l;
+            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
+            {
+                l = (from p in db.Table<Surcharge>()
+                     where p.orderID == orderID
+                     orderby p.surchargeDate descending
+                     select p).ToList();
+            }
+            return l;
+        }
         #endregion
 
         #region ObservableCollection Get

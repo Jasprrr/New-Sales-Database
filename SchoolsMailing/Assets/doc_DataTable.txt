@@ -1,0 +1,447 @@
+﻿<w:p w:rsidR="006D40D6" w:rsidRDefault="006D40D6" w:rsidP="00EC414F">
+	<w:pPr>
+		<w:rPr>
+			<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Tahoma" />
+			<w:color w:val="5F5F5F" />
+			<w:sz w:val="20" />
+			<w:szCs w:val="20" />
+			<w:lang w:val="en-GB" />
+		</w:rPr>
+	</w:pPr>
+</w:p>
+<w:tbl>
+	<w:tblPr>
+		<w:tblW w:w="11482" w:type="dxa" />
+		<w:tblBorders>
+			<w:top w:val="single" w:sz="4" w:space="0" w:color="auto" />
+			<w:left w:val="single" w:sz="4" w:space="0" w:color="auto" />
+			<w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto" />
+			<w:right w:val="single" w:sz="4" w:space="0" w:color="auto" />
+			<w:insideH w:val="single" w:sz="4" w:space="0" w:color="auto" />
+			<w:insideV w:val="single" w:sz="4" w:space="0" w:color="auto" />
+		</w:tblBorders>
+		<w:tblLook w:val="0480" w:firstRow="0" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" w:noVBand="1" />
+	</w:tblPr>
+	<w:tblGrid>
+		<w:gridCol w:w="2099" />
+		<w:gridCol w:w="3288" />
+		<w:gridCol w:w="1050" />
+		<w:gridCol w:w="5045" />
+	</w:tblGrid>
+	<w:tr w:rsidR="006D40D6" w:rsidRPr="00BA5814" w:rsidTr="006D40D6">
+		<w:trPr>
+			<w:trHeight w:val="402" />
+		</w:trPr>
+		<w:tc>
+			<w:tcPr>
+				<w:tcW w:w="2099" w:type="dxa" />
+				<w:tcBorders>
+					<w:top w:val="nil" />
+					<w:left w:val="nil" />
+					<w:bottom w:val="nil" />
+					<w:right w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+				</w:tcBorders>
+				<w:shd w:val="clear" w:color="auto" w:fill="D9D9D9" />
+				<w:vAlign w:val="center" />
+			</w:tcPr>
+			<w:p w:rsidR="006D40D6" w:rsidRPr="006D40D6" w:rsidRDefault="006D40D6" w:rsidP="0038052E">
+				<w:pPr>
+					<w:rPr>
+						<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+				</w:pPr>
+				<w:r>
+					<w:rPr>
+						<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+					<w:t xml:space="preserve">Start </w:t>
+				</w:r>
+				<w:r w:rsidRPr="006D40D6">
+					<w:rPr>
+						<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+					<w:t>Date</w:t>
+				</w:r>
+			</w:p>
+		</w:tc>
+		<w:tc>
+			<w:tcPr>
+				<w:tcW w:w="3288" w:type="dxa" />
+				<w:tcBorders>
+					<w:top w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:left w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:bottom w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:right w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+				</w:tcBorders>
+				<w:shd w:val="clear" w:color="auto" w:fill="auto" />
+				<w:vAlign w:val="center" />
+			</w:tcPr>
+			<w:p w:rsidR="006D40D6" w:rsidRPr="00BA5814" w:rsidRDefault="006D40D6" w:rsidP="0038052E">
+				<w:pPr>
+					<w:rPr>
+						<w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+				</w:pPr>
+				<w:r>
+					<w:rPr>
+						<w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+					<w:t>{0}</w:t>
+				</w:r>
+			</w:p>
+		</w:tc>
+		<w:tc>
+			<w:tcPr>
+				<w:tcW w:w="1050" w:type="dxa" />
+				<w:tcBorders>
+					<w:top w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:left w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:bottom w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:right w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+				</w:tcBorders>
+				<w:shd w:val="clear" w:color="auto" w:fill="D9D9D9" />
+				<w:vAlign w:val="center" />
+			</w:tcPr>
+			<w:p w:rsidR="006D40D6" w:rsidRPr="00BA5814" w:rsidRDefault="006D40D6" w:rsidP="006D40D6">
+				<w:pPr>
+					<w:jc w:val="center" />
+					<w:rPr>
+						<w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+						<w:b />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+				</w:pPr>
+				<w:r>
+					<w:rPr>
+						<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+					<w:t>End Date</w:t>
+				</w:r>
+			</w:p>
+		</w:tc>
+		<w:tc>
+			<w:tcPr>
+				<w:tcW w:w="5045" w:type="dxa" />
+				<w:tcBorders>
+					<w:top w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:left w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:bottom w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:right w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+				</w:tcBorders>
+				<w:shd w:val="clear" w:color="auto" w:fill="auto" />
+				<w:vAlign w:val="center" />
+			</w:tcPr>
+			<w:p w:rsidR="006D40D6" w:rsidRPr="00BA5814" w:rsidRDefault="006D40D6" w:rsidP="0038052E">
+				<w:pPr>
+					<w:rPr>
+						<w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+				</w:pPr>
+				<w:r>
+					<w:rPr>
+						<w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+					<w:t>{1}</w:t>
+				</w:r>
+			</w:p>
+		</w:tc>
+	</w:tr>
+	<w:tr w:rsidR="006D40D6" w:rsidRPr="00BA5814" w:rsidTr="006D40D6">
+		<w:trPr>
+			<w:trHeight w:val="422" />
+		</w:trPr>
+		<w:tc>
+			<w:tcPr>
+				<w:tcW w:w="2099" w:type="dxa" />
+				<w:tcBorders>
+					<w:top w:val="nil" />
+					<w:left w:val="nil" />
+					<w:bottom w:val="nil" />
+					<w:right w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+				</w:tcBorders>
+				<w:shd w:val="clear" w:color="auto" w:fill="D9D9D9" />
+				<w:vAlign w:val="center" />
+			</w:tcPr>
+			<w:p w:rsidR="006D40D6" w:rsidRPr="006D40D6" w:rsidRDefault="006D40D6" w:rsidP="0038052E">
+				<w:pPr>
+					<w:rPr>
+						<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+				</w:pPr>
+				<w:r w:rsidRPr="006D40D6">
+					<w:rPr>
+						<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+					<w:t>Data Supplied</w:t>
+				</w:r>
+			</w:p>
+		</w:tc>
+		<w:tc>
+			<w:tcPr>
+				<w:tcW w:w="9383" w:type="dxa" />
+				<w:gridSpan w:val="3" />
+				<w:tcBorders>
+					<w:top w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:left w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:bottom w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:right w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+				</w:tcBorders>
+				<w:shd w:val="clear" w:color="auto" w:fill="auto" />
+				<w:vAlign w:val="center" />
+			</w:tcPr>
+			<w:p w:rsidR="006D40D6" w:rsidRPr="00BA5814" w:rsidRDefault="006D40D6" w:rsidP="0038052E">
+				<w:pPr>
+					<w:rPr>
+						<w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+				</w:pPr>
+				<w:r>
+					<w:rPr>
+						<w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+					<w:t>{2}</w:t>
+				</w:r>
+			</w:p>
+		</w:tc>
+	</w:tr>
+	<w:tr w:rsidR="006D40D6" w:rsidRPr="00BA5814" w:rsidTr="006D40D6">
+		<w:trPr>
+			<w:trHeight w:val="711" />
+		</w:trPr>
+		<w:tc>
+			<w:tcPr>
+				<w:tcW w:w="2099" w:type="dxa" />
+				<w:tcBorders>
+					<w:top w:val="nil" />
+					<w:left w:val="nil" />
+					<w:bottom w:val="nil" />
+					<w:right w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+				</w:tcBorders>
+				<w:shd w:val="clear" w:color="auto" w:fill="D9D9D9" />
+				<w:vAlign w:val="center" />
+			</w:tcPr>
+			<w:p w:rsidR="006D40D6" w:rsidRPr="006D40D6" w:rsidRDefault="006D40D6" w:rsidP="0038052E">
+				<w:pPr>
+					<w:rPr>
+						<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+				</w:pPr>
+				<w:r w:rsidRPr="006D40D6">
+					<w:rPr>
+						<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+					<w:t>Supply Date</w:t>
+				</w:r>
+			</w:p>
+		</w:tc>
+		<w:tc>
+			<w:tcPr>
+				<w:tcW w:w="9383" w:type="dxa" />
+				<w:gridSpan w:val="3" />
+				<w:tcBorders>
+					<w:top w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:left w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:bottom w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:right w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+				</w:tcBorders>
+				<w:shd w:val="clear" w:color="auto" w:fill="auto" />
+				<w:vAlign w:val="center" />
+			</w:tcPr>
+			<w:p w:rsidR="006D40D6" w:rsidRPr="00BA5814" w:rsidRDefault="006D40D6" w:rsidP="0038052E">
+				<w:pPr>
+					<w:rPr>
+						<w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+				</w:pPr>
+				<w:r w:rsidRPr="00BA5814">
+					<w:rPr>
+						<w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+					<w:t>Subject to receiving signed order form and payment.</w:t>
+				</w:r>
+			</w:p>
+			<w:p w:rsidR="006D40D6" w:rsidRPr="00BA5814" w:rsidRDefault="006D40D6" w:rsidP="0038052E">
+				<w:pPr>
+					<w:rPr>
+						<w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+				</w:pPr>
+				<w:r w:rsidRPr="00BA5814">
+					<w:rPr>
+						<w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+					<w:t>To be emailed to contact above in Excel format.</w:t>
+				</w:r>
+			</w:p>
+		</w:tc>
+	</w:tr>
+	<w:tr w:rsidR="006D40D6" w:rsidRPr="00BA5814" w:rsidTr="006D40D6">
+		<w:trPr>
+			<w:trHeight w:val="403" />
+		</w:trPr>
+		<w:tc>
+			<w:tcPr>
+				<w:tcW w:w="2099" w:type="dxa" />
+				<w:tcBorders>
+					<w:top w:val="nil" />
+					<w:left w:val="nil" />
+					<w:bottom w:val="nil" />
+					<w:right w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+				</w:tcBorders>
+				<w:shd w:val="clear" w:color="auto" w:fill="D9D9D9" />
+				<w:vAlign w:val="center" />
+			</w:tcPr>
+			<w:p w:rsidR="006D40D6" w:rsidRPr="006D40D6" w:rsidRDefault="006D40D6" w:rsidP="0038052E">
+				<w:pPr>
+					<w:rPr>
+						<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+				</w:pPr>
+				<w:r w:rsidRPr="006D40D6">
+					<w:rPr>
+						<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+					<w:t>Payment (Inc. VAT)</w:t>
+				</w:r>
+			</w:p>
+		</w:tc>
+		<w:tc>
+			<w:tcPr>
+				<w:tcW w:w="9383" w:type="dxa" />
+				<w:gridSpan w:val="3" />
+				<w:tcBorders>
+					<w:top w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:left w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:bottom w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+					<w:right w:val="single" w:sz="2" w:space="0" w:color="7F7F7F" />
+				</w:tcBorders>
+				<w:shd w:val="clear" w:color="auto" w:fill="auto" />
+				<w:vAlign w:val="center" />
+			</w:tcPr>
+			<w:p w:rsidR="006D40D6" w:rsidRPr="00BA5814" w:rsidRDefault="007A53DC" w:rsidP="0038052E">
+				<w:pPr>
+					<w:rPr>
+						<w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+				</w:pPr>
+				<w:r>
+					<w:rPr>
+						<w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+					<w:t>{3}</w:t>
+				</w:r>
+				<w:r w:rsidR="006D40D6">
+					<w:rPr>
+						<w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+					<w:t xml:space="preserve">+ VAT = </w:t>
+				</w:r>
+				<w:r>
+					<w:rPr>
+						<w:rFonts w:ascii="Tahoma" w:hAnsi="Tahoma" w:cs="Tahoma" />
+						<w:color w:val="595959" />
+						<w:sz w:val="20" />
+						<w:szCs w:val="20" />
+						<w:lang w:val="en-GB" />
+					</w:rPr>
+					<w:t>{4}</w:t>
+				</w:r>
+			</w:p>
+		</w:tc>
+	</w:tr>
+</w:tbl>
