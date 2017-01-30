@@ -88,7 +88,7 @@
                                                 </core:EventTriggerBehavior>
                                             </interactivity:Interaction.Behaviors>
                                         </ComboBox>
-                                        <ctrl:InvalidFlag Visibility="{Binding isValidOrderCompany, Converter={StaticResource InvalidTextBox}}" 
+                                        <ctrl:InvalidFlag Visibility="{Binding isInvalidOrderCompany, Converter={StaticResource InvalidTextBox}}" 
                                                           ToolTipService.ToolTip="Invalid Company"/>
                                     </StackPanel>
                                     <TextBlock Text="Contact"
@@ -107,7 +107,7 @@
                                                 </core:EventTriggerBehavior>
                                             </interactivity:Interaction.Behaviors>
                                         </ComboBox>
-                                        <ctrl:InvalidFlag Visibility="{Binding isValidOrderCompany, Converter={StaticResource InvalidTextBox}}" 
+                                        <ctrl:InvalidFlag Visibility="{Binding isInvalidOrderCompany, Converter={StaticResource InvalidTextBox}}" 
                                                           ToolTipService.ToolTip="Invalid Company"/>
                                     </StackPanel>
                                     <TextBlock Text="Order Code"
@@ -548,7 +548,7 @@
                           Label="Order Form">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=saveOrder}" />
+                        <core:InvokeCommandAction Command="{Binding Path=createOrderForm}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

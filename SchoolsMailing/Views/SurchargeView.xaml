@@ -28,7 +28,7 @@
                                                 MinWidth="120"
                                                 Date="{Binding selectedSurchargeOrder.surchargeDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                                 Style="{StaticResource inputCalendarDatePicker}"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidSurchargeDate, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidSurchargeDate, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Date"/>
                         </StackPanel>
                     </StackPanel>
@@ -46,7 +46,7 @@
                                      AcceptsReturn="True" 
                                      TextWrapping="Wrap" 
                                      ScrollViewer.VerticalScrollBarVisibility="Visible"/>
-                            <cntrl:InvalidFlagLarge Visibility="{Binding isValidSurchargeDetails, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlagLarge Visibility="{Binding isInvalidSurchargeDetails, Converter={StaticResource InvalidTextBox}}" 
                                                     ToolTipService.ToolTip="Invalid Details"/>
                         </StackPanel>
                     </StackPanel>

@@ -455,16 +455,11 @@
             </AppBarButton>
             <AppBarButton Label="Order"
                           Icon="Shop">
-                <AppBarButton.Flyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem Text="Data"/>
-                        <MenuFlyoutItem Text="Email"/>
-                        <MenuFlyoutItem Text="Direct Mailing"/>
-                        <MenuFlyoutItem Text="Print"/>
-                        <MenuFlyoutItem Text="SchoolSend"/>
-                        <MenuFlyoutItem Text="Shared Mailing"/>
-                    </MenuFlyout>
-                </AppBarButton.Flyout>
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:InvokeCommandAction Command="{Binding Path=newOrder}"/>
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
             </AppBarButton>
             <AppBarButton Label="Export"
                           Icon="Download"/>

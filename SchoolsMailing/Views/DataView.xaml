@@ -32,7 +32,7 @@
                                                 MinWidth="120"
                                                 Date="{Binding selectedDataOrder.dataStart, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                                 Style="{StaticResource inputCalendarDatePicker}"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidDataStart, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidDataStart, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Start Date"/>
                         </StackPanel>
                         
@@ -43,7 +43,7 @@
                                                 MinWidth="120"
                                                 Date="{Binding selectedDataOrder.dataEnd, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                                 Style="{StaticResource inputCalendarDatePicker}"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidDataEnd, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidDataEnd, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid End Date"/>
                         </StackPanel>
                         
@@ -63,7 +63,7 @@
                                      ScrollViewer.VerticalScrollBarVisibility="Visible" 
                                      AcceptsReturn="True" 
                                      TextWrapping="Wrap"/>
-                            <cntrl:InvalidFlagLarge Visibility="{Binding isValidDataDetails, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlagLarge Visibility="{Binding isInvalidDataDetails, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Data Details"/>
                         </StackPanel>
                     </StackPanel>
@@ -78,7 +78,7 @@
                             <TextBox Text="{Binding selectedDataOrder.dataCost, Mode=TwoWay}"
                                     Style="{StaticResource inputTextBox}"
                                     Width="200"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidDataCost, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidDataCost, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Cost"/>
                         </StackPanel>
                     </StackPanel>

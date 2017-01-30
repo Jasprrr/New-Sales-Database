@@ -32,7 +32,7 @@
                             <TextBox Text="{Binding selectedSharedPack.packName, Mode=TwoWay}"
                                      Style="{StaticResource inputTextBox}"
                                      Width="200"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidPackageName, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidPackageName, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Name"/>
                         </StackPanel>
                         <TextBlock Text="Mailing To"
@@ -41,7 +41,7 @@
                             <TextBox Text="{Binding selectedSharedPack.packTo, Mode=TwoWay}"
                                      Style="{StaticResource inputTextBox}"
                                      Width="200"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidPackageTo, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidPackageTo, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Mailing To"/>
                         </StackPanel>
                         <TextBlock Text="Send Date"
@@ -51,7 +51,7 @@
                                                 MinWidth="120"
                                                 Date="{Binding selectedSharedPack.packDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                                 Style="{StaticResource inputCalendarDatePicker}"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidPackageDate, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidPackageDate, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Send Date"/>
                         </StackPanel>
                         <TextBlock Text="Artwork Date"
@@ -61,7 +61,7 @@
                                                 MinWidth="120"
                                                 Date="{Binding selectedSharedPack.packArtworkDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                                 Style="{StaticResource inputCalendarDatePicker}"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidPackageArtworkDate, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidPackageArtworkDate, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Artwork Date"/>
                         </StackPanel>
                         <TextBlock Text="Delivery Date"
@@ -71,7 +71,7 @@
                                                 MinWidth="120"
                                                 Date="{Binding selectedSharedPack.packDeliveryDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                                 Style="{StaticResource inputCalendarDatePicker}"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidPackageDeliveryDate, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidPackageDeliveryDate, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Delivery Date"/>
                         </StackPanel>
                         <TextBlock Text="Cost"
@@ -80,7 +80,7 @@
                             <TextBox Text="{Binding selectedSharedPack.packCost, Mode=TwoWay}"
                                      Style="{StaticResource inputTextBox}"
                                      Width="200"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidPackageCost, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidPackageCost, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Cost"/>
                         </StackPanel>
                         <TextBlock Text="Maximum Inserts"
@@ -89,7 +89,7 @@
                             <TextBox Text="{Binding selectedSharedPack.packMaxInserts, Mode=TwoWay}"
                                      Style="{StaticResource inputTextBox}"
                                      Width="200"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidPackageCost, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidPackageCost, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Maximum Inserts"/>
                         </StackPanel>
                     </StackPanel>

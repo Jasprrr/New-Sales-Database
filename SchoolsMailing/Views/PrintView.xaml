@@ -32,7 +32,7 @@
                                                 MinWidth="120"
                                                 Date="{Binding selectedPrintOrder.printDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                                 Style="{StaticResource inputCalendarDatePicker}"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidPrintDate, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidPrintDate, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Print Date"/>
                         </StackPanel>
                         
@@ -48,7 +48,7 @@
                             <TextBox Text="{Binding selectedPrintOrder.printPrinter, Mode=TwoWay}"
                                      Style="{StaticResource inputTextBox}"
                                      Width="300"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidPrintPrinter, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidPrintPrinter, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Printer"/>
                         </StackPanel>
                         
@@ -60,7 +60,7 @@
                                      Width="300" 
                                      ScrollViewer.VerticalScrollBarVisibility="Visible" 
                                      TextWrapping="Wrap"/>
-                            <cntrl:InvalidFlagLarge Visibility="{Binding isValidPrintDetails, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlagLarge Visibility="{Binding isInvalidPrintDetails, Converter={StaticResource InvalidTextBox}}" 
                                                     ToolTipService.ToolTip="Invalid Print Details"/>
                         </StackPanel>
                         
@@ -76,7 +76,7 @@
                             <TextBox Text="{Binding selectedPrintOrder.printCharge, Mode=TwoWay}"
                                      Style="{StaticResource inputTextBox}"
                                      Width="200"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidPrintCharge, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidPrintCharge, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Printer"/>
                         </StackPanel>
                         <TextBlock Text="Print Cost"
@@ -85,7 +85,7 @@
                             <TextBox Text="{Binding selectedPrintOrder.printCost, Mode=TwoWay}"
                                      Style="{StaticResource inputTextBox}"
                                      Width="200"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidPrintCost, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidPrintCost, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Printer"/>
                         </StackPanel>
                     </StackPanel>

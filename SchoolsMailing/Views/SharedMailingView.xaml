@@ -41,7 +41,7 @@
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </ComboBox>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidSharedPackage, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidSharedPackage, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Shared Package"/>
                         </StackPanel>
                         <TextBlock Text="To"
@@ -63,7 +63,7 @@
                                                 MinWidth="120"
                                                 Date="{Binding selectedSharedMailingOrder.sharedDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                                 Style="{StaticResource inputCalendarDatePicker}"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidSharedDate, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidSharedDate, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Send Date"/>
                         </StackPanel>
                         <TextBlock Text="Artwork"
@@ -73,7 +73,7 @@
                                                 MinWidth="120"
                                                 Date="{Binding selectedSharedMailingOrder.sharedArtworkDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                                 Style="{StaticResource inputCalendarDatePicker}"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidSharedArtworkDate, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidSharedArtworkDate, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Artwork Date"/>
                         </StackPanel>
                         
@@ -84,7 +84,7 @@
                                                 MinWidth="120"
                                                 Date="{Binding selectedSharedMailingOrder.sharedDeliveryDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                                 Style="{StaticResource inputCalendarDatePicker}"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidSharedDeliveryDate, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidSharedDeliveryDate, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Delivery Date"/>
                         </StackPanel>
                         
@@ -127,7 +127,7 @@
                             <TextBox Text="{Binding selectedSharedMailingOrder.sharedCost, Mode=TwoWay}"
                                      Style="{StaticResource inputTextBox}"
                                      Width="200"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidSharedCost, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidSharedCost, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Cost"/>
                         </StackPanel>
                     </StackPanel>

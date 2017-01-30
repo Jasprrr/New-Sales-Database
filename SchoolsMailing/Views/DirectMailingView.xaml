@@ -38,7 +38,7 @@
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </CalendarDatePicker>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidDirectMailingDate, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidDirectMailingDate, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Send Date"/>
                         </StackPanel>
                         <TextBlock Text="Data Date"
@@ -48,7 +48,7 @@
                                                 MinWidth="120"
                                                 Date="{Binding selectedDirectMailingOrder.directDataDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                             Style="{StaticResource inputCalendarDatePicker}"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidDirectMailingDataDate, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidDirectMailingDataDate, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Data Date"/>
                         </StackPanel>
                         <TextBlock Text="Insert Date"
@@ -58,7 +58,7 @@
                                                 MinWidth="120"
                                                 Date="{Binding selectedDirectMailingOrder.directInsertDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                                 Style="{StaticResource inputCalendarDatePicker}"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidDirectMailingInsertDate, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidDirectMailingInsertDate, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Insert Date"/>
                         </StackPanel>
                         
@@ -69,7 +69,7 @@
                                             MinWidth="120"
                                             Date="{Binding selectedDirectMailingOrder.directArtworkDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                             Style="{StaticResource inputCalendarDatePicker}"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidDirectMailingArtworkDate, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidDirectMailingArtworkDate, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Artwork Date"/>
                         </StackPanel>
                     </StackPanel>
@@ -91,7 +91,7 @@
                             <TextBox Text="{Binding selectedDirectMailingOrder.directDeliveryCode, Mode=TwoWay}"
                                      Style="{StaticResource inputTextBox}"
                                      Width="400"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidDirectMailingDeliveryCode, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidDirectMailingDeliveryCode, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Delivery Code"/>
                         </StackPanel>
                         <TextBlock Text="Mailing To"
@@ -110,7 +110,7 @@
                                      AcceptsReturn="True" 
                                      ScrollViewer.VerticalScrollBarVisibility="Visible" 
                                      TextWrapping="Wrap"/>
-                            <cntrl:InvalidFlagLarge Visibility="{Binding isValidDirectMailingDetails, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlagLarge Visibility="{Binding isInvalidDirectMailingDetails, Converter={StaticResource InvalidTextBox}}" 
                                                     ToolTipService.ToolTip="Invalid Details"/>
                         </StackPanel>
                         
@@ -133,7 +133,7 @@
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </TextBox>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidDirectMailingFulfilmentCost, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidDirectMailingFulfilmentCost, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Fulfilment Cost"/>
                         </StackPanel>
                         <TextBlock Text="Print"
@@ -149,7 +149,7 @@
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </TextBox>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidDirectMailingPrintCost, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidDirectMailingPrintCost, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Print Cost"/>
                         </StackPanel>
                         <TextBlock Text="Postage"
@@ -165,7 +165,7 @@
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </TextBox>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidDirectMailingPostageCost, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidDirectMailingPostageCost, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Postage Cost"/>
                         </StackPanel>
                         <TextBlock Text="Total"

@@ -38,7 +38,7 @@
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </CalendarDatePicker>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidSchoolSendStart, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidSchoolSendStart, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Start Date"/>
                         </StackPanel>
                         <TextBlock Text="End"
@@ -48,7 +48,7 @@
                                                 MinWidth="120"
                                                 Date="{Binding selectedSchoolSendOrder.schoolsendEnd, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                                                 Style="{StaticResource inputCalendarDatePicker}"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidSchoolSendEnd, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidSchoolSendEnd, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid End Date"/>
                         </StackPanel>
                         
@@ -74,7 +74,7 @@
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </ComboBox>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidSchoolSendPackage, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidSchoolSendPackage, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Package"/>
                         </StackPanel>
                         
@@ -96,7 +96,7 @@
                             <TextBox Text="{Binding selectedSchoolSendOrder.schoolsendCost, Mode=TwoWay}"
                                      Style="{StaticResource inputTextBox}"
                                      Width="200"/>
-                            <cntrl:InvalidFlag Visibility="{Binding isValidSchoolSendCost, Converter={StaticResource InvalidTextBox}}" 
+                            <cntrl:InvalidFlag Visibility="{Binding isInvalidSchoolSendCost, Converter={StaticResource InvalidTextBox}}" 
                                                ToolTipService.ToolTip="Invalid Cost"/>
                         </StackPanel>
                     </StackPanel>

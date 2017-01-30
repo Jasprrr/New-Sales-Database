@@ -61,7 +61,7 @@ namespace SchoolsMailing.ViewModels
         {
             get
             {
-                _companies = DataAccessLayer.GetAllCompanies();
+                _companies = DataAccessLayer.getCompanies();
                 //companies.GroupBy()
                 _companies.GroupBy(x => x.companyInitial);
                 return _companies;

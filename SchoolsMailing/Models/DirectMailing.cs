@@ -9,9 +9,9 @@ namespace SchoolsMailing.Models
         public long ID { get; set; }
         public long orderID { get; set; }
         public string directDeliveryCode { get; set; }
-        public DateTime directDataDate { get; set; }
-        public DateTime directInsertDate { get; set; }
-        public DateTime directArtworkDate { get; set; }
+        public DateTime? directDataDate { get; set; }
+        public DateTime? directInsertDate { get; set; }
+        public DateTime? directArtworkDate { get; set; }
         public DateTime directDate { get; set; }
         public string directMailingTo { get; set; }
         public string directLeafletCode { get; set; }

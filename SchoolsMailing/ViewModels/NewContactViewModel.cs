@@ -55,7 +55,7 @@ namespace SchoolsMailing.ViewModels
                 {
                     _saveContact = new RelayCommand(() =>
                     {
-                        DAL.DataAccessLayer.SaveContact(newContact);
+                        DAL.DataAccessLayer.saveContact(newContact);
                         this.NavigationService.GoBack();
                     });
                 }

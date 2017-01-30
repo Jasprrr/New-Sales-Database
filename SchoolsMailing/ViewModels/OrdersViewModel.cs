@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using SchoolsMailing.Common;
 using SchoolsMailing.DAL;
 using SchoolsMailing.Models;
@@ -17,36 +18,7 @@ namespace SchoolsMailing.ViewModels
 {
     public class OrdersViewModel : PageViewModel
     {
-        public OrdersViewModel(IMessenger messenger, NavigationService navigationService) : base(messenger, navigationService)
-        {
-
-        }
-
-        private Orders _selectedOrder;
-        public Orders selectedOrder
-        {
-            get { return _selectedOrder; }
-            set { if (_selectedOrder != value) { _selectedOrder = value; RaisePropertyChanged("selectedOrder"); } }
-        }
-
-        public void orderInvoked(object sender, object parameter)
-        {
-            long orderID = 0;
-            //Get parameter (order part)
-            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
-            //Get clicked order
-            var order = arg.ClickedItem as Orders;
-            orderID = order.ID;
-            
-            dataByOrder = DataAccessLayer.GetDataByOrderID(orderID);
-            emailByOrder = DataAccessLayer.GetEmailByOrderID(orderID);
-            schoolsendByOrder = DataAccessLayer.GetSchoolSendByOrderID(orderID);
-            directMailingByOrder = DataAccessLayer.GetDirectMailingByOrderID(orderID);
-            sharedMailingByOrder = DataAccessLayer.GetSharedMailingByOrderID(orderID);
-            printByOrder = DataAccessLayer.GetPrintByOrderID(orderID);
-            surchargeByOrder = DataAccessLayer.GetSurchargeByOrderID(orderID);
-        }
-
+        #region lists
         private List<OrdersData> _dataByOrder;
         public List<OrdersData> dataByOrder
         {
@@ -57,7 +29,7 @@ namespace SchoolsMailing.ViewModels
         public List<OrdersEmail> emailByOrder
         {
             get { return _emailByOrder; }
-            set { if(_emailByOrder != value) { _emailByOrder = value; RaisePropertyChanged("emailByOrder"); } }
+            set { if (_emailByOrder != value) { _emailByOrder = value; RaisePropertyChanged("emailByOrder"); } }
         }
         private List<OrdersSchoolSend> _schoolsendByOrder;
         public List<OrdersSchoolSend> schoolsendByOrder
@@ -95,7 +67,7 @@ namespace SchoolsMailing.ViewModels
         {
             get
             {
-                _allOrders = DataAccessLayer.GetAllOrders();
+                _allOrders = DataAccessLayer.getOrders();
                 return _allOrders;
             }
         }
@@ -104,7 +76,7 @@ namespace SchoolsMailing.ViewModels
         {
             get
             {
-                _allDataOrders = DataAccessLayer.GetAllData();
+                _allDataOrders = DataAccessLayer.getOrdersData();
                 return _allDataOrders;
             }
         }
@@ -113,7 +85,7 @@ namespace SchoolsMailing.ViewModels
         {
             get
             {
-                _allEmailOrders = DataAccessLayer.GetAllEmail();
+                _allEmailOrders = DataAccessLayer.getOrdersEmails();
                 return _allEmailOrders;
             }
         }
@@ -122,7 +94,7 @@ namespace SchoolsMailing.ViewModels
         {
             get
             {
-                _allSchoolSendOrders = DataAccessLayer.GetAllSchoolSend();
+                _allSchoolSendOrders = DataAccessLayer.getOrdersSchoolSend();
                 return _allSchoolSendOrders;
             }
         }
@@ -131,7 +103,7 @@ namespace SchoolsMailing.ViewModels
         {
             get
             {
-                _allDirectMailingOrders = DataAccessLayer.GetAllDirectMailing();
+                _allDirectMailingOrders = DataAccessLayer.getOrdersDirectMailing();
                 return _allDirectMailingOrders;
             }
         }
@@ -140,7 +112,7 @@ namespace SchoolsMailing.ViewModels
         {
             get
             {
-                _allSharedMailingOrders = DataAccessLayer.GetAllSharedMailing();
+                _allSharedMailingOrders = DataAccessLayer.getOrdersSharedMailing();
                 return _allSharedMailingOrders;
             }
         }
@@ -149,7 +121,7 @@ namespace SchoolsMailing.ViewModels
         {
             get
             {
-                _allPrintOrders = DataAccessLayer.GetAllPrint();
+                _allPrintOrders = DataAccessLayer.getOrdersPrint();
                 return _allPrintOrders;
             }
         }
@@ -158,11 +130,42 @@ namespace SchoolsMailing.ViewModels
         {
             get
             {
-                _allSurchargeOrders = DataAccessLayer.GetAllSurcharge();
+                _allSurchargeOrders = DataAccessLayer.getOrdersSurcharge();
                 return _allSurchargeOrders;
             }
         }
+        #endregion
 
+        public OrdersViewModel(IMessenger messenger, NavigationService navigationService) : base(messenger, navigationService)
+        {
+
+        }
+
+        private Orders _selectedOrder;
+        public Orders selectedOrder
+        {
+            get { return _selectedOrder; }
+            set { if (_selectedOrder != value) { _selectedOrder = value; RaisePropertyChanged("selectedOrder"); } }
+        }
+
+        public void orderInvoked(object sender, object parameter)
+        {
+            long orderID = 0;
+            //Get parameter (order part)
+            var arg = parameter as Windows.UI.Xaml.Controls.ItemClickEventArgs;
+            //Get clicked order
+            var order = arg.ClickedItem as Orders;
+            orderID = order.ID;
+            
+            dataByOrder = DataAccessLayer.getOrdersDataByOrderID(orderID);
+            emailByOrder = DataAccessLayer.getOrdersEmailsByOrderID(orderID);
+            schoolsendByOrder = DataAccessLayer.getOrdersSchoolSendByOrderID(orderID);
+            directMailingByOrder = DataAccessLayer.getOrdersDirectMailingByOrderID(orderID);
+            sharedMailingByOrder = DataAccessLayer.getOrdersSharedMailingByOrderID(orderID);
+            printByOrder = DataAccessLayer.getOrdersPrintByOrderID(orderID);
+            surchargeByOrder = DataAccessLayer.getOrdersSurchargeByOrderID(orderID);
+        }
+        
         public void orderPartInvoked(object sender, object parameter)
         {
             long orderID = 0;
@@ -218,6 +221,17 @@ namespace SchoolsMailing.ViewModels
                 MessengerInstance.Send<NotificationMessage<Int64>>(new NotificationMessage<Int64>(orderID, "OrderViewModel"));
             }
             
+        }
+
+        private RelayCommand _newOrder;
+        public RelayCommand newOrder
+        {
+            get { if (_newOrder == null) { _newOrder = new RelayCommand(() => { if (_newOrder != null) {
+                if (newOrder != null)
+                {
+                        NavigationService.Navigate(typeof(OrderView));
+                }
+            } }); } return _newOrder; }
         }
     }
 }

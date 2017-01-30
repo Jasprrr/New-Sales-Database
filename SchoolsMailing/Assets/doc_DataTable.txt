@@ -1,15 +1,4 @@
-﻿<w:p w:rsidR="006D40D6" w:rsidRDefault="006D40D6" w:rsidP="00EC414F">
-	<w:pPr>
-		<w:rPr>
-			<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Tahoma" />
-			<w:color w:val="5F5F5F" />
-			<w:sz w:val="20" />
-			<w:szCs w:val="20" />
-			<w:lang w:val="en-GB" />
-		</w:rPr>
-	</w:pPr>
-</w:p>
-<w:tbl>
+﻿<w:tbl>
 	<w:tblPr>
 		<w:tblW w:w="11482" w:type="dxa" />
 		<w:tblBorders>

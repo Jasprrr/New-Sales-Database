@@ -34,24 +34,7 @@
         public MainPageViewModel(IMessenger messenger, NavigationService navigationService) : base(messenger, navigationService)
         {
             this.InitializeMenu();
-
-            path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path,"Sales.sqlite");
-            conn = new SQLite.Net.SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
-            conn.CreateTable<Company>();
-            conn.CreateTable<Contact>();
-            conn.CreateTable<CompanyHistory>();
-            conn.CreateTable<Contact>();
-            conn.CreateTable<SharedPack>();
-            conn.CreateTable<Email>();
-            conn.CreateTable<Data>();
-            conn.CreateTable<SchoolSend>();
-            conn.CreateTable<SharedMailing>();
-            conn.CreateTable<DirectMailing>();
-            conn.CreateTable<Print>();
-            conn.CreateTable<Surcharge>();
-            conn.CreateTable<Orders>();
-            conn.CreateTable<User>();
-            conn.CreateTable<SchoolSendPack>();
+            
 
             //Sample Data
             //SharedPack sp1 = new SharedPack { packCost = 475, packArtworkDate = Convert.ToDateTime("26/01/17"), packDate = Convert.ToDateTime("15/02/17"), packTo = "Secondary", packDeliveryDate = Convert.ToDateTime("06/02/17"), packMaxInserts = 7, packName = "[15/02/17] Secondary" };
@@ -77,19 +60,18 @@
 
             this.ItemInvokedCommand = new RelayCommand<ListViewItem>(this.ItemInvoked);
 
-            MessengerInstance.Register<NotificationMessage<string>>(this, RegisterMessages);
+            MessengerInstance.Register<NotificationMessage<User>>(this, RegisterMessages);
         }
 
-        public void RegisterMessages(NotificationMessage<string> obj)
+        //Register logged in user
+        public void RegisterMessages(NotificationMessage<User> obj)
         {
-            if(obj.Notification == "frameTitle")
+            if (obj.Notification == "userSignedIn")
             {
-                string newTitle = obj.Content.ToString();
-                frameTitle = newTitle;
-            }
-            else if(obj.Notification == "backButtonVisible")
-            {
-
+                if(obj.Content != null)
+                {
+                    loggedInAs = obj.Content;
+                }
             }
         }
 
@@ -103,25 +85,21 @@
 
         #region login details
 
-        private User _loggedInAs = new User()
-        {
-            userInitials="J", ID=1, userName="Jasper", userPassword="@"
-        };
+        private User _loggedInAs;
         public User loggedInAs
         {
             get { return _loggedInAs; }
-            set
-            {
-                if (loggedInAs != value)
-                {
-                    _loggedInAs = value;
-                    RaisePropertyChanged("loggedInAs");
-                }
-            }
+            set { if (loggedInAs != value) { _loggedInAs = value; RaisePropertyChanged("loggedInAs"); } }
         }
 
+        private int _selectedItem = 0;
+        public int selectedItem
+        {
+            get { return _selectedItem; }
+            set { _selectedItem = value; RaisePropertyChanged("selectedItem"); }
+        }
         #endregion
-        
+
         /// <summary>
         /// Gets the menu items for the app.
         /// </summary>
@@ -135,7 +113,7 @@
             {
                 new SplitViewPaneMenuItem
                 {
-                    Label = "Home",
+                    Label = "Calendar",
                     Symbol = Symbol.Calendar,
                     AssociatedPage = typeof(HomePage)
                 },
@@ -149,15 +127,14 @@
                 {
                     Label = "Orders",
                     Symbol = Symbol.Shop,
-                    AssociatedPage = typeof(OrderView)
-                    
-                },
-                new SplitViewPaneMenuItem
-                {
-                    Label="Orders 2",
-                    Symbol = Symbol.Shop,
                     AssociatedPage = typeof(OrdersView)
                 }
+                //new SplitViewPaneMenuItem
+                //{
+                //    Label = "Reports",
+                //    Symbol = Symbol.Library
+                    
+                //}
                 //new SplitViewPaneMenuItem
                 //{
                 //    Label = "Reports",
@@ -168,28 +145,7 @@
             };
 
         }
-
-        private int _selectedItem = 0;
-        public int selectedItem
-        {
-            get { return _selectedItem; }
-            set { _selectedItem = value; RaisePropertyChanged("selectedItem"); }
-        }
-
-        private string _frameTitle;
-        public string frameTitle
-        {
-            get { return _frameTitle; }
-            set
-            {
-                if(_frameTitle != value)
-                {
-                    _frameTitle = value;
-                }
-                RaisePropertyChanged("frameTitle");
-            }
-        }
-
+        
         /// <summary>
         /// Gets the item invoked command.
         /// </summary>
@@ -199,11 +155,11 @@
             var menuItem = obj?.Content as SplitViewPaneMenuItem;
             if (menuItem != null)
             {
-                if(menuItem.Label == "Orders")
+                if(menuItem.Label == "asd")
                 {
                     this.NavigationService.Navigate(typeof(OrderView));
                     //Pass ID parameter
-                    MessengerInstance.Send<NotificationMessage<Int64>>(new NotificationMessage<Int64>(0, "OrderViewModel"));
+                    MessengerInstance.Send<NotificationMessage<int>>(new NotificationMessage<int>(0, "OrderViewModel"));
                 }
                 else
                 {

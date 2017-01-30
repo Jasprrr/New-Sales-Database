@@ -1,138 +1,118 @@
 ﻿using SchoolsMailing.ViewModels.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
 using SchoolsMailing.Common;
 using GalaSoft.MvvmLight.Command;
-using System.Diagnostics;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
-using SchoolsMailing.Views;
-using Windows.UI.Xaml.Navigation;
-using Windows.ApplicationModel.Activation;
 using System.IO;
 using Windows.Storage;
-using System.IO.Compression;
-using Windows.Storage.AccessCache;
-using Windows.Data.Xml.Dom;
-using System.Xml;
-using System.Xml.Linq;
+using SchoolsMailing.Models;
 
 namespace SchoolsMailing.ViewModels
 {
     public class LoginViewModel : PageViewModel
     {
+        string path;
+        SQLite.Net.SQLiteConnection conn;
+
         public LoginViewModel(IMessenger messenger, NavigationService navigationService) : base(messenger, navigationService)
         {
+            //Creates local tables
+            path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Sales.sqlite");
+            conn = new SQLite.Net.SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
+            conn.CreateTable<Company>();
+            conn.CreateTable<Contact>();
+            conn.CreateTable<CompanyHistory>();
+            conn.CreateTable<Contact>();
+            conn.CreateTable<SharedPack>();
+            conn.CreateTable<Email>();
+            conn.CreateTable<Data>();
+            conn.CreateTable<SchoolSend>();
+            conn.CreateTable<SharedMailing>();
+            conn.CreateTable<DirectMailing>();
+            conn.CreateTable<Print>();
+            conn.CreateTable<Surcharge>();
+            conn.CreateTable<Orders>();
+            conn.CreateTable<User>();
+            conn.CreateTable<SchoolSendPack>();
+        }
+        
+
+        private string _userName;
+        public string userName
+        {
+            get { return _userName; }
+            set { if(_userName != value) { _userName = value; RaisePropertyChanged("userName"); } }
+        }
+        private string _userPassword;
+        public string userPassword
+        {
+            get { return _userPassword; }
+            set { if(_userPassword != value) { _userPassword = value; RaisePropertyChanged("userPassword"); } }
         }
 
-        private string _username;
-        public string username
+        public static int invalidLoginAttempts = 0;
+
+        private bool _isInvalidUserPassword = false;
+        public bool isInvalidUserPassword
         {
-            get { return _username; }
-            set
-            {
-                if(_username != value)
-                {
-                    _username = value;
-                    RaisePropertyChanged("username");
-                }
-            }
-        }
-        private string _password;
-        public string password
-        {
-            get { return _password; }
-            set
-            {
-                if(_password != value)
-                {
-                    _password = value;
-                    RaisePropertyChanged("password");
-                }
-            }
+            get { return _isInvalidUserPassword; }
+            set { if(_isInvalidUserPassword != value) { _isInvalidUserPassword = !_isInvalidUserPassword; RaisePropertyChanged("isInvalidUserPassword"); } }
         }
 
-        private bool _invalidPassword = false;
-        public bool invalidPassword
+        private bool _isInvalidUserName = false;
+        public bool isInvalidUserName
         {
-            get { return _invalidPassword; }
-            set { if(_invalidPassword != value) { _invalidPassword = !invalidPassword; RaisePropertyChanged("invalidPassword"); } }
-        }
-
-        private bool _invalidUsername = false;
-        public bool invalidUsername
-        {
-            get { return _invalidUsername; }
-            set { if (_invalidUsername != value) { _invalidUsername = !invalidUsername; RaisePropertyChanged("invalidUsername"); } }
+            get { return _isInvalidUserName; }
+            set { if (_isInvalidUserName != value) { _isInvalidUserName = !_isInvalidUserName; RaisePropertyChanged("isInvalidUserName"); } }
         }
 
         //TODO: add enter event to login
 
-        private RelayCommand _authenticateLogin;
-        public RelayCommand authenticateLogin
+        private RelayCommand _attemptLogin;
+        public RelayCommand attemptLogin
         {
             get
             {
-                if (_authenticateLogin == null)
+                if (_attemptLogin == null)
                 {
-                    _authenticateLogin = new RelayCommand(() =>
+                    _attemptLogin = new RelayCommand(() =>
                     {
-                        if(username == "admin")
+                        if (isLoggedIn())
                         {
-                            invalidUsername = false;
-
-                            if(password == "@")
-                            {
-                                Uri test = new Uri(@"ms-appx:///Assets/doc_CompanyTable.txt");
-                                Debug.WriteLine(test.ToString());
-                                //DAL.DocumentAccessLayer.CompanyTable();
-                                //string test = "testing string {0}";
-                                //string test2 = string.Format(test, "success!");
-                                //Debug.WriteLine(Windows.ApplicationModel.Package.Current.InstalledLocation.Path.ToString());
-                                //DoMove();
-                                //ViewModels.MoveFile.DoMove();
-                                //var rootFrame = Window.Current.Content as Frame;
-
-                                //rootFrame.Navigate(typeof(MainPage));
-                                //ZipFile.
-                            }
-                            else
-                            {
-                                invalidPassword = true;
-                            }
-                        }
-                        else
-                        {
-                            invalidUsername = true;
-                        }
+                            var rootFrame = Window.Current.Content as Frame;
+                            rootFrame.Navigate(typeof(MainPage));
+                        }      
                     });
                 }
-
-                return _authenticateLogin;
-
+                return _attemptLogin;
             }
         }
 
-        public async void DoMove()
+        public bool isLoggedIn()
         {
-            //Debug.WriteLine(string.Format(Windows.Storage.ApplicationData.Current.LocalFolder.Path.ToString()));
-
-
-            //try
-            //{
-            //    using (var stream = await fil.OpenStreamForWriteAsync())
-            //    {
-            //        xdoc.Save(stream);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Debug.WriteLine(ex);
-            //}
+            if (!DAL.DataAccessLayer.isValidUsername(userName))
+            {
+                isInvalidUserName = true;
+                invalidLoginAttempts++;
+                return false;
+            }
+            else
+            {
+                isInvalidUserName = false;
+            }
+            
+            if (!DAL.DataAccessLayer.isValidPassword(userName, userPassword))
+            {
+                isInvalidUserPassword = true;
+                invalidLoginAttempts++;
+                return false;
+            }
+            else
+            {
+                isInvalidUserPassword = false;
+            }
+            return true;
         }
     }
 }

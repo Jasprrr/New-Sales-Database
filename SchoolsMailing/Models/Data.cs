@@ -11,7 +11,7 @@ namespace SchoolsMailing.Models
         public string dataDetails { get; set; }
         public double dataCost { get; set; }
         public DateTime dataStart { get; set; }
-        public DateTime dataEnd { get; set; }
+        public DateTime? dataEnd { get; set; }
         public DateTime dataCreated { get; set; }
         public DateTime dataModified { get; set; }
     }

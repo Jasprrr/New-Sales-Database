@@ -354,11 +354,11 @@
         <CommandBar Grid.Row="1">
             <AppBarButton Icon="Add"
                           Label="New">
-                <!--<interactivity:Interaction.Behaviors>
+                <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=saveOrder}" />
+                        <core:InvokeCommandAction Command="{Binding Path=newOrder}" />
                     </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>-->
+                </interactivity:Interaction.Behaviors>
             </AppBarButton>
             <AppBarButton Icon="Refresh"
                           Label="Refresh">

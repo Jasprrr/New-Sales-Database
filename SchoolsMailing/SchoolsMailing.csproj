@@ -93,7 +93,9 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="Assets\OrderForm.zip" />
+    <None Include="Assets\OrderForm.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="project.json" />
     <None Include="SchoolsMailing_TemporaryKey.pfx" />
   </ItemGroup>
@@ -278,21 +280,48 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\doc_DataTable.txt" />
-    <Content Include="Assets\doc_DirectMailingTable.txt" />
-    <Content Include="Assets\doc_EmailTable.txt" />
-    <Content Include="Assets\doc_Footer.txt" />
-    <Content Include="Assets\doc_Header.txt" />
-    <Content Include="Assets\doc_Spacer.txt" />
-    <Content Include="Assets\foot_Footer.txt" />
-    <Content Include="Assets\doc_SchoolSendTable.txt" />
-    <Content Include="Assets\doc_SharedMailingTable.txt" />
-    <Content Include="Assets\head_Header.txt" />
+    <Content Include="Assets\docProps_Core.txt" />
+    <Content Include="Assets\doc_DataTable.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\doc_DirectMailingTable.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\doc_EmailTable.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\doc_Footer.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\doc_Header.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\doc_Spacer.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\foot_Footer.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\doc_SchoolSendTable.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\doc_SharedMailingTable.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\head_Header.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\SplashScreen.scale-100.png" />
-    <Content Include="Assets\doc_SurchargeTable.txt" />
+    <Content Include="Assets\doc_SurchargeTable.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
-    <Content Include="Assets\doc_CompanyTable.txt" />
-    <Content Include="Assets\word_Rels_Document.txt" />
+    <Content Include="Assets\doc_CompanyTable.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\word_Rels_Document.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

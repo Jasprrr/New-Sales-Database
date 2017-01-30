@@ -30,10 +30,10 @@ namespace SchoolsMailing.Views
         public HomePage()
         {
             this.InitializeComponent();
-            email = DataAccessLayer.GetAllEmail();
-            schoolSend = DataAccessLayer.GetAllSchoolSend();
-            directMailing = DataAccessLayer.GetAllDirectMailing();
-            sharedMailing = DataAccessLayer.GetAllSharedMailing();
+            email = DataAccessLayer.getOrdersEmails();
+            schoolSend = DataAccessLayer.getOrdersSchoolSend();
+            directMailing = DataAccessLayer.getOrdersDirectMailing();
+            sharedMailing = DataAccessLayer.getOrdersSharedMailing();
         }
 
         public List<OrdersEmail> emailsByDate;

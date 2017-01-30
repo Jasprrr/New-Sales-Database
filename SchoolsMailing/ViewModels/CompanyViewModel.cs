@@ -41,8 +41,6 @@ namespace SchoolsMailing.ViewModels
                 GetCompany(id);
                 GetContacts(id);
                 GetHistory(id);
-
-                MessengerInstance.Send<NotificationMessage<string>>(new NotificationMessage<string>(string.Format(selectedCompany.companyName), "frameTitle"));
             }
             //MobileServiceInvalidOperationException exception = null;
             //try
@@ -60,29 +58,32 @@ namespace SchoolsMailing.ViewModels
             //}
         }
 
+        //Initialise company
         public void GetCompany(long id)
         {
-            selectedCompany = DataAccessLayer.GetCompanyById(id);
+            selectedCompany = DataAccessLayer.getCompanyByID(id);
         }
+        //Get company contacts
         public void GetContacts(long id)
         {
-            companyContacts = DataAccessLayer.GetAllContactsByCompanyID(id);
+            companyContacts = DataAccessLayer.getContactsByCompanyID(id);
         }
+        //Get company history
         public void GetHistory(long id)
         {
-            selectedCompanyHistory = DataAccessLayer.GetAllHistoryByCompany(id);
+            selectedCompanyHistory = DataAccessLayer.getHistoryByCompanyID(id);
         }
 
         #region Data Lists
-        private ObservableCollection<CompanyHistory> _selectedCompanyHistory;
-        public ObservableCollection<CompanyHistory> selectedCompanyHistory
+        private List<CompanyHistory> _selectedCompanyHistory;
+        public List<CompanyHistory> selectedCompanyHistory
         {
             get { return _selectedCompanyHistory; }
             set { if(_selectedCompanyHistory != value) { _selectedCompanyHistory = value; RaisePropertyChanged("selectedCompanyHistory"); } }
         }
 
-        private ObservableCollection<Contact> _companyContacts;
-        public ObservableCollection<Contact> companyContacts
+        private List<Contact> _companyContacts;
+        public List<Contact> companyContacts
         {
             get { return _companyContacts; }
             set { if(_companyContacts != value) { _companyContacts = value; RaisePropertyChanged("companyContacts"); } }
@@ -114,7 +115,7 @@ namespace SchoolsMailing.ViewModels
             var result = await deleteCompanyDialog.ShowAsync();
             if(result == ContentDialogResult.Primary)
             {
-                DataAccessLayer.DeleteCompany(selectedCompany);
+                DataAccessLayer.deleteCompany(selectedCompany);
                 NavigationService.GoBack();
             }
             else if(result == ContentDialogResult.Secondary)
@@ -146,7 +147,7 @@ namespace SchoolsMailing.ViewModels
             var result = await deleteContactDialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
-                DataAccessLayer.DeleteContact(selectedContact);
+                DataAccessLayer.deleteContact(selectedContact);
             }
             else if (result == ContentDialogResult.Secondary)
             {
@@ -203,7 +204,7 @@ namespace SchoolsMailing.ViewModels
 
             if (HistoryID != 0)
             {
-                invokedCompanyHistory = DataAccessLayer.GetHistoryByID(HistoryID); //Get company history
+                invokedCompanyHistory = DataAccessLayer.getCompanyHistoryByID(HistoryID); //Get company history
                 newHistoryDialog.SecondaryButtonText = "Delete"; //Set secondary option
             }
             else
@@ -220,14 +221,14 @@ namespace SchoolsMailing.ViewModels
                 var item = newHistoryDialog.Content; //Get user input
                 invokedCompanyHistory.companyHistoryDetails = item.ToString(); //Convert to string
                 invokedCompanyHistory.companyID = selectedCompany.ID; //Attribute company
-                DataAccessLayer.SaveHistory(invokedCompanyHistory); //Save history
+                DataAccessLayer.saveHistory(invokedCompanyHistory); //Save history
                 GetHistory(selectedCompany.ID); //Refresh history
             }
             else if(result == ContentDialogResult.Secondary) //If secondary option chosen
             {
                 if(HistoryID != 0)
                 {
-                    DataAccessLayer.DeleteHistory(invokedCompanyHistory);
+                    DataAccessLayer.deleteHistory(invokedCompanyHistory);
                     GetHistory(selectedCompany.ID); //Refresh history
                 }
             }
@@ -265,10 +266,10 @@ namespace SchoolsMailing.ViewModels
                     {
                         selectedCompany.companyModified = DateTime.Now; //Set date modified
                         selectedCompany.companyInitial = selectedCompany.companyName.Substring(0, 1); //Set company initial
-                        DataAccessLayer.SaveCompany(selectedCompany);
+                        DataAccessLayer.saveCompany(selectedCompany);
                         foreach (Contact c in companyContacts) //Loop through contacts
                         {
-                            DataAccessLayer.SaveContact(c); //Save contacts
+                            DataAccessLayer.saveContact(c); //Save contacts
                         }
                     });
                 }
@@ -361,10 +362,10 @@ namespace SchoolsMailing.ViewModels
                 {
                     selectedCompany.companyModified = DateTime.Now; //Set date modified
                     selectedCompany.companyInitial = selectedCompany.companyName.Substring(0, 1); //Set company initial
-                    DataAccessLayer.SaveCompany(selectedCompany);
+                    DataAccessLayer.saveCompany(selectedCompany);
                     foreach (Contact c in companyContacts) //Loop through contacts
                     {
-                        DataAccessLayer.SaveContact(c); //Save contacts
+                        DataAccessLayer.saveContact(c); //Save contacts
                     }
                     isDirty = false;
                     NavigationService.GoBack();

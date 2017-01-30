@@ -39,7 +39,7 @@ namespace SchoolsMailing.ViewModels
                 pivotIndex = 0;
                 if (obj.Content != 0) //Get order
                 {
-                    selectedOrder = DataAccessLayer.GetOrder(obj.Content);
+                    selectedOrder = DataAccessLayer.getOrderByID(obj.Content);
                     emailOrders = new ObservableCollection<Email>(DataAccessLayer.GetAllEmailsByOrderID(obj.Content));
                     dataOrders = new ObservableCollection<Data>(DataAccessLayer.GetAllDataByOrderID(obj.Content));
                     schoolSendOrders = new ObservableCollection<SchoolSend>(DataAccessLayer.GetAllSchoolSendsByOrderID(obj.Content));
@@ -48,8 +48,8 @@ namespace SchoolsMailing.ViewModels
                     printOrders = new ObservableCollection<Print>(DataAccessLayer.GetAllPrintByOrderID(obj.Content));
                     surchargeOrders = new ObservableCollection<Surcharge>(DataAccessLayer.GetAllSurchargesByOrderID(obj.Content));
 
-                    selectedCompany = DataAccessLayer.GetCompanyById(selectedOrder.companyID);
-                    selectedContact = DataAccessLayer.GetContactById(selectedOrder.contactID);
+                    selectedCompany = DataAccessLayer.getCompanyByID(selectedOrder.companyID);
+                    selectedContact = DataAccessLayer.getContactByID(selectedOrder.contactID);
 
                     pageTitle = selectedOrder.orderCode;
                 }
@@ -73,7 +73,7 @@ namespace SchoolsMailing.ViewModels
 
                 }
                 CalculateCosts();
-                //Deleted lists 
+                //Set deleted lists to new lists
                 deletedEmailOrders = new ObservableCollection<Email>();
                 deletedDataOrders = new ObservableCollection<Data>();
                 deletedDirectMailingOrders = new ObservableCollection<DirectMailing>();
@@ -81,19 +81,6 @@ namespace SchoolsMailing.ViewModels
                 deletedSchoolSendOrders = new ObservableCollection<SchoolSend>();
                 deletedSharedMailingOrders = new ObservableCollection<SharedMailing>();
                 deletedSurchargeOrders = new ObservableCollection<Surcharge>();
-                //var savePicker = new Windows.Storage.Pickers.FileSavePicker();
-                //savePicker.FileTypeChoices.Add("Rich Text Format", new List<string>() { ".rtf" });
-                //var file = StorageFile.GetFileFromPathAsync(@"C:\Users\Jasper\Desktop\testzip.zip");
-                //System.IO.File.Move(@"C:\Users\Jasper\Desktop\testzip.zip", @"C:\Users\Jasper\Desktop\testzip.docx");
-                //FileInfo file = new FileInfo(@"C:\Users\Jasper\Desktop\testzip.zip");
-                
-                //var asd = Windows.System.Launcher.LaunchUriAsync(new Uri(@"ms-word:ofe|u|C:\Users\Jasper\Desktop\testRTF.rtf"));
-
-                //if (asd != null)
-                //{
-
-                //}
-                //File.Move(@"C:\Users\Jasper\Desktop\testzip.zip", @"C:\Users\Jasper\Desktop\testzip.docx");
             }
         }
 
@@ -229,29 +216,29 @@ namespace SchoolsMailing.ViewModels
         #endregion
 
         #region Order
-        private bool _isValidOrderCompany = false;
-        public bool isValidOrderCompany
+        private bool _isInvalidOrderCompany = false;
+        public bool isInvalidOrderCompany
         {
-            get { return _isValidOrderCompany; }
-            set { if (_isValidOrderCompany != value) { _isValidOrderCompany = !_isValidOrderCompany; RaisePropertyChanged("isValidOrderCompany"); } }
+            get { return _isInvalidOrderCompany; }
+            set { if (_isInvalidOrderCompany != value) { _isInvalidOrderCompany = !_isInvalidOrderCompany; RaisePropertyChanged("isInvalidOrderCompany"); } }
         }
-        private bool _isValidOrderContact = false;
-        public bool isValidOrderContact
+        private bool _isInvalidOrderContact = false;
+        public bool isInvalidOrderContact
         {
-            get { return _isValidOrderContact; }
-            set { if (_isValidOrderContact != value) { _isValidOrderContact = !_isValidOrderContact; RaisePropertyChanged("isValidOrderContact"); } }
+            get { return _isInvalidOrderContact; }
+            set { if (_isInvalidOrderContact != value) { _isInvalidOrderContact = !_isInvalidOrderContact; RaisePropertyChanged("isInvalidOrderContact"); } }
         }
-        private bool _isValidOrderCode = false;
-        public bool isValidOrderCode
+        private bool _isInvalidOrderCode = false;
+        public bool isInvalidOrderCode
         {
-            get { return _isValidOrderCode; }
-            set { if (_isValidOrderCode != value) { _isValidOrderCode = !_isValidOrderCode; RaisePropertyChanged("isValidOrderCode"); } }
+            get { return _isInvalidOrderCode; }
+            set { if (_isInvalidOrderCode != value) { _isInvalidOrderCode = !_isInvalidOrderCode; RaisePropertyChanged("isInvalidOrderCode"); } }
         }
-        private bool _isValidOrderDate = false;
-        public bool isValidOrderDate
+        private bool _isInvalidOrderDate = false;
+        public bool isInvalidOrderDate
         {
-            get { return _isValidOrderDate; }
-            set { if (_isValidOrderDate != value) { _isValidOrderDate = !_isValidOrderDate; RaisePropertyChanged("isValidOrderDate"); } }
+            get { return _isInvalidOrderDate; }
+            set { if (_isInvalidOrderDate != value) { _isInvalidOrderDate = !_isInvalidOrderDate; RaisePropertyChanged("isInvalidOrderDate"); } }
         }
         
         private string _orderCode;
@@ -402,9 +389,9 @@ namespace SchoolsMailing.ViewModels
         #endregion
 
         #region Company
-        public ObservableCollection<Company> companies
+        public List<Company> companies
         {
-            get { return DataAccessLayer.GetAllCompanies2(); }
+            get { return DataAccessLayer.getCompanies(); }
         }
 
         private Company _selectedCompany = new Company();
@@ -432,7 +419,7 @@ namespace SchoolsMailing.ViewModels
                             if (selectedCompany.companyInvoiceCounty != null) { selectedOrder.companyCounty = selectedCompany.companyInvoiceCounty.ToString(); }
                             if (selectedCompany.companyInvoicePostCode != null) { selectedOrder.companyPostCode = selectedCompany.companyInvoicePostCode.ToString(); }
 
-                            contacts = DataAccessLayer.GetContactsByCompany(selectedCompany.ID);
+                            contacts = DataAccessLayer.getContactsByCompanyID(selectedCompany.ID);
                         }
                     });
                 }
@@ -449,18 +436,18 @@ namespace SchoolsMailing.ViewModels
             set { if (_selectedContact != value) {  _selectedContact = value; RaisePropertyChanged("selectedContact"); } }
         }
 
-        private ObservableCollection<Contact> _contacts;
-        public ObservableCollection<Contact> contacts
+        private List<Contact> _contacts;
+        public List<Contact> contacts
         {
             get {
                 if (selectedOrder.companyID > 0)
                 {
-                    _contacts = DataAccessLayer.GetContactsByCompany(selectedCompany.ID);
+                    _contacts = DataAccessLayer.getContactsByCompanyID(selectedCompany.ID);
                     return _contacts;
                 }
                 else
                 {
-                    _contacts = DataAccessLayer.GetAllContacts();
+                    _contacts = DataAccessLayer.getContacts();
                     return _contacts;
                 }
             }
@@ -517,29 +504,29 @@ namespace SchoolsMailing.ViewModels
             set { if (_originalDataOrder != value) { _originalDataOrder = value; RaisePropertyChanged("deleteDataOrder"); } }
         }
         public Data rightClickedData = new Data(); //Holds right clicked item for flyout
-        private bool _isValidDataStart = false;
-        public bool isValidDataStart
+        private bool _isInvalidDataStart = false;
+        public bool isInvalidDataStart
         {
-            get { return _isValidDataStart; }
-            set { if (_isValidDataStart != value) { _isValidDataStart = !_isValidDataStart; RaisePropertyChanged("isValidDataStart"); } }
+            get { return _isInvalidDataStart; }
+            set { if (_isInvalidDataStart != value) { _isInvalidDataStart = !_isInvalidDataStart; RaisePropertyChanged("isInvalidDataStart"); } }
         }
-        private bool _isValidDataEnd = false;
-        public bool isValidDataEnd
+        private bool _isInvalidDataEnd = false;
+        public bool isInvalidDataEnd
         {
-            get { return _isValidDataEnd; }
-            set { if (_isValidDataEnd != value) { _isValidDataEnd = !_isValidDataEnd; RaisePropertyChanged("isValidDataEnd"); } }
+            get { return _isInvalidDataEnd; }
+            set { if (_isInvalidDataEnd != value) { _isInvalidDataEnd = !_isInvalidDataEnd; RaisePropertyChanged("isInvalidDataEnd"); } }
         }
-        private bool _isValidDataDetails = false;
-        public bool isValidDataDetails
+        private bool _isInvalidDataDetails = false;
+        public bool isInvalidDataDetails
         {
-            get { return _isValidDataDetails; }
-            set { if (_isValidDataDetails != value) { _isValidDataDetails = !_isValidDataDetails; RaisePropertyChanged("isValidDataDetails"); } }
+            get { return _isInvalidDataDetails; }
+            set { if (_isInvalidDataDetails != value) { _isInvalidDataDetails = !_isInvalidDataDetails; RaisePropertyChanged("isInvalidDataDetails"); } }
         }
-        private bool _isValidDataCost = false;
-        public bool isValidDataCost
+        private bool _isInvalidDataCost = false;
+        public bool isInvalidDataCost
         {
-            get { return _isValidDataCost; }
-            set { if (_isValidDataCost != value) { _isValidDataCost = !_isValidDataCost; RaisePropertyChanged("isValidDataCost"); } }
+            get { return _isInvalidDataCost; }
+            set { if (_isInvalidDataCost != value) { _isInvalidDataCost = !_isInvalidDataCost; RaisePropertyChanged("isInvalidDataCost"); } }
         }
         #endregion
 
@@ -569,35 +556,35 @@ namespace SchoolsMailing.ViewModels
             set { if (_originalEmailOrder != value) { _originalEmailOrder = value; RaisePropertyChanged("originalEmailOrder"); } }
         }
         public Email rightClickedEmail = new Email(); //Holds right clicked item for flyout
-        private bool _isValidEmailDate = false;
-        public bool isValidEmailDate
+        private bool _isInvalidEmailDate = false;
+        public bool isInvalidEmailDate
         {
-            get { return _isValidEmailDate; }
-            set { if (_isValidEmailDate != value) { _isValidEmailDate = !_isValidEmailDate; RaisePropertyChanged("isValidEmailDate"); } }
+            get { return _isInvalidEmailDate; }
+            set { if (_isInvalidEmailDate != value) { _isInvalidEmailDate = !_isInvalidEmailDate; RaisePropertyChanged("isInvalidEmailDate"); } }
         }
-        private bool _isValidEmailDetails = false;
-        public bool isValidEmailDetails
+        private bool _isInvalidEmailDetails = false;
+        public bool isInvalidEmailDetails
         {
-            get { return _isValidEmailDetails; }
-            set { if (_isValidEmailDetails != value) { _isValidEmailDetails = !_isValidEmailDetails; RaisePropertyChanged("isValidEmailDetails"); } }
+            get { return _isInvalidEmailDetails; }
+            set { if (_isInvalidEmailDetails != value) { _isInvalidEmailDetails = !_isInvalidEmailDetails; RaisePropertyChanged("isInvalidEmailDetails"); } }
         }
-        private bool _isValidEmailAdminCost = false;
-        public bool isValidEmailAdminCost
+        private bool _isInvalidEmailAdminCost = false;
+        public bool isInvalidEmailAdminCost
         {
-            get { return _isValidEmailAdminCost; }
-            set { if (_isValidEmailAdminCost != value) { _isValidEmailAdminCost = !_isValidEmailAdminCost; RaisePropertyChanged("isValidEmailAdminCost"); } }
+            get { return _isInvalidEmailAdminCost; }
+            set { if (_isInvalidEmailAdminCost != value) { _isInvalidEmailAdminCost = !_isInvalidEmailAdminCost; RaisePropertyChanged("isInvalidEmailAdminCost"); } }
         }
-        private bool _isValidEmailDirectCost = false;
-        public bool isValidEmailDirectCost
+        private bool _isInvalidEmailDirectCost = false;
+        public bool isInvalidEmailDirectCost
         {
-            get { return _isValidEmailDirectCost; }
-            set { if (_isValidEmailDirectCost != value) { _isValidEmailDirectCost = !_isValidEmailDirectCost; RaisePropertyChanged("isValidEmailDirectCost"); } }
+            get { return _isInvalidEmailDirectCost; }
+            set { if (_isInvalidEmailDirectCost != value) { _isInvalidEmailDirectCost = !_isInvalidEmailDirectCost; RaisePropertyChanged("isInvalidEmailDirectCost"); } }
         }
-        private bool _isValidEmailCost = false;
-        public bool isValidEmailCost
+        private bool _isInvalidEmailCost = false;
+        public bool isInvalidEmailCost
         {
-            get { return _isValidEmailCost; }
-            set { if (_isValidEmailCost != value) { _isValidEmailCost = !_isValidEmailCost; RaisePropertyChanged("isValidEmailCost"); } }
+            get { return _isInvalidEmailCost; }
+            set { if (_isInvalidEmailCost != value) { _isInvalidEmailCost = !_isInvalidEmailCost; RaisePropertyChanged("isInvalidEmailCost"); } }
         }
         public DateTime duplicateEmailDate;
         #endregion
@@ -628,59 +615,59 @@ namespace SchoolsMailing.ViewModels
             set { if (_originalDirectMailingOrder != value) { _originalDirectMailingOrder = value; RaisePropertyChanged("originalDirectMailingOrder"); } }
         }
         public DirectMailing rightClickedDirectMailing = new DirectMailing(); //Holds right clicked item for flyout
-        private bool _isValidDirectMailingFulfilmentCost = false;
-        public bool isValidDirectMailingFulfilmentCost
+        private bool _isInvalidDirectMailingFulfilmentCost = false;
+        public bool isInvalidDirectMailingFulfilmentCost
         {
-            get { return _isValidDirectMailingFulfilmentCost; }
-            set { if (_isValidDirectMailingFulfilmentCost != value) { _isValidDirectMailingFulfilmentCost = !_isValidDirectMailingFulfilmentCost; RaisePropertyChanged("isValidDirectMailingFulfilmentCost"); } }
+            get { return _isInvalidDirectMailingFulfilmentCost; }
+            set { if (_isInvalidDirectMailingFulfilmentCost != value) { _isInvalidDirectMailingFulfilmentCost = !_isInvalidDirectMailingFulfilmentCost; RaisePropertyChanged("isInvalidDirectMailingFulfilmentCost"); } }
         }
-        public bool isValidDirectMailingPrintCost
+        public bool isInvalidDirectMailingPrintCost
         {
-            get { return _isValidDirectMailingPrintCost; }
-            set { if (_isValidDirectMailingPrintCost != value) { _isValidDirectMailingPrintCost = !_isValidDirectMailingPrintCost; RaisePropertyChanged("isValidDirectMailingPrintCost"); } }
+            get { return _isInvalidDirectMailingPrintCost; }
+            set { if (_isInvalidDirectMailingPrintCost != value) { _isInvalidDirectMailingPrintCost = !_isInvalidDirectMailingPrintCost; RaisePropertyChanged("isInvalidDirectMailingPrintCost"); } }
         }
-        private bool _isValidDirectMailingPostageCost = false;
-        public bool isValidDirectMailingPostageCost
+        private bool _isInvalidDirectMailingPostageCost = false;
+        public bool isInvalidDirectMailingPostageCost
         {
-            get { return _isValidDirectMailingPostageCost; }
-            set { if (_isValidDirectMailingPostageCost != value) { _isValidDirectMailingPostageCost = !_isValidDirectMailingPostageCost; RaisePropertyChanged("isValidDirectMailingPostageCost"); } }
+            get { return _isInvalidDirectMailingPostageCost; }
+            set { if (_isInvalidDirectMailingPostageCost != value) { _isInvalidDirectMailingPostageCost = !_isInvalidDirectMailingPostageCost; RaisePropertyChanged("isInvalidDirectMailingPostageCost"); } }
         }
-        private bool _isValidDirectMailingPrintCost = false;
-        private bool _isValidDirectMailingDate = false;
-        public bool isValidDirectMailingDate
+        private bool _isInvalidDirectMailingPrintCost = false;
+        private bool _isInvalidDirectMailingDate = false;
+        public bool isInvalidDirectMailingDate
         {
-            get { return _isValidDirectMailingDate; }
-            set { if (_isValidDirectMailingDate != value) { _isValidDirectMailingDate = !_isValidDirectMailingDate; RaisePropertyChanged("isValidDirectMailingDate"); } }
+            get { return _isInvalidDirectMailingDate; }
+            set { if (_isInvalidDirectMailingDate != value) { _isInvalidDirectMailingDate = !_isInvalidDirectMailingDate; RaisePropertyChanged("isInvalidDirectMailingDate"); } }
         }
-        private bool _isValidDirectMailingDetails = false;
-        public bool isValidDirectMailingDetails
+        private bool _isInvalidDirectMailingDetails = false;
+        public bool isInvalidDirectMailingDetails
         {
-            get { return _isValidDirectMailingDetails; }
-            set { if (_isValidDirectMailingDetails != value) { _isValidDirectMailingDetails = !_isValidDirectMailingDetails; RaisePropertyChanged("isValidDirectMailingDetails"); } }
+            get { return _isInvalidDirectMailingDetails; }
+            set { if (_isInvalidDirectMailingDetails != value) { _isInvalidDirectMailingDetails = !_isInvalidDirectMailingDetails; RaisePropertyChanged("isInvalidDirectMailingDetails"); } }
         }
-        private bool _isValidDirectMailingDeliveryCode = false;
-        public bool isValidDirectMailingDeliveryCode
+        private bool _isInvalidDirectMailingDeliveryCode = false;
+        public bool isInvalidDirectMailingDeliveryCode
         {
-            get { return _isValidDirectMailingDeliveryCode; }
-            set { if (_isValidDirectMailingDeliveryCode != value) { _isValidDirectMailingDeliveryCode = !_isValidDirectMailingDeliveryCode; RaisePropertyChanged("isValidDirectMailingDeliveryCode"); } }
+            get { return _isInvalidDirectMailingDeliveryCode; }
+            set { if (_isInvalidDirectMailingDeliveryCode != value) { _isInvalidDirectMailingDeliveryCode = !_isInvalidDirectMailingDeliveryCode; RaisePropertyChanged("isInvalidDirectMailingDeliveryCode"); } }
         }
-        private bool _isValidDirectMailingArtworkDate = false;
-        public bool isValidDirectMailingArtworkDate
+        private bool _isInvalidDirectMailingArtworkDate = false;
+        public bool isInvalidDirectMailingArtworkDate
         {
-            get { return _isValidDirectMailingArtworkDate; }
-            set { if (_isValidDirectMailingArtworkDate != value) { _isValidDirectMailingArtworkDate = !_isValidDirectMailingArtworkDate; RaisePropertyChanged("isValidDirectMailingArtworkDate"); } }
+            get { return _isInvalidDirectMailingArtworkDate; }
+            set { if (_isInvalidDirectMailingArtworkDate != value) { _isInvalidDirectMailingArtworkDate = !_isInvalidDirectMailingArtworkDate; RaisePropertyChanged("isInvalidDirectMailingArtworkDate"); } }
         }
-        private bool _isValidDirectMailingDataDate = false;
-        public bool isValidDirectMailingDataDate
+        private bool _isInvalidDirectMailingDataDate = false;
+        public bool isInvalidDirectMailingDataDate
         {
-            get { return _isValidDirectMailingDataDate; }
-            set { if (_isValidDirectMailingDataDate != value) { _isValidDirectMailingDataDate = !_isValidDirectMailingDataDate; RaisePropertyChanged("isValidDirectMailingDataDate"); } }
+            get { return _isInvalidDirectMailingDataDate; }
+            set { if (_isInvalidDirectMailingDataDate != value) { _isInvalidDirectMailingDataDate = !_isInvalidDirectMailingDataDate; RaisePropertyChanged("isInvalidDirectMailingDataDate"); } }
         }
-        private bool _isValidDirectMailingInsertDate = false;
-        public bool isValidDirectMailingInsertDate
+        private bool _isInvalidDirectMailingInsertDate = false;
+        public bool isInvalidDirectMailingInsertDate
         {
-            get { return _isValidDirectMailingInsertDate; }
-            set { if (_isValidDirectMailingInsertDate != value) { _isValidDirectMailingInsertDate = !_isValidDirectMailingInsertDate; RaisePropertyChanged("isValidDirectMailingInsertDate"); } }
+            get { return _isInvalidDirectMailingInsertDate; }
+            set { if (_isInvalidDirectMailingInsertDate != value) { _isInvalidDirectMailingInsertDate = !_isInvalidDirectMailingInsertDate; RaisePropertyChanged("isInvalidDirectMailingInsertDate"); } }
         }
 
         private RelayCommand _setDirectMailingDate;
@@ -730,35 +717,35 @@ namespace SchoolsMailing.ViewModels
             set { if (_originalPrintOrder != value) { _originalPrintOrder = value; RaisePropertyChanged("originalPrintOrder"); } }
         }
         public Print rightClickedPrint = new Print(); //Holds right clicked item for flyout
-        private bool _isValidPrintCharge = false;
-        public bool isValidPrintCharge
+        private bool _isInvalidPrintCharge = false;
+        public bool isInvalidPrintCharge
         {
-            get { return _isValidPrintCharge; }
-            set { if (_isValidPrintCharge != value) { _isValidPrintCharge = !_isValidPrintCharge; RaisePropertyChanged("isValidPrintCharge"); } }
+            get { return _isInvalidPrintCharge; }
+            set { if (_isInvalidPrintCharge != value) { _isInvalidPrintCharge = !_isInvalidPrintCharge; RaisePropertyChanged("isInvalidPrintCharge"); } }
         }
-        private bool _isValidPrintCost = false;
-        public bool isValidPrintCost
+        private bool _isInvalidPrintCost = false;
+        public bool isInvalidPrintCost
         {
-            get { return _isValidPrintCost; }
-            set { if (_isValidPrintCost != value) { _isValidPrintCost = !_isValidPrintCost; RaisePropertyChanged("isValidPrintCost"); } }
+            get { return _isInvalidPrintCost; }
+            set { if (_isInvalidPrintCost != value) { _isInvalidPrintCost = !_isInvalidPrintCost; RaisePropertyChanged("isInvalidPrintCost"); } }
         }
-        private bool _isValidPrintDetails = false;
-        public bool isValidPrintDetails
+        private bool _isInvalidPrintDetails = false;
+        public bool isInvalidPrintDetails
         {
-            get { return _isValidPrintDetails; }
-            set { if (_isValidPrintDetails != value) { _isValidPrintDetails = !_isValidPrintDetails; RaisePropertyChanged("isValidPrintDetails"); } }
+            get { return _isInvalidPrintDetails; }
+            set { if (_isInvalidPrintDetails != value) { _isInvalidPrintDetails = !_isInvalidPrintDetails; RaisePropertyChanged("isInvalidPrintDetails"); } }
         }
-        private bool _isValidPrintPrinter = false;
-        public bool isValidPrintPrinter
+        private bool _isInvalidPrintPrinter = false;
+        public bool isInvalidPrintPrinter
         {
-            get { return _isValidPrintPrinter; }
-            set { if (_isValidPrintPrinter != value) { _isValidPrintPrinter = !_isValidPrintPrinter; RaisePropertyChanged("isValidPrintPrinter"); } }
+            get { return _isInvalidPrintPrinter; }
+            set { if (_isInvalidPrintPrinter != value) { _isInvalidPrintPrinter = !_isInvalidPrintPrinter; RaisePropertyChanged("isInvalidPrintPrinter"); } }
         }
-        private bool _isValidPrintDate = false;
-        public bool isValidPrintDate
+        private bool _isInvalidPrintDate = false;
+        public bool isInvalidPrintDate
         {
-            get { return _isValidPrintDate; }
-            set { if (_isValidPrintDate != value) { _isValidPrintDate = !_isValidPrintDate; RaisePropertyChanged("isValidPrintDate"); } }
+            get { return _isInvalidPrintDate; }
+            set { if (_isInvalidPrintDate != value) { _isInvalidPrintDate = !_isInvalidPrintDate; RaisePropertyChanged("isInvalidPrintDate"); } }
         }
         #endregion
 
@@ -800,29 +787,29 @@ namespace SchoolsMailing.ViewModels
             set { if (_originalSchoolSendOrder != value) { _originalSchoolSendOrder = value; RaisePropertyChanged("originalSchoolSendOrder"); } }
         }
         public SchoolSend rightClickedSchoolSend = new SchoolSend(); //Holds right clicked item for flyout
-        private bool _isValidSchoolSendStart = false;
-        public bool isValidSchoolSendStart
+        private bool _isInvalidSchoolSendStart = false;
+        public bool isInvalidSchoolSendStart
         {
-            get { return _isValidSchoolSendStart; }
-            set { if (_isValidSchoolSendStart != value) { _isValidSchoolSendStart = !_isValidSchoolSendStart; RaisePropertyChanged("isValidSchoolSendStart"); } }
+            get { return _isInvalidSchoolSendStart; }
+            set { if (_isInvalidSchoolSendStart != value) { _isInvalidSchoolSendStart = !_isInvalidSchoolSendStart; RaisePropertyChanged("isInvalidSchoolSendStart"); } }
         }
-        private bool _isValidSchoolSendEnd = false;
-        public bool isValidSchoolSendEnd
+        private bool _isInvalidSchoolSendEnd = false;
+        public bool isInvalidSchoolSendEnd
         {
-            get { return _isValidSchoolSendEnd; }
-            set { if (_isValidSchoolSendEnd != value) { _isValidSchoolSendEnd = !_isValidSchoolSendEnd; RaisePropertyChanged("isValidSchoolSendEnd"); } }
+            get { return _isInvalidSchoolSendEnd; }
+            set { if (_isInvalidSchoolSendEnd != value) { _isInvalidSchoolSendEnd = !_isInvalidSchoolSendEnd; RaisePropertyChanged("isInvalidSchoolSendEnd"); } }
         }
-        private bool _isValidSchoolSendPackage = false;
-        public bool isValidSchoolSendPackage
+        private bool _isInvalidSchoolSendPackage = false;
+        public bool isInvalidSchoolSendPackage
         {
-            get { return _isValidSchoolSendPackage; }
-            set { if (_isValidSchoolSendPackage != value) { _isValidSchoolSendPackage = !_isValidSchoolSendPackage; RaisePropertyChanged("isValidSchoolSendPackage"); } }
+            get { return _isInvalidSchoolSendPackage; }
+            set { if (_isInvalidSchoolSendPackage != value) { _isInvalidSchoolSendPackage = !_isInvalidSchoolSendPackage; RaisePropertyChanged("isInvalidSchoolSendPackage"); } }
         }
-        private bool _isValidSchoolSendCost = false;
-        public bool isValidSchoolSendCost
+        private bool _isInvalidSchoolSendCost = false;
+        public bool isInvalidSchoolSendCost
         {
-            get { return _isValidSchoolSendCost; }
-            set { if (_isValidSchoolSendCost != value) { _isValidSchoolSendCost = !_isValidSchoolSendCost; RaisePropertyChanged("isValidSchoolSendCost"); } }
+            get { return _isInvalidSchoolSendCost; }
+            set { if (_isInvalidSchoolSendCost != value) { _isInvalidSchoolSendCost = !_isInvalidSchoolSendCost; RaisePropertyChanged("isInvalidSchoolSendCost"); } }
         }
 
         private RelayCommand _setSchoolSendDate;
@@ -889,35 +876,35 @@ namespace SchoolsMailing.ViewModels
             set { if (_originalSharedMailingOrder != value) { _originalSharedMailingOrder = value; RaisePropertyChanged("originalSharedMailingOrder"); } }
         }
         public SharedMailing rightClickedSharedMailing = new SharedMailing(); //Holds right clicked item for flyout
-        private bool _isValidSharedPackage = false;
-        public bool isValidSharedPackage
+        private bool _isInvalidSharedPackage = false;
+        public bool isInvalidSharedPackage
         {
-            get { return _isValidSharedPackage; }
-            set { if (_isValidSharedPackage != value) { _isValidSharedPackage = !_isValidSharedPackage; RaisePropertyChanged("isValidSharedPackage"); } }
+            get { return _isInvalidSharedPackage; }
+            set { if (_isInvalidSharedPackage != value) { _isInvalidSharedPackage = !_isInvalidSharedPackage; RaisePropertyChanged("isInvalidSharedPackage"); } }
         }
-        private bool _isValidSharedDate = false;
-        public bool isValidSharedDate
+        private bool _isInvalidSharedDate = false;
+        public bool isInvalidSharedDate
         {
-            get { return _isValidSharedDate; }
-            set { if (_isValidSharedDate != value) { _isValidSharedDate = !_isValidSharedDate; RaisePropertyChanged("isValidSharedDate"); } }
+            get { return _isInvalidSharedDate; }
+            set { if (_isInvalidSharedDate != value) { _isInvalidSharedDate = !_isInvalidSharedDate; RaisePropertyChanged("isInvalidSharedDate"); } }
         }
-        private bool _isValidSharedDeliveryDate = false;
-        public bool isValidSharedDeliveryDate
+        private bool _isInvalidSharedDeliveryDate = false;
+        public bool isInvalidSharedDeliveryDate
         {
-            get { return _isValidSharedDeliveryDate; }
-            set { if (_isValidSharedDeliveryDate != value) { _isValidSharedDeliveryDate = !_isValidSharedDeliveryDate; RaisePropertyChanged("isValidSharedDeliveryDate"); } }
+            get { return _isInvalidSharedDeliveryDate; }
+            set { if (_isInvalidSharedDeliveryDate != value) { _isInvalidSharedDeliveryDate = !_isInvalidSharedDeliveryDate; RaisePropertyChanged("isInvalidSharedDeliveryDate"); } }
         }
-        private bool _isValidSharedArtworkDate = false;
-        public bool isValidSharedArtworkDate
+        private bool _isInvalidSharedArtworkDate = false;
+        public bool isInvalidSharedArtworkDate
         {
-            get { return _isValidSharedArtworkDate; }
-            set { if (_isValidSharedArtworkDate != value) { _isValidSharedArtworkDate = !_isValidSharedArtworkDate; RaisePropertyChanged("isValidSharedArtworkDate"); } }
+            get { return _isInvalidSharedArtworkDate; }
+            set { if (_isInvalidSharedArtworkDate != value) { _isInvalidSharedArtworkDate = !_isInvalidSharedArtworkDate; RaisePropertyChanged("isInvalidSharedArtworkDate"); } }
         }
-        private bool _isValidSharedCost = false;
-        public bool isValidSharedCost
+        private bool _isInvalidSharedCost = false;
+        public bool isInvalidSharedCost
         {
-            get { return _isValidSharedCost; }
-            set { if (_isValidSharedCost != value) { _isValidSharedCost = !_isValidSharedCost; RaisePropertyChanged("isValidSharedCost"); } }
+            get { return _isInvalidSharedCost; }
+            set { if (_isInvalidSharedCost != value) { _isInvalidSharedCost = !_isInvalidSharedCost; RaisePropertyChanged("isInvalidSharedCost"); } }
         }
 
         private RelayCommand _setPack;
@@ -969,23 +956,23 @@ namespace SchoolsMailing.ViewModels
             set { if (_originalSurchargeOrder != value) { _originalSurchargeOrder = value; RaisePropertyChanged("originalSurchargeOrder"); } }
         }
         public Surcharge rightClickedSurcharge = new Surcharge(); //Holds right clicked item for flyout
-        private bool _isValidSurchargeDate = false;
-        public bool isValidSurchargeDate
+        private bool _isInvalidSurchargeDate = false;
+        public bool isInvalidSurchargeDate
         {
-            get { return _isValidSurchargeDate; }
-            set { if (_isValidSurchargeDate != value) { _isValidSurchargeDate = !_isValidSurchargeDate; RaisePropertyChanged("isValidSurchargeDate"); } }
+            get { return _isInvalidSurchargeDate; }
+            set { if (_isInvalidSurchargeDate != value) { _isInvalidSurchargeDate = !_isInvalidSurchargeDate; RaisePropertyChanged("isInvalidSurchargeDate"); } }
         }
-        private bool _isValidSurchargeDetails = false;
-        public bool isValidSurchargeDetails
+        private bool _isInvalidSurchargeDetails = false;
+        public bool isInvalidSurchargeDetails
         {
-            get { return _isValidSurchargeDetails; }
-            set { if (_isValidSurchargeDetails != value) { _isValidSurchargeDetails = !_isValidSurchargeDetails; RaisePropertyChanged("isValidSurchargeDetails"); } }
+            get { return _isInvalidSurchargeDetails; }
+            set { if (_isInvalidSurchargeDetails != value) { _isInvalidSurchargeDetails = !_isInvalidSurchargeDetails; RaisePropertyChanged("isInvalidSurchargeDetails"); } }
         }
-        private bool _isValidSurchargeCost = false;
-        public bool isValidSurchargeCost
+        private bool _isInvalidSurchargeCost = false;
+        public bool isInvalidSurchargeCost
         {
-            get { return _isValidSurchargeCost; }
-            set { if (_isValidSurchargeCost != value) { _isValidSurchargeCost = !_isValidSurchargeCost; RaisePropertyChanged("isValidSurchargeCost"); } }
+            get { return _isInvalidSurchargeCost; }
+            set { if (_isInvalidSurchargeCost != value) { _isInvalidSurchargeCost = !_isInvalidSurchargeCost; RaisePropertyChanged("isInvalidSurchargeCost"); } }
         }
         #endregion
 
@@ -1003,54 +990,54 @@ namespace SchoolsMailing.ViewModels
             set { if (_selectedSharedPack != value) { _selectedSharedPack = value; RaisePropertyChanged("selectedSharedPack"); } }
         }
 
-        private bool _isValidPackageName = false;
-        public bool isValidPackageName
+        private bool _isInvalidPackageName = false;
+        public bool isInvalidPackageName
         {
-            get { return _isValidPackageName; }
-            set { if (_isValidPackageName != value) { _isValidPackageName = !_isValidPackageName; RaisePropertyChanged("isValidPackageName"); } }
+            get { return _isInvalidPackageName; }
+            set { if (_isInvalidPackageName != value) { _isInvalidPackageName = !_isInvalidPackageName; RaisePropertyChanged("isInvalidPackageName"); } }
         }
-        private bool _isValidPackageTo = false;
-        public bool isValidPackageTo
+        private bool _isInvalidPackageTo = false;
+        public bool isInvalidPackageTo
         {
-            get { return _isValidPackageTo; }
-            set { if (_isValidPackageTo != value) { _isValidPackageTo = !_isValidPackageTo; RaisePropertyChanged("isValidPackageTo"); } }
+            get { return _isInvalidPackageTo; }
+            set { if (_isInvalidPackageTo != value) { _isInvalidPackageTo = !_isInvalidPackageTo; RaisePropertyChanged("isInvalidPackageTo"); } }
         }
-        private bool _isValidPackageDate = false;
-        public bool isValidPackageDate
+        private bool _isInvalidPackageDate = false;
+        public bool isInvalidPackageDate
         {
-            get { return _isValidPackageDate; }
-            set { if (_isValidPackageDate != value) { _isValidPackageDate = !_isValidPackageDate; RaisePropertyChanged("isValidPackageDate"); } }
+            get { return _isInvalidPackageDate; }
+            set { if (_isInvalidPackageDate != value) { _isInvalidPackageDate = !_isInvalidPackageDate; RaisePropertyChanged("isInvalidPackageDate"); } }
         }
-        private bool _isValidPackageArtworkDate = false;
-        public bool isValidPackageArtworkDate
+        private bool _isInvalidPackageArtworkDate = false;
+        public bool isInvalidPackageArtworkDate
         {
-            get { return _isValidPackageArtworkDate; }
-            set { if (_isValidPackageArtworkDate != value) { _isValidPackageArtworkDate = !_isValidPackageArtworkDate; RaisePropertyChanged("isValidPackageArtworkDate"); } }
+            get { return _isInvalidPackageArtworkDate; }
+            set { if (_isInvalidPackageArtworkDate != value) { _isInvalidPackageArtworkDate = !_isInvalidPackageArtworkDate; RaisePropertyChanged("isInvalidPackageArtworkDate"); } }
         }
-        private bool _isValidPackageDeliveryDate = false;
-        public bool isValidPackageDeliveryDate
+        private bool _isInvalidPackageDeliveryDate = false;
+        public bool isInvalidPackageDeliveryDate
         {
-            get { return _isValidPackageDeliveryDate; }
-            set { if (_isValidPackageDeliveryDate != value) { _isValidPackageDeliveryDate = !_isValidPackageDeliveryDate; RaisePropertyChanged("isValidPackageDeliveryDate"); } }
+            get { return _isInvalidPackageDeliveryDate; }
+            set { if (_isInvalidPackageDeliveryDate != value) { _isInvalidPackageDeliveryDate = !_isInvalidPackageDeliveryDate; RaisePropertyChanged("isInvalidPackageDeliveryDate"); } }
         }
-        private bool _isValidPackageCost = false;
-        public bool isValidPackageCost
+        private bool _isInvalidPackageCost = false;
+        public bool isInvalidPackageCost
         {
-            get { return _isValidPackageCost; }
-            set { if (_isValidPackageCost != value) { _isValidPackageCost = !_isValidPackageCost; RaisePropertyChanged("isValidPackageCost"); } }
+            get { return _isInvalidPackageCost; }
+            set { if (_isInvalidPackageCost != value) { _isInvalidPackageCost = !_isInvalidPackageCost; RaisePropertyChanged("isInvalidPackageCost"); } }
         }
-        private bool _isValidPackageMaxInserts = false;
-        public bool isValidPackageMaxInserts
+        private bool _isInvalidPackageMaxInserts = false;
+        public bool isInvalidPackageMaxInserts
         {
-            get { return _isValidPackageMaxInserts; }
-            set { if (_isValidPackageMaxInserts != value) { _isValidPackageMaxInserts = !_isValidPackageMaxInserts; RaisePropertyChanged("isValidPackageMaxInserts"); } }
+            get { return _isInvalidPackageMaxInserts; }
+            set { if (_isInvalidPackageMaxInserts != value) { _isInvalidPackageMaxInserts = !_isInvalidPackageMaxInserts; RaisePropertyChanged("isInvalidPackageMaxInserts"); } }
         }
         #endregion
 
         #region Save
         public void SaveOrder()
         {
-            DataAccessLayer.SaveOrder(selectedOrder);
+            DataAccessLayer.saveOrder(selectedOrder);
             long orderID = selectedOrder.ID;
 
             //Data
@@ -1059,14 +1046,14 @@ namespace SchoolsMailing.ViewModels
                 foreach (Data d in dataOrders)
                 {
                     d.orderID = orderID;
-                    DataAccessLayer.SaveData(d);
+                    DataAccessLayer.saveData(d);
                 }
             }
             if (deletedDataOrders != null)
             {
                 foreach (Data d in deletedDataOrders)
                 {
-                    DataAccessLayer.DeleteData(d);
+                    DataAccessLayer.deleteData(d);
                 }
             }
             //Email
@@ -1075,14 +1062,14 @@ namespace SchoolsMailing.ViewModels
                 foreach (Email e in emailOrders) //Loop through emails
                 {
                     e.orderID = orderID;
-                    DataAccessLayer.SaveEmail(e); //Add emails
+                    DataAccessLayer.saveEmail(e); //Add emails
                 }
             }
             if (deletedEmailOrders != null)
             {
                 foreach (Email e in deletedEmailOrders) //Loop through emails
                 {
-                    DataAccessLayer.DeleteEmail(e); //Delete emails
+                    DataAccessLayer.deleteEmail(e); //Delete emails
                 }
             }
             //SchoolSend
@@ -1091,14 +1078,14 @@ namespace SchoolsMailing.ViewModels
                 foreach (SchoolSend ss in schoolSendOrders)
                 {
                     ss.orderID = orderID;
-                    DataAccessLayer.SaveSchoolSend(ss);
+                    DataAccessLayer.saveSchoolSend(ss);
                 }
             }
             if (deletedSchoolSendOrders != null)
             {
                 foreach (SchoolSend ss in deletedSchoolSendOrders)
                 {
-                    DataAccessLayer.DeleteSchoolSend(ss);
+                    DataAccessLayer.deleteSchoolSend(ss);
                 }
             }
             //Direct mailing
@@ -1107,14 +1094,14 @@ namespace SchoolsMailing.ViewModels
                 foreach (DirectMailing dm in directMailingOrders)
                 {
                     dm.orderID = orderID;
-                    DataAccessLayer.SaveDirectMailing(dm);
+                    DataAccessLayer.saveDirectMailing(dm);
                 }
             }
             if (deletedDirectMailingOrders != null)
             {
                 foreach (DirectMailing dm in deletedDirectMailingOrders)
                 {
-                    DataAccessLayer.DeleteDirectMailing(dm);
+                    DataAccessLayer.deleteDirectMailing(dm);
                 }
             }
             //Shared mailing
@@ -1123,14 +1110,14 @@ namespace SchoolsMailing.ViewModels
                 foreach (SharedMailing sm in sharedMailingOrders)
                 {
                     sm.orderID = orderID;
-                    DataAccessLayer.SaveSharedMailing(sm);
+                    DataAccessLayer.saveSharedMailing(sm);
                 }
             }
             if (deletedSharedMailingOrders != null)
             {
                 foreach (SharedMailing sm in deletedSharedMailingOrders)
                 {
-                    DataAccessLayer.DeleteSharedMailing(sm);
+                    DataAccessLayer.deleteSharedMailing(sm);
                 }
             }
             //Print
@@ -1139,14 +1126,14 @@ namespace SchoolsMailing.ViewModels
                 foreach (Print p in printOrders)
                 {
                     p.orderID = orderID;
-                    DataAccessLayer.SavePrint(p);
+                    DataAccessLayer.savePrint(p);
                 }
             }
             if (deletedPrintOrders != null)
             {
                 foreach (Print p in deletedPrintOrders)
                 {
-                    DataAccessLayer.DeletePrint(p);
+                    DataAccessLayer.deletePrint(p);
                 }
             }
             //Surcharge
@@ -1155,14 +1142,14 @@ namespace SchoolsMailing.ViewModels
                 foreach (Surcharge s in surchargeOrders)
                 {
                     s.orderID = orderID;
-                    DataAccessLayer.SaveSurcharge(s);
+                    DataAccessLayer.saveSurcharge(s);
                 }
             }
             if (deletedSurchargeOrders != null)
             {
                 foreach (Surcharge s in deletedSurchargeOrders)
                 {
-                    DataAccessLayer.DeleteSurcharge(s);
+                    DataAccessLayer.deleteSurcharge(s);
                 }
             }
         }
@@ -1172,7 +1159,7 @@ namespace SchoolsMailing.ViewModels
             switch (orderPart)
             {
                 case "Data":
-                    if (ValidateDataOrder(selectedDataOrder))
+                    if (isValidDataOrder(selectedDataOrder))
                     {
                         dataOrders.Remove(originalDataOrder);
                         dataOrders.Add(selectedDataOrder);
@@ -1183,7 +1170,7 @@ namespace SchoolsMailing.ViewModels
                     break;
 
                 case "Email":
-                    if (validateEmailOrder(selectedEmailOrder))
+                    if (isValidEmailOrder(selectedEmailOrder))
                     {
                         emailOrders.Remove(originalEmailOrder);
                         emailOrders.Add(selectedEmailOrder);
@@ -1194,7 +1181,7 @@ namespace SchoolsMailing.ViewModels
                     break;
 
                 case "SchoolSend":
-                    if (validateSchoolSendOrder(selectedSchoolSendOrder))
+                    if (InvalidateSchoolSendOrder(selectedSchoolSendOrder))
                     {
                         schoolSendOrders.Remove(originalSchoolSendOrder);
                         schoolSendOrders.Add(selectedSchoolSendOrder);
@@ -1205,7 +1192,7 @@ namespace SchoolsMailing.ViewModels
                     break;
 
                 case "DirectMailing":
-                    if (validateDirectMailingOrder(selectedDirectMailingOrder))
+                    if (isValidDirectMailingOrder(selectedDirectMailingOrder))
                     {
                         directMailingOrders.Remove(originalDirectMailingOrder);
                         directMailingOrders.Add(selectedDirectMailingOrder);
@@ -1216,7 +1203,7 @@ namespace SchoolsMailing.ViewModels
                     break;
 
                 case "SharedMailing":
-                    if (validateSharedMailingOrder(selectedSharedMailingOrder))
+                    if (isValidSharedMailingOrder(selectedSharedMailingOrder))
                     {
                         sharedMailingOrders.Remove(originalSharedMailingOrder);
                         sharedMailingOrders.Add(selectedSharedMailingOrder);
@@ -1227,7 +1214,7 @@ namespace SchoolsMailing.ViewModels
                     break;
 
                 case "Print":
-                    if (validatePrintOrder(selectedPrintOrder))
+                    if (isValidPrintOrder(selectedPrintOrder))
                     {
                         printOrders.Remove(originalPrintOrder);
                         printOrders.Add(selectedPrintOrder);
@@ -1238,7 +1225,7 @@ namespace SchoolsMailing.ViewModels
                     break;
 
                 case "Surcharge":
-                    if (validateSurchargeOrder(selectedSurchargeOrder))
+                    if (isValidSurchargeOrder(selectedSurchargeOrder))
                     {
                         surchargeOrders.Remove(originalSurchargeOrder);
                         surchargeOrders.Add(selectedSurchargeOrder);
@@ -1248,9 +1235,9 @@ namespace SchoolsMailing.ViewModels
                     }
                     break;
                 case "SharedPack":
-                    if (validateSharedPackOrder(selectedSharedPack))
+                    if (isValidSharedPackOrder(selectedSharedPack))
                     {
-                        DataAccessLayer.SaveSharedPack(selectedSharedPack);
+                        DataAccessLayer.saveSharedPack(selectedSharedPack);
                         sharedPacks = DataAccessLayer.GetAllSharedPacks();
 
                         NavigationService.GoBack();
@@ -1558,179 +1545,94 @@ namespace SchoolsMailing.ViewModels
         }
         #endregion
 
-        #region Validation
+        #region Invalidation
         private RelayCommand _validateOrder;
         public RelayCommand validateOrder
         {
-            get { if (_validateOrder == null) { _validateOrder = new RelayCommand(()=> { ValidateOrder(selectedOrder); }); } return _validateOrder; } 
+            get { if (_validateOrder == null) { _validateOrder = new RelayCommand(()=> { isValidOrder(selectedOrder); }); } return _validateOrder; } 
         }
-        public bool ValidateOrder(Orders order)
+        public bool isValidOrder(Orders order)
         {
-            if (order.companyID != 0) { isValidOrderCompany = true; }
-            else { isValidOrderCompany = false; }
-            if(order.contactID == 0) { isValidOrderContact = true; }
-            else { isValidOrderContact = false; }
-            if(order.orderCode == null) { isValidOrderCode = true; }
-            else { isValidOrderCode = false; }
-            if (order.orderDate == null) { isValidOrderDate = true; }
-            else { isValidOrderDate = false; }
+            isInvalidOrderCompany = (order.companyID != 0)    ? true : false;
+            isInvalidOrderContact = (order.contactID != 0)    ? true : false;
+            isInvalidOrderCode    = (order.orderCode != null) ? true : false;
+            isInvalidOrderDate    = (order.orderDate != null) ? true : false;
             
-            if( isValidOrderCompany == true ||
-                isValidOrderContact == true ||
-                isValidOrderCode == true ||
-                isValidOrderDate == true)
-            {
-                return false;
-            }
-            else { return true; }
+            return (isInvalidOrderCompany == true || isInvalidOrderContact == true || isInvalidOrderCode == true || isInvalidOrderDate == true) ? false : true;
         }
 
         private RelayCommand _validateData;
         public RelayCommand validateData
         {
-            get { if (_validateData == null) { _validateData = new RelayCommand(() => { ValidateDataOrder(selectedDataOrder); }); } return _validateData; }
+            get { if (_validateData == null) { _validateData = new RelayCommand(() => { isValidDataOrder(selectedDataOrder); }); } return _validateData; }
         }
-        public bool ValidateDataOrder(Data data)
+        public bool isValidDataOrder(Data data)
         {
-            if (data.dataStart == null) { isValidDataStart = true; }
-            else { isValidDataStart = false; }
+            isInvalidDataStart   = (data.dataStart == null)        ? true : false;
+            isInvalidDataEnd     = (data.dataEnd < data.dataStart) ? true : false;
+            isInvalidDataCost    = (data.dataCost < 0)             ? true : false;
+            isInvalidDataDetails = (data.dataDetails == null)      ? true : false;
 
-            if (data.dataEnd == null || data.dataEnd < data.dataStart) { isValidDataEnd = true; }
-            else { isValidDataEnd = false; }
-
-            if (data.dataCost < 0) { isValidDataCost = true; }
-            else { isValidDataCost = false; }
-
-            if (data.dataDetails == null) { isValidDataDetails = true; }
-            else { isValidDataDetails = false; }
-
-            if (isValidDataStart == true ||
-                isValidDataEnd == true ||
-                isValidDataCost == true ||
-                isValidDataDetails == true)
-            {
-                return false;
-            }
-            else { return true; }
+            return (isInvalidDataStart == true || isInvalidDataEnd == true || isInvalidDataCost == true || isInvalidDataDetails == true) ? false : true;
         }
 
         private RelayCommand _validateEmail;
         public RelayCommand validateEmail
         {
-            get { if (_validateEmail == null) { _validateEmail = new RelayCommand(() => { if (_validateEmail != null) { validateEmailOrder(selectedEmailOrder); } }); } return _validateEmail; }
+            get { if (_validateEmail == null) { _validateEmail = new RelayCommand(() => { if (_validateEmail != null) { isValidEmailOrder(selectedEmailOrder); } }); } return _validateEmail; }
         }
-        public bool validateEmailOrder(Email email)
-        {
-            if (email.emailDate == null) { isValidEmailDate = true; }
-            else { isValidEmailDate = false; }
+        public bool isValidEmailOrder(Email email)
+        { 
+            isInvalidEmailDate       = (email.emailDate == null)    ? true : false;
+            isInvalidEmailDetails    = (email.emailDetails == null) ? true : false;
+            isInvalidEmailAdminCost  = (email.emailAdminCost < 0)   ? true : false;
+            isInvalidEmailDirectCost = (email.emailDirectCost< 0)   ? true : false;
+            isInvalidEmailCost       = (email.emailCost< 0)         ? true : false;
 
-            if (email.emailDetails == null) { isValidEmailDetails = true; }
-            else { isValidEmailDetails = false; }
-
-            if (email.emailAdminCost < 0) { isValidEmailAdminCost = true; }
-            else { isValidEmailAdminCost = false; }
-
-            if (email.emailDirectCost < 0) { isValidEmailDirectCost = true; }
-            else { isValidEmailDirectCost = false; }
-
-            if (email.emailCost < 0) { isValidEmailCost = true; }
-            else { isValidEmailCost = false; }
-
-            if (isValidEmailAdminCost == true ||
-                isValidEmailCost == true ||
-                isValidEmailDate == true ||
-                isValidEmailDetails == true ||
-                isValidEmailDirectCost == true)
-            {
-                return false;
-            }
-            else
-            {
-                if (selectedEmailOrder.emailSetUp)
-                {
-                    selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost + 125;
-                }
-                else
-                {
-                    selectedEmailOrder.emailCost = selectedEmailOrder.emailAdminCost + selectedEmailOrder.emailDirectCost;
-                }
-                RaisePropertyChanged("selectedEmailOrder");
-                return true;
-            }
+            return (isInvalidEmailAdminCost == true || isInvalidEmailCost == true || isInvalidEmailDetails == true || isInvalidEmailDirectCost == true) ? false : true;
         }
 
         private RelayCommand _validateSchoolSend;
         public RelayCommand validateSchoolSend
         {
-            get { if (_validateSchoolSend == null) { _validateSchoolSend = new RelayCommand(() => { if (_validateSchoolSend != null) { validateSchoolSendOrder(selectedSchoolSendOrder); } }); } return _validateSchoolSend; }
+            get { if (_validateSchoolSend == null) { _validateSchoolSend = new RelayCommand(() => { if (_validateSchoolSend != null) { InvalidateSchoolSendOrder(selectedSchoolSendOrder); } }); } return _validateSchoolSend; }
         }
-        public bool validateSchoolSendOrder(SchoolSend schoolsend)
+        public bool InvalidateSchoolSendOrder(SchoolSend schoolsend)
         {
-            if (schoolsend.schoolsendStart == null) { isValidSchoolSendStart = true; }
-            else { isValidSchoolSendStart = false; }
+            isInvalidSchoolSendStart   = (schoolsend.schoolsendStart == null)                                                        ? true : false;
+            isInvalidSchoolSendEnd     = (schoolsend.schoolsendEnd == null || schoolsend.schoolsendEnd < schoolsend.schoolsendStart) ? true : false;
+            isInvalidSchoolSendPackage = (schoolsend.schoolsendPackage <= 0)                                                         ? true : false;
+            isInvalidSchoolSendCost    = (schoolsend.schoolsendCost < 0)                                                             ? true : false;
 
-            if (schoolsend.schoolsendEnd == null || schoolsend.schoolsendEnd < schoolsend.schoolsendStart) { isValidSchoolSendEnd = true; }
-            else { isValidSchoolSendEnd = false; }
-
-            if (schoolsend.schoolsendPackage <= 0) { isValidSchoolSendPackage = true; }
-            else { isValidSchoolSendPackage = false; }
-
-            if (schoolsend.schoolsendCost < 0) { isValidSchoolSendCost = true; }
-            else { isValidSchoolSendCost = false; }
-
-            if (isValidSchoolSendStart == true ||
-                isValidSchoolSendEnd == true ||
-                isValidSchoolSendPackage == true ||
-                isValidSchoolSendCost == true)
-            {
-                return false;
-            }
-            else { return true; }
+            return (isInvalidSchoolSendStart == true || isInvalidSchoolSendEnd == true || isInvalidSchoolSendPackage == true || isInvalidSchoolSendCost == true) ? false : true;
         }
 
         private RelayCommand _validateDirectMailing;
         public RelayCommand validateDirectMailing
         {
-            get { if (_validateDirectMailing == null) { _validateDirectMailing = new RelayCommand(() => { if (_validateDirectMailing != null) { validateDirectMailingOrder(selectedDirectMailingOrder); } }); } return _validateDirectMailing; }
+            get { if (_validateDirectMailing == null) { _validateDirectMailing = new RelayCommand(() => { if (_validateDirectMailing != null) { isValidDirectMailingOrder(selectedDirectMailingOrder); } }); } return _validateDirectMailing; }
         }
-        public bool validateDirectMailingOrder(DirectMailing directMailing)
+        public bool isValidDirectMailingOrder(DirectMailing directMailing)
         {
-            if (directMailing.directDate == null || directMailing.directDate < directMailing.directArtworkDate || directMailing.directDate < directMailing.directDataDate || directMailing.directDate < directMailing.directInsertDate) { isValidDirectMailingDate = true; }
-            else { isValidDirectMailingDate = false; }
-
-            if (directMailing.directArtworkDate == null || directMailing.directArtworkDate > directMailing.directDate) { isValidDirectMailingArtworkDate = true; }
-            else { isValidDirectMailingArtworkDate = false; }
-
-            if (directMailing.directDataDate == null || directMailing.directDataDate > directMailing.directDate) { isValidDirectMailingDataDate = true; }
-            else { isValidDirectMailingDataDate = false; }
-
-            if (directMailing.directInsertDate == null || directMailing.directInsertDate > directMailing.directDate) { isValidDirectMailingInsertDate = true; }
-            else { isValidDirectMailingInsertDate = false; }
-
-            if (directMailing.directDeliveryCode == null) { isValidDirectMailingDeliveryCode = true; }
-            else { isValidDirectMailingDeliveryCode = false; }
-
-            if (directMailing.directDetails == null) { isValidDirectMailingDetails = true; }
-            else { isValidDirectMailingDetails = false; }
-
-            if (directMailing.directFulfilmentCost < 0) { isValidDirectMailingFulfilmentCost = true; }
-            else { isValidDirectMailingFulfilmentCost = false; }
-
-            if (directMailing.directPostageCost < 0) { isValidDirectMailingPostageCost = true; }
-            else { isValidDirectMailingPostageCost = false; }
-
-            if (directMailing.directPrintCost < 0) { isValidDirectMailingPrintCost = true; }
-            else { isValidDirectMailingPrintCost = false; }
-
-            if (isValidDirectMailingDate == true ||
-                isValidDirectMailingArtworkDate == true ||
-                isValidDirectMailingInsertDate == true ||
-                isValidDirectMailingDataDate == true ||
-                isValidDirectMailingDeliveryCode == true ||
-                isValidDirectMailingDetails == true ||
-                isValidDirectMailingFulfilmentCost == true ||
-                isValidDirectMailingPostageCost == true ||
-                isValidDirectMailingPrintCost == true)
+            isInvalidDirectMailingDate           = (directMailing.directDate == null)                           ? true : false;
+            isInvalidDirectMailingArtworkDate    = (directMailing.directArtworkDate > directMailing.directDate) ? true : false;
+            isInvalidDirectMailingDataDate       = (directMailing.directDataDate > directMailing.directDate)    ? true : false;
+            isInvalidDirectMailingInsertDate     = (directMailing.directInsertDate > directMailing.directDate)  ? true : false;
+            isInvalidDirectMailingDeliveryCode   = (directMailing.directDeliveryCode == null)                   ? true : false;
+            isInvalidDirectMailingDetails        = (directMailing.directDetails == null)                        ? true : false;
+            isInvalidDirectMailingFulfilmentCost = (directMailing.directFulfilmentCost < 0)                     ? true : false;
+            isInvalidDirectMailingPostageCost    = (directMailing.directPostageCost < 0)                        ? true : false;
+            isInvalidDirectMailingPrintCost      = (directMailing.directPrintCost < 0)                          ? true : false;
+            
+            if (isInvalidDirectMailingDate == true ||
+                isInvalidDirectMailingArtworkDate == true ||
+                isInvalidDirectMailingInsertDate == true ||
+                isInvalidDirectMailingDataDate == true ||
+                isInvalidDirectMailingDeliveryCode == true ||
+                isInvalidDirectMailingDetails == true ||
+                isInvalidDirectMailingFulfilmentCost == true ||
+                isInvalidDirectMailingPostageCost == true ||
+                isInvalidDirectMailingPrintCost == true)
             {
                 return false;
             }
@@ -1745,129 +1647,85 @@ namespace SchoolsMailing.ViewModels
         private RelayCommand _validateSharedMailing;
         public RelayCommand validateSharedMailing
         {
-            get { if (_validateSharedMailing == null) { _validateSharedMailing = new RelayCommand(() => { if (_validateSharedMailing != null) { validateSharedMailingOrder(selectedSharedMailingOrder); } }); } return _validateSharedMailing; }
+            get { if (_validateSharedMailing == null) { _validateSharedMailing = new RelayCommand(() => { if (_validateSharedMailing != null) { isValidSharedMailingOrder(selectedSharedMailingOrder); } }); } return _validateSharedMailing; }
         }
-        public bool validateSharedMailingOrder(SharedMailing sharedMailing)
+        public bool isValidSharedMailingOrder(SharedMailing sharedMailing)
         {
-            if (sharedMailing.sharedPackage <= 0) { isValidSharedPackage = true; }
-            else { isValidSharedPackage = false; }
 
-            if (sharedMailing.sharedDate == null || sharedMailing.sharedDate < sharedMailing.sharedDeliveryDate || sharedMailing.sharedDate < sharedMailing.sharedArtworkDate) { isValidSharedDate = true; }
-            else { isValidSharedDate = false; }
+            isInvalidSharedPackage      = (sharedMailing.sharedPackage <= 0)                                                                                                                              ? true : false;
+            isInvalidSharedDate         = (sharedMailing.sharedDate == null || sharedMailing.sharedDate < sharedMailing.sharedDeliveryDate || sharedMailing.sharedDate < sharedMailing.sharedArtworkDate) ? true : false;
+            isInvalidSharedDeliveryDate = (sharedMailing.sharedDeliveryDate == null || sharedMailing.sharedDeliveryDate > sharedMailing.sharedDate)                                                       ? true : false;
+            isInvalidSharedArtworkDate  = (sharedMailing.sharedArtworkDate == null || sharedMailing.sharedArtworkDate > sharedMailing.sharedDate)                                                         ? true : false;
+            isInvalidSharedCost         = (sharedMailing.sharedCost < 0)                                                                                                                                  ? true : false;
 
-            if (sharedMailing.sharedDeliveryDate == null || sharedMailing.sharedDeliveryDate > sharedMailing.sharedDate) { isValidSharedDeliveryDate = true; }
-            else { isValidSharedDeliveryDate = false; }
-
-            if (sharedMailing.sharedArtworkDate == null || sharedMailing.sharedArtworkDate > sharedMailing.sharedDate) { isValidSharedArtworkDate = true; }
-            else { isValidSharedArtworkDate = false; }
-
-            if (sharedMailing.sharedCost < 0) { isValidSharedCost = true; }
-            else { isValidSharedCost = false; }
-
-            if (isValidSharedPackage == true ||
-                isValidSharedDate == true ||
-                isValidSharedDeliveryDate == true ||
-                isValidSharedArtworkDate == true ||
-                isValidSharedCost == true)
-            {
-                return false;
-            }
-            else { return true; }
+            return (isInvalidSharedPackage == true || isInvalidSharedDate == true || isInvalidSharedDeliveryDate == true || isInvalidSharedArtworkDate == true || isInvalidSharedCost == true) ? false : true;
         }
 
         private RelayCommand _validatePrint;
-        public RelayCommand validatePrint
+        public RelayCommand ValidatePrint
         {
-            get { if (_validatePrint == null) { _validatePrint = new RelayCommand(() => { if (_validatePrint != null) { validatePrintOrder(selectedPrintOrder); } }); } return _validatePrint; }
+            get { if (_validatePrint == null) { _validatePrint = new RelayCommand(() => { if (_validatePrint != null) { isValidPrintOrder(selectedPrintOrder); } }); } return _validatePrint; }
         }
-        public bool validatePrintOrder(Print print)
+        public bool isValidPrintOrder(Print print)
         {
-            if (print.printDate == null) { isValidPrintDate = true; }
-            else { isValidPrintDate = false; }
+            isInvalidPrintDate    = (print.printDate == null)    ? true : false;
+            isInvalidPrintPrinter = (print.printPrinter == null) ? true : false;
+            isInvalidPrintDetails = (print.printDetails == null) ? true : false;
+            isInvalidPrintCharge  = (print.printCharge < 0)      ? true : false;
+            isInvalidPrintCost    = (print.printCost < 0)        ? true : false;
 
-            if (print.printPrinter == null) { isValidPrintPrinter = true; }
-            else { isValidPrintPrinter = false; }
-
-            if (print.printDetails == null) { isValidPrintDetails = true; }
-            else { isValidPrintDetails = false; }
-
-            if (print.printCharge < 0) { isValidPrintCharge = true; }
-            else { isValidPrintCharge = false; }
-
-            if (print.printCost < 0) { isValidPrintCost = true; }
-            else { isValidPrintCost = false; }
-
-            if (isValidPrintCharge == true ||
-                isValidPrintDetails == true)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return (isInvalidPrintCharge == true || isInvalidPrintDetails == true || isInvalidPrintPrinter == true || isInvalidPrintCost == true) ? false : true;
         }
 
         private RelayCommand _validateSurcharge;
         public RelayCommand validateSurcharge
         {
-            get { if (_validateSurcharge == null) { _validateSurcharge = new RelayCommand(() => { if (_validateSurcharge != null) { validateSurchargeOrder(selectedSurchargeOrder); } }); } return _validateSurcharge; }
+            get { if (_validateSurcharge == null) { _validateSurcharge = new RelayCommand(() => { if (_validateSurcharge != null) { isValidSurchargeOrder(selectedSurchargeOrder); } }); } return _validateSurcharge; }
         }
-        public bool validateSurchargeOrder(Surcharge surcharge)
+        public bool isValidSurchargeOrder(Surcharge surcharge)
         {
-            if (surcharge.surchargeDate == null) { isValidSurchargeDate = true; }
-            else { isValidSurchargeDate = false; }
+            isInvalidSurchargeDate    = (surcharge.surchargeDate == null)    ? true : false;
+            isInvalidSurchargeDetails = (surcharge.surchargeDetails == null) ? true : false;
+            isInvalidSurchargeCost    = (surcharge.surchargeCost < 0)        ? true : false;
 
-            if (surcharge.surchargeDetails == null) { isValidSurchargeDetails = true; }
-            else { isValidSurchargeDetails = false; }
-
-            if (surcharge.surchargeCost < 0) { isValidSurchargeCost = true; }
-            else { isValidSurchargeCost = false; }
-
-            if (isValidSurchargeDate == true ||
-                isValidSurchargeDetails == true ||
-                isValidSurchargeCost == true)
-            {
-                return false;
-            }
-            else { return true; }
+            return (isInvalidSurchargeDate == true || isInvalidSurchargeDetails == true || isInvalidSurchargeCost == true) ? false : true;
         }
 
         private RelayCommand _validateSharedPack;
         public RelayCommand validateSharedPack
         {
-            get { if (_validateSharedPack == null) { _validateSharedPack = new RelayCommand(() => { if (_validateSharedPack != null) { validateSharedPackOrder(selectedSharedPack); } }); } return _validateSharedPack; }
+            get { if (_validateSharedPack == null) { _validateSharedPack = new RelayCommand(() => { if (_validateSharedPack != null) { isValidSharedPackOrder(selectedSharedPack); } }); } return _validateSharedPack; }
         }
-        public bool validateSharedPackOrder(SharedPack pack)
+        public bool isValidSharedPackOrder(SharedPack pack)
         {
-            if(pack.packArtworkDate == null || pack.packArtworkDate > pack.packDate) { isValidPackageArtworkDate = true; }
-            else { isValidPackageArtworkDate = false; }
+            if(pack.packArtworkDate == null || pack.packArtworkDate > pack.packDate) { isInvalidPackageArtworkDate = true; }
+            else { isInvalidPackageArtworkDate = false; }
 
-            if(pack.packCost < 0) { isValidPackageCost = true; }
-            else { isValidPackageCost = false; }
+            if(pack.packCost < 0) { isInvalidPackageCost = true; }
+            else { isInvalidPackageCost = false; }
 
-            if(pack.packDate == null || pack.packDate < pack.packArtworkDate || pack.packDate < pack.packDeliveryDate) { isValidPackageDate = true; }
-            else { isValidPackageDate = false; }
+            if(pack.packDate == null || pack.packDate < pack.packArtworkDate || pack.packDate < pack.packDeliveryDate) { isInvalidPackageDate = true; }
+            else { isInvalidPackageDate = false; }
 
-            if(pack.packDeliveryDate == null || pack.packDeliveryDate > pack.packDate) { isValidPackageDeliveryDate = true; }
-            else { isValidPackageDeliveryDate = false; }
+            if(pack.packDeliveryDate == null || pack.packDeliveryDate > pack.packDate) { isInvalidPackageDeliveryDate = true; }
+            else { isInvalidPackageDeliveryDate = false; }
 
-            if(pack.packMaxInserts < 0) { isValidPackageMaxInserts = true; }
-            else { isValidPackageMaxInserts = false; }
+            if(pack.packMaxInserts < 0) { isInvalidPackageMaxInserts = true; }
+            else { isInvalidPackageMaxInserts = false; }
 
-            if(pack.packName == null) { isValidPackageName = true; }
-            else { isValidPackageName = false; }
+            if(pack.packName == null) { isInvalidPackageName = true; }
+            else { isInvalidPackageName = false; }
 
-            if (pack.packTo == null) { isValidPackageTo = true; }
-            else { isValidPackageTo = false; }
+            if (pack.packTo == null) { isInvalidPackageTo = true; }
+            else { isInvalidPackageTo = false; }
 
-            if(isValidPackageArtworkDate == true ||
-                isValidPackageCost == true ||
-                isValidPackageDate == true ||
-                isValidPackageDeliveryDate == true ||
-                isValidPackageMaxInserts == true ||
-                isValidPackageName == true ||
-                isValidPackageTo == true)
+            if(isInvalidPackageArtworkDate == true ||
+                isInvalidPackageCost == true ||
+                isInvalidPackageDate == true ||
+                isInvalidPackageDeliveryDate == true ||
+                isInvalidPackageMaxInserts == true ||
+                isInvalidPackageName == true ||
+                isInvalidPackageTo == true)
             {
                 return false;
             }
@@ -2079,6 +1937,12 @@ namespace SchoolsMailing.ViewModels
         #endregion
 
         #region Go Back
+        private RelayCommand _goBack;
+        public RelayCommand goBack
+        {
+            get { if (_goBack == null) { _goBack = new RelayCommand(() => { NavigationService.GoBack(); }); } return _goBack; }
+        }
+
         private RelayCommand _cancelDataPart;
         public RelayCommand cancelDataPart
         {
@@ -2129,1155 +1993,18 @@ namespace SchoolsMailing.ViewModels
         #endregion
 
         #region Generate Order Form
-        public async void GenerateOrderForm()
+        private RelayCommand _createOrderForm;
+        public RelayCommand createOrderForm
         {
-            string orderForm;
-
-            orderForm = @"
-
-
-<?xml version=""1.0"" encoding=""UTF-8""?>
-<w:document xmlns:w=""http://schemas.openxmlformats.org/wordprocessingml/2006/main"" xmlns:cx=""http://schemas.microsoft.com/office/drawing/2014/chartex"" xmlns:cx1=""http://schemas.microsoft.com/office/drawing/2015/9/8/chartex"" xmlns:cx2=""http://schemas.microsoft.com/office/drawing/2015/10/21/chartex"" xmlns:cx3=""http://schemas.microsoft.com/office/drawing/2016/5/9/chartex"" xmlns:cx4=""http://schemas.microsoft.com/office/drawing/2016/5/10/chartex"" xmlns:cx5=""http://schemas.microsoft.com/office/drawing/2016/5/11/chartex"" xmlns:m=""http://schemas.openxmlformats.org/officeDocument/2006/math"" xmlns:mc=""http://schemas.openxmlformats.org/markup-compatibility/2006"" xmlns:o=""urn:schemas-microsoft-com:office:office"" xmlns:r=""http://schemas.openxmlformats.org/officeDocument/2006/relationships"" xmlns:v=""urn:schemas-microsoft-com:vml"" xmlns:w10=""urn:schemas-microsoft-com:office:word"" xmlns:w14=""http://schemas.microsoft.com/office/word/2010/wordml"" xmlns:w15=""http://schemas.microsoft.com/office/word/2012/wordml"" xmlns:w16se=""http://schemas.microsoft.com/office/word/2015/wordml/symex"" xmlns:wne=""http://schemas.microsoft.com/office/word/2006/wordml"" xmlns:wp=""http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"" xmlns:wp14=""http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing"" xmlns:wpc=""http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas"" xmlns:wpg=""http://schemas.microsoft.com/office/word/2010/wordprocessingGroup"" xmlns:wpi=""http://schemas.microsoft.com/office/word/2010/wordprocessingInk"" xmlns:wps=""http://schemas.microsoft.com/office/word/2010/wordprocessingShape"" mc:Ignorable=""w14 w15 w16se wp14"">
-<w:body>
-<w:p w:rsidR=""00810DBD"" w:rsidRPr=""003636BA"" w:rsidRDefault=""00601E00"" w:rsidP=""00056BC8"">
-<w:pPr>
-<w:spacing w:line=""360"" w:lineRule=""auto"" />
-<w:jc w:val=""center"" />
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:b />
-<w:color w:val=""595959"" />
-<w:sz w:val=""28"" />
-<w:szCs w:val=""28"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r w:rsidRPr=""003636BA"">
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:b />
-<w:color w:val=""595959"" />
-<w:sz w:val=""28"" />
-<w:szCs w:val=""28"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>Order Form</w:t>
-</w:r>
-</w:p>
-<w:p w:rsidR=""00BA5814"" w:rsidRPr=""003636BA"" w:rsidRDefault=""008C0362"" w:rsidP=""001952B3"">
-<w:pPr>
-<w:spacing w:line=""360"" w:lineRule=""auto"" />
-<w:jc w:val=""center"" />
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>Please check details before signing and email signed copy to</w:t>
-</w:r>
-<w:r w:rsidR=""00C2709E"">
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t xml:space=""preserve""> </w:t>
-</w:r>
-<w:hyperlink r:id=""rId8"" w:history=""1"">
-<w:r w:rsidR=""00C2709E"" w:rsidRPr=""00C2709E"">
-<w:rPr>
-<w:rStyle w:val=""Hyperlink"" />
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>!</w:t>
-</w:r>
-<w:proofErr w:type=""spellStart"" />
-<w:r w:rsidR=""00C2709E"" w:rsidRPr=""00C2709E"">
-<w:rPr>
-<w:rStyle w:val=""Hyperlink"" />
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>UserEmail</w:t>
-</w:r>
-<w:proofErr w:type=""spellEnd"" />
-</w:hyperlink>
-</w:p>
-<w:tbl>
-<w:tblPr>
-<w:tblW w:w=""11516"" w:type=""dxa"" />
-<w:tblInd w:w=""-34"" w:type=""dxa"" />
-<w:tblBorders>
-<w:top w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-<w:left w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-<w:bottom w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-<w:right w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-<w:insideH w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-<w:insideV w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-</w:tblBorders>
-<w:tblCellMar>
-<w:top w:w=""57"" w:type=""dxa"" />
-<w:bottom w:w=""57"" w:type=""dxa"" />
-</w:tblCellMar>
-<w:tblLook w:val=""01E0"" w:firstRow=""1"" w:lastRow=""1"" w:firstColumn=""1"" w:lastColumn=""1"" w:noHBand=""0"" w:noVBand=""0"" />
-</w:tblPr>
-<w:tblGrid>
-<w:gridCol w:w=""2127"" />
-<w:gridCol w:w=""3294"" />
-<w:gridCol w:w=""709"" />
-<w:gridCol w:w=""5386"" />
-</w:tblGrid>
-<w:tr w:rsidR=""0033694A"" w:rsidRPr=""00A02982"" w:rsidTr=""00BB755D"">
-<w:trPr>
-<w:trHeight w:val=""185"" />
-</w:trPr>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""2127"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""nil"" />
-<w:left w:val=""nil"" />
-<w:bottom w:val=""nil"" />
-<w:right w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""D9D9D9"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""0033694A"" w:rsidRPr=""004152DB"" w:rsidRDefault=""0033694A"" w:rsidP=""000F5CE1"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r w:rsidRPr=""004152DB"">
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>Company Name</w:t>
-</w:r>
-</w:p>
-</w:tc>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""9389"" w:type=""dxa"" />
-<w:gridSpan w:val=""3"" />
-<w:tcBorders>
-<w:top w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:left w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:bottom w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:right w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""auto"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""0033694A"" w:rsidRPr=""003636BA"" w:rsidRDefault=""0033694A"" w:rsidP=""000F5CE1"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>" + selectedCompany.companyInvoiceName.ToString() + @"</w:t>
-</w:r>
-</w:p>
-</w:tc>
-</w:tr>
-<w:tr w:rsidR=""00AC2283"" w:rsidRPr=""00A02982"" w:rsidTr=""00BB755D"">
-<w:trPr>
-<w:trHeight w:val=""205"" />
-</w:trPr>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""2127"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""nil"" />
-<w:left w:val=""nil"" />
-<w:bottom w:val=""nil"" />
-<w:right w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""D9D9D9"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00AC2283"" w:rsidRPr=""004152DB"" w:rsidRDefault=""00AC2283"" w:rsidP=""000F5CE1"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r w:rsidRPr=""004152DB"">
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>Address</w:t>
-</w:r>
-</w:p>
-</w:tc>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""9389"" w:type=""dxa"" />
-<w:gridSpan w:val=""3"" />
-<w:tcBorders>
-<w:top w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:left w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:bottom w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:right w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""auto"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00270D00"" w:rsidRPr=""003636BA"" w:rsidRDefault=""00EB392B"" w:rsidP=""00525295"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>" + selectedCompany.companyInvoiceAddress1.ToString() + "," + selectedCompany.companyInvoiceAddress2.ToString() + "," + selectedCompany.companyInvoiceCity.ToString() + "," + selectedCompany.companyInvoiceCounty + "," + selectedCompany.companyInvoicePostCode.ToString() + @"</w:t>
-</w:r>
-</w:p>
-</w:tc>
-</w:tr>
-<w:tr w:rsidR=""00EB392B"" w:rsidRPr=""00A02982"" w:rsidTr=""008F5677"">
-<w:trPr>
-<w:trHeight w:val=""294"" />
-</w:trPr>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""2127"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""nil"" />
-<w:left w:val=""nil"" />
-<w:bottom w:val=""nil"" />
-<w:right w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""D9D9D9"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00EB392B"" w:rsidRPr=""004152DB"" w:rsidRDefault=""00EB392B"" w:rsidP=""000F5CE1"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r w:rsidRPr=""004152DB"">
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>Telephone</w:t>
-</w:r>
-</w:p>
-</w:tc>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""3294"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:left w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:bottom w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:right w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""auto"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00EB392B"" w:rsidRPr=""003636BA"" w:rsidRDefault=""0033694A"" w:rsidP=""000F5CE1"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>" + selectedCompany.companyTelephone.ToString() + @"</w:t>
-</w:r>
-</w:p>
-</w:tc>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""709"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:left w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:bottom w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:right w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""D9D9D9"" w:themeFill=""background1"" w:themeFillShade=""D9"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00EB392B"" w:rsidRPr=""00A02982"" w:rsidRDefault=""00EB392B"" w:rsidP=""000F5CE1"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r w:rsidRPr=""00A02982"">
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>Email</w:t>
-</w:r>
-</w:p>
-</w:tc>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""5386"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:left w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:bottom w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:right w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""auto"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00EB392B"" w:rsidRPr=""003636BA"" w:rsidRDefault=""00EB392B"" w:rsidP=""000F5CE1"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>" + selectedContact.contactEmail.ToString() + @"</w:t>
-</w:r>
-</w:p>
-</w:tc>
-</w:tr>
-<w:tr w:rsidR=""00AC2283"" w:rsidRPr=""00A02982"" w:rsidTr=""00BB755D"">
-<w:trPr>
-<w:trHeight w:val=""18"" />
-</w:trPr>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""2127"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""nil"" />
-<w:left w:val=""nil"" />
-<w:bottom w:val=""nil"" />
-<w:right w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""D9D9D9"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00AC2283"" w:rsidRPr=""004152DB"" w:rsidRDefault=""00AC2283"" w:rsidP=""000F5CE1"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r w:rsidRPr=""004152DB"">
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>Authorising Name</w:t>
-</w:r>
-</w:p>
-</w:tc>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""9389"" w:type=""dxa"" />
-<w:gridSpan w:val=""3"" />
-<w:tcBorders>
-<w:top w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:left w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:bottom w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:right w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""auto"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00AC2283"" w:rsidRPr=""003636BA"" w:rsidRDefault=""0033694A"" w:rsidP=""000F5CE1"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>!Name</w:t>
-</w:r>
-</w:p>
-</w:tc>
-</w:tr>
-<w:tr w:rsidR=""00AC2283"" w:rsidRPr=""00A02982"" w:rsidTr=""00A02982"">
-<w:trPr>
-<w:trHeight w:val=""429"" />
-</w:trPr>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""2127"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""nil"" />
-<w:left w:val=""nil"" />
-<w:bottom w:val=""nil"" />
-<w:right w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""D9D9D9"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00AC2283"" w:rsidRPr=""004152DB"" w:rsidRDefault=""00AC2283"" w:rsidP=""000F5CE1"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r w:rsidRPr=""004152DB"">
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>Authorising Signature</w:t>
-</w:r>
-</w:p>
-</w:tc>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""9389"" w:type=""dxa"" />
-<w:gridSpan w:val=""3"" />
-<w:tcBorders>
-<w:top w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:left w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:bottom w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-<w:right w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""808080"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""auto"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00AC2283"" w:rsidRPr=""003636BA"" w:rsidRDefault=""001503F0"" w:rsidP=""000F5CE1"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r w:rsidRPr=""008F5677"">
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""28"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>*</w:t>
-</w:r>
-<w:bookmarkStart w:id=""0"" w:name=""_GoBack"" />
-<w:bookmarkEnd w:id=""0"" />
-</w:p>
-</w:tc>
-</w:tr>
-</w:tbl>
-<w:p w:rsidR=""00601E00"" w:rsidRPr=""00A02982"" w:rsidRDefault=""00601E00"" w:rsidP=""00601E00"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-</w:p>
-<w:tbl>
-<w:tblPr>
-<w:tblpPr w:leftFromText=""180"" w:rightFromText=""180"" w:vertAnchor=""text"" w:horzAnchor=""margin"" w:tblpXSpec=""center"" w:tblpY=""48"" />
-<w:tblW w:w=""11449"" w:type=""dxa"" />
-<w:tblBorders>
-<w:top w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-<w:left w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-<w:bottom w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-<w:right w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-<w:insideH w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-<w:insideV w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-</w:tblBorders>
-<w:tblLook w:val=""04A0"" w:firstRow=""1"" w:lastRow=""0"" w:firstColumn=""1"" w:lastColumn=""0"" w:noHBand=""0"" w:noVBand=""1"" />
-</w:tblPr>
-<w:tblGrid>
-<w:gridCol w:w=""2127"" />
-<w:gridCol w:w=""9322"" />
-</w:tblGrid>
-<w:tr w:rsidR=""00A02982"" w:rsidRPr=""00A02982"" w:rsidTr=""00A02982"">
-<w:trPr>
-<w:trHeight w:val=""452"" />
-</w:trPr>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""2127"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""nil"" />
-<w:left w:val=""nil"" />
-<w:bottom w:val=""nil"" />
-<w:right w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""D9D9D9"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00A02982"" w:rsidRPr=""00A02982"" w:rsidRDefault=""00A02982"" w:rsidP=""00A02982"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r w:rsidRPr=""00A02982"">
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>Send Dates</w:t>
-</w:r>
-</w:p>
-</w:tc>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""9322"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-<w:left w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-<w:bottom w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-<w:right w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""auto"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00A02982"" w:rsidRDefault=""00A02982"" w:rsidP=""00A02982"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r w:rsidRPr=""00A02982"">
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>!EmailDate1</w:t>
-</w:r>
-</w:p>
-<w:p w:rsidR=""007C49D6"" w:rsidRPr=""00A02982"" w:rsidRDefault=""007C49D6"" w:rsidP=""00A02982"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>!EmailDate2</w:t>
-</w:r>
-</w:p>
-</w:tc>
-</w:tr>
-<w:tr w:rsidR=""00A02982"" w:rsidRPr=""00A02982"" w:rsidTr=""00A02982"">
-<w:trPr>
-<w:trHeight w:val=""510"" />
-</w:trPr>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""2127"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""nil"" />
-<w:left w:val=""nil"" />
-<w:bottom w:val=""nil"" />
-<w:right w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""D9D9D9"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00A02982"" w:rsidRPr=""00A02982"" w:rsidRDefault=""00A02982"" w:rsidP=""00A02982"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r w:rsidRPr=""00A02982"">
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>Email Details</w:t>
-</w:r>
-</w:p>
-</w:tc>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""9322"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-<w:left w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-<w:bottom w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-<w:right w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""auto"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00A02982"" w:rsidRDefault=""00A02982"" w:rsidP=""00A02982"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r w:rsidRPr=""00A02982"">
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>!EmailDetails1</w:t>
-</w:r>
-</w:p>
-<w:p w:rsidR=""007C49D6"" w:rsidRPr=""00A02982"" w:rsidRDefault=""007C49D6"" w:rsidP=""00A02982"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>!EmailDetails2</w:t>
-</w:r>
-</w:p>
-</w:tc>
-</w:tr>
-<w:tr w:rsidR=""00A02982"" w:rsidRPr=""00A02982"" w:rsidTr=""00A02982"">
-<w:trPr>
-<w:trHeight w:val=""418"" />
-</w:trPr>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""2127"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""nil"" />
-<w:left w:val=""nil"" />
-<w:bottom w:val=""nil"" />
-<w:right w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""D9D9D9"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00A02982"" w:rsidRPr=""00A02982"" w:rsidRDefault=""00A02982"" w:rsidP=""00A02982"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r w:rsidRPr=""00A02982"">
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>Email Subject</w:t>
-</w:r>
-</w:p>
-</w:tc>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""9322"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-<w:left w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-<w:bottom w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-<w:right w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""auto"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00A02982"" w:rsidRDefault=""00A02982"" w:rsidP=""00A02982"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>!EmailSubject1</w:t>
-</w:r>
-</w:p>
-<w:p w:rsidR=""007C49D6"" w:rsidRPr=""005D636F"" w:rsidRDefault=""007C49D6"" w:rsidP=""00A02982"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>!EmailSubject2</w:t>
-</w:r>
-</w:p>
-</w:tc>
-</w:tr>
-<w:tr w:rsidR=""00A02982"" w:rsidRPr=""005D636F"" w:rsidTr=""00A02982"">
-<w:trPr>
-<w:trHeight w:val=""510"" />
-</w:trPr>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""2127"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""nil"" />
-<w:left w:val=""nil"" />
-<w:bottom w:val=""nil"" />
-<w:right w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""D9D9D9"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00A02982"" w:rsidRPr=""00A02982"" w:rsidRDefault=""00A02982"" w:rsidP=""00A02982"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r w:rsidRPr=""00A02982"">
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>Email Costs</w:t>
-</w:r>
-</w:p>
-</w:tc>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""9322"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-<w:left w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-<w:bottom w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-<w:right w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""auto"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00A02982"" w:rsidRDefault=""00A02982"" w:rsidP=""00A02982"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>!EmailCost1 +/- !EmailSetup1</w:t>
-</w:r>
-</w:p>
-<w:p w:rsidR=""007C49D6"" w:rsidRPr=""005D636F"" w:rsidRDefault=""007C49D6"" w:rsidP=""00A02982"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>!EmailCost2 +/- !EmailSetup2</w:t>
-</w:r>
-</w:p>
-</w:tc>
-</w:tr>
-</w:tbl>
-<w:p w:rsidR=""00FE049B"" w:rsidRDefault=""00FE049B"" w:rsidP=""00A02982"">
-<w:pPr>
-<w:jc w:val=""center"" />
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""5F5F5F"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-</w:p>
-<w:tbl>
-<w:tblPr>
-<w:tblpPr w:leftFromText=""180"" w:rightFromText=""180"" w:vertAnchor=""text"" w:horzAnchor=""margin"" w:tblpXSpec=""center"" w:tblpY=""48"" />
-<w:tblW w:w=""11449"" w:type=""dxa"" />
-<w:tblBorders>
-<w:top w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-<w:left w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-<w:bottom w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-<w:right w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-<w:insideH w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-<w:insideV w:val=""single"" w:sz=""4"" w:space=""0"" w:color=""auto"" />
-</w:tblBorders>
-<w:tblLook w:val=""04A0"" w:firstRow=""1"" w:lastRow=""0"" w:firstColumn=""1"" w:lastColumn=""0"" w:noHBand=""0"" w:noVBand=""1"" />
-</w:tblPr>
-<w:tblGrid>
-<w:gridCol w:w=""2127"" />
-<w:gridCol w:w=""9322"" />
-</w:tblGrid>
-<w:tr w:rsidR=""00F254A1"" w:rsidRPr=""005D636F"" w:rsidTr=""0038052E"">
-<w:trPr>
-<w:trHeight w:val=""510"" />
-</w:trPr>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""2127"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""nil"" />
-<w:left w:val=""nil"" />
-<w:bottom w:val=""nil"" />
-<w:right w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""D9D9D9"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00F254A1"" w:rsidRPr=""00A02982"" w:rsidRDefault=""00F254A1"" w:rsidP=""0038052E"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>Total</w:t>
-</w:r>
-</w:p>
-</w:tc>
-<w:tc>
-<w:tcPr>
-<w:tcW w:w=""9322"" w:type=""dxa"" />
-<w:tcBorders>
-<w:top w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-<w:left w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-<w:bottom w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-<w:right w:val=""single"" w:sz=""2"" w:space=""0"" w:color=""7F7F7F"" />
-</w:tcBorders>
-<w:shd w:val=""clear"" w:color=""auto"" w:fill=""auto"" />
-<w:vAlign w:val=""center"" />
-</w:tcPr>
-<w:p w:rsidR=""00F254A1"" w:rsidRPr=""005D636F"" w:rsidRDefault=""00F254A1"" w:rsidP=""0038052E"">
-<w:pPr>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>!</w:t>
-</w:r>
-<w:proofErr w:type=""spellStart"" />
-<w:r>
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""595959"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-<w:t>OrderCost</w:t>
-</w:r>
-<w:proofErr w:type=""spellEnd"" />
-</w:p>
-</w:tc>
-</w:tr>
-</w:tbl>
-<w:p w:rsidR=""00F254A1"" w:rsidRPr=""003636BA"" w:rsidRDefault=""00F254A1"" w:rsidP=""00A02982"">
-<w:pPr>
-<w:jc w:val=""center"" />
-<w:rPr>
-<w:rFonts w:ascii=""Calibri"" w:hAnsi=""Calibri"" w:cs=""Tahoma"" />
-<w:color w:val=""5F5F5F"" />
-<w:sz w:val=""20"" />
-<w:szCs w:val=""20"" />
-<w:lang w:val=""en-GB"" />
-</w:rPr>
-</w:pPr>
-</w:p>
-<w:sectPr w:rsidR=""00F254A1"" w:rsidRPr=""003636BA"" w:rsidSect=""0064312C"">
-<w:headerReference w:type=""default"" r:id=""rId9"" />
-<w:footerReference w:type=""default"" r:id=""rId10"" />
-<w:pgSz w:w=""12240"" w:h=""15840"" />
-<w:pgMar w:top=""1246"" w:right=""333"" w:bottom=""1079"" w:left=""426"" w:header=""0"" w:footer=""177"" w:gutter=""0"" />
-<w:cols w:space=""708"" />
-<w:docGrid w:linePitch=""360"" />
-</w:sectPr>
-</w:body>
-</w:document>";
-
-
-
-
-            foreach (Data p in dataOrders)
-            {
-
-            }
-            foreach(Email p in emailOrders)
-            {
-
-            }
-            foreach(SchoolSend p in schoolSendOrders)
-            {
-
-            }
-            foreach(DirectMailing p in directMailingOrders)
-            {
-
-            }
-            foreach(SharedMailing p in sharedMailingOrders)
-            {
-
-            }
-            foreach(Print p in printOrders)
-            {
-
-            }
-            foreach(Surcharge p in surchargeOrders)
-            {
-
-            }
-
-            StorageFolder fol = ApplicationData.Current.LocalFolder;
-            StorageFile fil = await fol.CreateFileAsync(@"\CreateDoc\word\document.xml", CreationCollisionOption.ReplaceExisting);
-
-            await FileIO.WriteTextAsync(fil, "");
-
-            string locPath = @"C:\Users\Jasper\AppData\Local\Packages\430d4efd-8648-4a35-8670-6dcecc88d151_7mzr475ysvhxg\LocalState\CreateDoc";
-            string desPath = @"C:\Users\Jasper\AppData\Local\Packages\430d4efd-8648-4a35-8670-6dcecc88d151_7mzr475ysvhxg\LocalState\FinishDoc\test.docx";
-            ZipFile.CreateFromDirectory(locPath, desPath);
-            string launchURI = string.Format(@"ms-word:ofe|u|{0}{1}", ApplicationData.Current.LocalFolder.Path.ToString(), @"\FinishDoc\test.docx");
-            var asd = Windows.System.Launcher.LaunchUriAsync(new Uri(launchURI));
-
-            if (asd != null)
-            {
-
-            }
+            get { if (_createOrderForm == null) { _createOrderForm = new RelayCommand(() => { if (createOrderForm != null)
+                {
+                    if (selectedOrder != null)
+                    {
+                        DocumentAccessLayer.CreateOrderForm(selectedOrder);
+                    }
+                } }); } return _createOrderForm; }
         }
         #endregion
     }
+
 }

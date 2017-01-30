@@ -60,5 +60,6 @@
                 this.ToggleMenuButton.TransformToVisual(this);
             }
         }
+
     }
 }

@@ -22,12 +22,12 @@
                        HorizontalAlignment="Left"
                        Style="{StaticResource inputTextBlock}"/>
             <StackPanel Orientation="Horizontal">
-                <TextBox Text="{Binding username, Mode=TwoWay}" 
+                <TextBox Text="{Binding userName, Mode=TwoWay}" 
                          Width="300" 
                          SelectionHighlightColor="Black" 
                          Background="White"
                          Style="{StaticResource inputTextBox}"/>
-                <cntrl:InvalidFlag Visibility="{Binding invalidUsername, Converter={StaticResource InvalidTextBox}}" 
+                <cntrl:InvalidFlag Visibility="{Binding isInvalidUserName, Converter={StaticResource InvalidTextBox}}" 
                                    ToolTipService.ToolTip="Invalid Username"/>
             </StackPanel>
             <TextBlock Text="Password"
@@ -36,12 +36,12 @@
                        HorizontalAlignment="Left"
                        Style="{StaticResource inputTextBlock}"/>
             <StackPanel Orientation="Horizontal">
-                <PasswordBox Password="{Binding password, Mode=TwoWay}" 
+                <PasswordBox Password="{Binding userPassword, Mode=TwoWay}" 
                              Width="300"
                              SelectionHighlightColor="White"
                              Style="{StaticResource inputPasswordBox}">
                 </PasswordBox>
-                <cntrl:InvalidFlag Visibility="{Binding invalidPassword, Converter={StaticResource InvalidTextBox}}" 
+                <cntrl:InvalidFlag Visibility="{Binding isInvalidUserPassword, Converter={StaticResource InvalidTextBox}}" 
                                    ToolTipService.ToolTip="Invalid Password"/>
             </StackPanel>
             
@@ -50,7 +50,7 @@
                     HorizontalAlignment="Center">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=authenticateLogin}" />
+                        <core:InvokeCommandAction Command="{Binding Path=attemptLogin}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </Button>
