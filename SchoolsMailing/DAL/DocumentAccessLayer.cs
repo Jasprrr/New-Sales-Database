@@ -236,7 +236,7 @@ namespace SchoolsMailing.DAL
                 //If user created a file
                 if(tempFile != null)
                 {
-                    //Convert new order form to storage file
+                    //Convert new order form to storage file to allow write permissions to restricted locations
                     StorageFile file = await StorageFile.GetFileFromPathAsync(Path.Combine(localPath,"form.docx"));
 
                     //Replace temporary file with actual order form
@@ -249,7 +249,7 @@ namespace SchoolsMailing.DAL
                 }
             }
         }
-
+        
         public static void CreateDocumentName(Orders selectedOrder)
         {
             string fileName = string.Empty;
@@ -312,6 +312,7 @@ namespace SchoolsMailing.DAL
                 string dataCosts = string.Empty;
                 double dataTotal = 0;
 
+                //Iterate through each data order and comma seperate each part
                 foreach (Data p in dataOrders)
                 {
                     dataStart = dataStart + p.dataStart.Date + ", ";
@@ -325,6 +326,7 @@ namespace SchoolsMailing.DAL
                 dataDetails = dataDetails.Substring(0, dataDetails.Length - 2); //Remove last ", "
                 dataCosts = dataCosts.Substring(0, dataCosts.Length - 2); //Remove last ", "
 
+                //Adds variables to string
                 dataTable = spacer + string.Format(dataTable,
                                                     dataStart,
                                                     dataEnd,

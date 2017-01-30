@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SchoolsMailing.Models
 {
+    /// <summary>
+    /// Adds direct mailing data to orders data
+    /// </summary>
     public class OrdersDirectMailing
     {
         public long ID { get; set; }

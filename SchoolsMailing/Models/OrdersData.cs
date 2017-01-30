@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SchoolsMailing.Models
 {
+    /// <summary>
+    /// Adds order data to email data
+    /// </summary>
     public class OrdersData
     {
         public long ID { get; set; }
@@ -41,7 +44,7 @@ namespace SchoolsMailing.Models
         public double orderTotal { get; set; }
         public double orderTotalVAT { get; set; }
 
-        //Data
+        //Data details
         public string dataDetails { get; set; }
         public double dataCost { get; set; }
         public DateTime dataStart { get; set; }
