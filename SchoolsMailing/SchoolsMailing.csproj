@@ -186,7 +186,6 @@
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\CompanyHistory.cs" />
     <Compile Include="Models\Contact.cs" />
-    <Compile Include="Models\ContactHistory.cs" />
     <Compile Include="Models\Data.cs" />
     <Compile Include="Models\DirectMailing.cs" />
     <Compile Include="Models\Email.cs" />
@@ -211,7 +210,6 @@
     <Compile Include="ViewModels\Common\ViewModelLocator.cs" />
     <Compile Include="ViewModels\CompaniesViewModel.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />
-    <Compile Include="ViewModels\EmailViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
@@ -315,6 +313,7 @@
     <Content Include="Assets\doc_SurchargeTable.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\SchoolsMailingLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\doc_CompanyTable.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -524,7 +523,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Documents\" />
-    <Folder Include="XamlExtensions\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

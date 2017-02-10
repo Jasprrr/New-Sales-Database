@@ -17,37 +17,37 @@ namespace SchoolsMailing.ViewModels
 {
     public class NewCompanyViewModel : PageViewModel
     {
-        public NewCompanyViewModel(IMessenger messenger, NavigationService navigationService) : base(messenger, navigationService)
-        {
-            
-        }
-
-        #region Company Data
+        #region Variables
         private Company _newCompany = new Company() { companyCallBack = DateTime.Now, companyLastCall = DateTime.Now };
         public Company newCompany
         {
             get { return _newCompany; }
-            set { if(_newCompany != value) { _newCompany = value; RaisePropertyChanged("newCompany"); } }
+            set { if (_newCompany != value) { _newCompany = value; RaisePropertyChanged("newCompany"); } }
         }
         #endregion
 
-        private RelayCommand _saveCompany;
-        public RelayCommand saveCompany
+        #region Commands
+        private RelayCommand _cmdCancelCompany;
+        public RelayCommand cmdCancelCompany
         {
-            get
-            {
-                if (_saveCompany == null)
-                {
-                    _saveCompany = new RelayCommand(() =>
-                    {
-                        DALSave();
-                    });
-                }
-                return _saveCompany;
-            }
+            get { if (_cmdCancelCompany == null) { _cmdCancelCompany = new RelayCommand(() => { NavigationService.GoBack(); newCompany = null; }); } return _cmdCancelCompany; }
         }
 
-        public async void DALSave()
+        private RelayCommand _cmdSaveCompany;
+        public RelayCommand cmdSaveCompany
+        {
+            get { if (_cmdSaveCompany == null) { _cmdSaveCompany = new RelayCommand(() => { SaveCompany(); }); } return _cmdSaveCompany; }
+        }
+        #endregion
+
+        public NewCompanyViewModel(IMessenger messenger, NavigationService navigationService) : base(messenger, navigationService)
+        {
+            
+        }
+        
+        //TODO: Company verification
+        
+        public async void SaveCompany()
         {
             if(newCompany.companyInvoiceAddress1 == null &&
                 newCompany.companyInvoiceAddress2 == null &&
@@ -66,12 +66,12 @@ namespace SchoolsMailing.ViewModels
                 var result = await deleteContactDialog.ShowAsync();
                 if (result == ContentDialogResult.Primary)
                 {
-                    if (newCompany.companyName != null) { newCompany.companyInvoiceName = newCompany.companyName; }
-                    if (newCompany.companyAddress1 != null) { newCompany.companyInvoiceAddress1 = newCompany.companyAddress1; }
-                    if (newCompany.companyAddress2 != null) { newCompany.companyInvoiceAddress2 = newCompany.companyAddress2; }
-                    if (newCompany.companyCity != null) { newCompany.companyInvoiceCity = newCompany.companyCity; }
-                    if (newCompany.companyCounty != null) { newCompany.companyInvoiceCounty = newCompany.companyCounty; }
-                    if (newCompany.companyPostCode != null) { newCompany.companyInvoicePostCode = newCompany.companyPostCode; }
+                    newCompany.companyInvoiceName     = (newCompany.companyName != null)     ? newCompany.companyName     : null;
+                    newCompany.companyInvoiceAddress1 = (newCompany.companyAddress1 != null) ? newCompany.companyAddress1 : null;
+                    newCompany.companyInvoiceAddress2 = (newCompany.companyAddress2 != null) ? newCompany.companyAddress2 : null;
+                    newCompany.companyInvoiceCity     = (newCompany.companyCity != null)     ? newCompany.companyCity     : null;
+                    newCompany.companyInvoiceCounty   = (newCompany.companyCounty != null)   ? newCompany.companyCounty   : null;
+                    newCompany.companyInvoicePostCode = (newCompany.companyPostCode != null) ? newCompany.companyPostCode : null;
                 }
             }
             
@@ -84,23 +84,5 @@ namespace SchoolsMailing.ViewModels
             NavigationService.GoBack();
         }
 
-        private RelayCommand _cancelCompany;
-        public RelayCommand cancelCompany
-        {
-            get
-            {
-                if (_cancelCompany == null)
-                {
-                    _cancelCompany = new RelayCommand(() =>
-                    {
-                        NavigationService.GoBack();
-                        newCompany = null;
-                    });
-                }
-
-                return _cancelCompany;
-
-            }
-        }
     }
 }

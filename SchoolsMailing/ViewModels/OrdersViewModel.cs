@@ -18,7 +18,7 @@ namespace SchoolsMailing.ViewModels
 {
     public class OrdersViewModel : PageViewModel
     {
-        #region lists
+        #region Variables
         private List<OrdersData> _dataByOrder;
         public List<OrdersData> dataByOrder
         {
@@ -136,6 +136,14 @@ namespace SchoolsMailing.ViewModels
         }
         #endregion
 
+        #region Commands
+        private RelayCommand _newOrder;
+        public RelayCommand newOrder
+        {
+            get { if (_newOrder == null) { _newOrder = new RelayCommand(() => { if (_newOrder != null) { if (newOrder != null) { NavigationService.Navigate(typeof(OrderView)); } } }); } return _newOrder; }
+        }
+        #endregion
+
         public OrdersViewModel(IMessenger messenger, NavigationService navigationService) : base(messenger, navigationService)
         {
 
@@ -223,15 +231,5 @@ namespace SchoolsMailing.ViewModels
             
         }
 
-        private RelayCommand _newOrder;
-        public RelayCommand newOrder
-        {
-            get { if (_newOrder == null) { _newOrder = new RelayCommand(() => { if (_newOrder != null) {
-                if (newOrder != null)
-                {
-                        NavigationService.Navigate(typeof(OrderView));
-                }
-            } }); } return _newOrder; }
-        }
     }
 }

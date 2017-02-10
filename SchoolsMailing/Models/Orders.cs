@@ -38,7 +38,7 @@ namespace SchoolsMailing.Models
         public string contactSurname { get; set; }
         public string contactEmail { get; set; }
         public string contactTelephone { get; set; }
-
+        
         //Order Totals
         public double orderTotal { get; set; }
         public double orderTotalVAT { get; set; }

@@ -56,6 +56,8 @@ namespace SchoolsMailing.ViewModels
         //    }
         //}
         
+        //TODO: Group companies by initial
+
         private List<Company> _companies;
         public List<Company> companies
         {
@@ -117,6 +119,7 @@ namespace SchoolsMailing.ViewModels
         //}
         
         //Handle company clicked event
+
         public void companyInvoked(object sender, object parameter)
         {
             //Get any parameters

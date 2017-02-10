@@ -59,13 +59,21 @@ namespace SchoolsMailing.ViewModels
             get { return _isInvalidUserPassword; }
             set { if(_isInvalidUserPassword != value) { _isInvalidUserPassword = !_isInvalidUserPassword; RaisePropertyChanged("isInvalidUserPassword"); } }
         }
-
         private bool _isInvalidUserName = false;
         public bool isInvalidUserName
         {
             get { return _isInvalidUserName; }
             set { if (_isInvalidUserName != value) { _isInvalidUserName = !_isInvalidUserName; RaisePropertyChanged("isInvalidUserName"); } }
         }
+
+        private User loggedInAs = new User()
+        {
+            ID = 1,
+            userName = "Jasper",
+            userInitials = "J",
+            userPassword = "envelope1",
+            userCode = 1
+        };
 
         //TODO: add enter event to login
 
@@ -78,10 +86,11 @@ namespace SchoolsMailing.ViewModels
                 {
                     _attemptLogin = new RelayCommand(() =>
                     {
-                        if (isLoggedIn())
+                        if (isCorrectLogin())
                         {
                             var rootFrame = Window.Current.Content as Frame;
                             rootFrame.Navigate(typeof(MainPage));
+                            MessengerInstance.Send<NotificationMessage<User>>(new NotificationMessage<User>(loggedInAs, "userSignIn"));
                         }      
                     });
                 }
@@ -89,19 +98,8 @@ namespace SchoolsMailing.ViewModels
             }
         }
 
-        public bool isLoggedIn()
-        {
-            if (!DAL.DataAccessLayer.isValidUsername(userName))
-            {
-                isInvalidUserName = true;
-                invalidLoginAttempts++;
-                return false;
-            }
-            else
-            {
-                isInvalidUserName = false;
-            }
-            
+        public bool isCorrectLogin()
+        {            
             if (!DAL.DataAccessLayer.isValidPassword(userName, userPassword))
             {
                 isInvalidUserPassword = true;

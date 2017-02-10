@@ -41,8 +41,7 @@
                                             TabIndex="3"
                                             ItemsSource="{Binding MenuItems}"
                                             ItemContainerStyle="{StaticResource SplitViewPaneMenuContainerStyle}"
-                                            ItemTemplate="{StaticResource SplitViewPaneMenuItemTemplate}" 
-                                            SelectedIndex="{Binding selectedItem, Mode=TwoWay}">
+                                            ItemTemplate="{StaticResource SplitViewPaneMenuItemTemplate}">
                     <interactivity:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="ItemInvoked">
                             <core:InvokeCommandAction Command="{Binding ItemInvokedCommand}" />

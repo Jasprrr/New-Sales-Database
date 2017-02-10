@@ -17,6 +17,7 @@
     <Grid>
         <StackPanel HorizontalAlignment="Center" 
                     VerticalAlignment="Center">
+            <Image x:Name="image" Source="ms-appx:///Assets/SchoolsMailingLogo.png" HorizontalAlignment="Center" Height="70" VerticalAlignment="Top" Width="150" NineGrid="0"/>
             <TextBlock Text="Username"
                        Width="100"
                        HorizontalAlignment="Left"
@@ -55,5 +56,6 @@
                 </interactivity:Interaction.Behaviors>
             </Button>
         </StackPanel>
+        
     </Grid>
 </Page>

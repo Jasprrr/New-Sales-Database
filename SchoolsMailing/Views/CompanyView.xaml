@@ -36,7 +36,7 @@
             <Button Style="{StaticResource BackButton}">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Tapped">
-                        <core:InvokeCommandAction Command="{Binding Path=goBack}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdGoBack}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Border Style="{StaticResource BackBorder}">
@@ -433,7 +433,7 @@
                           Icon="Save">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=saveCompany}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdSaveCompany}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
@@ -441,7 +441,7 @@
                           Icon="AddFriend">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=newContact}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdNewContact}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
@@ -449,7 +449,7 @@
                           Icon="Comment">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=newCompanyHistory}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdNewCompanyHistory}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
@@ -457,7 +457,7 @@
                           Icon="Shop">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=newOrder}"/>
+                        <core:InvokeCommandAction Command="{Binding Path=cmdNewOrder}"/>
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
@@ -467,7 +467,7 @@
                           Icon="Refresh">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=refreshCompany}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdRefreshCompany}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
@@ -478,14 +478,14 @@
                         <MenuFlyoutItem Text="Company">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Click">
-                                    <core:InvokeCommandAction Command="{Binding Path=deleteCompany}" />
+                                    <core:InvokeCommandAction Command="{Binding Path=cmdDeleteCompany}" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </MenuFlyoutItem>
                         <MenuFlyoutItem Text="Contact">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Click">
-                                    <core:InvokeCommandAction Command="{Binding Path=deleteContact}" />
+                                    <core:InvokeCommandAction Command="{Binding Path=cmdDeleteContact}" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </MenuFlyoutItem>

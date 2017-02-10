@@ -55,7 +55,7 @@ namespace SchoolsMailing.ViewModels
                 }
                 else //Create order
                 {
-                    selectedOrder = new Orders() { orderDate = DateTime.Now };
+                    selectedOrder = new Orders() { orderDate = DateTime.Now, userID = MainPageViewModel.loggedInAs.ID };
 
                     //New & existing lists
                     emailOrders = new ObservableCollection<Email>();
@@ -65,10 +65,9 @@ namespace SchoolsMailing.ViewModels
                     directMailingOrders = new ObservableCollection<DirectMailing>();
                     printOrders = new ObservableCollection<Print>();
                     surchargeOrders = new ObservableCollection<Surcharge>();
-
                     selectedSchoolSendPack = new SchoolSendPack();
                     selectedSharedPack = new SharedPack();
-
+                    
                     pageTitle = "New Order";
 
                 }
@@ -418,6 +417,7 @@ namespace SchoolsMailing.ViewModels
                             if (selectedCompany.companyInvoiceCity != null) { selectedOrder.companyCity = selectedCompany.companyInvoiceCity.ToString(); }
                             if (selectedCompany.companyInvoiceCounty != null) { selectedOrder.companyCounty = selectedCompany.companyInvoiceCounty.ToString(); }
                             if (selectedCompany.companyInvoicePostCode != null) { selectedOrder.companyPostCode = selectedCompany.companyInvoicePostCode.ToString(); }
+                            selectedOrder.companyProspects = (selectedCompany.companyProspects != null) ? selectedCompany.companyProspects : null;
 
                             contacts = DataAccessLayer.getContactsByCompanyID(selectedCompany.ID);
                         }
@@ -479,6 +479,9 @@ namespace SchoolsMailing.ViewModels
         #endregion
 
         #region Data Order
+        public Data rightClickedData = new Data(); //Holds right clicked item for flyout
+
+        #region Data bindings
         private ObservableCollection<Data> _dataOrders;
         public ObservableCollection<Data> dataOrders
         {
@@ -503,7 +506,9 @@ namespace SchoolsMailing.ViewModels
             get { return _originalDataOrder; }
             set { if (_originalDataOrder != value) { _originalDataOrder = value; RaisePropertyChanged("deleteDataOrder"); } }
         }
-        public Data rightClickedData = new Data(); //Holds right clicked item for flyout
+        #endregion
+        
+        #region Data validation
         private bool _isInvalidDataStart = false;
         public bool isInvalidDataStart
         {
@@ -529,8 +534,12 @@ namespace SchoolsMailing.ViewModels
             set { if (_isInvalidDataCost != value) { _isInvalidDataCost = !_isInvalidDataCost; RaisePropertyChanged("isInvalidDataCost"); } }
         }
         #endregion
+        #endregion
 
         #region Email Order
+        public Email rightClickedEmail = new Email(); //Holds right clicked item for flyout
+
+        #region Email bindings
         private ObservableCollection<Email> _emailOrders;
         public ObservableCollection<Email> emailOrders
         {
@@ -555,7 +564,9 @@ namespace SchoolsMailing.ViewModels
             get { return _originalEmailOrder; }
             set { if (_originalEmailOrder != value) { _originalEmailOrder = value; RaisePropertyChanged("originalEmailOrder"); } }
         }
-        public Email rightClickedEmail = new Email(); //Holds right clicked item for flyout
+        #endregion
+        
+        #region Email validation
         private bool _isInvalidEmailDate = false;
         public bool isInvalidEmailDate
         {
@@ -586,10 +597,15 @@ namespace SchoolsMailing.ViewModels
             get { return _isInvalidEmailCost; }
             set { if (_isInvalidEmailCost != value) { _isInvalidEmailCost = !_isInvalidEmailCost; RaisePropertyChanged("isInvalidEmailCost"); } }
         }
+        #endregion
+
         public DateTime duplicateEmailDate;
         #endregion
 
         #region Direct Mailing Order
+        public DirectMailing rightClickedDirectMailing = new DirectMailing(); //Holds right clicked item for flyout
+
+        #region Direct Mailing bindings
         private ObservableCollection<DirectMailing> _directMailingOrders;
         public ObservableCollection<DirectMailing> directMailingOrders
         {
@@ -614,7 +630,9 @@ namespace SchoolsMailing.ViewModels
             get { return _originalDirectMailingOrder; }
             set { if (_originalDirectMailingOrder != value) { _originalDirectMailingOrder = value; RaisePropertyChanged("originalDirectMailingOrder"); } }
         }
-        public DirectMailing rightClickedDirectMailing = new DirectMailing(); //Holds right clicked item for flyout
+        #endregion
+        
+        #region Direct Mailing validation
         private bool _isInvalidDirectMailingFulfilmentCost = false;
         public bool isInvalidDirectMailingFulfilmentCost
         {
@@ -669,6 +687,7 @@ namespace SchoolsMailing.ViewModels
             get { return _isInvalidDirectMailingInsertDate; }
             set { if (_isInvalidDirectMailingInsertDate != value) { _isInvalidDirectMailingInsertDate = !_isInvalidDirectMailingInsertDate; RaisePropertyChanged("isInvalidDirectMailingInsertDate"); } }
         }
+        #endregion
 
         private RelayCommand _setDirectMailingDate;
         public RelayCommand setDirectMailingDate
@@ -692,6 +711,9 @@ namespace SchoolsMailing.ViewModels
         #endregion
 
         #region Print Order
+        public Print rightClickedPrint = new Print(); //Holds right clicked item for flyout
+
+        #region Print bindings
         private ObservableCollection<Print> _printOrders;
         public ObservableCollection<Print> printOrders
         {
@@ -716,7 +738,9 @@ namespace SchoolsMailing.ViewModels
             get { return _originalPrintOrder; }
             set { if (_originalPrintOrder != value) { _originalPrintOrder = value; RaisePropertyChanged("originalPrintOrder"); } }
         }
-        public Print rightClickedPrint = new Print(); //Holds right clicked item for flyout
+        #endregion
+        
+        #region Print validation
         private bool _isInvalidPrintCharge = false;
         public bool isInvalidPrintCharge
         {
@@ -748,8 +772,12 @@ namespace SchoolsMailing.ViewModels
             set { if (_isInvalidPrintDate != value) { _isInvalidPrintDate = !_isInvalidPrintDate; RaisePropertyChanged("isInvalidPrintDate"); } }
         }
         #endregion
+        #endregion
 
         #region SchoolSend Order
+        public SchoolSend rightClickedSchoolSend = new SchoolSend(); //Holds right clicked item for flyout
+
+        #region Bindings
         private ObservableCollection<SchoolSend> _schoolSendOrders;
         public ObservableCollection<SchoolSend> schoolSendOrders
         {
@@ -786,7 +814,9 @@ namespace SchoolsMailing.ViewModels
             get { return _originalSchoolSendOrder; }
             set { if (_originalSchoolSendOrder != value) { _originalSchoolSendOrder = value; RaisePropertyChanged("originalSchoolSendOrder"); } }
         }
-        public SchoolSend rightClickedSchoolSend = new SchoolSend(); //Holds right clicked item for flyout
+        #endregion
+        
+        #region SchoolSend validation
         private bool _isInvalidSchoolSendStart = false;
         public bool isInvalidSchoolSendStart
         {
@@ -811,6 +841,7 @@ namespace SchoolsMailing.ViewModels
             get { return _isInvalidSchoolSendCost; }
             set { if (_isInvalidSchoolSendCost != value) { _isInvalidSchoolSendCost = !_isInvalidSchoolSendCost; RaisePropertyChanged("isInvalidSchoolSendCost"); } }
         }
+        #endregion
 
         private RelayCommand _setSchoolSendDate;
         public RelayCommand setSchoolSendDate
@@ -848,9 +879,13 @@ namespace SchoolsMailing.ViewModels
                 return _setCredits;
             }
         }
+
         #endregion
 
         #region Shared Mailing Order
+        public SharedMailing rightClickedSharedMailing = new SharedMailing(); //Holds right clicked item for flyout
+
+        #region Shared Mailing bindings
         private ObservableCollection<SharedMailing> _sharedMailingOrders;
         public ObservableCollection<SharedMailing> sharedMailingOrders
         {
@@ -875,7 +910,9 @@ namespace SchoolsMailing.ViewModels
             get { return _originalSharedMailingOrder; }
             set { if (_originalSharedMailingOrder != value) { _originalSharedMailingOrder = value; RaisePropertyChanged("originalSharedMailingOrder"); } }
         }
-        public SharedMailing rightClickedSharedMailing = new SharedMailing(); //Holds right clicked item for flyout
+        #endregion
+
+        #region Shared Mailing validation
         private bool _isInvalidSharedPackage = false;
         public bool isInvalidSharedPackage
         {
@@ -906,6 +943,7 @@ namespace SchoolsMailing.ViewModels
             get { return _isInvalidSharedCost; }
             set { if (_isInvalidSharedCost != value) { _isInvalidSharedCost = !_isInvalidSharedCost; RaisePropertyChanged("isInvalidSharedCost"); } }
         }
+        #endregion
 
         private RelayCommand _setPack;
         public RelayCommand setPack
@@ -931,6 +969,9 @@ namespace SchoolsMailing.ViewModels
         #endregion
 
         #region Surcharge Order
+        public Surcharge rightClickedSurcharge = new Surcharge(); //Holds right clicked item for flyout
+
+        #region Surcharge bindings
         private ObservableCollection<Surcharge> _surchargeOrders;
         public ObservableCollection<Surcharge> surchargeOrders
         {
@@ -955,7 +996,9 @@ namespace SchoolsMailing.ViewModels
             get { return _originalSurchargeOrder; }
             set { if (_originalSurchargeOrder != value) { _originalSurchargeOrder = value; RaisePropertyChanged("originalSurchargeOrder"); } }
         }
-        public Surcharge rightClickedSurcharge = new Surcharge(); //Holds right clicked item for flyout
+        #endregion
+        
+        #region Surcharge validation
         private bool _isInvalidSurchargeDate = false;
         public bool isInvalidSurchargeDate
         {
@@ -974,6 +1017,7 @@ namespace SchoolsMailing.ViewModels
             get { return _isInvalidSurchargeCost; }
             set { if (_isInvalidSurchargeCost != value) { _isInvalidSurchargeCost = !_isInvalidSurchargeCost; RaisePropertyChanged("isInvalidSurchargeCost"); } }
         }
+        #endregion
         #endregion
 
         #region School Send Package
@@ -1545,7 +1589,7 @@ namespace SchoolsMailing.ViewModels
         }
         #endregion
 
-        #region Invalidation
+        #region Validation
         private RelayCommand _validateOrder;
         public RelayCommand validateOrder
         {

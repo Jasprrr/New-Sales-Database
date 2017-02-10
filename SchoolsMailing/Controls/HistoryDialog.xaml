@@ -13,7 +13,7 @@
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
     DataContext="{Binding CompanyViewModel, Source={StaticResource VmLocator}}">
     <TextBox x:Name="HistoryInput" 
-             Text="{Binding invokedCompanyHistory.companyHistoryDetails, Mode=TwoWay}" 
+             Text="{Binding selectedCompanyHistory.companyHistoryDetails, Mode=TwoWay}" 
              Margin="0,4,0,0" 
              MinHeight="120"
              MinWidth="320"

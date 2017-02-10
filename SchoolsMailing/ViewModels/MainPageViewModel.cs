@@ -22,6 +22,7 @@
     {
         string path;
         SQLite.Net.SQLiteConnection conn;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainPageViewModel"/> class.
         /// </summary>
@@ -35,7 +36,6 @@
         {
             this.InitializeMenu();
             
-
             //Sample Data
             //SharedPack sp1 = new SharedPack { packCost = 475, packArtworkDate = Convert.ToDateTime("26/01/17"), packDate = Convert.ToDateTime("15/02/17"), packTo = "Secondary", packDeliveryDate = Convert.ToDateTime("06/02/17"), packMaxInserts = 7, packName = "[15/02/17] Secondary" };
             //SharedPack sp2 = new SharedPack { packCost = 1749, packArtworkDate = Convert.ToDateTime("26/01/17"), packDate = Convert.ToDateTime("15/02/17"), packTo = "Primary", packDeliveryDate = Convert.ToDateTime("06/02/17"), packMaxInserts = 12, packName = "[15/02/17] Primary" };
@@ -66,7 +66,7 @@
         //Register logged in user
         public void RegisterMessages(NotificationMessage<User> obj)
         {
-            if (obj.Notification == "userSignedIn")
+            if (obj.Notification == "userSignIn")
             {
                 if(obj.Content != null)
                 {
@@ -74,30 +74,10 @@
                 }
             }
         }
-
-
-        public bool backVisisble;
-        public void backButtonVisible(string obj)
-        {
-            backVisisble = Convert.ToBoolean(obj);
-            Debug.Write("Msg Recieved!");
-        }
+        
 
         #region login details
-
-        private User _loggedInAs;
-        public User loggedInAs
-        {
-            get { return _loggedInAs; }
-            set { if (loggedInAs != value) { _loggedInAs = value; RaisePropertyChanged("loggedInAs"); } }
-        }
-
-        private int _selectedItem = 0;
-        public int selectedItem
-        {
-            get { return _selectedItem; }
-            set { _selectedItem = value; RaisePropertyChanged("selectedItem"); }
-        }
+        public static User loggedInAs;
         #endregion
 
         /// <summary>
