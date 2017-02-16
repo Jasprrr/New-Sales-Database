@@ -44,7 +44,7 @@ namespace SchoolsMailing.ViewModels
         }
 
         //History selected from list
-        private CompanyHistory _selectedCompanyHistory;
+        private CompanyHistory _selectedCompanyHistory = new CompanyHistory();
         public CompanyHistory selectedCompanyHistory
         {
             get { return _selectedCompanyHistory; }
@@ -285,11 +285,7 @@ namespace SchoolsMailing.ViewModels
                 {
                     selectedCompany.companyModified = DateTime.Now; //Set date modified
                     selectedCompany.companyInitial = selectedCompany.companyName.Substring(0, 1); //Set company initial
-                    DataAccessLayer.saveCompany(selectedCompany);
-                    foreach (Contact c in companyContacts) //Loop through contacts
-                    {
-                        DataAccessLayer.saveContact(c); //Save contacts
-                    }
+                    SaveCompany();
                     isDirty = false;
                     NavigationService.GoBack();
                 }

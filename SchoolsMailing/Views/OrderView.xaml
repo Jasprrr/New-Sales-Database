@@ -49,7 +49,7 @@
             <Button Style="{StaticResource BackButton}">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Tapped">
-                        <core:InvokeCommandAction Command="{Binding Path=goBack}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdGoBack}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Border Style="{StaticResource BackBorder}">
@@ -84,7 +84,7 @@
                                                   SelectedValuePath="ID">
                                             <interactivity:Interaction.Behaviors>
                                                 <core:EventTriggerBehavior EventName="SelectionChanged">
-                                                    <core:InvokeCommandAction Command="{Binding Path=companyChanged}" />
+                                                    <core:InvokeCommandAction Command="{Binding Path=cmdCompanyChanged}" />
                                                 </core:EventTriggerBehavior>
                                             </interactivity:Interaction.Behaviors>
                                         </ComboBox>
@@ -103,7 +103,7 @@
                                                   SelectedValuePath="ID">
                                             <interactivity:Interaction.Behaviors>
                                                 <core:EventTriggerBehavior EventName="SelectionChanged">
-                                                    <core:InvokeCommandAction Command="{Binding Path=contactChanged}" />
+                                                    <core:InvokeCommandAction Command="{Binding Path=cmdContactChanged}" />
                                                 </core:EventTriggerBehavior>
                                             </interactivity:Interaction.Behaviors>
                                         </ComboBox>
@@ -194,14 +194,14 @@
                                             <MenuFlyoutItem Text="Duplicate">
                                                 <interactivity:Interaction.Behaviors>
                                                     <core:EventTriggerBehavior EventName="Click">
-                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.duplicateData, Source={StaticResource VmLocator}}" />
+                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.cmdDuplicateData, Source={StaticResource VmLocator}}" />
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                             </MenuFlyoutItem>
                                             <MenuFlyoutItem Text="Delete">
                                                 <interactivity:Interaction.Behaviors>
                                                     <core:EventTriggerBehavior EventName="Click">
-                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.deleteData, Source={StaticResource VmLocator}}" />
+                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.cmdDeleteData, Source={StaticResource VmLocator}}" />
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                             </MenuFlyoutItem>
@@ -240,14 +240,14 @@
                                                 <MenuFlyoutItem Text="Duplicate">
                                                     <interactivity:Interaction.Behaviors>
                                                         <core:EventTriggerBehavior EventName="Click">
-                                                            <core:InvokeCommandAction Command="{Binding OrderViewModel.duplicateEmail, Source={StaticResource VmLocator}}"/>
+                                                            <core:InvokeCommandAction Command="{Binding OrderViewModel.cmdDuplicateEmail, Source={StaticResource VmLocator}}"/>
                                                         </core:EventTriggerBehavior>
                                                     </interactivity:Interaction.Behaviors>
                                                 </MenuFlyoutItem>
                                                 <MenuFlyoutItem Text="Delete">
                                                     <interactivity:Interaction.Behaviors>
                                                         <core:EventTriggerBehavior EventName="Click">
-                                                            <core:InvokeCommandAction Command="{Binding OrderViewModel.deleteEmail, Source={StaticResource VmLocator}}"/>
+                                                            <core:InvokeCommandAction Command="{Binding OrderViewModel.cmdDeleteEmail, Source={StaticResource VmLocator}}"/>
                                                         </core:EventTriggerBehavior>
                                                     </interactivity:Interaction.Behaviors>
                                                 </MenuFlyoutItem>
@@ -286,14 +286,14 @@
                                             <MenuFlyoutItem Text="Duplicate">
                                                 <interactivity:Interaction.Behaviors>
                                                     <core:EventTriggerBehavior EventName="Click">
-                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.duplicateSchoolSend, Source={StaticResource VmLocator}}" />
+                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.cmdDuplicateSchoolSend, Source={StaticResource VmLocator}}" />
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                             </MenuFlyoutItem>
                                             <MenuFlyoutItem Text="Delete">
                                                 <interactivity:Interaction.Behaviors>
                                                     <core:EventTriggerBehavior EventName="Click">
-                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.deleteSchoolSend, Source={StaticResource VmLocator}}" />
+                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.cmdDeleteSchoolSend, Source={StaticResource VmLocator}}" />
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                             </MenuFlyoutItem>
@@ -331,14 +331,14 @@
                                             <MenuFlyoutItem Text="Duplicate">
                                                 <interactivity:Interaction.Behaviors>
                                                     <core:EventTriggerBehavior EventName="Click">
-                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.duplicateDirectMailing, Source={StaticResource VmLocator}}" />
+                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.cmdDuplicateDirectMailing, Source={StaticResource VmLocator}}" />
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                             </MenuFlyoutItem>
                                             <MenuFlyoutItem Text="Delete">
                                                 <interactivity:Interaction.Behaviors>
                                                     <core:EventTriggerBehavior EventName="Click">
-                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.deleteDirectMailing, Source={StaticResource VmLocator}}" />
+                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.cmdDeleteDirectMailing, Source={StaticResource VmLocator}}" />
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                             </MenuFlyoutItem>
@@ -377,14 +377,14 @@
                                             <MenuFlyoutItem Text="Duplicate">
                                                 <interactivity:Interaction.Behaviors>
                                                     <core:EventTriggerBehavior EventName="Click">
-                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.duplicateSharedMailing, Source={StaticResource VmLocator}}" />
+                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.cmdDuplicateSharedMailing, Source={StaticResource VmLocator}}" />
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                             </MenuFlyoutItem>
                                             <MenuFlyoutItem Text="Delete">
                                                 <interactivity:Interaction.Behaviors>
                                                     <core:EventTriggerBehavior EventName="Click">
-                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.deleteSharedMailing, Source={StaticResource VmLocator}}" />
+                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.cmdDeleteSharedMailing, Source={StaticResource VmLocator}}" />
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                             </MenuFlyoutItem>
@@ -422,14 +422,14 @@
                                             <MenuFlyoutItem Text="Duplicate">
                                                 <interactivity:Interaction.Behaviors>
                                                     <core:EventTriggerBehavior EventName="Click">
-                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.duplicatePrint, Source={StaticResource VmLocator}}" />
+                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.cmdDuplicatePrint, Source={StaticResource VmLocator}}" />
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                             </MenuFlyoutItem>
                                             <MenuFlyoutItem Text="Delete">
                                                 <interactivity:Interaction.Behaviors>
                                                     <core:EventTriggerBehavior EventName="Click">
-                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.deletePrint, Source={StaticResource VmLocator}}" />
+                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.cmdDeletePrint, Source={StaticResource VmLocator}}" />
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                             </MenuFlyoutItem>
@@ -467,14 +467,14 @@
                                             <MenuFlyoutItem Text="Duplicate">
                                                 <interactivity:Interaction.Behaviors>
                                                     <core:EventTriggerBehavior EventName="Click">
-                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.duplicateSurcharge, Source={StaticResource VmLocator}}" />
+                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.cmdDuplicateSurcharge, Source={StaticResource VmLocator}}" />
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                             </MenuFlyoutItem>
                                             <MenuFlyoutItem Text="Delete">
                                                 <interactivity:Interaction.Behaviors>
                                                     <core:EventTriggerBehavior EventName="Click">
-                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.deleteSurcharge, Source={StaticResource VmLocator}}" />
+                                                        <core:InvokeCommandAction Command="{Binding OrderViewModel.cmdDeleteSurcharge, Source={StaticResource VmLocator}}" />
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                             </MenuFlyoutItem>
@@ -495,49 +495,49 @@
                         <MenuFlyoutItem Text="Data">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Click">
-                                    <core:InvokeCommandAction Command="{Binding Path=newData}" />
+                                    <core:InvokeCommandAction Command="{Binding Path=cmdNewData}" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </MenuFlyoutItem>
                         <MenuFlyoutItem Text="Email">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Click">
-                                    <core:InvokeCommandAction Command="{Binding Path=newEmail}" />
+                                    <core:InvokeCommandAction Command="{Binding Path=cmdNewEmail}" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </MenuFlyoutItem>
                         <MenuFlyoutItem Text="SchoolSend">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Click">
-                                    <core:InvokeCommandAction Command="{Binding Path=newSchoolSend}" />
+                                    <core:InvokeCommandAction Command="{Binding Path=cmdNewSchoolSend}" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </MenuFlyoutItem>
                         <MenuFlyoutItem Text="Direct Mailing">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Click">
-                                    <core:InvokeCommandAction Command="{Binding Path=newDirectMailing}" />
+                                    <core:InvokeCommandAction Command="{Binding Path=cmdNewDirectMailing}" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </MenuFlyoutItem>
                         <MenuFlyoutItem Text="Shared Mailing">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Click">
-                                    <core:InvokeCommandAction Command="{Binding Path=newSharedMailing}" />
+                                    <core:InvokeCommandAction Command="{Binding Path=cmdNewSharedMailing}" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </MenuFlyoutItem>
                         <MenuFlyoutItem Text="Print">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Click">
-                                    <core:InvokeCommandAction Command="{Binding Path=newPrint}" />
+                                    <core:InvokeCommandAction Command="{Binding Path=cmdNewPrint}" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </MenuFlyoutItem>
                         <MenuFlyoutItem Text="Surcharge">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Click">
-                                    <core:InvokeCommandAction Command="{Binding Path=newSurcharge}" />
+                                    <core:InvokeCommandAction Command="{Binding Path=cmdNewSurcharge}" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </MenuFlyoutItem>
@@ -556,7 +556,7 @@
                           Label="Save">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=saveOrder}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdSaveOrder}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

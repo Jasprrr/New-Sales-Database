@@ -70,7 +70,7 @@
                                   IsChecked="{Binding selectedEmailOrder.emailSetUp, Mode=TwoWay}">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Click">
-                                    <core:InvokeCommandAction Command="{Binding Path=sumEmail}" />
+                                    <core:InvokeCommandAction Command="{Binding Path=cmdSumEmailTotal}" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </CheckBox>
@@ -83,7 +83,7 @@
                                      Width="200">
                                 <interactivity:Interaction.Behaviors>
                                     <core:EventTriggerBehavior EventName="LostFocus">
-                                        <core:InvokeCommandAction Command="{Binding Path=sumEmail}" />
+                                        <core:InvokeCommandAction Command="{Binding Path=cmdSumEmailTotal}" />
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </TextBox>
@@ -100,7 +100,7 @@
                                          Width="200">
                                 <interactivity:Interaction.Behaviors>
                                     <core:EventTriggerBehavior EventName="LostFocus">
-                                        <core:InvokeCommandAction Command="{Binding Path=sumEmail}" />
+                                        <core:InvokeCommandAction Command="{Binding Path=cmdSumEmailTotal}" />
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </TextBox>
@@ -127,7 +127,7 @@
                           Label="Calculator">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=saveEmail}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdSaveEmail}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
@@ -135,7 +135,7 @@
                           Label="Save">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=saveEmail}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdSaveEmail}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
@@ -143,7 +143,7 @@
                           Label="Cancel">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=cancelEmailPart}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdGoBack}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

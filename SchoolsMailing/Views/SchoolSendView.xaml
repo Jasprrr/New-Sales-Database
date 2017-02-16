@@ -70,7 +70,7 @@
                                       SelectedValuePath="ID">
                                 <interactivity:Interaction.Behaviors>
                                     <core:EventTriggerBehavior EventName="SelectionChanged">
-                                        <core:InvokeCommandAction Command="{Binding Path=setCredits}" />
+                                        <core:InvokeCommandAction Command="{Binding Path=cmdSchoolSendPackageChanged}" />
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </ComboBox>
@@ -109,7 +109,7 @@
                           Label="Save">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=saveSchoolSend}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdSaveSchoolSend}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
@@ -117,7 +117,7 @@
                           Label="Cancel">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=cancelSchoolSendPart}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdGoBack}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

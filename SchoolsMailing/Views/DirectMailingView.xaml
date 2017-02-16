@@ -34,7 +34,7 @@
                                                 Style="{StaticResource inputCalendarDatePicker}">
                                 <interactivity:Interaction.Behaviors>
                                     <core:EventTriggerBehavior EventName="DateChanged">
-                                        <core:InvokeCommandAction Command="{Binding Path=setDirectMailingDate}" />
+                                        <core:InvokeCommandAction Command="{Binding Path=cmdDirectMailingDateChanged}" />
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </CalendarDatePicker>
@@ -129,7 +129,7 @@
                                      Width="200">
                                 <interactivity:Interaction.Behaviors>
                                     <core:EventTriggerBehavior EventName="LostFocus">
-                                        <core:InvokeCommandAction Command="{Binding Path=sumDirectMailing}" />
+                                        <core:InvokeCommandAction Command="{Binding Path=cmdSumDirectMailingTotal}" />
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </TextBox>
@@ -145,7 +145,7 @@
                                      Width="200">
                                 <interactivity:Interaction.Behaviors>
                                     <core:EventTriggerBehavior EventName="LostFocus">
-                                        <core:InvokeCommandAction Command="{Binding Path=sumDirectMailing}" />
+                                        <core:InvokeCommandAction Command="{Binding Path=cmdSumDirectMailingTotal}" />
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </TextBox>
@@ -161,7 +161,7 @@
                                      Width="200">
                                 <interactivity:Interaction.Behaviors>
                                     <core:EventTriggerBehavior EventName="LostFocus">
-                                        <core:InvokeCommandAction Command="{Binding Path=sumDirectMailing}" />
+                                        <core:InvokeCommandAction Command="{Binding Path=cmdSumDirectMailingTotal}" />
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </TextBox>
@@ -184,7 +184,7 @@
                           Label="Calculator">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=saveDirectMailing}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdSaveDirectMailing}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
@@ -192,7 +192,7 @@
                           Label="Save">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=saveDirectMailing}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdSaveDirectMailing}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
@@ -200,7 +200,7 @@
                           Label="Cancel">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=cancelDirectMailingPart}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdGoBack}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

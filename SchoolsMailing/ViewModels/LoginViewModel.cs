@@ -77,40 +77,24 @@ namespace SchoolsMailing.ViewModels
 
         //TODO: add enter event to login
 
-        private RelayCommand _attemptLogin;
-        public RelayCommand attemptLogin
+        private RelayCommand _cmdLogin;
+        public RelayCommand cmdLogin
         {
-            get
-            {
-                if (_attemptLogin == null)
-                {
-                    _attemptLogin = new RelayCommand(() =>
-                    {
-                        if (isCorrectLogin())
-                        {
-                            var rootFrame = Window.Current.Content as Frame;
-                            rootFrame.Navigate(typeof(MainPage));
-                            MessengerInstance.Send<NotificationMessage<User>>(new NotificationMessage<User>(loggedInAs, "userSignIn"));
-                        }      
-                    });
-                }
-                return _attemptLogin;
-            }
+            get { if (_cmdLogin == null) { _cmdLogin = new RelayCommand(() => { Login();  }); } return _cmdLogin; }
         }
 
-        public bool isCorrectLogin()
-        {            
-            if (!DAL.DataAccessLayer.isValidPassword(userName, userPassword))
+        public void Login()
+        {
+            if(DAL.DataAccessLayer.isValidLogin(userName, userPassword))
             {
-                isInvalidUserPassword = true;
-                invalidLoginAttempts++;
-                return false;
+                var rootFrame = Window.Current.Content as Frame;
+                rootFrame.Navigate(typeof(MainPage));
+                MessengerInstance.Send<NotificationMessage<User>>(new NotificationMessage<User>(loggedInAs, "MainPageViewModel"));
             }
             else
             {
-                isInvalidUserPassword = false;
+                //TODO: Add invalid login display
             }
-            return true;
         }
     }
 }

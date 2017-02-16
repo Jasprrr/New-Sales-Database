@@ -82,5 +82,7 @@ namespace SchoolsMailing.ViewModels
 
             }
         }
+
+        //TODO: verification
     }
 }

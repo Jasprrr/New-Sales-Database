@@ -49,21 +49,8 @@ namespace SchoolsMailing.DAL
                 return new SQLiteConnection(new SQLitePlatformWinRT(), DbPath);
             }
         }
-
-
-        public static bool isValidUsername(string userName)
-        {
-            using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
-            {
-                List<User> u;
-                u = (from p in db.Table<User>()
-                     where p.userName == userName
-                     select p).ToList();
-                return (u.Count == 1) ? true : false;
-            }
-        }
-
-        public static bool isValidPassword(string userName, string userPassword)
+        
+        public static bool isValidLogin(string userName, string userPassword)
         {
             using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
             {
@@ -73,8 +60,10 @@ namespace SchoolsMailing.DAL
                      select p).ToList();
                 return (u.Count == 1) ? true : false;
             }
+
         }
 
+        #region Get company
         public static Company getCompanyByID(long companyID)
         {
             Company q;
@@ -97,7 +86,9 @@ namespace SchoolsMailing.DAL
             }
             return l;
         }
+        #endregion
 
+        #region Get contact
         public static Contact getContactByID(long contactID)
         {
             Contact q;
@@ -132,7 +123,9 @@ namespace SchoolsMailing.DAL
             }
             return l;
         }
+        #endregion
 
+        #region Get history
         public static List<CompanyHistory> getHistoryByCompanyID(long companyID)
         {
             List<CompanyHistory> h;
@@ -156,7 +149,9 @@ namespace SchoolsMailing.DAL
             }
             return q;
         }
+        #endregion
 
+        #region Get data
         public static Orders getOrderByID(long orderID)
         {
             Orders q;
@@ -179,7 +174,9 @@ namespace SchoolsMailing.DAL
             }
             return l;
         }
+        #endregion
 
+        #region Get email
         public static List<OrdersEmail> getOrdersEmails()
         {
             using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
@@ -262,7 +259,9 @@ namespace SchoolsMailing.DAL
             }
             return q;
         }
+        #endregion
 
+        #region Get data
         public static List<OrdersData> getOrdersData()
         {
             using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
@@ -345,7 +344,9 @@ namespace SchoolsMailing.DAL
             }
             return q;
         }
+        #endregion
 
+        #region Get SchoolSend
         public static List<OrdersSchoolSend> getOrdersSchoolSend()
         {
             using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
@@ -428,7 +429,9 @@ namespace SchoolsMailing.DAL
             }
             return q;
         }
+        #endregion
 
+        #region Get direct mailing
         public static List<OrdersDirectMailing> getOrdersDirectMailing()
         {
             using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
@@ -517,7 +520,9 @@ namespace SchoolsMailing.DAL
             }
             return q;
         }
+        #endregion
 
+        #region Get shared mailing
         public static List<OrdersSharedMailing> getOrdersSharedMailing()
         {
             using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
@@ -606,7 +611,9 @@ namespace SchoolsMailing.DAL
             }
             return q;
         }
+        #endregion
 
+        #region Get print
         public static List<OrdersPrint> getOrdersPrint()
         {
             using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
@@ -689,7 +696,9 @@ namespace SchoolsMailing.DAL
             }
             return q;
         }
+        #endregion
 
+        #region Get surcharge
         public static List<OrdersSurcharge> getOrdersSurcharge()
         {
             using (var db = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath))
@@ -772,6 +781,7 @@ namespace SchoolsMailing.DAL
             }
             return q;
         }
+        #endregion
 
         public static List<Email> GetEmailByDate(DateTime date)
         {
@@ -785,7 +795,6 @@ namespace SchoolsMailing.DAL
             }
             return email.FindAll(p => p.emailDate.Date == date.Date);
         }
-
 
         #region Order part by date
         //public static List<OrdersData> GetDataByOrderDate(DateTime date)

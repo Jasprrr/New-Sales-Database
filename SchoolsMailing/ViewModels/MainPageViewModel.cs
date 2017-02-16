@@ -35,28 +35,28 @@
         public MainPageViewModel(IMessenger messenger, NavigationService navigationService) : base(messenger, navigationService)
         {
             this.InitializeMenu();
-            
+
             //Sample Data
-            //SharedPack sp1 = new SharedPack { packCost = 475, packArtworkDate = Convert.ToDateTime("26/01/17"), packDate = Convert.ToDateTime("15/02/17"), packTo = "Secondary", packDeliveryDate = Convert.ToDateTime("06/02/17"), packMaxInserts = 7, packName = "[15/02/17] Secondary" };
-            //SharedPack sp2 = new SharedPack { packCost = 1749, packArtworkDate = Convert.ToDateTime("26/01/17"), packDate = Convert.ToDateTime("15/02/17"), packTo = "Primary", packDeliveryDate = Convert.ToDateTime("06/02/17"), packMaxInserts = 12, packName = "[15/02/17] Primary" };
-            //SharedPack sp3 = new SharedPack { packCost = 2119, packArtworkDate = Convert.ToDateTime("30/03/17"), packDate = Convert.ToDateTime("26/04/17"), packTo = "Primary & Secondary", packDeliveryDate = Convert.ToDateTime("10/04/16"), packMaxInserts = 6, packName = "[15/02/17] Primary & Secondary" };
-            //DataAccessLayer.SaveSharedPack(sp1);
-            //DataAccessLayer.SaveSharedPack(sp2);
-            //DataAccessLayer.SaveSharedPack(sp3);
+            SharedPack sp1 = new SharedPack { packCost = 475, packArtworkDate = Convert.ToDateTime("26/01/17"), packDate = Convert.ToDateTime("15/02/17"), packTo = "Secondary", packDeliveryDate = Convert.ToDateTime("06/02/17"), packMaxInserts = 7, packName = "[15/02/17] Secondary" };
+            SharedPack sp2 = new SharedPack { packCost = 1749, packArtworkDate = Convert.ToDateTime("26/01/17"), packDate = Convert.ToDateTime("15/02/17"), packTo = "Primary", packDeliveryDate = Convert.ToDateTime("06/02/17"), packMaxInserts = 12, packName = "[15/02/17] Primary" };
+            SharedPack sp3 = new SharedPack { packCost = 2119, packArtworkDate = Convert.ToDateTime("30/03/17"), packDate = Convert.ToDateTime("26/04/17"), packTo = "Primary & Secondary", packDeliveryDate = Convert.ToDateTime("10/04/16"), packMaxInserts = 6, packName = "[15/02/17] Primary & Secondary" };
+            DataAccessLayer.saveSharedPack(sp1);
+            DataAccessLayer.saveSharedPack(sp2);
+            DataAccessLayer.saveSharedPack(sp3);
 
-            //SchoolSendPack ssp1 = new SchoolSendPack { packCost = 50, packCredits = 10000, packName = "Ruby" };
-            //SchoolSendPack ssp2 = new SchoolSendPack { packCost = 100, packCredits = 25000, packName = "Sapphire" };
-            //SchoolSendPack ssp3 = new SchoolSendPack { packCost = 150, packCredits = 50000, packName = "Emerald" };
-            //SchoolSendPack ssp4 = new SchoolSendPack { packCost = 250, packCredits = 100000, packName = "Silver" };
-            //SchoolSendPack ssp5 = new SchoolSendPack { packCost = 350, packCredits = 150000, packName = "Gold" };
-            //SchoolSendPack ssp6 = new SchoolSendPack { packCost = 450, packCredits = 200000, packName = "Platinum" };
+            SchoolSendPack ssp1 = new SchoolSendPack { packCost = 50, packCredits = 10000, packName = "Ruby" };
+            SchoolSendPack ssp2 = new SchoolSendPack { packCost = 100, packCredits = 25000, packName = "Sapphire" };
+            SchoolSendPack ssp3 = new SchoolSendPack { packCost = 150, packCredits = 50000, packName = "Emerald" };
+            SchoolSendPack ssp4 = new SchoolSendPack { packCost = 250, packCredits = 100000, packName = "Silver" };
+            SchoolSendPack ssp5 = new SchoolSendPack { packCost = 350, packCredits = 150000, packName = "Gold" };
+            SchoolSendPack ssp6 = new SchoolSendPack { packCost = 450, packCredits = 200000, packName = "Platinum" };
 
-            //DAL.DataAccessLayer.SaveSchoolSendPack(ssp1);
-            //DAL.DataAccessLayer.SaveSchoolSendPack(ssp2);
-            //DAL.DataAccessLayer.SaveSchoolSendPack(ssp3);
-            //DAL.DataAccessLayer.SaveSchoolSendPack(ssp4);
-            //DAL.DataAccessLayer.SaveSchoolSendPack(ssp5);
-            //DAL.DataAccessLayer.SaveSchoolSendPack(ssp6);
+            DAL.DataAccessLayer.saveSchoolSendPack(ssp1);
+            DAL.DataAccessLayer.saveSchoolSendPack(ssp2);
+            DAL.DataAccessLayer.saveSchoolSendPack(ssp3);
+            DAL.DataAccessLayer.saveSchoolSendPack(ssp4);
+            DAL.DataAccessLayer.saveSchoolSendPack(ssp5);
+            DAL.DataAccessLayer.saveSchoolSendPack(ssp6);
 
             this.ItemInvokedCommand = new RelayCommand<ListViewItem>(this.ItemInvoked);
 
@@ -66,7 +66,7 @@
         //Register logged in user
         public void RegisterMessages(NotificationMessage<User> obj)
         {
-            if (obj.Notification == "userSignIn")
+            if (obj.Notification == "MainPageViewModel")
             {
                 if(obj.Content != null)
                 {
@@ -144,7 +144,6 @@
                 else
                 {
                     this.NavigationService.Navigate(menuItem.AssociatedPage, menuItem.Parameters);
-                    //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                 }
 
             }

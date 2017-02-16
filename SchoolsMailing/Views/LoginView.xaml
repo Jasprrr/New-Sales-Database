@@ -15,9 +15,19 @@
         <conv:BooleanToVisibilityConverter x:Key="InvalidTextBox"/>
     </Page.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="400"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image Source="ms-appx:///Assets/SchoolsMailingLogo.png" 
+               HorizontalAlignment="Center" 
+               Height="200"
+               VerticalAlignment="Top" 
+               Width="429" 
+               NineGrid="0"/>
         <StackPanel HorizontalAlignment="Center" 
-                    VerticalAlignment="Center">
-            <Image x:Name="image" Source="ms-appx:///Assets/SchoolsMailingLogo.png" HorizontalAlignment="Center" Height="70" VerticalAlignment="Top" Width="150" NineGrid="0"/>
+                    VerticalAlignment="Center"
+                    Grid.Row="1">
             <TextBlock Text="Username"
                        Width="100"
                        HorizontalAlignment="Left"
@@ -45,17 +55,15 @@
                 <cntrl:InvalidFlag Visibility="{Binding isInvalidUserPassword, Converter={StaticResource InvalidTextBox}}" 
                                    ToolTipService.ToolTip="Invalid Password"/>
             </StackPanel>
-            
             <Button Content="Login"
                     Width="100" 
                     HorizontalAlignment="Center">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=attemptLogin}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdLogin}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </Button>
         </StackPanel>
-        
     </Grid>
 </Page>

@@ -180,7 +180,7 @@
                           Icon="Save">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=saveCompany}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdSaveCompany}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>
@@ -188,7 +188,7 @@
                           Icon="Cancel">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Click">
-                        <core:InvokeCommandAction Command="{Binding Path=cancelCompany}" />
+                        <core:InvokeCommandAction Command="{Binding Path=cmdCancelCompany}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </AppBarButton>

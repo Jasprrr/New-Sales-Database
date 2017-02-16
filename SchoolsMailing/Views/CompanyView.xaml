@@ -161,14 +161,14 @@
                                                HorizontalAlignment="Center" 
                                                Margin="0,0,0,4"/>
                                     <ListView Grid.Column="2"
-                                              ItemsSource="{Binding selectedCompanyHistory, Mode=TwoWay}" 
+                                              ItemsSource="{Binding companyHistory, Mode=TwoWay}" 
                                               IsItemClickEnabled="True"
                                               VerticalAlignment="Top" 
                                               HorizontalAlignment="Center"
                                               MaxHeight="808">
                                         <interactivity:Interaction.Behaviors>
                                             <core:EventTriggerBehavior EventName="ItemClick">
-                                                <core:CallMethodAction MethodName="historyInvoked" 
+                                                <core:CallMethodAction MethodName="cmdHistoryInvoked" 
                                                                        TargetObject="{Binding Mode=OneWay}"/>
                                             </core:EventTriggerBehavior>
                                         </interactivity:Interaction.Behaviors>

@@ -140,7 +140,7 @@ namespace SchoolsMailing.ViewModels
         private RelayCommand _newOrder;
         public RelayCommand newOrder
         {
-            get { if (_newOrder == null) { _newOrder = new RelayCommand(() => { if (_newOrder != null) { if (newOrder != null) { NavigationService.Navigate(typeof(OrderView)); } } }); } return _newOrder; }
+            get { if (_newOrder == null) { _newOrder = new RelayCommand(() => { if (_newOrder != null) { if (newOrder != null) { NavigationService.Navigate(typeof(OrderView)); MessengerInstance.Send<NotificationMessage<Int64>>(new NotificationMessage<Int64>(0, "OrderViewModel-CompanyID")); } } }); } return _newOrder; }
         }
         #endregion
 
@@ -226,7 +226,7 @@ namespace SchoolsMailing.ViewModels
                 //Navigate to CompanyView
                 this.NavigationService.Navigate(typeof(OrderView));
                 //Pass ID parameter
-                MessengerInstance.Send<NotificationMessage<Int64>>(new NotificationMessage<Int64>(orderID, "OrderViewModel"));
+                MessengerInstance.Send<NotificationMessage<Int64>>(new NotificationMessage<Int64>(orderID, "OrderViewModel-OrderID"));
             }
             
         }
